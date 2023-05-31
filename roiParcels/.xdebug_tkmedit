@@ -1,0 +1,102 @@
+tkmedit started: Fri Aug  8 16:08:09 2014
+
+	/usr/local/freesurfer/tktools/tkmedit.bin SCM08 orig/anat.mgz -overlay /Volumes/Zeus/SCM/SCM08/FOSS_func/HighLevel.gfeat/cope4.feat/stats/zstat1.nii.gz -fthresh 6 -fmid 6.5 -fmax 8 
+
+$Id: tkmedit.c,v 1.343 2011/03/01 01:41:22 nicks Exp $ $Name: stable5 $
+Set user home dir to /Volumes/Zeus/SCM/scripts/roiParcels
+Set subject home dir to /usr/local/freesurfer/subjects/SCM08
+mriFunctionalData:
+	msFileName=/Volumes/Zeus/SCM/SCM08/FOSS_func/HighLevel.gfeat/cope4.feat/stats/zstat1.nii.gz
+	msRegistrationFileName=./
+	msSubjectName=
+	mpData->ps=1.000000
+	mpData->thick=1.000000
+	mpData->width=152
+	mpData->height=203
+	mpData->depth=196
+	mConvMethod=2
+	mNumTimePoints=1
+	mNumConditions=1
+	mbNullConditionPresent=0
+	mMaxValue=-10000.000000
+	mMinValue=10000.000000
+	mTimeResolution=1.000000
+	mNumPreStimTimePoints=0
+	mbErrorDataPresent=0
+	mNumBins=0
+
+Using interface file /usr/local/freesurfer/tktools/tkmedit.tcl
+Tcl: Successfully parsed tkmedit.tcl
+Tcl: Successfully parsed tkm_functional.tcl
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
+Error 10 in DspA_DspA_ConvertScreenToBuffer_: Invalid screen point.
