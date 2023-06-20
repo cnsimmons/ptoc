@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0,curr_dir)
 import subprocess
 from glob import glob as glob
-import pdb
+import pandas as pd
 
 #command line options
 
@@ -16,11 +16,10 @@ print(sub, flush = True)
 
 
 #add exp to each item in sub_list
-#
 
 tasks = ['loc']
 
-ses = 1
+ses = 1 #this may need to change for which sesion you want to run? - Claire
 runs = [1,2,3]
 
 data_dir = f'/lab_data/behrmannlab/vlad/hemispace'
