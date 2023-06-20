@@ -19,7 +19,7 @@ print(sub, flush = True)
 
 tasks = ['loc']
 
-ses = 1 #this may need to change for which sesion you want to run? - Claire
+ses = 1
 runs = [1,2,3]
 
 data_dir = f'/lab_data/behrmannlab/vlad/hemispace'
