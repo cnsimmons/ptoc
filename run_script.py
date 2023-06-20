@@ -22,7 +22,7 @@ sub_info = sub_info.head(4) #DELETE THIS WHNE YOU RUN THE WHOLE THING
 for sub in sub_info['sub']:
     try:
         bash_cmd = f'python {curr_script} {sub}'
-        #subprocess.run(bash_cmd.split(),check = True)
+        subprocess.run(bash_cmd.split(),check = True)
     except:
         print(f'failed on {sub}')
             
