@@ -26,7 +26,7 @@ folders = glob(f'{target_dir}/*')
 #loop through the folders and change the group and permissions in parallel
 import multiprocessing as mp
 def change_group_permissions(folder):
-    print(folder[0].split('/')[-1])
+    print(folder.split('/')[-1])
 
     subprocess.run(['chgrp', '-R', group, folder])
     subprocess.run(['chmod', '-R', permissions, folder])
