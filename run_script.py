@@ -17,7 +17,9 @@ curr_script = f'{curr_dir}/fmri/pre_proc/preprocess.py'
 
 sub_info = params.sub_info
 #pdb.set_trace()
-sub_info = sub_info.head(4) #DELETE THIS WHNE YOU RUN THE WHOLE THING
+#sub_info = sub_info.head(4) #DELETE THIS WHNE YOU RUN THE WHOLE THING
+sub_info = sub_info.iloc[5:] #to prevent redundancies I am adding this line since rows 1-4 were already preprocessed.
+
 
 for sub in sub_info['sub']:
     try:
