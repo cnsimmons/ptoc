@@ -23,6 +23,7 @@ permissions = '770'
 #glob all the folders in the target directory
 folders = glob(f'{target_dir}/*')
 
+
 #loop through the folders and change the group and permissions in parallel
 import multiprocessing as mp
 def change_group_permissions(folder):
