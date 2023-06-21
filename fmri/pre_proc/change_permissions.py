@@ -1,6 +1,6 @@
 #create a script the globs all folders in a directory and then changes their group to behrmanlab using subprocess
 #run in parallel
-curr_dir = '/user_data/csimmon2/GitHub_Repos/ptoc'
+curr_dir = '/user_data/csimmon2/git_repos/ptoc'
 import sys
 sys.path.append(curr_dir)
 import subprocess
