@@ -12,7 +12,7 @@ import pdb
 
 
 #set the directory to the current working directory
-target_dir = params.raw_dir
+target_dir = params.data_dir
 
 #set the group to behrmanlab
 group = 'behrmannlab'
