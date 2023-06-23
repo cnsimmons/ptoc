@@ -7,8 +7,8 @@
 #
 
 exp="ptoc" #experiment name
-ogSub="004" #which sub to copy from
-subj_list="004 007" #which subs to copy to (add as many as you have)
+ogSub="007" #which sub to copy from
+subj_list="007 057 059" #which subs to copy to (add as many as you have)
 
 runs=("1" "2" "3") #runs to copy
 
