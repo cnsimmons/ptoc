@@ -9,37 +9,29 @@ job_name = 'fsl_job'
 mem = 24
 run_time = "1-00:00:00"
 
-pause_crit = 12
-pause_time = 5
+pause_crit = 12 #number of jobs to request
+pause_time = 40 #low long to wait between jobs in minutes
 
-runs=list(range(1,3))
-exp = 'hemispace'
-sub_list = list(range(1001,1013)) + list(range(2013,2019))
-sub_list = [f'spaceloc{sub}' for sub in sub_list]
-tasks = ['spaceloc','toolloc', 'loc']
+runs=list(range(1,4))
+exp = 'ptoc'
 
-tasks = ['toolloc']
+tasks = ['loc']
 
 
 
-#sub_list = [25,38,57,59,64,67,68,71,83,84,85,87,88]
-#sub_list = [f'0{sub}' if sub < 100 else f'{sub}' for sub in sub_list]
-sub_list=["025", "038", "057", "059", "064", "067", "068", "071", "083", "084", "085", 
-"087", "088", "093", "094", "095", "096", "097", "103", "104", "105", "106", "107", 
-"hemispace1001", "hemispace1002", "hemispace1003","hemispace1004", "hemispace1006", "hemispace1007",
- "hemispace2001", "hemispace2002", "hemispace2003"]
 
 
 sub_info = pd.read_csv('/user_data/vayzenbe/GitHub_Repos/hemispace/sub_info.csv')
 sub_list = sub_info['sub'].tolist()
+
+sub_list = ['sub-025', 'sub-038']
+sub_list = ['sub-007','sub-057','sub-059']
 print(sub_list)
-#sub_list=["sub-hemispace1002"]
-#subj_list=["sub-057", "sub-068", "sub-095", "sub-104", "sub-105", "sub-spaceloc1005", "sub-spaceloc1006", "sub-spaceloc1011", "sub-spaceloc1012", "sub-spaceloc2017", "sub-spaceloc2018"]
 
 
 study_dir= f'/lab_data/behrmannlab/vlad/{exp}'
 ses = 1
-suf = '_roi'
+suf = ''
 
 #the sbatch setup info
 run_1stlevel = False
@@ -56,14 +48,14 @@ def setup_sbatch(job_name, script_name):
 #SBATCH --job-name={job_name}
 
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=vayzenb@cmu.edu
+#SBATCH --mail-user=csimmon2@andrew.cmu.edu
 
 # Submit job to cpu queue                
 #SBATCH -p cpu
 
 #SBATCH --cpus-per-task=1
 #SBATCH --gres=gpu:0
-#SBATCH --exclude=mind-0-15,mind-0-14,mind-0-16
+# SBATCH --exclude=mind-0-15,mind-0-14,mind-0-16
 # Job memory request
 #SBATCH --mem={mem}gb
 

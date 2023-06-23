@@ -7,7 +7,7 @@
 #
 
 exp="ptoc" #experiment name
-ogSub="007" #which sub to copy from
+ogSub="004" #which sub to copy from
 subj_list="007 057 059" #which subs to copy to (add as many as you have)
 
 runs=("1" "2" "3") #runs to copy
@@ -52,8 +52,8 @@ do
 		done
 
 		#COMMENTING THIS OUT FOR NOW BECAUSE YOU DONT HAVE A HIGHLEVEL YET!!
-		#cp ${ogRun}/HighLevel${suf}.fsf $runDir/HighLevel${suf}.fsf #copies fsf from run 1 into the other runs (cp = copy)
-		#sed -i "s/${ogSub}/${sub}/g" $runDir/HighLevel${suf}.fsf
+		cp ${ogRun}/HighLevel${suf}.fsf $runDir/HighLevel${suf}.fsf #copies fsf from run 1 into the other runs (cp = copy)
+		sed -i "s/${ogSub}/${sub}/g" $runDir/HighLevel${suf}.fsf
 
 
 	echo $s
