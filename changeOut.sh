@@ -8,7 +8,7 @@
 
 exp="ptoc" #experiment name
 ogSub="004" #which sub to copy from
-subj_list="007 057 059" #which subs to copy to (add as many as you have)
+subj_list="007 025 038 057 059" #which subs to copy to (add as many as you have)
 
 runs=("1" "2" "3") #runs to copy
 
