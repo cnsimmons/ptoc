@@ -24,8 +24,8 @@ tasks = ['loc']
 sub_info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info.csv')
 sub_list = sub_info['sub'].tolist()
 
-sub_list = ['sub-025', 'sub-038']
-#sub_list = ['sub-007','sub-057','sub-059']
+
+sub_list = ['sub-025', 'sub-038', 'sub-057', 'sub-059']
 print(sub_list)
 
 
@@ -34,8 +34,8 @@ ses = 1
 suf = ''
 
 #the sbatch setup info
-run_1stlevel = True
-run_highlevel = False
+run_1stlevel = False
+run_highlevel = True
 
 preprocess = False
 
