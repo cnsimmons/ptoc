@@ -10,7 +10,8 @@ exp="ptoc" #experiment name
 ogSub="004" #which sub to copy from
 subj_list="007 025 038 057 059" #which subs to copy to (add as many as you have)
 subj_list="064 066 067 068 069 071 074 075 076 077 078 079 083 084 085 087 088 089 
-090 091 092 093 094 095 096 097 103 106 107 108 109 sub-hemispace1004 sub-hemispace1007 sub-hemispace1006"
+090 091 092 093 094 095 096 097 103 106 107 108 109 hemispace1004 hemispace1007 hemispace1006"
+subj_list="hemispace1006 hemispace1004 hemispace1007"
 
 runs=("1" "2" "3") #runs to copy
 
