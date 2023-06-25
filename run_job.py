@@ -6,11 +6,11 @@ import pdb
 import pandas as pd
 
 job_name = 'fsl_job'
-mem = 24
+mem = 32
 run_time = "1-00:00:00"
 
 pause_crit = 12 #number of jobs to request
-pause_time = 40 #low long to wait between jobs in minutes
+pause_time = 10 #how long to wait between jobs in minutes
 
 runs=list(range(1,4))
 exp = 'ptoc'
@@ -18,14 +18,17 @@ exp = 'ptoc'
 tasks = ['loc']
 
 
-
-
-
 sub_info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info.csv')
 sub_list = sub_info['sub'].tolist()
 
 
-sub_list = ['sub-057', 'sub-059']
+sub_list = ['sub-064', 'sub-066', 'sub-069', 'sub-078', 'sub-079', 'sub-090',
+ 'sub-092', 'sub-108', 'sub-067', 'sub-068', 'sub-071', 'sub-083', 'sub-084', 
+ 'sub-085', 'sub-087', 'sub-088', 'sub-093', 'sub-094', 'sub-095', 'sub-096', 
+ 'sub-097', 'sub-103', 'sub-106', 'sub-107', 'sub-074', 'sub-075', 'sub-076', 
+ 'sub-077', 'sub-089', 'sub-091', 'sub-109', 'sub-hemispace1004', 
+ 'sub-hemispace1007', 'sub-hemispace1006']
+
 print(sub_list)
 
 
