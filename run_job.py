@@ -34,8 +34,8 @@ ses = 1
 suf = ''
 
 #the sbatch setup info
-run_1stlevel = True
-run_highlevel = False
+run_1stlevel = False
+run_highlevel = True
 
 preprocess = False
 
