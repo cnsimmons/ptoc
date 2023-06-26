@@ -1,5 +1,8 @@
 '''CHANGE DIRECTORIES!'''
-
+'''before you run
+conda activate fmri
+module load fsl-6.0.3
+'''
 
 curr_dir = '/user_data/csimmon2/git_repos/ptoc'
 import sys
@@ -24,12 +27,14 @@ import hemispace_params as params #AND PARAMS
 #bash_cmd = f'module load fsl-6.0.3'
 #subprocess.run(bash_cmd.split(), check = True)
 
+#set directories
 study='hemispace'
 
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 
-control_dir = f"/lab_data/behrmannlab/vlad/spaceloc"
+#LOAD DATA_DIR CLAIRE
 
+#load subs
 sub_info = params.sub_info
 
 #left is negative, right is positive
@@ -161,6 +166,8 @@ def register_parcels(sub, parcel_dir, parcels):
     Register parcels to subject
     """
     print("Registering parcels for ", sub)
+    
+    #CHANGE THE DIRECTORY CLAIRE!! SO IT OUTPUTS TO DATA_DIR
     sub_dir = f'{study_dir}/{sub}/ses-01'
     roi_dir = f'{sub_dir}/derivatives/rois'
     anat_dir = f'{sub_dir}/anat'
@@ -203,18 +210,17 @@ def register_parcels(sub, parcel_dir, parcels):
 
 
 
-all_subs = sub_info['sub'].values
+#all_subs = sub_info['sub'].values
 
+sub_info = sub_info.head(2)
 
-for sub in all_subs:
+parcel_dir = f'{parcel_root}/{parcel_type}'
+
+for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['group']):
     if sub[:4] != 'sub-':
         sub = 'sub-' + sub
     
-    #ex tract intact hemi of current sub from sub_info
-    hemi = sub_info[sub_info['sub']==sub]['intact_hemi'].values[0]
-    group = sub_info[sub_info['sub']==sub]['group'].values[0]
-
-    parcel_dir = f'{parcel_root}/{parcel_type}'
+    print(sub, hemi, group)
 
     
     if group == 'patient':
@@ -223,7 +229,7 @@ for sub in all_subs:
         create_hemi_mask(sub)
     
 
-
     register_mni(sub,group)
+    
     register_parcels(sub, parcel_dir, parcels)
 
