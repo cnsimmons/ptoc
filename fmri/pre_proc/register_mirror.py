@@ -1,11 +1,14 @@
-curr_dir = '/user_data/vayzenbe/GitHub_Repos/hemispace'
+'''CHANGE DIRECTORIES!'''
+
+
+curr_dir = '/user_data/csimmon2/git_repos/ptoc'
 import sys
 
 #insert current directory to path
 sys.path.insert(0,curr_dir)
 
 import matplotlib.pyplot as plt
-import seaborn as sns
+
 import numpy as np
 import pandas as pd
 import itertools
@@ -15,7 +18,7 @@ import pdb
 import os
 import subprocess
 from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
-import hemispace_params as params
+import hemispace_params as params #AND PARAMS
 
 #load fsl on node
 #bash_cmd = f'module load fsl-6.0.3'
@@ -34,8 +37,9 @@ mni = load_mni152_brain_mask()
 mni_affine = mni.affine
 parcel_mni='/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz' #this is the MNI we use for both julian and mruczek parcels
 anat_mni='/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz' #this is the MNI we use for analysis
-parcel_root = "/user_data/vayzenbe/GitHub_Repos/fmri/roiParcels"
-parcel_type = "mruczek_parcels/binary"
+
+parcel_root = f"{curr_dir}/parcels"
+parcel_type = ""
 
 parcels = params.rois
 
@@ -199,15 +203,6 @@ def register_parcels(sub, parcel_dir, parcels):
 
 
 
-patient_subs=["hemispace1001", "hemispace1002", "hemispace1003","hemispace1004","hemispace1006","hemispace1007", "108", "109"]
-
-control_subs=["hemispace2001", "hemispace2002", "hemispace2003",
-"025", "038", "057", "059", "064", "067", "068", "071", "083", "084", "085", 
-"087", "088", "093", "094", "095", "096", "097", "103", "104", "105", "106", "107", 
-"spaceloc1001", "spaceloc1002", "spaceloc1003", "spaceloc1004", "spaceloc1005", "spaceloc1006",
-    "spaceloc1007", "spaceloc1008", "spaceloc1009", "spaceloc1010", "spaceloc1011", "spaceloc1012",
-	 "spaceloc2013", "spaceloc2014", "spaceloc2015", "spaceloc2016", "spaceloc2017", "spaceloc2018" ]
-
 all_subs = sub_info['sub'].values
 
 
@@ -221,14 +216,14 @@ for sub in all_subs:
 
     parcel_dir = f'{parcel_root}/{parcel_type}'
 
-    '''
+    
     if group == 'patient':
         create_mirror_brain(sub,hemi)
     else:
         create_hemi_mask(sub)
-    '''
+    
 
 
-    #register_mni(sub,group)
+    register_mni(sub,group)
     register_parcels(sub, parcel_dir, parcels)
 
