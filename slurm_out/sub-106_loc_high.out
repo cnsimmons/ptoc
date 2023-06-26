@@ -1,0 +1,10 @@
+child process exited abnormally
+    while executing
+"fsl:exec "${FSLDIR}/bin/feat ${fsfroot}.fsf -D $FD -gfeatprep" -b 60 -N feat2_pre -l logs "
+    invoked from within
+"if { $done_something == 0 } {
+
+    if { ! $fmri(inmelodic) } {
+       if { $fmri(level) == 1 } {
+	      for { set session 1 } { $session <= $fmri(mult..."
+    (file "/opt/fsl/6.0.3/bin/feat" line 390)
