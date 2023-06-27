@@ -113,7 +113,7 @@ def create_hemi_mask(sub):
         nib.save(hemi_mask,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mask_{hemi}.nii.gz')
                 
 
-def register_mni(sub,group):
+def ni(sub,group):
     '''
     Register to MNI
     '''
@@ -229,7 +229,7 @@ for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['
         create_hemi_mask(sub)
     
 
-    register_mni(sub,group)
+    ni(sub,group)
     
     register_parcels(sub, parcel_dir, parcels)
 
