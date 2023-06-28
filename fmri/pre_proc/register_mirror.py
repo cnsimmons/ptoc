@@ -22,6 +22,9 @@ import os
 import subprocess
 from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
 import ptoc_params as params 
+pdb.set_trace()
+
+
 
 #load fsl on node
 #bash_cmd = f'module load fsl-6.0.3'
