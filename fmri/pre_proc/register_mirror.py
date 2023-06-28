@@ -22,8 +22,10 @@ import os
 import subprocess
 from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
 import ptoc_params as params 
-pdb.set_trace()
+print('loaded params')
 
+#print('Stop here: Print this line')
+#quit()
 
 
 #load fsl on node
@@ -37,12 +39,16 @@ study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 #LOAD DATA_DIR CLAIRE
 data_dir = params.data_dir
 raw_dir = params.raw_dir  
+print('loaded data dir')
 
 #load subs
 sub_info = params.sub_info
+print('loaded sub info')
 
 #pause to check script
-pdb.set_trace()
+#pdb.set_trace()
+#print('Stop here: Print this line')
+#quit()
 
 #left is negative, right is positive
 mni = load_mni152_brain_mask()
@@ -54,6 +60,8 @@ parcel_root = f"{curr_dir}/parcels"
 parcel_type = ""
 
 parcels = params.rois
+print('loaded parcels')
+quit()
 
 #exp = 
 def create_mirror_brain(sub,hemi):
