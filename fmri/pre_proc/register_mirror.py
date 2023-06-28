@@ -21,21 +21,25 @@ import pdb
 import os
 import subprocess
 from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
-import hemispace_params as params #AND PARAMS
+import ptoc_params as params 
 
 #load fsl on node
 #bash_cmd = f'module load fsl-6.0.3'
 #subprocess.run(bash_cmd.split(), check = True)
 
 #set directories
-study='hemispace'
-
+study='ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 
 #LOAD DATA_DIR CLAIRE
+data_dir = params.data_dir
+raw_dir = params.raw_dir  
 
 #load subs
 sub_info = params.sub_info
+
+#pause to check script
+pdb.set_trace()
 
 #left is negative, right is positive
 mni = load_mni152_brain_mask()
