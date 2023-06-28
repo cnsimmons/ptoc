@@ -1,4 +1,4 @@
-sub,Session,DOB,ScanDate,Age,Sex,SurgerySide,Patient,Loc
+sub,Session,DOB,ScanDate,Age,Sex,SurgerySide,group,Loc
 sub-007,ses-05,8/27/1999,2/4/2021,21.43611111,Male,Left,1,3
 sub-066,ses-01,11/26/2002,9/18/2019,16.81111111,Male,Left,1,3
 sub-069,ses-01,9/9/2007,11/7/2019,12.16111111,Female,Left,1,3
