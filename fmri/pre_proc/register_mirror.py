@@ -204,8 +204,9 @@ def register_parcels(sub, parcel_dir, parcels): # I believe this is correct to u
 #bash_cmd = f'flirt -in {anat} -ref {anat_mni} -out {anat_dir}/{sub[1]}_ses-01_T1w_brain_stand.nii.gz -applyxfm -init {anat_dir}/parcel2mirror.mat -interp trilinear'
 #subprocess.run(bash_cmd.split(), check = True)
 
-#all_subs = sub_info['sub'].values
-sub_info = sub_info.head(2)
+all_subs = sub_info['sub'].values
+#sub_info = sub_info.head(2)
+
 parcel_dir = f'{parcel_root}/{parcel_type}'
 for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['group']):
     if sub[:4] != 'sub-':
@@ -218,6 +219,6 @@ for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['
     else:
         create_hemi_mask(sub)
     
-    ni(sub,group)
+    #ni(sub,group)
     
-    register_parcels(sub, parcel_dir, parcels)
+    #register_parcels(sub, parcel_dir, parcels)
