@@ -28,7 +28,7 @@ import ptoc_params as params
 #subprocess.run(bash_cmd.split(), check = True)
 
 #set directories
-study='hemispace' #hemispace instead of ptoc because we need anat data not func
+study='ptoc' #hemispace instead of ptoc because we need anat data not func
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 
 #LOAD DATA_DIR CLAIRE
@@ -40,9 +40,6 @@ sub_info = params.sub_info
 
 #pause to check script
 #pdb.set_trace()
-
-#print('Stop here: Print this line')
-#quit()
 
 #left is negative, right is positive
 mni = load_mni152_brain_mask()
@@ -56,7 +53,6 @@ parcel_type = ""
 parcels = params.rois
 print('loaded parcels')
 
-
 #exp = 
 
 def create_mirror_brain(sub,hemi):
@@ -65,8 +61,8 @@ def create_mirror_brain(sub,hemi):
     #stat_dir = f'{sub_dir}/fsl/{exp[1]}/HighLevel{suf}.gfeat/cope{copes[exp[0]]}.feat/'
 
     #load anat
-    anat_mask = image.load_img(f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mask.nii.gz')
-    anat = image.load_img(f'{sub_dir}/anat/{sub}_ses-01_T1w_brain.nii.gz')
+    anat_mask = image.load_img(f'{raw_dir}/anat/{sub}_ses-01_T1w_brain_mask.nii.gz')
+    anat = image.load_img(f'{raw_dir}/anat/{sub}_ses-01_T1w_brain.nii.gz')
     anat = image.get_data(anat)
     affine = anat_mask.affine
     hemi_mask = image.get_data(anat_mask)
@@ -94,7 +90,7 @@ def create_mirror_brain(sub,hemi):
     print('mirror saved to', f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mirrored.nii.gz')
     
     
-#def create_hemi_mask(sub):
+def create_hemi_mask(sub):
     """
     Creating hemispheric masks for control sub
     """
@@ -104,7 +100,7 @@ def create_mirror_brain(sub,hemi):
 
     for hemi in ['Left','Right']:
          #load anat
-        anat_mask = image.load_img(f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mask.nii.gz')
+        anat_mask = image.load_img(f'{raw_dir}/anat/{sub}_ses-01_T1w_brain_mask.nii.gz')
         affine = anat_mask.affine
     
         hemi_mask = image.get_data(anat_mask)
@@ -124,13 +120,13 @@ def create_mirror_brain(sub,hemi):
         nib.save(hemi_mask,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mask_{hemi}.nii.gz')
                 
 
-#
+#def register_to_mni(sub,group):
     '''
     Register to MNI
     '''
     
     print('Registering subj to MNI...', sub)
-    anat_dir = f'{study_dir}/{sub}/ses-01/anat/'
+    anat_dir = f'{raw_dir}/{sub}/ses-01/anat/'
     if group == 'patient':
         anat_mirror = f'{anat_dir}/{sub}_ses-01_T1w_brain_mirrored.nii.gz'
     else:
@@ -151,20 +147,19 @@ def create_mirror_brain(sub,hemi):
     subprocess.run(bash_cmd.split(), check = True)
 
     
-
     #create registration matrix for mni to patient
     #use parcel MNI here
     bash_cmd = f'flirt -in {parcel_mni} -ref {anat_mirror} -omat {anat_dir}/mni2anat.mat -bins 256 -cost corratio -searchrx -90 90 -searchry -90 90 -searchrz -90 90 -dof 12'
     subprocess.run(bash_cmd.split(), check = True)
     
 
-#def register_funcs(sub, exps):
+def register_funcs(sub, exps):
     """
     Register highlevels to MNI
     """
     print("Registering HighLevels to MNI...")
     sub_dir = f'{study_dir}/{sub[1]}/ses-01'
-    anat_dir = f'{sub_dir}/anat'
+    anat_dir = f'{raw_dir}/anat'
     for exp in enumerate(exps):
         print("Registering ", exp[1])
         stat_dir = f'{sub_dir}/derivatives/fsl/{exp[1]}/HighLevel{suf}.gfeat/cope{copes[exp[0]]}.feat/stats/'
@@ -172,7 +167,7 @@ def create_mirror_brain(sub,hemi):
         bash_cmd = f'flirt -in {stat} -ref {anat_mni} -out {stat_dir}/zstat1_reg.nii.gz -applyxfm -init {anat_dir}/mirror2stand.mat -interp trilinear'
         subprocess.run(bash_cmd.split(), check = True)
 
-#def register_parcels(sub, parcel_dir, parcels):
+def register_parcels(sub, parcel_dir, parcels):
     """
     Register parcels to subject
     """
@@ -181,7 +176,7 @@ def create_mirror_brain(sub,hemi):
     #CHANGE THE DIRECTORY CLAIRE!! SO IT OUTPUTS TO DATA_DIR
     sub_dir = f'{study_dir}/{sub}/ses-01'
     roi_dir = f'{sub_dir}/derivatives/rois'
-    anat_dir = f'{sub_dir}/anat'
+    anat_dir = f'{raw_dir}/anat'
     anat = f'{anat_dir}/{sub}_ses-01_T1w_brain.nii.gz'
     os.makedirs(f'{roi_dir}/parcels',exist_ok=True)
 
@@ -215,7 +210,8 @@ def create_mirror_brain(sub,hemi):
 #Create mni of patient brain
 #bash_cmd = f'flirt -in {anat} -ref {anat_mni} -out {anat_dir}/{sub[1]}_ses-01_T1w_brain_stand.nii.gz -applyxfm -init {anat_dir}/parcel2mirror.mat -interp trilinear'
 #subprocess.run(bash_cmd.split(), check = True)
-#all_subs = sub_info['sub'].values
+
+#all_subs = sub_info['sub'].values #why was this commented out?
 
 sub_info = sub_info.head(2)
 
@@ -227,13 +223,12 @@ for sub, hemi, group in zip(sub_info['sub'], sub_info['hemi'], sub_info['group']
     
     print(sub, hemi, group)
     #just for testing I'm isolating the first function by using only if group == 'patient'
-    if group == '1':
-        create_mirror_brain(sub,hemi)
+    #create_mirror_brain(sub,hemi)
     
-    #if group == 'patient':
-        #create_mirror_brain(sub,hemi)
-   # else:
-        #create_hemi_mask(sub)
+    if group == 'patient':
+        create_mirror_brain(sub,hemi)
+    else:
+        create_hemi_mask(sub)
     
 
     #ni(sub,group)
