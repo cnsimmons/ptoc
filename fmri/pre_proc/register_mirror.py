@@ -22,31 +22,25 @@ import os
 import subprocess
 from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
 import ptoc_params as params 
-print('loaded params')
-
-#print('Stop here: Print this line')
-#quit()
-
 
 #load fsl on node
 #bash_cmd = f'module load fsl-6.0.3'
 #subprocess.run(bash_cmd.split(), check = True)
 
 #set directories
-study='ptoc'
+study='hemispace' #hemispace instead of ptoc because we need anat data not func
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 
 #LOAD DATA_DIR CLAIRE
 data_dir = params.data_dir
-raw_dir = params.raw_dir  
-print('loaded data dir')
+raw_dir = params.raw_dir
 
 #load subs
 sub_info = params.sub_info
-print('loaded sub info')
 
 #pause to check script
 #pdb.set_trace()
+
 #print('Stop here: Print this line')
 #quit()
 
@@ -61,13 +55,13 @@ parcel_type = ""
 
 parcels = params.rois
 print('loaded parcels')
-quit()
+
 
 #exp = 
-def create_mirror_brain(sub,hemi):
 
+def create_mirror_brain(sub,hemi):
     print("creating brain mirror", sub)
-    sub_dir = f'{study_dir}/{sub}/ses-01/'
+    sub_dir = f'{study_dir}/{sub}/ses-01'
     #stat_dir = f'{sub_dir}/fsl/{exp[1]}/HighLevel{suf}.gfeat/cope{copes[exp[0]]}.feat/'
 
     #load anat
@@ -85,7 +79,7 @@ def create_mirror_brain(sub,hemi):
     anat_mirror = anat
     anat_flip =anat_flip[::-1,:, :]
 
-    if hemi == 'left':
+    if hemi == 'Left':
         hemi_mask[mid[0]:, :, :] = 0 
         anat_mirror[mid[0]:,:,:] = anat_flip[mid[0]:,:,:]
     else:
@@ -94,19 +88,21 @@ def create_mirror_brain(sub,hemi):
 
     anat_mirror = nib.Nifti1Image(anat_mirror, affine)  # create the volume image
     hemi_mask = nib.Nifti1Image(hemi_mask, affine)  # create a mask for just that hemi image
+
     nib.save(hemi_mask,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mask_{hemi}.nii.gz')
     nib.save(anat_mirror,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mirrored.nii.gz')
     print('mirror saved to', f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mirrored.nii.gz')
-
-def create_hemi_mask(sub):
+    
+    
+#def create_hemi_mask(sub):
     """
     Creating hemispheric masks for control sub
     """
     print("creating hemisphere mask", sub)
-    sub_dir = f'{study_dir}/{sub}/ses-01/'
+    sub_dir = f'{study_dir}/{sub}/ses-01'
     #stat_dir = f'{sub_dir}/fsl/{exp[1]}/HighLevel{suf}.gfeat/cope{copes[exp[0]]}.feat/'
 
-    for hemi in ['left','right']:
+    for hemi in ['Left','Right']:
          #load anat
         anat_mask = image.load_img(f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mask.nii.gz')
         affine = anat_mask.affine
@@ -118,7 +114,7 @@ def create_hemi_mask(sub):
 
         hemi_mask[hemi_mask>0] = 1 #ensure to mask all of it
 
-        if hemi == 'left':
+        if hemi == 'Left':
             hemi_mask[mid[0]:, :, :] = 0 
 
         else:
@@ -128,7 +124,7 @@ def create_hemi_mask(sub):
         nib.save(hemi_mask,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mask_{hemi}.nii.gz')
                 
 
-def ni(sub,group):
+#
     '''
     Register to MNI
     '''
@@ -162,7 +158,7 @@ def ni(sub,group):
     subprocess.run(bash_cmd.split(), check = True)
     
 
-def register_funcs(sub, exps):
+#def register_funcs(sub, exps):
     """
     Register highlevels to MNI
     """
@@ -176,7 +172,7 @@ def register_funcs(sub, exps):
         bash_cmd = f'flirt -in {stat} -ref {anat_mni} -out {stat_dir}/zstat1_reg.nii.gz -applyxfm -init {anat_dir}/mirror2stand.mat -interp trilinear'
         subprocess.run(bash_cmd.split(), check = True)
 
-def register_parcels(sub, parcel_dir, parcels):
+#def register_parcels(sub, parcel_dir, parcels):
     """
     Register parcels to subject
     """
@@ -216,35 +212,31 @@ def register_parcels(sub, parcel_dir, parcels):
         #bash_cmd = f'flirt -in {roi_parcel} -ref {anat} -out {roi_dir}/parcels/r{rp}.nii.gz -applyxfm -init {anat_dir}/parcel2mirror.mat -interp trilinear'
         #subprocess.run(bash_cmd.split(), check = True)
         print(f"Registered {rp}")
-
-
-
 #Create mni of patient brain
 #bash_cmd = f'flirt -in {anat} -ref {anat_mni} -out {anat_dir}/{sub[1]}_ses-01_T1w_brain_stand.nii.gz -applyxfm -init {anat_dir}/parcel2mirror.mat -interp trilinear'
 #subprocess.run(bash_cmd.split(), check = True)
-
-
-
 #all_subs = sub_info['sub'].values
 
 sub_info = sub_info.head(2)
 
 parcel_dir = f'{parcel_root}/{parcel_type}'
 
-for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['group']):
+for sub, hemi, group in zip(sub_info['sub'], sub_info['hemi'], sub_info['group']):
     if sub[:4] != 'sub-':
         sub = 'sub-' + sub
     
     print(sub, hemi, group)
-
-    
-    if group == 'patient':
+    #just for testing I'm isolating the first function by using only if group == 'patient'
+    if group == '1':
         create_mirror_brain(sub,hemi)
-    else:
-        create_hemi_mask(sub)
+    
+    #if group == 'patient':
+        #create_mirror_brain(sub,hemi)
+   # else:
+        #create_hemi_mask(sub)
     
 
-    ni(sub,group)
+    #ni(sub,group)
     
-    register_parcels(sub, parcel_dir, parcels)
+    #register_parcels(sub, parcel_dir, parcels)
 
