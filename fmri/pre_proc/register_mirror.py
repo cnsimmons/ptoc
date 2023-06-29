@@ -80,8 +80,18 @@ def create_mirror_brain(sub,hemi):
     nib.save(anat_mirror,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mirrored.nii.gz')
     print('mirror saved to', f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mirrored.nii.gz')
     
-#create_mirror_brain('sub-007','Right')
-#quit()
+#create_mirror_brain('sub-066','Right')
+
+for sub, hemi, group in zip(sub_info['sub'], sub_info['hemi'], sub_info['group']):
+    if sub[:4] != 'sub-':
+        sub = 'sub-' + sub
+    
+    print(sub, hemi, group)
+    #just for testing I'm isolating the first function by using only if group == 'patient'
+    if group == '1':
+        create_mirror_brain(sub,hemi)
+
+quit()
 
 def create_hemi_mask(sub):
     """
