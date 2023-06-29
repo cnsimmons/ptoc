@@ -79,7 +79,7 @@ def create_mirror_brain(sub,hemi):
     nib.save(hemi_mask,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mask_{hemi}.nii.gz')
     nib.save(anat_mirror,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mirrored.nii.gz')
     print('mirror saved to', f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mirrored.nii.gz')
-    
+
 
 def create_hemi_mask(sub):
     """
@@ -109,27 +109,7 @@ def create_hemi_mask(sub):
 
         hemi_mask = nib.Nifti1Image(hemi_mask, affine)  # create a mask for just that hemi image
         nib.save(hemi_mask,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mask_{hemi}.nii.gz')
-        
-for sub in sub_info['sub']:
     
-    if sub[:4] != 'sub-':
-        sub = 'sub-' + sub
-    
-    #ex tract intact hemi of current sub from sub_info
-    hemi = sub_info[sub_info['sub']==sub]['hemi'].values[0]
-    group = sub_info[sub_info['sub']==sub]['group'].values[0]
-
-    parcel_dir = f'{parcel_root}/{parcel_type}'
-    
-    if group == '1':
-        create_mirror_brain(sub,hemi)
-        
-    #else:
-    #    create_hemi_mask(sub)               
-
-print (group, sub, hemi)
-quit()
-
 
 def register_mni(sub,group):
     '''
@@ -224,43 +204,20 @@ def register_parcels(sub, parcel_dir, parcels): # I believe this is correct to u
 #bash_cmd = f'flirt -in {anat} -ref {anat_mni} -out {anat_dir}/{sub[1]}_ses-01_T1w_brain_stand.nii.gz -applyxfm -init {anat_dir}/parcel2mirror.mat -interp trilinear'
 #subprocess.run(bash_cmd.split(), check = True)
 
-
 #all_subs = sub_info['sub'].values
-
 sub_info = sub_info.head(2)
-
 parcel_dir = f'{parcel_root}/{parcel_type}'
-
-for sub, hemi, group in zip(sub_info['sub'], sub_info['hemi'], sub_info['group']):
+for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['group']):
     if sub[:4] != 'sub-':
         sub = 'sub-' + sub
     
     print(sub, hemi, group)
-    #just for testing I'm isolating the first function by using only if group == 'patient'
-    if group == '1':
-        create_mirror_brain(sub,hemi)
-        
-        
-#all_subs = sub_info['sub'].values
-sub_info = sub_info.head(2)
-
-for sub in all_subs:
-    if sub[:4] != 'sub-':
-        sub = 'sub-' + sub
-    
-    #ex tract intact hemi of current sub from sub_info
-    hemi = sub_info[sub_info['sub']==sub]['hemi'].values[0]
-    group = sub_info[sub_info['sub']==sub]['group'].values[0]
-
-    parcel_dir = f'{parcel_root}/{parcel_type}'
-
     
     if group == 'patient':
         create_mirror_brain(sub,hemi)
     else:
         create_hemi_mask(sub)
     
-
-
-    register_mni(sub,group)
+    ni(sub,group)
+    
     register_parcels(sub, parcel_dir, parcels)
