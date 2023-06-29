@@ -67,7 +67,7 @@ def create_mirror_brain(sub,hemi):
     anat_mirror = anat
     anat_flip =anat_flip[::-1,:, :]
 
-    if hemi == 'left':
+    if hemi == 'Left':
         hemi_mask[mid[0]:, :, :] = 0 
         anat_mirror[mid[0]:,:,:] = anat_flip[mid[0]:,:,:]
     else:
@@ -80,18 +80,6 @@ def create_mirror_brain(sub,hemi):
     nib.save(anat_mirror,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mirrored.nii.gz')
     print('mirror saved to', f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mirrored.nii.gz')
     
-#create_mirror_brain('sub-066','Right')
-
-for sub, hemi, group in zip(sub_info['sub'], sub_info['hemi'], sub_info['group']):
-    if sub[:4] != 'sub-':
-        sub = 'sub-' + sub
-    
-    print(sub, hemi, group)
-    #just for testing I'm isolating the first function by using only if group == 'patient'
-    if group == '1':
-        create_mirror_brain(sub,hemi)
-
-quit()
 
 def create_hemi_mask(sub):
     """
@@ -101,7 +89,7 @@ def create_hemi_mask(sub):
     sub_dir = f'{raw_dir}/{sub}/ses-01/'
     #stat_dir = f'{sub_dir}/fsl/{exp[1]}/HighLevel{suf}.gfeat/cope{copes[exp[0]]}.feat/'
 
-    for hemi in ['left','right']:
+    for hemi in ['Left','Right']:
          #load anat
         anat_mask = image.load_img(f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mask.nii.gz')
         affine = anat_mask.affine
@@ -113,7 +101,7 @@ def create_hemi_mask(sub):
 
         hemi_mask[hemi_mask>0] = 1 #ensure to mask all of it
 
-        if hemi == 'left':
+        if hemi == 'Left':
             hemi_mask[mid[0]:, :, :] = 0 
 
         else:
@@ -121,7 +109,27 @@ def create_hemi_mask(sub):
 
         hemi_mask = nib.Nifti1Image(hemi_mask, affine)  # create a mask for just that hemi image
         nib.save(hemi_mask,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mask_{hemi}.nii.gz')
-                
+        
+for sub in sub_info['sub']:
+    
+    if sub[:4] != 'sub-':
+        sub = 'sub-' + sub
+    
+    #ex tract intact hemi of current sub from sub_info
+    hemi = sub_info[sub_info['sub']==sub]['hemi'].values[0]
+    group = sub_info[sub_info['sub']==sub]['group'].values[0]
+
+    parcel_dir = f'{parcel_root}/{parcel_type}'
+    
+    if group == '1':
+        create_mirror_brain(sub,hemi)
+        
+    #else:
+    #    create_hemi_mask(sub)               
+
+print (group, sub, hemi)
+quit()
+
 
 def register_mni(sub,group):
     '''
@@ -231,3 +239,28 @@ for sub, hemi, group in zip(sub_info['sub'], sub_info['hemi'], sub_info['group']
     #just for testing I'm isolating the first function by using only if group == 'patient'
     if group == '1':
         create_mirror_brain(sub,hemi)
+        
+        
+#all_subs = sub_info['sub'].values
+sub_info = sub_info.head(2)
+
+for sub in all_subs:
+    if sub[:4] != 'sub-':
+        sub = 'sub-' + sub
+    
+    #ex tract intact hemi of current sub from sub_info
+    hemi = sub_info[sub_info['sub']==sub]['hemi'].values[0]
+    group = sub_info[sub_info['sub']==sub]['group'].values[0]
+
+    parcel_dir = f'{parcel_root}/{parcel_type}'
+
+    
+    if group == 'patient':
+        create_mirror_brain(sub,hemi)
+    else:
+        create_hemi_mask(sub)
+    
+
+
+    register_mni(sub,group)
+    register_parcels(sub, parcel_dir, parcels)
