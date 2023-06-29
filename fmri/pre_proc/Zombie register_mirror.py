@@ -165,7 +165,7 @@ def register_parcels(sub, parcel_dir, parcels): # I believe this is correct to u
     print("Registering parcels for ", sub)
     sub_dir = f'{study_dir}/{sub}/ses-01'
     roi_dir = f'{sub_dir}/derivatives/rois'
-    anat_dir = f'{sub_dir}/anat'
+    anat_dir = f'{raw_dir}/anat'
     anat = f'{anat_dir}/{sub}_ses-01_T1w_brain.nii.gz'
     os.makedirs(f'{roi_dir}/parcels',exist_ok=True)
 
@@ -205,15 +205,15 @@ def register_parcels(sub, parcel_dir, parcels): # I believe this is correct to u
 
 
 
-all_subs = sub_info['sub'].values
+#all_subs = sub_info['sub'].values
+sub_info = sub_info.head(2)
 
-
-for sub in all_subs:
+for sub in sub_info: #all_subs
     if sub[:4] != 'sub-':
         sub = 'sub-' + sub
     
     #ex tract intact hemi of current sub from sub_info
-    hemi = sub_info[sub_info['sub']==sub]['intact_hemi'].values[0]
+    hemi = sub_info[sub_info['sub']==sub]['hemi'].values[0]
     group = sub_info[sub_info['sub']==sub]['group'].values[0]
 
     parcel_dir = f'{parcel_root}/{parcel_type}'
