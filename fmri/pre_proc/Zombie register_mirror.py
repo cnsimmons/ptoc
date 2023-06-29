@@ -28,7 +28,7 @@ study='ptoc'
 
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 raw_dir = f"/lab_data/behrmannlab/vlad/hemispace"
-data_dir = f"/lab_data/behrmannlab/vlad/ptoc" #this is where we will save the data
+data_dir = f"/lab_data/behrmannlab/vlad/ptoc" #this is where we will save the non-anat data
 sub_info = params.sub_info
 
 #left is negative, right is positive
@@ -77,8 +77,8 @@ def create_mirror_brain(sub,hemi):
     nib.save(anat_mirror,f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mirrored.nii.gz')
     print('mirror saved to', f'{sub_dir}/anat/{sub}_ses-01_T1w_brain_mirrored.nii.gz')
     
-create_mirror_brain('sub-007','Right')
-quit()
+#create_mirror_brain('sub-007','Right')
+#quit()
 
 def create_hemi_mask(sub):
     """
@@ -116,7 +116,7 @@ def register_mni(sub,group):
     '''
     
     print('Registering subj to MNI...', sub)
-    anat_dir = f'{study_dir}/{sub}/ses-01/anat/'
+    anat_dir = f'{raw_dir}/{sub}/ses-01/anat/'
     if group == 'patient':
         anat_mirror = f'{anat_dir}/{sub}_ses-01_T1w_brain_mirrored.nii.gz'
     else:
@@ -144,7 +144,7 @@ def register_mni(sub,group):
     subprocess.run(bash_cmd.split(), check = True)
     
 
-def register_funcs(sub, exps):
+def register_funcs(sub, exps): # I believe this is correct to use study dir for this function, but will need to check
     """
     Register highlevels to MNI
     """
@@ -158,7 +158,7 @@ def register_funcs(sub, exps):
         bash_cmd = f'flirt -in {stat} -ref {anat_mni} -out {stat_dir}/zstat1_reg.nii.gz -applyxfm -init {anat_dir}/mirror2stand.mat -interp trilinear'
         subprocess.run(bash_cmd.split(), check = True)
 
-def register_parcels(sub, parcel_dir, parcels):
+def register_parcels(sub, parcel_dir, parcels): # I believe this is correct to use study dir for this function, but will need to check
     """
     Register parcels to subject
     """
