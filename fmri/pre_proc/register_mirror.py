@@ -145,7 +145,7 @@ def register_mni(sub,group):
     subprocess.run(bash_cmd.split(), check = True)
     
 
-def register_funcs(sub, exps): # I believe this is correct to use study dir for this function, but will need to check ||| had to change anat_dir to f'{raw_dir}/{sub}/ses-01/anat/'
+def register_funcs(sub, exps):
     """
     Register highlevels to MNI
     """
@@ -158,8 +158,9 @@ def register_funcs(sub, exps): # I believe this is correct to use study dir for 
         stat = f'{stat_dir}/zstat1.nii.gz'
         bash_cmd = f'flirt -in {stat} -ref {anat_mni} -out {stat_dir}/zstat1_reg.nii.gz -applyxfm -init {anat_dir}/mirror2stand.mat -interp trilinear'
         subprocess.run(bash_cmd.split(), check = True)
+        
 
-def register_parcels(sub, parcel_dir, parcels): # I believe this is correct to use study dir for this function, but will need to check ||| had to change anat_dir to f'{raw_dir}/{sub}/ses-01/anat/'
+def register_parcels(sub, parcel_dir, parcels): 
     """
     Register parcels to subject
     """
@@ -173,7 +174,7 @@ def register_parcels(sub, parcel_dir, parcels): # I believe this is correct to u
     for rp in parcels:
         
         roi_parcel  = f'{parcel_dir}/{rp}.nii.gz'
-        bash_cmd = f'flirt -in {roi_parcel} -ref {anat} -out {roi_dir}/parcels/{rp}.nii.gz -applyxfm -init {anat_dir}/mni2anat.mat -interp trilinear'
+        bash_cmd = f'flirt -in {roi_parcel} -ref {anat} -out {roi_dir}/parcels{rp}.nii.gz -applyxfm -init {anat_dir}/mni2anat.mat -interp trilinear'
         subprocess.run(bash_cmd.split(), check = True)
 
         #bash_cmd = f'fslmaths {roi_dir}/parcels/{rp}.nii.gz -bin {roi_dir}/parcels/{rp}.nii.gz'
@@ -198,7 +199,12 @@ def register_parcels(sub, parcel_dir, parcels): # I believe this is correct to u
         #subprocess.run(bash_cmd.split(), check = True)
         print(f"Registered {rp}")
 
+parcel_dir = f'{parcel_root}{parcel_type}'
+sub = 'sub-007'
+register_parcels(sub, parcel_dir, parcels)
+print(f"Registered {sub}")
 
+quit()
 
 #Create mni of patient brain
 #bash_cmd = f'flirt -in {anat} -ref {anat_mni} -out {anat_dir}/{sub[1]}_ses-01_T1w_brain_stand.nii.gz -applyxfm -init {anat_dir}/parcel2mirror.mat -interp trilinear'
@@ -215,11 +221,11 @@ for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['
     
     print(sub, hemi, group)
     
-    if group == 'patient':
-        create_mirror_brain(sub,hemi)
-    else:
-        create_hemi_mask(sub)
+    #if group == 'patient':
+     #   create_mirror_brain(sub,hemi)
+    #else:
+      #  create_hemi_mask(sub)
     
-    register_mni(sub,group)
+    #register_mni(sub,group)
     
-    #register_parcels(sub, parcel_dir, parcels)
+    register_parcels(sub, parcel_dir, parcels)
