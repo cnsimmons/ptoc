@@ -40,7 +40,8 @@ mni_affine = mni.affine
 parcel_mni='/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz' #this is the MNI we use for both julian and mruczek parcels
 anat_mni='/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz' #this is the MNI we use for analysis
 
-parcel_root = f"{curr_dir}/parcels"
+parcel_root = f"{curr_dir}/roiParcels"
+#parcel_root = "/user_data/csimmon2/git_repos/ptoc/roiParcels"
 parcel_type = ""
 
 parcels = params.rois
@@ -145,7 +146,7 @@ def register_mni(sub,group):
     subprocess.run(bash_cmd.split(), check = True)
     
 
-def register_funcs(sub, exps): # I believe this is correct to use study dir for this function, but will need to check ||| had to change anat_dir to f'{raw_dir}/{sub}/ses-01/anat/'
+def register_funcs(sub, exps): 
     """
     Register highlevels to MNI
     """
@@ -159,7 +160,7 @@ def register_funcs(sub, exps): # I believe this is correct to use study dir for 
         bash_cmd = f'flirt -in {stat} -ref {anat_mni} -out {stat_dir}/zstat1_reg.nii.gz -applyxfm -init {anat_dir}/mirror2stand.mat -interp trilinear'
         subprocess.run(bash_cmd.split(), check = True)
 
-def register_parcels(sub, parcel_dir, parcels): # I believe this is correct to use study dir for this function, but will need to check ||| had to change anat_dir to f'{raw_dir}/{sub}/ses-01/anat/'
+def register_parcels(sub, parcel_dir, parcels): 
     """
     Register parcels to subject
     """
@@ -172,8 +173,8 @@ def register_parcels(sub, parcel_dir, parcels): # I believe this is correct to u
 
     for rp in parcels:
         
-        roi_parcel  = f'{parcel_dir}/{rp}.nii.gz'
-        bash_cmd = f'flirt -in {roi_parcel} -ref {anat} -out {roi_dir}/parcels/{rp}.nii.gz -applyxfm -init {anat_dir}/mni2anat.mat -interp trilinear'
+        roi_parcel  = f'{parcel_dir}{rp}.nii.gz'
+        bash_cmd = f'flirt -in {roi_parcel} -ref {anat} -out {roi_dir}/parcels{rp}.nii.gz -applyxfm -init {anat_dir}/mni2anat.mat -interp trilinear'
         subprocess.run(bash_cmd.split(), check = True)
 
         #bash_cmd = f'fslmaths {roi_dir}/parcels/{rp}.nii.gz -bin {roi_dir}/parcels/{rp}.nii.gz'
@@ -215,11 +216,11 @@ for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['
     
     print(sub, hemi, group)
     
-    if group == 'patient':
-        create_mirror_brain(sub,hemi)
-    else:
-        create_hemi_mask(sub)
+    #if group == 'patient':
+     #   create_mirror_brain(sub,hemi)
+    #else:
+      #  create_hemi_mask(sub)
     
-    register_mni(sub,group)
+    #register_mni(sub,group)
     
-    #register_parcels(sub, parcel_dir, parcels)
+    register_parcels(sub, parcel_dir, parcels)
