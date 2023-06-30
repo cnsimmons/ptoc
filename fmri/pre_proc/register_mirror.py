@@ -208,6 +208,7 @@ all_subs = sub_info['sub'].values
 #sub_info = sub_info.head(2)
 
 parcel_dir = f'{parcel_root}/{parcel_type}'
+
 for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['group']):
     if sub[:4] != 'sub-':
         sub = 'sub-' + sub
@@ -219,6 +220,6 @@ for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['
     else:
         create_hemi_mask(sub)
     
-    #ni(sub,group)
+    register_mni(sub,group)
     
     #register_parcels(sub, parcel_dir, parcels)
