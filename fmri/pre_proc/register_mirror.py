@@ -205,8 +205,8 @@ def register_parcels(sub, parcel_dir, parcels):
 #bash_cmd = f'flirt -in {anat} -ref {anat_mni} -out {anat_dir}/{sub[1]}_ses-01_T1w_brain_stand.nii.gz -applyxfm -init {anat_dir}/parcel2mirror.mat -interp trilinear'
 #subprocess.run(bash_cmd.split(), check = True)
 
-sub = 'sub-082'
-#all_subs = sub_info['sub'].values
+#sub = 'sub-082'
+all_subs = sub_info['sub'].values
 #sub_info = sub_info.head(2)
 
 parcel_dir = f'{parcel_root}/{parcel_type}'
@@ -217,11 +217,11 @@ for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['
     
     print(sub, hemi, group)
     
-    #if group == 'patient':
-     #   create_mirror_brain(sub,hemi)
-    #else:
-     #   create_hemi_mask(sub)
+    if group == 'patient':
+        create_mirror_brain(sub,hemi)
+    else:
+        create_hemi_mask(sub)
     
-    #register_mni(sub,group)
+    register_mni(sub,group)
     
     register_parcels(sub, parcel_dir, parcels)
