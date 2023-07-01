@@ -169,12 +169,12 @@ def register_parcels(sub, parcel_dir, parcels):
     roi_dir = f'{sub_dir}/derivatives/rois'
     anat_dir = f'{raw_dir}/{sub}/ses-01/anat/'
     anat = f'{anat_dir}/{sub}_ses-01_T1w_brain.nii.gz'
-    os.makedirs(f'{roi_dir}/parcels',exist_ok=True)
+    os.makedirs(f'{roi_dir}/parcels/',exist_ok=True)
 
     for rp in parcels:
         
         roi_parcel  = f'{parcel_dir}{rp}.nii.gz'
-        bash_cmd = f'flirt -in {roi_parcel} -ref {anat} -out {roi_dir}/parcels{rp}.nii.gz -applyxfm -init {anat_dir}/mni2anat.mat -interp trilinear'
+        bash_cmd = f'flirt -in {roi_parcel} -ref {anat} -out {roi_dir}/parcels/{rp}.nii.gz -applyxfm -init {anat_dir}/mni2anat.mat -interp trilinear'
         subprocess.run(bash_cmd.split(), check = True)
 
         #bash_cmd = f'fslmaths {roi_dir}/parcels/{rp}.nii.gz -bin {roi_dir}/parcels/{rp}.nii.gz'
@@ -219,7 +219,7 @@ for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['
     #if group == 'patient':
      #   create_mirror_brain(sub,hemi)
     #else:
-      #  create_hemi_mask(sub)
+     #   create_hemi_mask(sub)
     
     #register_mni(sub,group)
     
