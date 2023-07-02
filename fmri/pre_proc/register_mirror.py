@@ -177,26 +177,10 @@ def register_parcels(sub, parcel_dir, parcels):
         bash_cmd = f'flirt -in {roi_parcel} -ref {anat} -out {roi_dir}/parcels/{rp}.nii.gz -applyxfm -init {anat_dir}/mni2anat.mat -interp trilinear'
         subprocess.run(bash_cmd.split(), check = True)
 
-        #bash_cmd = f'fslmaths {roi_dir}/parcels/{rp}.nii.gz -bin {roi_dir}/parcels/{rp}.nii.gz'
-        #subprocess.run(bash_cmd.split(), check = True)
-
-
-        #load parcel
-        #roi_parcel = image.load_img(f'{parcel_dir}/{rp}.nii.gz')
-
-        #resample to anat
-        #roi_parcel = image.resample_to_img(roi_parcel, anat, interpolation='nearest')
-
         #binarize
-        #roi_parcel = image.math_img('img>0.1',img=roi_parcel)
-
-        #save
-        #nib.save(roi_parcel,f'{roi_dir}/parcels/{rp}.nii.gz')
-
-
-        #roi_parcel  = f'{parcel_dir}/r{rp}.nii.gz'
-        #bash_cmd = f'flirt -in {roi_parcel} -ref {anat} -out {roi_dir}/parcels/r{rp}.nii.gz -applyxfm -init {anat_dir}/parcel2mirror.mat -interp trilinear'
-        #subprocess.run(bash_cmd.split(), check = True)
+        bash_cmd = f'fslmaths {roi_dir}/parcels/{rp}.nii.gz -bin {roi_dir}/parcels/{rp}.nii.gz'
+        subprocess.run(bash_cmd.split(), check = True)
+        
         print(f"Registered {rp}")
 
 
