@@ -201,11 +201,11 @@ for sub, hemi, group in zip(sub_info['sub'], sub_info['intact_hemi'], sub_info['
     
     print(sub, hemi, group)
     
-    if group == 'patient':
-        create_mirror_brain(sub,hemi)
-    else:
-        create_hemi_mask(sub)
+    #if group == 'patient':
+     #   create_mirror_brain(sub,hemi)
+    #else:
+     #   create_hemi_mask(sub)
     
-    register_mni(sub,group)
+    #register_mni(sub,group)
     
     register_parcels(sub, parcel_dir, parcels)
