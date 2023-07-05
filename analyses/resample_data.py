@@ -26,7 +26,7 @@ hemis = params.hemis
 
 
 #number of resamples
-iter = 10000
+iter = 10
 
 #number of subs to pull on each resample
 n_subs = 4
@@ -90,7 +90,7 @@ def resample_selectivity():
     sum_selec_norm_df.to_csv(f'{results_dir}/resamples/sum_selec_norm_resamples{suf}.csv', index=False)
 
 
-
+#IGNORE ME!
 def resample_decoding():
     """
     Resample decoding data
@@ -134,7 +134,7 @@ def resample_decoding():
     #save each resample
     decoding_df.to_csv(f'{results_dir}/resamples/acc_resamples{suf}.csv', index=False)
 
-
+#IGNORE ME TOO!
 def resample_neural_map():
     """
     Resample neural 
@@ -176,6 +176,6 @@ def resample_neural_map():
     resample_df.to_csv(f'{results_dir}/map_overlap_resamples{suf}.csv', index=False)
 
 
-#resample_selectivity()
+resample_selectivity()
 #resample_decoding()
-resample_neural_map()
+#resample_neural_map()

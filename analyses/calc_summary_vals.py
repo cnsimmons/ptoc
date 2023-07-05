@@ -3,7 +3,7 @@ Calculate mean activation, cortical volume, summed selectivity, parcel size for 
 """
 
 
-curr_dir = f'/user_data/vayzenbe/GitHub_Repos/hemispace'
+curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 import sys
 sys.path.append(curr_dir)
 
@@ -14,26 +14,25 @@ from nilearn import image, plotting, datasets, masking
 import nibabel as nib
 import pdb
 import os
-import hemispace_params as params
+import ptoc_params as params
 
 #hide warnings
 import warnings
 warnings.filterwarnings("ignore")
 
 data_dir = params.data_dir
+raw_dir = params.raw_dir  
 results_dir = params.results_dir
 
 sub_info = params.sub_info
-task_info = params.task_info
+task_info = params.task_info #I don't know if I have a task info file yet CNS
 
 suf = params.suf
 thresh = params.thresh
 rois = params.rois
 start_over = False
 
-#rois = ['V1']
-#extract task info for just scene cond
-task_info = task_info[task_info['cond'] == 'scene']
+
 
 def calc_summary_vals(sub, task, cope, roi,hemi):
     """
@@ -66,12 +65,12 @@ def calc_summary_vals(sub, task, cope, roi,hemi):
     #pdb.set_trace()
     #calculate voxel size
     vox_size = np.prod(func.header.get_zooms())
+    
+    #calc size of roi
+    roi_size = np.sum(image.get_data(roi))
 
     #threshold func image
     func = image.threshold_img(func, threshold = thresh)    
-
-    #calc size of roi
-    roi_size = np.sum(image.get_data(roi))
 
     #extract the activation values
     vox_resp = masking.apply_mask(func, roi)
@@ -132,13 +131,13 @@ for sub, group, hemi in zip(sub_info['sub'], sub_info['group'], sub_info['intact
 
     for hemi in hemis:
         for roi in rois:
-            for task, cond, cope in zip(task_info['task'], task_info['cond'], task_info['cope']):
+            for task, cond, cope in zip(task_info['task'], task_info['cond'], task_info['cope']): # claire remove this line
 
                 #check if task folder exists
                 if os.path.exists(f'{data_dir}/{sub}/ses-01/derivatives/fsl/{task}/HighLevel.gfeat'):
                 
                     print(f'Calculating summary values for {sub} {task} {cond} {cope} {hemi} {roi}')
-                    roi_size, mean_act,  cortex_vol, sum_selec, sum_selec_norm = calc_summary_vals(sub, task, cope, roi, hemi)
+                    roi_size, mean_act,  cortex_vol, sum_selec, sum_selec_norm = calc_summary_vals(sub, params.task, params.cope, roi, hemi)
 
                     #apend to summary df
                     summary_df = summary_df.append({'sub': sub, 'group': group, 'hemi': hemi, 'roi': roi, 'cond': cond, 'roi_size': roi_size, 'mean_act': mean_act, 'volume': cortex_vol, 'sum_selec': sum_selec, 'sum_selec_norm': sum_selec_norm}, ignore_index = True)
