@@ -19,3 +19,9 @@ data_dir = '/lab_data/behrmannlab/vlad/ptoc'
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 
 rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aIPS']
+
+thresh = 2.58
+
+task = 'loc'
+cond = 'object'
+cope = 3
