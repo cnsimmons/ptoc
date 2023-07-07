@@ -3,13 +3,13 @@ Resample control data
 """
 
 
-curr_dir = f'/user_data/vayzenbe/GitHub_Repos/hemispace'
+curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 import sys
 sys.path.append(curr_dir)
 
 import numpy as np
 import pandas as pd
-import hemispace_params as params
+import ptoc_params as params
 import itertools
 import pdb
 
