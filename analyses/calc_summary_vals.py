@@ -25,15 +25,14 @@ raw_dir = params.raw_dir
 results_dir = params.results_dir
 
 sub_info = params.sub_info
-task_info = params.task
+#task_info = params.task probably not needed at the moment since I am only using loc
 cond = params.cond
 cope = params.cope
 
-#suf = params.suf
+suf="" #any suffix to add
 thresh = params.thresh
 rois = params.rois
 start_over = False
-
 
 
 def calc_summary_vals(sub, task, cope, roi,hemi):
@@ -120,6 +119,7 @@ else:
 
 for sub, group, hemi in zip(sub_info['sub'], sub_info['group'], sub_info['intact_hemi']):
     
+    task = 'loc'
     
     #check if sub alread has 'sub-' prefix
     if sub[:4] != 'sub-':
@@ -133,7 +133,7 @@ for sub, group, hemi in zip(sub_info['sub'], sub_info['group'], sub_info['intact
 
     for hemi in hemis:
         for roi in rois:
-            for task, cond, cope in zip(task_info['task'], task_info['cond'], task_info['cope']): # claire remove this line
+            #for task, cond, cope in zip(task_info['task'], task_info['cond'], task_info['cope']): # claire remove this line
 
                 #check if task folder exists
                 if os.path.exists(f'{data_dir}/{sub}/ses-01/derivatives/fsl/{task}/HighLevel.gfeat'):
