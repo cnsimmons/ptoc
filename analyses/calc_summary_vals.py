@@ -25,9 +25,11 @@ raw_dir = params.raw_dir
 results_dir = params.results_dir
 
 sub_info = params.sub_info
-task_info = params.task_info #I don't know if I have a task info file yet CNS
+task_info = params.task
+cond = params.cond
+cope = params.cope
 
-suf = params.suf
+#suf = params.suf
 thresh = params.thresh
 rois = params.rois
 start_over = False
@@ -51,7 +53,7 @@ def calc_summary_vals(sub, task, cope, roi,hemi):
         hemi = ''
 
     #load anat mask
-    anat_mask = image.load_img(f'{data_dir}/{sub}/ses-01/anat/{sub}_ses-01_T1w_brain_mask{hemi}.nii.gz')
+    anat_mask = image.load_img(f'{raw_dir}/{sub}/ses-01/anat/{sub}_ses-01_T1w_brain_mask{hemi}.nii.gz')
 
 
     if roi != 'hemi':

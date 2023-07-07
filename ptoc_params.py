@@ -15,6 +15,7 @@ import pdb
 runs = [1,2,3]
 raw_dir = '/lab_data/behrmannlab/vlad/hemispace'
 data_dir = '/lab_data/behrmannlab/vlad/ptoc'
+results_dir = '/lab_data/behrmannlab/vlad/ptoc/results'
 
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 
