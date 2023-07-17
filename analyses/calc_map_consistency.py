@@ -1,4 +1,4 @@
-curr_dir = f'/user_data/vayzenbe/GitHub_Repos/hemispace' #CHANGE AS NEEEDED CAUSE ITS FOR VLAAAD
+curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 
 import sys
 sys.path.insert(0,curr_dir)
@@ -11,7 +11,7 @@ import itertools
 
 import pdb
 import os
-import hemispace_params as params
+import ptoc_params as params
 
 #hide warning
 import warnings
