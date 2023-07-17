@@ -16,7 +16,7 @@ runs = [1,2,3]
 raw_dir = '/lab_data/behrmannlab/vlad/hemispace'
 data_dir = '/lab_data/behrmannlab/vlad/ptoc'
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
-
+fig_dir = '/user_data/csimmon2/git_repos/ptoc/results/figures'
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 
 
@@ -28,3 +28,4 @@ task_info = 'loc'
 cond = 'object'
 cope = 3
 suf = ''
+
