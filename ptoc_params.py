@@ -24,7 +24,7 @@ rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aI
 
 thresh = 2.58
 
-task = 'loc'
+task_info = 'loc'
 cond = 'object'
 cope = 3
 suf = ''
