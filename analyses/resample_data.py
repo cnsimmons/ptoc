@@ -23,19 +23,19 @@ task_info = params.task_info
 suf = params.suf
 rois = params.rois
 hemis = params.hemis
-
-
+cond = params.cond
 
 #number of resamples
 iter = 10
 
 #number of subs to pull on each resample
-n_subs = 4
+n_subs = 36
 
 rois = params.rois
 
-#make a list of all possible combinations of cond, hemi, and roi
-all_combos = list(itertools.product(task_info['cond'], hemis, rois))
+#make a list of all possible combinations of cond, hemi, and roi #get rid of cond
+#all_combos = list(itertools.product(task_info['cond'], hemis, rois))
+all_combos = list(itertools.product(hemis, rois)) 
 all_combos = ['_'.join(list(ele)) for ele in all_combos]
 
 def resample_selectivity():
@@ -63,7 +63,7 @@ def resample_selectivity():
         
         for hemi in hemis:
             for roi in rois:
-                for cond in task_info['cond']:
+                #for cond in task_info['cond']:
                     
                     
                     #select data that meets cond
@@ -90,7 +90,9 @@ def resample_selectivity():
     sum_selec_df.to_csv(f'{results_dir}/resamples/sum_selec_resamples{suf}.csv', index=False)
     sum_selec_norm_df.to_csv(f'{results_dir}/resamples/sum_selec_norm_resamples{suf}.csv', index=False)
 
+resample_selectivity()
 
+quit()
 #IGNORE ME!
 def resample_decoding():
     """
@@ -114,7 +116,7 @@ def resample_decoding():
         
         for hemi in hemis:
             for roi in rois:
-                for cond in task_info['cond']:
+                #for cond in task_info['cond']:
                     
                     try:
                         #select data that meets cond
