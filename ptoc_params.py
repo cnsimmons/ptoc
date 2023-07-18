@@ -19,6 +19,7 @@ results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 fig_dir = '/user_data/csimmon2/git_repos/ptoc/results/figures'
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 
+hemis = ['left','right']
 
 rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aIPS']
 

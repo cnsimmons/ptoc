@@ -15,6 +15,7 @@ import pdb
 
 data_dir = params.data_dir
 results_dir = params.results_dir
+raw_dir = params.raw_dir
 
 sub_info = params.sub_info
 task_info = params.task_info
