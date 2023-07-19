@@ -23,10 +23,10 @@ task_info = params.task_info
 suf = params.suf
 rois = params.rois
 hemis = params.hemis
-cond = params.cond
+cond = 'object'
 
 #number of resamples
-iter = 10
+iter = 10000
 
 #number of subs to pull on each resample
 n_subs = 36
@@ -63,24 +63,23 @@ def resample_selectivity():
         
         for hemi in hemis:
             for roi in rois:
-                #for cond in task_info['cond']:
-                    
-                    
-                    #select data that meets cond
-                    curr_data = summary_df[(summary_df['cond'] == cond) & (summary_df['roi'] == roi) & (summary_df['hemi'] == hemi)]
+                
+                #select data that meets cond
+                curr_data = summary_df[(summary_df['cond'] == cond) & (summary_df['roi'] == roi) & (summary_df['hemi'] == hemi)]
 
-                    #select n_subs random subs
-                    curr_subs = curr_data.sample(n = n_subs, replace = True)
+                #select n_subs random subs
+                curr_subs = curr_data.sample(n = n_subs, replace = True)
 
-                    #get mean of each value
-                    roi_size, mean_act,  cortex_vol, sum_selec, sum_selec_norm = curr_subs['roi_size'].mean(), curr_subs['mean_act'].mean(), curr_subs['volume'].mean(), curr_subs['sum_selec'].mean(), curr_subs['sum_selec_norm'].mean()
+                #get mean of each value
+                roi_size, mean_act,  cortex_vol, sum_selec, sum_selec_norm = curr_subs['roi_size'].mean(), curr_subs['mean_act'].mean(), curr_subs['volume'].mean(), curr_subs['sum_selec'].mean(), curr_subs['sum_selec_norm'].mean()
 
-                    #append to to dataframe
-                    roi_size_df.loc[ii, f'{cond}_{hemi}_{roi}'] = roi_size
-                    mean_act_df.loc[ii, f'{cond}_{hemi}_{roi}'] = mean_act
-                    cortex_vol_df.loc[ii, f'{cond}_{hemi}_{roi}'] = cortex_vol
-                    sum_selec_df.loc[ii, f'{cond}_{hemi}_{roi}'] = sum_selec
-                    sum_selec_norm_df.loc[ii, f'{cond}_{hemi}_{roi}'] = sum_selec_norm
+                #append to to dataframe
+                roi_size_df.loc[ii, f'{hemi}_{roi}'] = roi_size
+                mean_act_df.loc[ii, f'{hemi}_{roi}'] = mean_act
+                cortex_vol_df.loc[ii, f'{hemi}_{roi}'] = cortex_vol
+                sum_selec_df.loc[ii, f'{hemi}_{roi}'] = sum_selec
+                sum_selec_norm_df.loc[ii, f'{hemi}_{roi}'] = sum_selec_norm
+
 
 
     #save each resample
