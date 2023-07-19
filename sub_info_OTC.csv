@@ -1,6 +1,9 @@
 sub,Session,DOB,ScanDate,Age,Sex,SurgerySide,intact_hemi,group,Loc,code
+sub-007,ses-05,8/27/99,2/4/21,21.43611111,Male,left,right,patient,3,OT
 sub-066,ses-01,11/26/02,9/18/19,16.81111111,Male,left,right,patient,3,JF
 sub-069,ses-01,9/9/07,11/7/19,12.16111111,Female,left,right,patient,3,NM
+sub-078,ses-01,12/8/98,2/26/21,22.21666667,Female,left,right,patient,3,IT
+sub-079,ses-01,7/22/04,3/15/21,16.64722222,Male,left,right,patient,3,X
 sub-090,ses-01,4/20/06,11/17/21,15.575,Female,left,right,patient,3,KT
 sub-092,ses-01,4/9/02,1/19/22,19.77777778,Female,left,right,patient,3,FO
 sub-hemispace1006,ses-01,12/23/10,7/8/22,11.5416∏6667,Male,left,right,patient,3,KN
@@ -23,8 +26,12 @@ sub-095,ses-01,7/13/83,1/28/22,38.54166667,Male,both,both,control,3,
 sub-096,ses-01,3/26/94,2/8/22,27.86666667,Female,both,both,control,3,
 sub-097,ses-01,4/19/02,2/23/22,19.84444444,Female,both,both,control,3,
 sub-107,ses-01,7/18/06,12/2/22,16.37222222,Female,both,both,control,3,
+sub-004,ses-07,4/12/06,9/12/20,14.41666667,Male,right,left,patient,3,UD
 sub-074,ses-01,7/30/07,8/18/20,13.05,Female,right,left,patient,3,JD
+sub-075,ses-01,1/23/09,8/21/20,11.57777778,Female,right,left,patient,3,ED
+sub-076,ses-01,9/8/04,10/2/20,16.06666667,Male,right,left,patient,3,JH
 sub-077,ses-01,1/6/13,10/23/20,7.797222222,Female,right,left,patient,3,KI
+sub-089,ses-01,5/27/03,9/11/21,18.28888889,Male,right,left,patient,3,ON
 sub-091,ses-01,10/2/84,1/4/22,37.25555556,Male,right,left,patient,3,SI
 sub-hemispace1004,ses-01,5/17/06,6/28/22,16.11388889,Female,right,left,patient,3,BI
 sub-hemispace1007,ses-01,10/27/03,7/12/22,18.70833333,Female,right,left,patient,3,BN
