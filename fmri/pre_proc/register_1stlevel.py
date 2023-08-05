@@ -2,7 +2,8 @@
 Register each 1stlevel to anat in a parallelized manner
 
 """
-curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
+#curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
+curr_dir = f'/user_data/vayzenbe/GitHub_Repos/hemispace'
 import numpy as np
 import pandas as pd
 import subprocess
