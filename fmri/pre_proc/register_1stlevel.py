@@ -1,9 +1,8 @@
 """
 Register each 1stlevel to anat in a parallelized manner
-
+#python3 register_1stlevel.py 007
 """
-#curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
-curr_dir = f'/user_data/vayzenbe/GitHub_Repos/hemispace'
+curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 import numpy as np
 import pandas as pd
 import subprocess
@@ -12,7 +11,6 @@ import pdb
 
 import sys
 sys.path.append(curr_dir)
-
 import ptoc_params as params
 
 sub = sys.argv[1]
@@ -22,6 +20,7 @@ results_dir = params.results_dir
 
 sub_info = params.sub_info
 task_info = params.task_info
+raw_dir = params.raw_dir
 
 suf = params.suf
 thresh = params.thresh
@@ -32,10 +31,13 @@ firstlevel_suf = ''
 
 sub_dir = f'{data_dir}/{sub}/ses-01'
 
-#anat = f'{sub_dir}/anat/{sub}_ses-01_T1w_brain.nii.gz' #vlad
-anat = f'{}'
 
-for task in task_info['task']:
+anat = f'{raw_dir}/{sub}/ses-01/anat/{sub}_ses-01_T1w_brain.nii.gz' #brain extracted anat
+
+task = 'loc'
+
+#for task in task_info['task']:
+for task in ['loc']:
     for run in runs:
         run_dir = f'{sub_dir}/derivatives/fsl/{task}/run-0{run}/1stLevel{firstlevel_suf}.feat'
         filtered_func = f'{run_dir}/filtered_func_data.nii.gz'
@@ -51,3 +53,4 @@ for task in task_info['task']:
 
         else:
             print(f'run {run} for task {task} does not exist for subject {sub}')
+            print(run_dir)
