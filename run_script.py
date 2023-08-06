@@ -13,9 +13,12 @@ from glob import glob as glob
 import pdb
 import ptoc_params as params
 
-curr_script = f'{curr_dir}/fmri/pre_proc/preprocess.py'
+#curr_script = f'{curr_dir}/fmri/pre_proc/preprocess.py'
 
-sub_info = params.sub_info
+curr_script = f'{curr_dir}/fmri/pre_proc/register_1stlevel.py' ##This script register the timeseries data from each run (the 1stlevel) to that individual's anatomical
+
+sub_info = params.sub_info #run all subjects
+#sub_info = sub_info.head(1) #practicing with one 1stlevel
 #pdb.set_trace()
 #sub_info = sub_info.head(4) #DELETE THIS WHEN YOU RUN THE WHOLE THING
 sub_info = sub_info.iloc[5:] #to prevent redundancies I am adding this line since rows 1-4 were already preprocessed.
