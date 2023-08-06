@@ -13,9 +13,9 @@ import sys
 sys.path.append(curr_dir)
 import ptoc_params as params
 
-sub = sys.argv[1]
+sub = sys.argv[1] #which subject
 
-data_dir = params.data_dir
+data_dir = params.data_dir #params data dir is from ptoc, but I need hemispace for this script.
 results_dir = params.results_dir
 
 sub_info = params.sub_info
@@ -29,26 +29,30 @@ rois = params.rois
 runs = params.runs
 firstlevel_suf = ''
 
-sub_dir = f'{data_dir}/{sub}/ses-01'
+sub_data = f'{data_dir}/{sub}/ses-01'
 
 
 anat = f'{raw_dir}/{sub}/ses-01/anat/{sub}_ses-01_T1w_brain.nii.gz' #brain extracted anat
 
-task = 'loc'
+task = 'loc' #tasks = ['loc']; ses = 1; runs = [1,2,3]
+
 
 #for task in task_info['task']:
 for task in ['loc']:
     for run in runs:
-        run_dir = f'{sub_dir}/derivatives/fsl/{task}/run-0{run}/1stLevel{firstlevel_suf}.feat'
+        
+        print (sub, run)
+        
+        run_dir = f'{sub_data}/derivatives/fsl/{task}/run-0{run}/1stLevel{firstlevel_suf}.feat'
         filtered_func = f'{run_dir}/filtered_func_data.nii.gz'
         out_func = f'{run_dir}/filtered_func_data_reg.nii.gz'
 
         #check if run exists
         if os.path.exists(filtered_func):
 
-
             bash_cmd = f'flirt -in {filtered_func} -ref {anat} -out {out_func} -applyxfm -init {run_dir}/reg/example_func2standard.mat -interp trilinear'
             print(bash_cmd)
+            pdb.set_trace()
             subprocess.run(bash_cmd.split(), check=True)
 
         else:
