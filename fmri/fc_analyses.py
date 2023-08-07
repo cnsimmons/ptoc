@@ -1,5 +1,7 @@
 import sys
-sys.path.insert(0, '/user_data/vayzenbe/GitHub_Repos/docnet/fmri')
+curr_dir = '/user_data/csimmon2/git_repos/ptoc'
+sys.path.append(curr_dir)
+#sys.path.insert(0, '/user_data/vayzenbe/GitHub_Repos/docnet/fmri') #change sys/paths
 import pandas as pd
 from nilearn import image, plotting, input_data, glm
 #from nilearn.glm import threshold_stats_img
@@ -17,26 +19,30 @@ import pdb
 from scipy.stats import gamma
 import warnings
 
+import ptoc_params as params #change to study params
+
 warnings.filterwarnings('ignore')
 
 '''exp info'''
-subs = list(range(1001,1013))
+subs = list(range(1001,1013)) #change to sub_info method
 subs = subs + list(range(2013,2019))
 
-study ='spaceloc'
-study_dir = f"/lab_data/behrmannlab/vlad/{study}"
+study ='spaceloc' #change obvs
+study_dir = f"/lab_data/behrmannlab/vlad/{study}" 
 out_dir = f'{study_dir}/derivatives/fc'
 results_dir = '/user_data/vayzenbe/GitHub_Repos/docnet/results'
 exp = 'spaceloc'
-rois = ['PPC_spaceloc', 'APC_spaceloc', 'PPC_depthloc', 'APC_depthloc', 'PPC_toolloc', 'APC_toolloc', 'PPC_distloc', 'APC_distloc']
-dorsal_rois = ['lPPC', 'lAPC','rPPC', 'rAPC']
-dorsal_rois = ['rPPC', 'rAPC']
-control_tasks = ['distloc','toolloc','depthloc']
-file_suf = '_supp'
+rois = ['PPC_spaceloc', 'APC_spaceloc', 'PPC_depthloc', 'APC_depthloc', 'PPC_toolloc', 'APC_toolloc', 'PPC_distloc', 'APC_distloc'] #update
+#update with params too
 
-'''scan params'''
-tr = 1
-vols = 321
+
+file_suf = ''
+
+'''scan params''' #update with params
+tr = params.tr
+vols = params.vols
+#tr = 2
+#vols = 184
 
 whole_brain_mask = load_mni152_brain_mask()
 mni = load_mni152_template()
@@ -69,7 +75,7 @@ def extract_roi_coords():
         
         exp_dir = f'{sub_dir}/derivatives/fsl'
         parcel_dir = f'{roi_dir}/parcels'
-        roi_coords = pd.DataFrame(columns = ['index','task','roi','x','y','z'])
+        roi_coords = pd.DataFrame(columns = ['index','task','roi','x','y','z']) #create empty df to store roi coords
         for rcn, rc in enumerate(run_combos): #determine which runs to use for creating ROIs
 
 
