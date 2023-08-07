@@ -52,7 +52,7 @@ for task in ['loc']:
 
             bash_cmd = f'flirt -in {filtered_func} -ref {anat} -out {out_func} -applyxfm -init {run_dir}/reg/example_func2standard.mat -interp trilinear'
             print(bash_cmd)
-            pdb.set_trace()
+            #pdb.set_trace()
             subprocess.run(bash_cmd.split(), check=True)
 
         else:
