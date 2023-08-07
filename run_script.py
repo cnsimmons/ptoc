@@ -16,14 +16,14 @@ import ptoc_params as params
 
 #curr_script = f'{curr_dir}/fmri/pre_proc/preprocess.py'
 
-curr_script = f'{curr_dir}/fmri/pre_proc/register_1stlevel.py' ##This script register the timeseries data from each run (the 1stlevel) to that individual's anatomical
+curr_script = f'{curr_dir}/fmri/pre_proc/register_1stlevel.py' ##This script register the time series data from each run (the 1stlevel) to that individual's anatomical
 
 sub_info = params.sub_info #run all subjects
 
 #sub_info = sub_info.head(4) #DELETE THIS WHEN YOU RUN THE WHOLE THING
 #sub_info = sub_info.iloc[3:] #to prevent redundancies I am adding this line since rows 1-4 were already preprocessed.
 
-target_subject = sub_info['sub'].iloc[2]
+target_subject = sub_info['sub'].iloc[26] #sub-091, sub-092(3), sub-hemispace1004(27), sub-hemispace1006(4), sub-hemispace1007(28), sub-077 (25)
 
 #for sub in sub_info['sub']:
     #try:
