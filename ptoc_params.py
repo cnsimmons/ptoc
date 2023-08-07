@@ -30,3 +30,6 @@ cond = 'object'
 cope = 3
 suf = ''
 
+tr = 2
+vols = 184
+
