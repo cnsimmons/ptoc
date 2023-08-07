@@ -1,5 +1,5 @@
 import sys
-curr_dir = '/user_data/csimmon2/git_repos/ptoc'
+curr_dir = '/user_data/csimmon2/git_repos/ptoc/fmri'
 sys.path.append(curr_dir)
 #sys.path.insert(0, '/user_data/vayzenbe/GitHub_Repos/docnet/fmri') #change sys/paths
 import pandas as pd
@@ -24,25 +24,23 @@ import ptoc_params as params #change to study params
 warnings.filterwarnings('ignore')
 
 '''exp info'''
-subs = list(range(1001,1013)) #change to sub_info method
-subs = subs + list(range(2013,2019))
+sub_info = params.sub_info
 
-study ='spaceloc' #change obvs
+study ='ptoc' #change obvs
+
+data_dir = params.data_dir
+raw_dir = params.raw_dir  
+results_dir = params.results_dir
 study_dir = f"/lab_data/behrmannlab/vlad/{study}" 
-out_dir = f'{study_dir}/derivatives/fc'
-results_dir = '/user_data/vayzenbe/GitHub_Repos/docnet/results'
-exp = 'spaceloc'
-rois = ['PPC_spaceloc', 'APC_spaceloc', 'PPC_depthloc', 'APC_depthloc', 'PPC_toolloc', 'APC_toolloc', 'PPC_distloc', 'APC_distloc'] #update
-#update with params too
-
+exp = 'loc' #not sure
 
 file_suf = ''
 
 '''scan params''' #update with params
 tr = params.tr
 vols = params.vols
-#tr = 2
-#vols = 184
+cope = params.cope
+rois = params.rois
 
 whole_brain_mask = load_mni152_brain_mask()
 mni = load_mni152_template()
@@ -82,7 +80,7 @@ def extract_roi_coords():
             #load each run
             all_runs = []
             for rn in rc:
-                curr_run = image.load_img(f'{exp_dir}/{exp}/run-0{rn}/1stLevel_roi.feat/stats/zstat1_reg.nii.gz')
+                curr_run = image.load_img(f'{exp_dir}/{exp}/run-0{rn}/1stLevel_roi.feat/stats/zstat{cope}_reg.nii.gz')
         
                 all_runs.append(curr_run)
 
@@ -98,7 +96,7 @@ def extract_roi_coords():
                     roi = image.math_img('img > 0', img=roi)
 
                     #masked_image = roi*image.get_data(mean_zstat)
-                    coords = plotting.find_xyz_cut_coords(mean_zstat,mask_img=roi, activation_threshold = .99)
+                    coords = plotting.find_xyz_cut_coords(mean_zstat,mask_img=roi, activation_threshold = .99) #top 1% of voxels
 
                     masked_stat = image.math_img('img1 * img2', img1=roi, img2=mean_zstat)
                     masked_stat = image.get_data(masked_stat)
@@ -113,7 +111,7 @@ def extract_roi_coords():
                     roi_coords = roi_coords.append(curr_coords,ignore_index = True)
 
 
-        roi_coords.to_csv(f'{roi_dir}/spheres/sphere_coords.csv', index=False)
+        roi_coords.to_csv(f'{roi_dir}/spheres/sphere_coords.csv', index=False) #saves coords to csv | where our most object selective regions/voxels are
 
 def extract_roi_sphere(img, coords):
     roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius = 6)
@@ -143,55 +141,85 @@ def load_filtered_func(run):
 """    
 
 def conduct_fc():
-    for ss in subs:
-        print(ss)
+
+    #for each subject, load their individual anatomy and mask
+
+    for sub, group, hemi in zip(sub_info['sub'], sub_info['group'], sub_info['intact_hemi']):
+        print(sub)
         sub_dir = f'{study_dir}/sub-{study}{ss}/ses-01/'
         cov_dir = f'{sub_dir}/covs'
         roi_dir = f'{sub_dir}/derivatives/rois'
         exp_dir = f'{sub_dir}/derivatives/fsl/{exp}'
+        
+        if hemi == 'both':
+            hemis = ['l','r']
+        elif hemi == 'left':
+            hemis = ['l']
+        elif hemi == 'right':
+            hemis = ['r']
+        
 
         roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords.csv')
 
-        for tsk in ['spaceloc','distloc']:
-            for rr in dorsal_rois:
-                all_runs = [] #this will get filled with the data from each run
-                for rcn, rc in enumerate(run_combos): #determine which runs to use for creating ROIs
-                    curr_coords = roi_coords[(roi_coords['index'] == rcn) & (roi_coords['task'] ==tsk) & (roi_coords['roi'] ==rr)]
+        for tsk in ['loc']: #change to just loc
+            for lr in hemis:
+                if lr == 'l':
+                    curr_hemi = 'left'
+                elif lr == 'r':
+                    curr_hemi = 'right'
+                #load anat mask
+                anat_mask = image.load_img(f'{params.raw_dir}/{sub}/ses-01/anat/sub-{study}{sub}_ses-01_T1w_brain_mask_{curr_hemi}.nii.gz')
+                #binarize mask
+                anat_mask = image.math_img('img > 0', img=anat_mask)
+                brain_masker = input_data.NiftiMasker(anat_mask, smoothing_fwhm=0, standardize=True)
+                
+                
+                for rr in rois: #change to just rois
+                    roi = f'{lr}{rr}'
+                    all_runs = [] #this will get filled with the data from each run
+                    for rcn, rc in enumerate(run_combos): #determine which runs to use for creating ROIs
+                        curr_coords = roi_coords[(roi_coords['index'] == rcn) & (roi_coords['task'] ==tsk) & (roi_coords['roi'] ==roi)]
 
-                    #Determine which run was not used to create the ROI
-                    test_runs = [elem for elem in runs if elem not in rc ]
+                        #Determine which run was not used to create the ROI
+                        test_runs = [elem for elem in runs if elem not in rc ]
 
+                        filtered_list = []
+                        for rn in test_runs:
+                            #extract roi time series dat afrom held out run
+                            curr_run = image.load_img(f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz')
+                            curr_run = image.clean_img(curr_run,standardize=True)
+                            filtered_list.append(curr_run)
+                            
+                            
+                        img4d = image.concat_imgs(filtered_list)
+                        #extract time series from peak voxel
+                        phys = extract_roi_sphere(img4d,curr_coords[['x','y','z']].values.tolist()[0])
 
+                        #Extract time series from rest of brain
+                        brain_time_series = brain_masker.fit_transform(img4d)
 
-                    filtered_list = []
-                    for rn in test_runs:
+                        #Correlate interaction term to TS for vox in the brain
+                        seed_to_voxel_correlations = (np.dot(brain_time_series.T, phys) /
+                                        phys.shape[0])
+                        print(sub, roi, tsk, seed_to_voxel_correlations.max())
                         
-                        curr_run = image.load_img(f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz')
-                        curr_run = image.clean_img(curr_run,standardize=True)
-                        filtered_list.append(curr_run)
+                        #convert correlations to fisher z
+                        seed_to_voxel_correlations = np.arctanh(seed_to_voxel_correlations)
+
+                        #transform correlation map back to brain space
+                        seed_to_voxel_correlations_img = brain_masker.inverse_transform(seed_to_voxel_correlations.T)
                         
-                    img4d = image.concat_imgs(filtered_list)
-                    phys = extract_roi_sphere(img4d,curr_coords[['x','y','z']].values.tolist()[0])
+                        all_runs.append(seed_to_voxel_correlations_img)
 
-                    brain_time_series = brain_masker.fit_transform(img4d)
+                    mean_fc = image.mean_img(all_runs)
+                        
+                    nib.save(mean_fc, f'{results_dir}/sub-{study}{sub}_{roi}_{tsk}_fc.nii.gz')
 
-                    #Correlate interaction term to TS for vox in the brain
-                    seed_to_voxel_correlations = (np.dot(brain_time_series.T, phys) /
-                                    phys.shape[0])
-                    print(ss, rr, tsk, seed_to_voxel_correlations.max())
-                    
-                    #convert correlations to fisher z
-                    seed_to_voxel_correlations = np.arctanh(seed_to_voxel_correlations)
+extract_roi_coords() #temp location
 
-                    #transform correlation map back to brain space
-                    seed_to_voxel_correlations_img = brain_masker.inverse_transform(seed_to_voxel_correlations.T)
-                    
-                    all_runs.append(seed_to_voxel_correlations_img)
+conduct_fc() #temp location
 
-                mean_fc = image.mean_img(all_runs)
-                    
-                nib.save(mean_fc, f'{out_dir}/sub-{study}{ss}_{rr}_{tsk}_fc.nii.gz')
-
+quit()
 
 def create_summary():
     """
