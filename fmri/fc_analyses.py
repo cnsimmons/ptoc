@@ -1,7 +1,10 @@
 import sys
+
+
 curr_dir = '/user_data/csimmon2/git_repos/ptoc/fmri'
 sys.path.append(curr_dir)
-#sys.path.insert(0, '/user_data/vayzenbe/GitHub_Repos/docnet/fmri') #change sys/paths
+
+
 import pandas as pd
 from nilearn import image, plotting, input_data, glm
 #from nilearn.glm import threshold_stats_img
@@ -64,7 +67,7 @@ def extract_roi_coords():
     
     parcels = ['LO', 'PFS', 'pIPS','aIPS']
 
-    for ss in subs:
+    for ss in sub_info: #define subs somewhere
         sub_dir = f'{study_dir}/sub-{study}{ss}/ses-01'
         roi_dir = f'{sub_dir}/derivatives/rois'
         os.makedirs(f'{roi_dir}/spheres', exist_ok=True)
@@ -167,9 +170,9 @@ def conduct_fc():
                     curr_hemi = 'left'
                 elif lr == 'r':
                     curr_hemi = 'right'
-                #load anat mask
+                # load anat mask
                 anat_mask = image.load_img(f'{params.raw_dir}/{sub}/ses-01/anat/sub-{study}{sub}_ses-01_T1w_brain_mask_{curr_hemi}.nii.gz')
-                #binarize mask
+                # binarize mask
                 anat_mask = image.math_img('img > 0', img=anat_mask)
                 brain_masker = input_data.NiftiMasker(anat_mask, smoothing_fwhm=0, standardize=True)
                 
@@ -185,7 +188,7 @@ def conduct_fc():
 
                         filtered_list = []
                         for rn in test_runs:
-                            #extract roi time series dat afrom held out run
+                            #extract roi time series data from held out run
                             curr_run = image.load_img(f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz')
                             curr_run = image.clean_img(curr_run,standardize=True)
                             filtered_list.append(curr_run)

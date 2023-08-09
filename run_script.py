@@ -23,7 +23,8 @@ sub_info = params.sub_info #run all subjects
 #sub_info = sub_info.head(4) #DELETE THIS WHEN YOU RUN THE WHOLE THING
 #sub_info = sub_info.iloc[3:] #to prevent redundancies I am adding this line since rows 1-4 were already preprocessed.
 
-target_subject = sub_info['sub'].iloc[5] #sub-092(3), sub-hemispace1004(27), sub-hemispace1006(4), sub-hemispace1007(28)
+target_subject = sub_info['sub'].iloc[28]
+print(target_subject) 
 
 #for sub in sub_info['sub']:
     #try:

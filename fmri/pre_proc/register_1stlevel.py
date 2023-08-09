@@ -1,6 +1,5 @@
 """
 Register each 1stlevel to anat in a parallelized manner
-#python3 register_1stlevel.py 007
 """
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 import numpy as np
