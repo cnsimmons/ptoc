@@ -1,7 +1,6 @@
 import os
 import sys
 import subprocess
-from glob import glob
 import ptoc_params as params
 
 curr_dir = '/user_data/csimmon2/git_repos/ptoc'
@@ -13,7 +12,7 @@ curr_script = f'{curr_dir}/fmri/pre_proc/register_1stlevel.py'
 sub_info = params.sub_info
 
 # Find the subjects that have not been processed yet
-processed_subjects = [filename.split('_')[0] for filename in os.listdir(curr_dir) if filename.startswith('processed_')]
+processed_subjects = [filename.split('_')[1] for filename in os.listdir(curr_dir) if filename.startswith('processed_')]
 subjects_to_process = sub_info[~sub_info['sub'].isin(processed_subjects)]['sub']
 
 # Run the script for each subject

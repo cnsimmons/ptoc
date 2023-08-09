@@ -1,7 +1,7 @@
 import sys
 
 
-curr_dir = '/user_data/csimmon2/git_repos/ptoc/fmri'
+curr_dir = '/user_data/csimmon2/git_repos/ptoc'#note that when I include fmri to curr_dir ptoc_params is not found.
 sys.path.append(curr_dir)
 
 
@@ -22,14 +22,14 @@ import pdb
 from scipy.stats import gamma
 import warnings
 
-import ptoc_params as params #change to study params
+import ptoc_params as params
 
 warnings.filterwarnings('ignore')
 
 '''exp info'''
 sub_info = params.sub_info
 
-study ='ptoc' #change obvs
+study ='ptoc'
 
 data_dir = params.data_dir
 raw_dir = params.raw_dir  
@@ -39,7 +39,7 @@ exp = 'loc' #not sure
 
 file_suf = ''
 
-'''scan params''' #update with params
+'''scan params'''
 tr = params.tr
 vols = params.vols
 cope = params.cope
@@ -60,19 +60,19 @@ for rn1 in range(1,run_num+1):
         run_combos.append([rn1,rn2])
 
 
-def extract_roi_coords():
+def extract_roi_coords(): #keeps crashing at sub-hemispace1006
     """
     Define ROIs
     """
     
     parcels = ['LO', 'PFS', 'pIPS','aIPS']
 
-    for ss in sub_info: #define subs somewhere
-        sub_dir = f'{study_dir}/sub-{study}{ss}/ses-01'
+    for ss in sub_info['sub']: #define subs somewhere
+        sub_dir = f'{study_dir}/{ss}/ses-01' # error here
         roi_dir = f'{sub_dir}/derivatives/rois'
         os.makedirs(f'{roi_dir}/spheres', exist_ok=True)
         
-        '''make roi spheres for spaceloc'''
+        '''make roi spheres for loc'''
         
         exp_dir = f'{sub_dir}/derivatives/fsl'
         parcel_dir = f'{roi_dir}/parcels'
@@ -83,7 +83,7 @@ def extract_roi_coords():
             #load each run
             all_runs = []
             for rn in rc:
-                curr_run = image.load_img(f'{exp_dir}/{exp}/run-0{rn}/1stLevel_roi.feat/stats/zstat{cope}_reg.nii.gz')
+                curr_run = image.load_img(f'{exp_dir}/{exp}/run-0{rn}/1stLevel.feat/stats/zstat{cope}_reg.nii.gz') #error here 1stLevel_roi.feat or 1stLevel.feat?
         
                 all_runs.append(curr_run)
 
@@ -91,11 +91,12 @@ def extract_roi_coords():
             affine = mean_zstat.affine
             
             #loop through parcel determine coord of peak voxel
-            for lr in ['l','r']:
+            for lr in ['l','r']: #error here
                 for pr in parcels:
 
                     #load parcel
-                    roi = image.load_img(f'{parcel_dir}/{lr}{pr}.nii.gz')
+                    #roi = image.load_img(f'{parcel_dir}/{lr}{pr}.nii.gz') #error here
+                    roi = image.load_img(f'{parcel_dir}/{pr}.nii.gz')
                     roi = image.math_img('img > 0', img=roi)
 
                     #masked_image = roi*image.get_data(mean_zstat)
@@ -110,8 +111,9 @@ def extract_roi_coords():
 
 
                     #masked_image = nib.Nifti1Image(masked_image, affine)  # create the volume image
-                    curr_coords = pd.Series([rcn, exp, f'{lr}{pr}'] + coords, index=roi_coords.columns)
-                    roi_coords = roi_coords.append(curr_coords,ignore_index = True)
+                    curr_coords = pd.Series([rcn, exp, f'{lr}{pr}'] + coords, index=roi_coords.columns) 
+                    #curr_coords = pd.Series([rcn, exp, f'{pr}'] + coords, index=roi_coords.columns)
+                    roi_coords = roi_coords.append(curr_coords,ignore_index = True)git sa
 
 
         roi_coords.to_csv(f'{roi_dir}/spheres/sphere_coords.csv', index=False) #saves coords to csv | where our most object selective regions/voxels are
@@ -149,10 +151,11 @@ def conduct_fc():
 
     for sub, group, hemi in zip(sub_info['sub'], sub_info['group'], sub_info['intact_hemi']):
         print(sub)
-        sub_dir = f'{study_dir}/sub-{study}{ss}/ses-01/'
-        cov_dir = f'{sub_dir}/covs'
+        sub_dir = f'{study_dir}/{ss}/ses-01' # error here
         roi_dir = f'{sub_dir}/derivatives/rois'
         exp_dir = f'{sub_dir}/derivatives/fsl/{exp}'
+        
+        pdb.set_trace()
         
         if hemi == 'both':
             hemis = ['l','r']
@@ -179,6 +182,7 @@ def conduct_fc():
                 
                 for rr in rois: #change to just rois
                     roi = f'{lr}{rr}'
+                    print(roi)
                     all_runs = [] #this will get filled with the data from each run
                     for rcn, rc in enumerate(run_combos): #determine which runs to use for creating ROIs
                         curr_coords = roi_coords[(roi_coords['index'] == rcn) & (roi_coords['task'] ==tsk) & (roi_coords['roi'] ==roi)]
@@ -215,12 +219,12 @@ def conduct_fc():
                         all_runs.append(seed_to_voxel_correlations_img)
 
                     mean_fc = image.mean_img(all_runs)
-                        
+                    print(mean_fc, f'{results_dir}/sub-{study}{sub}_{roi}_{tsk}_fc.nii.gz')
                     nib.save(mean_fc, f'{results_dir}/sub-{study}{sub}_{roi}_{tsk}_fc.nii.gz')
 
 extract_roi_coords() #temp location
 
-conduct_fc() #temp location
+#conduct_fc() #temp location
 
 quit()
 
