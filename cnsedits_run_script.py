@@ -21,8 +21,8 @@ cope = params.cope
 task = 'loc'
 
 # Get indices for the specified range
-start_idx = sub_info.index[14]  # Index of the 10th row
-end_idx = sub_info.index[22]   # Index of the 23rd row
+start_idx = sub_info.index[22]  # Index of the 10th row
+end_idx = sub_info.index[27]   # Index of the 23rd row
 target_subjects = sub_info.loc[start_idx:end_idx, 'sub']
 
 for sub in target_subjects:
