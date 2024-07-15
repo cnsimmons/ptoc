@@ -26,6 +26,7 @@ rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aI
 thresh = 2.58
 
 task_info = 'loc'
+#task_info = pd.read_csv(f'{curr_dir}/task_info{suf}.csv') from vlads params. Task_info is a simple CSV with task condition and cope
 cond = 'object'
 cope = 3
 suf = ''
