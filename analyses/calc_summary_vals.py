@@ -25,7 +25,7 @@ raw_dir = params.raw_dir
 results_dir = params.results_dir
 
 sub_info = params.sub_info
-#task_info = params.task probably not needed at the moment since I am only using loc
+task_info = params.task #probably not needed at the moment since I am only using loc
 cond = params.cond
 cope = params.cope
 
@@ -35,7 +35,7 @@ rois = params.rois
 start_over = False
 
 
-def calc_summary_vals(sub, task, cope, roi,hemi):
+def calc_summary_vals(sub, task, cope, roi, hemi):
     """
     Calculate mean activation for a given sub and roi
     """
