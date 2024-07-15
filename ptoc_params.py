@@ -31,7 +31,7 @@ thresh = 2.58
 task = 'loc'
 task_info = 'loc' #pre 2024# 
 cond = 'scramble' #'object' #'scramble'
-cope = '5' #3 #5
+cope = '5' #3 #5 #short cut until I can recode scripts for task_info csv instead of the discrete
 suf = ''
 
 tr = 2
