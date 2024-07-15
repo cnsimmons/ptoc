@@ -82,7 +82,7 @@ def resample_selectivity():
 
 
 
-    #save each resample #aded 2 to the end of the file name just incase doesn't say scramble
+    #save each resample #added 2 to the end of the file name just incase doesn't say scramble
     roi_size_df.to_csv(f'{results_dir}/resamples/roi_size_resamples{suf}2.csv', index=False)
     mean_act_df.to_csv(f'{results_dir}/resamples/mean_act_resamples{suf}2.csv', index=False)
     cortex_vol_df.to_csv(f'{results_dir}/resamples/volume_resamples{suf}2.csv', index=False)
