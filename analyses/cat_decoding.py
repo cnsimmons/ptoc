@@ -1,3 +1,4 @@
+#NOT ADJUSTED FOR PTOC YET
 curr_dir = f'/user_data/vayzenbe/GitHub_Repos/hemispace'
 import numpy as np
 import pandas as pd

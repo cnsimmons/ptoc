@@ -42,7 +42,8 @@ sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 #load mni mask
 mni = load_mni152_brain_mask()
 #roi_dir = '/user_data/vayzenbe/GitHub_Repos/fmri/roiParcels'
-roi_dir = '/user_data/csimmon2/ptoc/roiParcels' #rois = params.rois
+roi_dir = '/user_data/csimmon2/ptoc/roiParcels' 
+rois = params.rois
 pdb.set_trace()
 
  
@@ -51,11 +52,12 @@ def create_sub_map():
 
     for task,cond, cope in zip(task_info['task'], task_info['cond'],task_info['cope']):
 
-        if cond == 'word' or task == 'face':
-            roi_type = 'ventral_visual_cortex'
-        elif cond == 'tool' or cond == 'space':
-            roi_type = 'dorsal_visual_cortex'
-        pdb.set_trace()
+        if cond == 'scramble':
+            roi_type = 'V1'
+        elif cond == 'scramble':
+            roi_type = 'V1'
+            
+        #pdb.set_trace()
         #load roi
         roi = image.load_img(f'{roi_dir}/{roi_type}.nii.gz')
         #binarize roi

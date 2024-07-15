@@ -23,7 +23,7 @@ task_info = params.task_info
 suf = params.suf
 rois = params.rois
 hemis = params.hemis
-cond = 'object'
+cond = 'scramble'
 
 #number of resamples
 iter = 10000
@@ -82,12 +82,12 @@ def resample_selectivity():
 
 
 
-    #save each resample
-    roi_size_df.to_csv(f'{results_dir}/resamples/roi_size_resamples{suf}.csv', index=False)
-    mean_act_df.to_csv(f'{results_dir}/resamples/mean_act_resamples{suf}.csv', index=False)
-    cortex_vol_df.to_csv(f'{results_dir}/resamples/volume_resamples{suf}.csv', index=False)
-    sum_selec_df.to_csv(f'{results_dir}/resamples/sum_selec_resamples{suf}.csv', index=False)
-    sum_selec_norm_df.to_csv(f'{results_dir}/resamples/sum_selec_norm_resamples{suf}.csv', index=False)
+    #save each resample #aded 2 to the end of the file name just incase doesn't say scramble
+    roi_size_df.to_csv(f'{results_dir}/resamples/roi_size_resamples{suf}2.csv', index=False)
+    mean_act_df.to_csv(f'{results_dir}/resamples/mean_act_resamples{suf}2.csv', index=False)
+    cortex_vol_df.to_csv(f'{results_dir}/resamples/volume_resamples{suf}2.csv', index=False)
+    sum_selec_df.to_csv(f'{results_dir}/resamples/sum_selec_resamples{suf}2.csv', index=False)
+    sum_selec_norm_df.to_csv(f'{results_dir}/resamples/sum_selec_norm_resamples{suf}2.csv', index=False)
 
 resample_selectivity()
 
