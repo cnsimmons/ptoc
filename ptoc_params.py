@@ -27,10 +27,11 @@ rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aI
 
 thresh = 2.58
 
-#task_info = pd.read_csv(f'{curr_dir}/task_info{suf}.csv') #from vlads params originally, created task_info file 7/15/24. Task_info is a simple CSV with task condition and cope
+#task = pd.read_csv(f'{curr_dir}/task_info.csv') #from vlads params originally, created task_info file 7/15/24. Task_info is a simple CSV with task condition and cope
+task = 'loc'
 task_info = 'loc' #pre 2024# 
-cond = 'object'
-cope = 3
+cond = 'scramble' #'object' #'scramble'
+cope = '5' #3 #5
 suf = ''
 
 tr = 2
