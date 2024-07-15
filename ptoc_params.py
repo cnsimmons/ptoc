@@ -12,12 +12,15 @@ import subprocess
 from glob import glob as glob
 import pdb
 
+suf = ''
+
 runs = [1,2,3]
 raw_dir = '/lab_data/behrmannlab/vlad/hemispace'
 data_dir = '/lab_data/behrmannlab/vlad/ptoc'
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 fig_dir = '/user_data/csimmon2/git_repos/ptoc/results/figures'
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+task_info = pd.read_csv(f'/user_data/csimmon2/git_repos/ptoc/task_info{suf}.csv')
 
 hemis = ['left','right']
 
@@ -26,10 +29,9 @@ rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aI
 
 
 thresh = 2.58
-suf = ''
 
 #task_info = pd.read_csv(f'{curr_dir}/task_info.csv') #from vlads params originally, created task_info file 7/15/24. Task_info is a simple CSV with task condition and cope
-task_info = pd.read_csv(f'/user_data/csimmon2/git_repos/ptoc/task_info{suf}.csv')
+#task_info = pd.read_csv(f'/user_data/csimmon2/git_repos/ptoc/task_info{suf}.csv')
 #task = pd.read_csv(f'/user_data/csimmon2/git_repos/ptoc/task_info.csv')
 #task = 'loc'
 #task_info = 'loc' #pre 2024# 
