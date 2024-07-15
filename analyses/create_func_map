@@ -31,7 +31,6 @@ thresh = params.thresh
 suf = params.suf
 rois = params.rois
 hemis = params.hemis
-cond = 'object'
 
 
 #load subject info
@@ -43,10 +42,10 @@ sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 #load mni mask
 mni = load_mni152_brain_mask()
 #roi_dir = '/user_data/vayzenbe/GitHub_Repos/fmri/roiParcels'
-roi_dir = '/user_data/csimmon2/ptoc/roiParcels' #rois = params.rois?
+roi_dir = '/user_data/csimmon2/ptoc/roiParcels' #rois = params.rois
+pdb.set_trace()
 
-quit()
-
+ 
 def create_sub_map():
     print('Creating individual subject maps...')
 
@@ -56,7 +55,7 @@ def create_sub_map():
             roi_type = 'ventral_visual_cortex'
         elif cond == 'tool' or cond == 'space':
             roi_type = 'dorsal_visual_cortex'
-        
+        pdb.set_trace()
         #load roi
         roi = image.load_img(f'{roi_dir}/{roi_type}.nii.gz')
         #binarize roi

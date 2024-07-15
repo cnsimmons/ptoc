@@ -1,4 +1,4 @@
-sub,Session,DOB,ScanDate,Age,Sex,SurgerySide,intact_hemi,group,Loc,code,object, scramble
+sub,Session,DOB,ScanDate,Age,Sex,SurgerySide,intact_hemi,group,Loc,code,object,scramble
 sub-066,ses-01,11/26/02,9/18/19,16.81111111,Male,left,right,patient,3,JF,1,1
 sub-069,ses-01,9/9/07,11/7/19,12.16111111,Female,left,right,patient,3,NM,1,1
 sub-090,ses-01,4/20/06,11/17/21,15.575,Female,left,right,patient,3,KT,1,1
