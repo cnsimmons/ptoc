@@ -20,19 +20,20 @@ import ptoc_params as params
 import warnings
 warnings.filterwarnings("ignore")
 
+
 data_dir = params.data_dir
-raw_dir = params.raw_dir  
 results_dir = params.results_dir
+raw_dir = params.raw_dir
 
 sub_info = params.sub_info
-task_info = params.task #probably not needed at the moment since I am only using loc
-cond = params.cond
-cope = params.cope
+task_info = params.task_info
 
-suf="" #any suffix to add
+suf = params.suf
 thresh = params.thresh
 rois = params.rois
 start_over = False
+
+#pdb.set_trace()
 
 
 def calc_summary_vals(sub, task, cope, roi, hemi):
@@ -63,7 +64,7 @@ def calc_summary_vals(sub, task, cope, roi, hemi):
     else:
         roi = anat_mask  
     
-    #pdb.set_trace()
+    
     #calculate voxel size
     vox_size = np.prod(func.header.get_zooms())
     
@@ -97,7 +98,6 @@ def calc_summary_vals(sub, task, cope, roi, hemi):
 
     return roi_size, mean_act,  cortex_vol, sum_selec, sum_selec_norm
 
-
 start_sub = ''
 #check if summary file already exists, else create it
 if start_over == False and os.path.exists(f'{results_dir}/selectivity/selectivity_summary{suf}.csv'):
@@ -119,7 +119,7 @@ else:
 
 for sub, group, hemi in zip(sub_info['sub'], sub_info['group'], sub_info['intact_hemi']):
     
-    task = 'loc'
+    #task = 'loc'
     
     #check if sub alread has 'sub-' prefix
     if sub[:4] != 'sub-':
@@ -133,13 +133,13 @@ for sub, group, hemi in zip(sub_info['sub'], sub_info['group'], sub_info['intact
 
     for hemi in hemis:
         for roi in rois:
-            #for task, cond, cope in zip(task_info['task'], task_info['cond'], task_info['cope']): # claire remove this line
+            for task, cond, cope in zip(task_info['task'], task_info['cond'], task_info['cope']): # claire remove this line
 
                 #check if task folder exists
                 if os.path.exists(f'{data_dir}/{sub}/ses-01/derivatives/fsl/{task}/HighLevel.gfeat'):
                 
                     print(f'Calculating summary values for {sub} {task} {cond} {cope} {hemi} {roi}')
-                    roi_size, mean_act,  cortex_vol, sum_selec, sum_selec_norm = calc_summary_vals(sub, params.task, params.cope, roi, hemi)
+                    roi_size, mean_act,  cortex_vol, sum_selec, sum_selec_norm = calc_summary_vals(sub, task, cope, roi, hemi)
 
                     #apend to summary df
                     summary_df = summary_df.append({'sub': sub, 'group': group, 'hemi': hemi, 'roi': roi, 'cond': cond, 'roi_size': roi_size, 'mean_act': mean_act, 'volume': cortex_vol, 'sum_selec': sum_selec, 'sum_selec_norm': sum_selec_norm}, ignore_index = True)
