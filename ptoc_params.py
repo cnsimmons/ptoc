@@ -21,12 +21,14 @@ sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 
 hemis = ['left','right']
 
-rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aIPS']
+#pre 2024#rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aIPS']
+rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aIPS', 'V1'] #adding V1 for early vision scramble and full hemispace || I need to add 'hemi' but at the moment I can't find the roi file so I'm leaving as is with just the added V1
+
 
 thresh = 2.58
 
-task_info = 'loc'
-#task_info = pd.read_csv(f'{curr_dir}/task_info{suf}.csv') from vlads params. Task_info is a simple CSV with task condition and cope
+#task_info = pd.read_csv(f'{curr_dir}/task_info{suf}.csv') #from vlads params originally, created task_info file 7/15/24. Task_info is a simple CSV with task condition and cope
+task_info = 'loc' #pre 2024# 
 cond = 'object'
 cope = 3
 suf = ''
