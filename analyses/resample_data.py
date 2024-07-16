@@ -24,8 +24,8 @@ rois = params.rois
 hemis = params.hemis
 
 # number of resamples
-iter = 4
-# iter = 10000
+#iter = 4
+iter = 10000
 
 # number of subs to pull on each resample
 n_subs = 36
