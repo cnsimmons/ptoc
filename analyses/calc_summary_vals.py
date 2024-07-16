@@ -33,6 +33,8 @@ thresh = params.thresh
 rois = params.rois
 start_over = True
 
+#rois = ['V1'] #note cancel objects if you do this route
+#extract task info for just scene cond
 
 def calc_summary_vals(sub, task, cope, roi, hemi):
     """
