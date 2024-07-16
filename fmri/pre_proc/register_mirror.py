@@ -33,6 +33,7 @@ study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 raw_dir = f"/lab_data/behrmannlab/vlad/hemispace"
 data_dir = f"/lab_data/behrmannlab/vlad/ptoc" #this is where we will save the non-anat data
 sub_info = params.sub_info
+sub_info_otc = params.sub_info_OTC 
 
 #left is negative, right is positive
 mni = load_mni152_brain_mask()
@@ -189,7 +190,6 @@ def register_parcels(sub, parcel_dir, parcels):
 #bash_cmd = f'flirt -in {anat} -ref {anat_mni} -out {anat_dir}/{sub[1]}_ses-01_T1w_brain_stand.nii.gz -applyxfm -init {anat_dir}/parcel2mirror.mat -interp trilinear'
 #subprocess.run(bash_cmd.split(), check = True)
 
-#sub = 'sub-082'
 all_subs = sub_info['sub'].values
 #sub_info = sub_info.head(2)
 
