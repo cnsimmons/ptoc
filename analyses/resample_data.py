@@ -23,10 +23,11 @@ task_info = params.task_info
 suf = params.suf
 rois = params.rois
 hemis = params.hemis
-cond = 'scramble'
-#cond = 'object'
+#cond = 'scramble'
+cond = 'object'
 
 #number of resamples
+#iter = 4
 iter = 10000
 
 #number of subs to pull on each resample
