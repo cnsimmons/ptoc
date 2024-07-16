@@ -27,7 +27,7 @@ rois = params.rois
 
 runs = params.runs
 
-cope = 3
+cope = 5 #3 #5 #short cut until I can recode scripts for task_info csv instead of the discrete
 task = 'loc'
 
 
