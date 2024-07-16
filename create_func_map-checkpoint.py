@@ -1,8 +1,10 @@
+#only partially edited from original
+
 '''
 Create 2D heatmap of activation for each subject and group average
 '''
 
-curr_dir = f'/user_data/vayzenbe/GitHub_Repos/hemispace' #CHANGE AS NEEEDED CAUSE ITS FOR VLAAAD
+curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 
 import sys
 sys.path.insert(0,curr_dir)
@@ -18,7 +20,7 @@ from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
 import nibabel as nib
 import pdb
 import os
-import hemispace_params as params
+import ptoc_params as params
 import pdb
 #hide warning
 import warnings
@@ -45,7 +47,7 @@ sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 
 #load mni mask
 mni = load_mni152_brain_mask()
-roi_dir = '/user_data/vayzenbe/GitHub_Repos/fmri/roiParcels'
+roi_dir = '/user_data/csimmon2/git_repos/ptoc/roiParcels' 
 
 
 
