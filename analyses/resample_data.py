@@ -24,6 +24,7 @@ suf = params.suf
 rois = params.rois
 hemis = params.hemis
 cond = 'scramble'
+#cond = 'object'
 
 #number of resamples
 iter = 10000
