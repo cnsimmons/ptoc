@@ -1,3 +1,5 @@
+#use this create_func_map.py script to create individual and group-level functional maps for the PTOC project
+
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 
 import sys
