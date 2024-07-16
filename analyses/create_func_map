@@ -2,7 +2,7 @@
 '''
 Create 2D heatmap of activation for each subject and group average
 '''
-
+#vlad created a third function create_3d_group_map after we had talked so I'm not sure if it would be relevant for me at this time and am not including the code. See vlad_create_func_map.py for the full code 
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 
 import sys
@@ -166,4 +166,6 @@ def create_group_map():
                 print(f'No valid neural maps found for condition {cond} and ROI {roi_type}.')
              
 #create_sub_map()
-create_group_map()
+#create_group_map()
+
+
