@@ -47,6 +47,67 @@ sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 mni = load_mni152_brain_mask()
 roi_dir = '/user_data/csimmon2/git_repos/ptoc/roiParcels' 
 
+def create_sub_map():
+    print('Creating individual subject maps...')
+    
+    for task, cond, cope in zip(task_info['task'], task_info['cond'], task_info['cope']):
+        if cond == 'object':
+            roi_types = ['ventral_visual_cortex', 'dorsal_visual_cortex']
+        elif cond == 'scramble':
+            roi_types = ['V1']
+        
+        for roi_type in roi_types:
+            # Load and binarize ROI
+            roi_path = f'{roi_dir}/{roi_type}.nii.gz'
+            roi = image.load_img(roi_path)
+            roi = image.math_img('img1 > 0', img1=roi)
+            
+            for sub, code, hemi in zip(sub_info['sub'], sub_info['code'], sub_info['intact_hemi']):
+                sub_dir = f'{data_dir}/{sub}/ses-01'
+                
+                # Check if zstat exists
+                zstat_path = f'{sub_dir}/derivatives/fsl/{task}/HighLevel{suf}.gfeat/cope{cope}.feat/stats/zstat1_reg.nii.gz'
+                
+                if os.path.exists(zstat_path):
+                    print(f'Processing {sub} {cond}, {roi_type}')
+                    
+                    # Load zstat
+                    zstat = image.load_img(zstat_path)
+                    
+                    # Check if ROI and zstat have the same shape and affine
+                    if not image.canonical_img(roi).shape == image.canonical_img(zstat).shape:
+                        print(f'Skipping {sub} {cond}, {roi_type}: ROI and zstat do not have the same shape')
+                        continue
+                    
+                    # Mask zstat with roi
+                    zstat_masked = image.math_img('img1 * img2', img1=zstat, img2=roi)
+                    
+                    # Convert zstat to numpy
+                    func_np = zstat_masked.get_fdata()
+                    
+                    # Binarize func_np
+                    binary_3dfunc = np.copy(func_np)
+                    binary_3dfunc[func_np > 0] = 1
+                    
+                    # Average across voxels in z dimension
+                    func_np = np.transpose(np.max(func_np, axis=2))
+                    
+                    # Create binary version of zstat
+                    binary_func = np.copy(func_np)
+                    binary_func[func_np > 0] = 1
+                    
+                    # Save func np
+                    np.save(f'{sub_dir}/derivatives/neural_map/{cond}_func.npy', func_np)
+                    
+                    # Save binary func
+                    np.save(f'{sub_dir}/derivatives/neural_map/{cond}_binary.npy', binary_func)
+                    
+                    # Save binary 3d func
+                    np.save(f'{sub_dir}/derivatives/neural_map/{cond}_binary_3d.npy', binary_3dfunc)
+                else:
+                    print(f'{cond} zstat does not exist for subject {sub}')
+
+quit()
 
 def create_sub_map():
     print('Creating individual subject maps...')
@@ -114,7 +175,7 @@ def create_sub_map():
                 else:
                     print(f'{cond} zstat does not exist for subject {sub}')
                 
-c
+                
 def create_group_map():
     print('Creating group maps...')
     
