@@ -1,3 +1,5 @@
+###this is not the one to use, use create_func_map.py in the main directory
+
 curr_dir = f'/user_data/vayzenbe/GitHub_Repos/hemispace' #CHANGE AS NEEEDED CAUSE ITS FOR VLAAAD
 
 import sys
