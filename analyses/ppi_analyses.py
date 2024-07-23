@@ -1,5 +1,5 @@
 import sys
-curr_dir = '/user_data/vayzenbe/GitHub_Repos/bwoc'
+#curr_dir = '/user_data/vayzenbe/GitHub_Repos/bwoc'
 sys.path.insert(0, curr_dir)
 import pandas as pd
 from nilearn import image, plotting, input_data, glm, maskers
@@ -18,7 +18,7 @@ import pdb
 from scipy.stats import gamma
 import warnings
 
-import bwoc_params as params
+import ptoc_params as params
 
 warnings.filterwarnings('ignore')
 
