@@ -1,5 +1,5 @@
 import sys
-#curr_dir = '/user_data/vayzenbe/GitHub_Repos/bwoc'
+curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 sys.path.insert(0, curr_dir)
 import pandas as pd
 from nilearn import image, plotting, input_data, glm, maskers
@@ -24,25 +24,37 @@ warnings.filterwarnings('ignore')
 
 '''exp info'''
 
-subs = params.sub_info['loc_sub'].tolist()
+subs = params.sub_info['sub'].tolist()
+#sub_info = params.sub_info
 
-
-out_dir = f'{params.scratch_dir}/derivatives/ppi'
+out_dir = f'/user_data/csimmon2/git_repos/ptoc/results/PPI'
 os.makedirs(out_dir, exist_ok=True)
 
 cov_dir = f'{params.loc_data}'
-results_dir = f'/{curr_dir}/results'
-roi_suf = 'toolloc'
-rois = ['PPC', 'APC', 'LO', 'PFS']
-
+roi_suf = ''
 first_fix = 6
 
-runs = [1,2]
+runs = [1,2,3]
 
+# Study parameters
+study = 'ptoc'
+exp = 'loc'
 file_suf = ''
+sub_info = params.sub_info
 
+data_dir = params.data_dir
+results_dir = params.results_dir
+fig_dir = params.fig_dir
+task_info = params.task_info
+thresh = params.thresh
 
+suf = params.suf
+rois = params.rois
+#rois = ['LO', 'PFS', 'pIPS', 'aIPS']
+#hemis = params.hemis
+cope = params.cope
 
+# Load MNI templates and masks
 whole_brain_mask = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain_mask.nii.gz'
 mni = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz'
 brain_masker = input_data.NiftiMasker(whole_brain_mask,
@@ -275,9 +287,7 @@ def create_summary():
 
 
 #extract_roi_coords(rois)
-
-
-conduct_ppi()
+#conduct_ppi()
 
 
 

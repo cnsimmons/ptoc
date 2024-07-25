@@ -194,5 +194,5 @@ def conduct_fc():
                     nib.save(mean_fc, f'{results_dir}/sub-{study}{sub}_{roi}_{tsk}_fc.nii.gz')
 
 # Call functions
-#extract_roi_coords()  # Run this first
-conduct_fc()  # Run this after extracting ROI coordinates
+extract_roi_coords()  # Run this first
+#conduct_fc()  # Run this after extracting ROI coordinates
