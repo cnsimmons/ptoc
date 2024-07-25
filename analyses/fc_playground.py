@@ -12,12 +12,8 @@ import nibabel as nib
 import warnings
 import ptoc_params as params
 
-
-
-
 # Other imports
 from nilearn.input_data import NiftiMasker ### "is deprecated in version 0.9. Please import from nilearn.maskers instead"
-
 
 warnings.filterwarnings('ignore')
 
@@ -34,9 +30,9 @@ task_info = params.task_info
 thresh = params.thresh
 
 suf = params.suf
-#rois = params.rois
-rois = ['LO', 'PFS', 'pIPS', 'aIPS']
-hemis = params.hemis
+rois = params.rois
+#rois = ['LO', 'PFS', 'pIPS', 'aIPS']
+#hemis = params.hemis
 cope = params.cope
 
 # Load MNI templates and masks
@@ -56,8 +52,6 @@ parcels = ['LO', 'PFS', 'pIPS', 'aIPS', 'ventral_visual_cortex', 'dorsal_visual_
 
 #parcels = ['lLO', 'lPFS', 'lpIPS', 'laIPS', 'lventral_visual_cortex', 'ldorsal_visual_cortex',
  #          'rLO', 'rPFS', 'rpIPS', 'raIPS', 'rventral_visual_cortex', 'rdorsal_visual_cortex']
-
-
 #ss = sub_info['sub'][5] #2 = sub-090, 
 
 # Function to extract ROI coordinates

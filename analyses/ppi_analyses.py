@@ -26,13 +26,13 @@ warnings.filterwarnings('ignore')
 
 subs = params.sub_info['sub'].tolist()
 #sub_info = params.sub_info
-
+#study_dir = params.study_dir
 out_dir = f'/user_data/csimmon2/git_repos/ptoc/results/PPI'
 os.makedirs(out_dir, exist_ok=True)
 
-cov_dir = f'{params.loc_data}'
+cov_dir = f'{params.loc_data}' #ID equivalent loc_data
 roi_suf = ''
-first_fix = 6
+first_fix = 6 #not sure what this for yet, CNS
 
 runs = [1,2,3]
 
@@ -69,16 +69,17 @@ def extract_roi_coords(parcels):
 
     for sub in subs:
         sub_dir = f'{params.study_dir}/sub-{sub}/ses-01'
+        #need to id study_dir
         roi_dir = f'{sub_dir}/derivatives/rois'
         os.makedirs(f'{roi_dir}/spheres', exist_ok=True)
         
-        '''make roi spheres for spaceloc'''
+        '''make roi spheres'''
         
         exp_dir = f'{sub_dir}/derivatives/fsl'
         parcel_dir = f'{roi_dir}/parcels'
         roi_coords = pd.DataFrame(columns = ['task','roi','x','y','z'])
         
-        
+        #possibly paras.task_info w/ loop
         zstat = image.load_img(f'{exp_dir}/{params.task}/HighLevel.gfeat/cope{params.cope}.feat/stats/zstat1.nii.gz')
         affine = zstat.affine
         
