@@ -30,11 +30,13 @@ subs = params.sub_info['sub'].tolist()
 out_dir = f'/user_data/csimmon2/git_repos/ptoc/results/PPI'
 os.makedirs(out_dir, exist_ok=True)
 
+
+
 cov_dir = f'{params.loc_data}' #ID equivalent loc_data
 roi_suf = ''
-first_fix = 6 #not sure what this for yet, CNS
-
-runs = [1,2,3]
+rois = params.rois
+#rois = ['LO', 'PFS', 'pIPS', 'aIPS'] # check correct use the rois from Vlad's file
+runs = [1,2,3] #go and look that these things are there in the brain, at every stage check the data and see that thing in real life.
 
 # Study parameters
 study = 'ptoc'
@@ -49,7 +51,7 @@ task_info = params.task_info
 thresh = params.thresh
 
 suf = params.suf
-rois = params.rois
+
 #rois = ['LO', 'PFS', 'pIPS', 'aIPS']
 #hemis = params.hemis
 cope = params.cope
@@ -66,7 +68,6 @@ def extract_roi_coords(parcels):
     Define ROIs
     """
     
-
     for sub in subs:
         sub_dir = f'{params.study_dir}/sub-{sub}/ses-01'
         #need to id study_dir
