@@ -33,7 +33,7 @@ task = 'loc'
 #target_subjects = sub_info['sub']
 #controls only
 target_subjects = sub_info[sub_info['group'] == 'control']['sub']
-#target_subjects = 'sub_057'
+#target_subjects = ['sub-057']
 
 for sub in target_subjects:
     sub_data = f'{data_dir}/{sub}/ses-01'
@@ -49,7 +49,7 @@ for sub in target_subjects:
 
     for run in runs:
         print(sub, run)
-        
+        #run_dir = f'{sub_data}/derivatives/fsl/{task}/run-0{run}/1stLevel{firstlevel_suf}.feat'
         run_dir = f'{sub_data2}/derivatives/fsl/{task}/run-0{run}/1stLevel{firstlevel_suf}.feat'
         filtered_func = f'{run_dir}/filtered_func_data.nii.gz'
         out_func = f'{run_dir}/filtered_func_data_reg.nii.gz'
