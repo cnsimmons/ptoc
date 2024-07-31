@@ -14,7 +14,8 @@ import pdb
 
 suf = ''
 
-runs = [1,2,3]
+#runs = [1,2,3]
+runs = [3] #change to 2 for sub_057
 raw_dir = '/lab_data/behrmannlab/vlad/hemispace'
 data_dir = '/lab_data/behrmannlab/vlad/ptoc'
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
@@ -27,7 +28,7 @@ hemis = ['left','right']
 rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aIPS', 'V1'] #adding V1 for early vision scramble and full hemispace || I need to add 'hemi' but at the moment I can't find the roi file so I'm leaving as is with just the added V1
 
 ##temporary
-#cope = '5' #3 #5 #short cut until I can recode scripts for task_info csv instead of the discrete
+cope = '3' #3 #5 #short cut until I can recode scripts for task_info csv instead of the discrete
 #task_info = 'loc' #pre 2024# 
 #cond = '' #'object' #'scramble'
 #task = 'loc'
@@ -38,6 +39,7 @@ tr = 2
 vols = 184
 
 #BWOC Params
+
 '''
 cov_dir = f'{params.loc_data}/sub-{sub}/ses-01/covs'
 loc_data = f'/lab_data/behrmannlab/vlad/hemispace
