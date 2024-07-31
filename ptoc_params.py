@@ -15,7 +15,7 @@ import pdb
 suf = ''
 
 #runs = [1,2,3]
-runs = [3] #change to 2 for sub_057
+#runs = [2] #change to 2 for sub_057
 raw_dir = '/lab_data/behrmannlab/vlad/hemispace'
 data_dir = '/lab_data/behrmannlab/vlad/ptoc'
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
