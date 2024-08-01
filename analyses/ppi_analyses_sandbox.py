@@ -1,6 +1,4 @@
-#this script for bash, the jupyter notebook is for testing
-
-#Run to start
+#run to start
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 
 import sys
@@ -20,12 +18,10 @@ import pdb
 import ptoc_params as params
 
 from plotnine import *
-#from plotnine import ggplot, aes, geom_point
 
 #hide warnings
 import warnings
 warnings.filterwarnings('ignore')
-
 
 #load additional libraries
 from nilearn import image, plotting, input_data, glm
@@ -39,31 +35,29 @@ data_dir = params.data_dir
 results_dir = params.results_dir
 fig_dir = params.fig_dir
 raw_dir = params.raw_dir
-
 sub_info = params.sub_info
 task_info = params.task_info
 
 suf = params.suf
-#rois = params.rois
-#hemis = params.hemis
 #mni = load_mni152_brain_mask()
 
 '''exp info'''
 #load subject info
-subs = ['sub-064']  # Run for one subject initially
-subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+subs = ['sub-059', 'sub-038', 'sub-068']
+#subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+
+
+
+
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 results_dir = '/user_data/csimmon2/GitHub_Repos/ptoc/results'
 exp = ''
-rois = ['LO']  # Run for one ROI initially
-#rois = ['LO', 'PFS', 'pIPS','aIPS', 'V1']
 control_tasks = ['loc']
 file_suf = ''
 
 '''scan params'''
-#tr = 1 #in the original code
-#vols = 321 #in the original code
 tr = 2 #ptoc_params
 vols = 184 #ptoc_params
 
@@ -71,9 +65,10 @@ whole_brain_mask = load_mni152_brain_mask()
 mni = load_mni152_template()
 brain_masker = NiftiMasker(whole_brain_mask, smoothing_fwhm=0, standardize=True)
 
-#NEW HOPE
+#PPI
 #rois = params.rois
-#rois = ['LO']
+#rois = ['LO', 'PFS', 'pIPS', 'aIPS', 'V1']
+rois = ['LO']
 
 '''run info'''
 run_num =3
@@ -92,18 +87,13 @@ def extract_roi_sphere(img, coords):
     
     phys = np.mean(seed_time_series, axis= 1)
     phys = phys.reshape((phys.shape[0],1))
-    
+    print (f'phys just ran')
     return phys
 
 #psy
 def make_psy_cov(runs, ss):
     temp_dir = f'{raw_dir}/{ss}/ses-01'
     cov_dir = f'{temp_dir}/covs'
-    
-    # Ensure output directory exists
-    out_dir = f'{study_dir}/{ss}/ses-01/derivatives/fc'
-    os.makedirs(out_dir, exist_ok=True)
-    print(f'Output directory ensured at {out_dir}')
     
     # Only for a single run
     times = np.arange(0, vols * tr, tr)  # Create time array covering the whole run duration
@@ -131,9 +121,8 @@ def make_psy_cov(runs, ss):
     # Debug: Print the shape of the created psy array
     print(f'Full covariate matrix shape: {cov.shape}')
     print(f'Created psy array shape: {psy.shape}')
-
+    print (f'psy just ran')
     return psy
-
 
 #ppi
 def conduct_ppi():
@@ -145,13 +134,22 @@ def conduct_ppi():
         temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'  # hemispace
         
         roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords.csv')  # load ROI coordinates
+        
+        # Ensure output directory exists
+        out_dir = f'{study_dir}/{ss}/ses-01/derivatives/fc'
+        os.makedirs(out_dir, exist_ok=True)
+        print(f'Output directory ensured at {out_dir}')
 
         for tsk in ['loc']:
             for rr in rois:
+                    # Check if the file already exists
+                    output_file = f'{out_dir}/{ss}_{rr}_{tsk}_ppi.nii.gz'
+                    if os.path.exists(output_file):
+                        print(f"Output file {output_file} already exists. Skipping analysis.")
+                        continue
                 all_runs = []
                 for rcn, rc in enumerate(run_combos):  # run combos
                     curr_coords = roi_coords[(roi_coords['index'] == rcn) & (roi_coords['task'] == tsk) & (roi_coords['roi'] == rr)]
-
                     for rn in rc:
                         filtered_list = []
                         curr_run = image.load_img(f'{temp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz') 
@@ -188,6 +186,7 @@ def conduct_ppi():
                     ppi = ppi.reshape((ppi.shape[0], 1))
                     print('Created PPI')
 
+                    # Time Bottleneck
                     brain_time_series = brain_masker.fit_transform(img4d, confounds=[confounds])
                     brain_time_series_4FC = brain_masker.fit_transform(img4d)
                     print('Extracted brain TS')
@@ -212,9 +211,15 @@ def conduct_ppi():
                     all_runs.append(seed_to_voxel_correlations_img)
 
                 mean_fc = image.mean_img(all_runs)
-                    
+                
+                # Ensure output directory exists
+                out_dir = f'{study_dir}/{ss}/ses-01/derivatives/fc'
+                os.makedirs(out_dir, exist_ok=True)
+                print(f'Output directory ensured at {out_dir}')
+                
+                #save    
                 nib.save(mean_fc, f'{out_dir}/{ss}_{rr}_{tsk}_ppi.nii.gz')
-                print (f'{out_dir}/sub-{ss}_{rr}_{tsk}_ppi.nii.gz')
+                print (f'{out_dir}/{ss}_{rr}_{tsk}_ppi.nii.gz') #added for next run
                 nib.save(mean_fc, f'{out_dir}/{ss}_{rr}_{tsk}_fc_4FC.nii.gz')
 
 conduct_ppi()
