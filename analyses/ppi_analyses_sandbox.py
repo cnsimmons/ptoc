@@ -1,225 +1,127 @@
-#run to start
-curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
-
-import sys
-sys.path.insert(0,curr_dir)
-import os
+import argparse
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import seaborn as sns
-import scipy.stats as stats
-import scipy
-import statsmodels.api as s
-from sklearn import metrics
-
-import pdb
-import ptoc_params as params
-
-from plotnine import *
-
-#hide warnings
-import warnings
-warnings.filterwarnings('ignore')
-
-#load additional libraries
-from nilearn import image, plotting, input_data, glm
-from nilearn.input_data import NiftiMasker
+import os
+from nilearn import image, input_data
 import nibabel as nib
-import statsmodels.api as sm
-from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
-from nilearn.glm.first_level import compute_regressor 
 
-data_dir = params.data_dir
-results_dir = params.results_dir
-fig_dir = params.fig_dir
-raw_dir = params.raw_dir
-sub_info = params.sub_info
-task_info = params.task_info
+# Parse command-line arguments
+parser = argparse.ArgumentParser(description='Run PPI analysis')
+parser.add_argument('--sub', type=str, required=True, help='Subject ID')
+parser.add_argument('--roi', type=str, required=True, help='ROI name')
+args = parser.parse_args()
 
-suf = params.suf
-#mni = load_mni152_brain_mask()
+sub = args.sub
+roi = args.roi
 
-'''exp info'''
-#load subject info
-sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-subs = ['sub-059', 'sub-038', 'sub-068']
-#subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-
-
-
-
+# Define paths and parameters
+curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
+data_dir = '/path/to/data_dir'
+results_dir = '/path/to/results_dir'
+fig_dir = '/path/to/fig_dir'
+raw_dir = '/path/to/raw_dir'
+sub_info_path = f'{curr_dir}/sub_info.csv'
+task_info_path = f'{curr_dir}/task_info.csv'
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
-results_dir = '/user_data/csimmon2/GitHub_Repos/ptoc/results'
-exp = ''
-control_tasks = ['loc']
-file_suf = ''
+ses = 1
+suf = ''
+tr = 2
+vols = 184
 
-'''scan params'''
-tr = 2 #ptoc_params
-vols = 184 #ptoc_params
+# Ensure necessary directories exist
+os.makedirs(f'{results_dir}/ppi', exist_ok=True)
 
-whole_brain_mask = load_mni152_brain_mask()
-mni = load_mni152_template()
-brain_masker = NiftiMasker(whole_brain_mask, smoothing_fwhm=0, standardize=True)
+# Load subject and task information
+sub_info = pd.read_csv(sub_info_path)
+task_info = pd.read_csv(task_info_path)
 
-#PPI
-#rois = params.rois
-#rois = ['LO', 'PFS', 'pIPS', 'aIPS', 'V1']
-rois = ['LO']
+# Define additional necessary functions and variables
 
-'''run info'''
-run_num =3
-runs = list(range(1,run_num+1))
-run_combos = []
-#determine the number of left out run combos
-
-for rn1 in range(1,run_num+1):
-    for rn2 in range(rn1+1,run_num+1):
-        run_combos.append([rn1,rn2])
-
-#phys
+# Function to extract ROI sphere
 def extract_roi_sphere(img, coords):
-    roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius = 6)
+    roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
     seed_time_series = roi_masker.fit_transform(img)
-    
-    phys = np.mean(seed_time_series, axis= 1)
-    phys = phys.reshape((phys.shape[0],1))
-    print (f'phys just ran')
+    phys = np.mean(seed_time_series, axis=1)
+    phys = phys.reshape((phys.shape[0], 1))
+    print(f'phys just ran')
     return phys
 
-#psy
+# Function to create the psychological regressor
 def make_psy_cov(runs, ss):
     temp_dir = f'{raw_dir}/{ss}/ses-01'
     cov_dir = f'{temp_dir}/covs'
     
-    # Only for a single run
-    times = np.arange(0, vols * tr, tr)  # Create time array covering the whole run duration
+    times = np.arange(0, vols * tr, tr)
     full_cov = pd.DataFrame(columns=['onset', 'duration', 'value'])
     
     for rn, run in enumerate(runs):
-        ss_num = ss.split('-')[1]  # Strips the "sub-" from the subject number
+        ss_num = ss.split('-')[1]
         curr_cov = pd.read_csv(f'{cov_dir}/catloc_{ss_num}_run-0{run}_Object.txt', sep='\t', header=None, names=['onset', 'duration', 'value'])
-        
-        # Contrasting (negative) covariate
         curr_cont = pd.read_csv(f'{cov_dir}/catloc_{ss_num}_run-0{run}_Scramble.txt', sep='\t', header=None, names=['onset', 'duration', 'value'])
-        curr_cont.iloc[:, 2] = curr_cont.iloc[:, 2] * -1  # Make contrasting cov negative
-        
-        curr_cov = curr_cov.append(curr_cont)  # Append to positive
-        
-        # Append to concatenated cov
+        curr_cont.iloc[:, 2] = curr_cont.iloc[:, 2] * -1
+        curr_cov = curr_cov.append(curr_cont)
         full_cov = full_cov.append(curr_cov)
     
     full_cov = full_cov.sort_values(by=['onset'])
     cov = full_cov.to_numpy()
-
-    # Convolve to HRF
     psy, name = compute_regressor(cov.T, 'spm', times)
     
-    # Debug: Print the shape of the created psy array
     print(f'Full covariate matrix shape: {cov.shape}')
     print(f'Created psy array shape: {psy.shape}')
-    print (f'psy just ran')
+    print(f'psy just ran')
     return psy
 
-#ppi
-def conduct_ppi():
-    for ss in subs:
-        print(ss)
-        sub_dir = f'{study_dir}/{ss}/ses-01/'  # study is PTOC
-        roi_dir = f'{sub_dir}/derivatives/rois'  # rois in PTOC
-        raw_dir = params.raw_dir  # hemispace
-        temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'  # hemispace
-        
-        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords.csv')  # load ROI coordinates
-        
-        # Ensure output directory exists
-        out_dir = f'{study_dir}/{ss}/ses-01/derivatives/fc'
-        os.makedirs(out_dir, exist_ok=True)
-        print(f'Output directory ensured at {out_dir}')
+# Function to conduct PPI analysis
+def conduct_ppi(sub, roi):
+    sub_dir = f'{study_dir}/{sub}/ses-0{ses}'
+    roi_dir = f'{sub_dir}/derivatives/rois'
+    raw_dir = params.raw_dir
+    temp_dir = f'{raw_dir}/{sub}/ses-01/derivatives/fsl/loc'
+    
+    roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords.csv')
+    out_dir = f'{study_dir}/{sub}/ses-01/derivatives/fc'
+    os.makedirs(out_dir, exist_ok=True)
+    print(f'Output directory ensured at {out_dir}')
 
-        for tsk in ['loc']:
-            for rr in rois:
-                    # Check if the file already exists
-                    output_file = f'{out_dir}/{ss}_{rr}_{tsk}_ppi.nii.gz'
-                    if os.path.exists(output_file):
-                        print(f"Output file {output_file} already exists. Skipping analysis.")
-                        continue
-                all_runs = []
-                for rcn, rc in enumerate(run_combos):  # run combos
-                    curr_coords = roi_coords[(roi_coords['index'] == rcn) & (roi_coords['task'] == tsk) & (roi_coords['roi'] == rr)]
-                    for rn in rc:
-                        filtered_list = []
-                        curr_run = image.load_img(f'{temp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz') 
-                        curr_run = image.clean_img(curr_run, standardize=True)
-                        filtered_list.append(curr_run)    
-                    print('Loaded filtered data')
-                    
-                    img4d = image.concat_imgs(filtered_list)
-                    print('Loaded 4D image') 
-                    
-                    phys = extract_roi_sphere(img4d, curr_coords[['x', 'y', 'z']].values.tolist()[0])  # extract ROI sphere coordinate
-                    print('Extracted sphere') 
-                    
-                    # Load behavioral data
-                    psy = make_psy_cov([rn], ss)  # grabs the covariate and converts the three-column into binary data
-                    print('Loaded psy cov')
-                    
-                    # Debug: Print shapes of img4d and the concatenated phys and psy arrays
-                    print(f'Shape of img4d: {img4d.shape}')
-                    print(f'Length of phys: {phys.shape[0]}')
-                    print(f'Length of psy: {psy.shape[0]}')
-                    
-                    # Ensure phys and psy lengths match
-                    assert phys.shape[0] == psy.shape[0], f"Length mismatch: phys={phys.shape[0]}, psy={psy.shape[0]}"
-                    
-                    # Combine phys (seed TS) and psy (task TS) into a regressor
-                    confounds = pd.DataFrame(columns=['psy', 'phys'])
-                    confounds['psy'] = psy[:, 0]
-                    confounds['phys'] = phys[:, 0]
-                    print('Combined psy and phys')
+    for tsk in ['loc']:
+        all_runs = []
+        for rcn, rc in enumerate(run_combos):
+            curr_coords = roi_coords[(roi_coords['index'] == rcn) & (roi_coords['task'] == tsk) & (roi_coords['roi'] == roi)]
+            for rn in rc:
+                filtered_list = []
+                curr_run = image.load_img(f'{temp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz')
+                curr_run = image.clean_img(curr_run, standardize=True)
+                filtered_list.append(curr_run)
+            print('Loaded filtered data')
+            
+            img4d = image.concat_imgs(filtered_list)
+            print('Loaded 4D image')
+            
+            phys = extract_roi_sphere(img4d, curr_coords[['x', 'y', 'z']].values.tolist()[0])
+            print('Extracted sphere')
+            
+            psy = make_psy_cov([rn], sub)
+            print('Loaded psy cov')
+            
+            print(f'Shape of img4d: {img4d.shape}')
+            print(f'Length of phys: {phys.shape[0]}')
+            print(f'Length of psy: {psy.shape[0]}')
+            
+            assert phys.shape[0] == psy.shape[0], f"Length mismatch: phys={phys.shape[0]}, psy={psy.shape[0]}"
+            
+            confounds = pd.DataFrame(columns=['psy', 'psy_lagged', 'phys', 'interact', 'constant'])
+            confounds['psy'] = psy
+            confounds['psy_lagged'] = confounds['psy'].shift()
+            confounds['phys'] = phys
+            confounds['interact'] = confounds['psy'] * confounds['phys']
+            confounds['constant'] = np.ones((phys.shape[0], 1))
 
-                    # Create PPI cov by multiplying psy * phys
-                    ppi = psy * phys
-                    ppi = ppi.reshape((ppi.shape[0], 1))
-                    print('Created PPI')
+            print('Confounds dataframe:')
+            print(confounds.head())
+            
+            confounds.to_csv(f'{out_dir}/{roi}_{tsk}_confounds.csv', index=False)
+            print(f'Confounds saved at {out_dir}/{roi}_{tsk}_confounds.csv')
 
-                    # Time Bottleneck
-                    brain_time_series = brain_masker.fit_transform(img4d, confounds=[confounds])
-                    brain_time_series_4FC = brain_masker.fit_transform(img4d)
-                    print('Extracted brain TS')
-
-                    # Correlate interaction term to TS for vox in the brain
-                    seed_to_voxel_correlations = (np.dot(brain_time_series.T, ppi) / ppi.shape[0])
-                    print(ss, rr, tsk, seed_to_voxel_correlations.max())
-                    print('Correlated interaction term')
-
-                    # Correlate psy term
-                    seed_to_voxel_correlations = (np.dot(brain_time_series_4FC.T, psy) / psy.shape[0])
-                    print('Correlated psy term')
-
-                    # Transform correlation back to brain space
-                    seed_to_voxel_correlations = np.arctanh(seed_to_voxel_correlations)
-                    print('Transformed correlation')
-
-                    # Transform correlation map back to brain
-                    seed_to_voxel_correlations_img = brain_masker.inverse_transform(seed_to_voxel_correlations.T)
-                    print('Transformed correlation map')
-
-                    all_runs.append(seed_to_voxel_correlations_img)
-
-                mean_fc = image.mean_img(all_runs)
-                
-                # Ensure output directory exists
-                out_dir = f'{study_dir}/{ss}/ses-01/derivatives/fc'
-                os.makedirs(out_dir, exist_ok=True)
-                print(f'Output directory ensured at {out_dir}')
-                
-                #save    
-                nib.save(mean_fc, f'{out_dir}/{ss}_{rr}_{tsk}_ppi.nii.gz')
-                print (f'{out_dir}/{ss}_{rr}_{tsk}_ppi.nii.gz') #added for next run
-                nib.save(mean_fc, f'{out_dir}/{ss}_{rr}_{tsk}_fc_4FC.nii.gz')
-
-conduct_ppi()
+# Run the PPI analysis
+conduct_ppi(sub, roi)
