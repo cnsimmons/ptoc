@@ -75,8 +75,8 @@ for rn1 in range(1,run_num+1):
         
 
 #set5  
-rois = ['LO', 'aIPS', 'V1']
-subs = ['sub-096','sub-097','sub-107']
+rois = ['aIPS']
+subs = ['sub-095']
 
 '''run info'''
 run_num =3
