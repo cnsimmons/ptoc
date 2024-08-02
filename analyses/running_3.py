@@ -42,10 +42,6 @@ suf = params.suf
 #mni = load_mni152_brain_mask()
 
 '''exp info'''
-#load subject info
-sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 results_dir = '/user_data/csimmon2/GitHub_Repos/ptoc/results'
@@ -75,8 +71,8 @@ for rn1 in range(1,run_num+1):
         
 
 #set3
-rois = ['LO', 'aIPS', 'V1']
-subs = ['sub-083','sub-084','sub-085','sub-087']
+rois = ['V1']
+subs = ['sub-095']
 
 '''run info'''
 run_num =3

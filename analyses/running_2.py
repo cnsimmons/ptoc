@@ -79,8 +79,8 @@ for rn1 in range(1,run_num+1):
 #subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 
 #set2
-rois = ['LO', 'aIPS', 'V1']
-subs = ['sub-067','sub-068','sub-071']
+rois = ['V1']
+subs = ['sub-087']
 
 '''run info'''
 run_num =3
