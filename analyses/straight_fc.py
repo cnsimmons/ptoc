@@ -1,3 +1,4 @@
+##FUNCTIONAL FC JUST NEED TO CHECK DIFF BETWEEN ROI AND CONSISTENCY WITH A SECOND SUBJECT
 import os
 import pandas as pd
 import numpy as np
@@ -8,14 +9,7 @@ from nilearn.maskers import NiftiMasker, NiftiSpheresMasker
 from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
 from nilearn.glm.first_level import compute_regressor
 import nibabel as nib
-
-curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
-
 import sys
-sys.path.insert(0,curr_dir)
-import os
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import seaborn as sns
@@ -24,8 +18,11 @@ import scipy
 import statsmodels.api as s
 from sklearn import metrics
 from plotnine import *
-
 import ptoc_params as params
+
+curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
+sys.path.insert(0,curr_dir)
+
 data_dir = params.data_dir
 results_dir = params.results_dir
 fig_dir = params.fig_dir
@@ -35,8 +32,8 @@ task_info = params.task_info
 
 #sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 #subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-subs = ['sub-025']
-rois = ['LO']
+subs = ['sub-025','sub-038','sub-064']
+rois = ['LO','V1']
 
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
@@ -142,7 +139,7 @@ def conduct_ppi():
             for rr in rois:
                 print (f"Processing ROI: {rr}")
                 
-                ppi_file = f'{out_dir}/{ss}_{rr}_{tsk}_ppi_straight.nii.gz'
+                ppi_file = f'{out_dir}/{ss}_{rr}_{tsk}_ppi.nii.gz'
                 
                 if os.path.exists(ppi_file):
                     print(f'Files {ppi_file} and already exist. Skipping...')
@@ -227,7 +224,6 @@ def conduct_ppi():
                 nib.save(mean_ppi, ppi_file)
                 print(f'Saved PPI result: {ppi_file}')
                 print(f"PPI correlation stats for ROI {rr} - Min: {seed_to_voxel_correlations_ppi.min()}, Max: {seed_to_voxel_correlations_ppi.max()}, Mean: {np.mean(seed_to_voxel_correlations_ppi)}")
-#conduct_ppi()
 
 def conduct_fc():
     for ss in subs:
@@ -247,7 +243,7 @@ def conduct_fc():
             for rr in rois:
                 print(f"Processing ROI: {rr}")
                 
-                fc_file = f'{out_dir}/{ss}_{rr}_{tsk}_fc_straight.nii.gz'
+                fc_file = f'{out_dir}/{ss}_{rr}_{tsk}_fc.nii.gz'
                 
                 if os.path.exists(fc_file):
                     print(f'File {fc_file} already exists. Skipping...')
@@ -300,4 +296,5 @@ def conduct_fc():
                 print(f'Saved FC result: {fc_file}')
 
 # Call the function
+#conduct_ppi()
 conduct_fc()
