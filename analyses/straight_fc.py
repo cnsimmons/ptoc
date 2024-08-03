@@ -1,6 +1,3 @@
-###PPI FUNCTIONAL BUT FC IS NOT SEE STRAIGHT_FC FOR FC FUNCTION TROUBLESHOOOTING###
-
-
 import os
 import pandas as pd
 import numpy as np
@@ -39,7 +36,7 @@ task_info = params.task_info
 #sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 #subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 subs = ['sub-025']
-rois = ['V1']
+rois = ['LO']
 
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
@@ -146,14 +143,12 @@ def conduct_ppi():
                 print (f"Processing ROI: {rr}")
                 
                 ppi_file = f'{out_dir}/{ss}_{rr}_{tsk}_ppi_straight.nii.gz'
-                fc_file = f'{out_dir}/{ss}_{rr}_{tsk}_fc_straight.nii.gz'
                 
-                if os.path.exists(ppi_file) and os.path.exists(fc_file):
-                    print(f'Files {ppi_file} and {fc_file} already exist. Skipping...')
+                if os.path.exists(ppi_file):
+                    print(f'Files {ppi_file} and already exist. Skipping...')
                     continue
                     
                 all_runs_ppi = []
-                all_runs_fc = []
                 
                 for rcn, rc in enumerate(run_combos):  # run combos
                 
@@ -223,50 +218,86 @@ def conduct_ppi():
                     print(f"PPI image stats for {rr}: Min = {np.min(seed_to_voxel_correlations_img_ppi.get_fdata())}, Max = {np.max(seed_to_voxel_correlations_img_ppi.get_fdata())}")
 
                     all_runs_ppi.append(seed_to_voxel_correlations_img_ppi)
+                mean_ppi = image.mean_img(all_runs_ppi)
+                
+                print(f"Final PPI stats for {rr}: Min = {np.min(mean_ppi.get_fdata())}, Max = {np.max(mean_ppi.get_fdata())}")
+                print(f"Final PPI image stats for ROI {rr} - Min: {mean_ppi.get_fdata().min()}, Max: {mean_ppi.get_fdata().max()}, Mean: {np.mean(mean_ppi.get_fdata())}")
+
+                # Save PPI results
+                nib.save(mean_ppi, ppi_file)
+                print(f'Saved PPI result: {ppi_file}')
+                print(f"PPI correlation stats for ROI {rr} - Min: {seed_to_voxel_correlations_ppi.min()}, Max: {seed_to_voxel_correlations_ppi.max()}, Mean: {np.mean(seed_to_voxel_correlations_ppi)}")
+#conduct_ppi()
+
+def conduct_fc():
+    for ss in subs:
+        print(ss)
+        sub_dir = f'{study_dir}/{ss}/ses-01/'
+        roi_dir = f'{sub_dir}/derivatives/rois'
+        raw_dir = params.raw_dir
+        temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
+        
+        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords.csv')
+        
+        out_dir = f'{study_dir}/{ss}/ses-01/derivatives/fc'
+        os.makedirs(out_dir, exist_ok=True)
+        print(f'Output directory ensured at {out_dir}')
+
+        for tsk in ['loc']:
+            for rr in rois:
+                print(f"Processing ROI: {rr}")
+                
+                fc_file = f'{out_dir}/{ss}_{rr}_{tsk}_fc_straight.nii.gz'
+                
+                if os.path.exists(fc_file):
+                    print(f'File {fc_file} already exists. Skipping...')
+                    continue
                     
-                    ##FC SECTION
-                    # Extract brain time series
+                all_runs_fc = []
+                
+                for rcn, rc in enumerate(run_combos):
+                    curr_coords = roi_coords[(roi_coords['index'] == rcn) & (roi_coords['task'] == tsk) & (roi_coords['roi'] == rr)]
+                    print(f"Using coordinates for ROI {rr}: {curr_coords[['x', 'y', 'z']].values.tolist()[0]}")
+                    
+                    for rn in rc:
+                        filtered_list = []
+                        curr_run = image.load_img(f'{temp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz') 
+                        curr_run = image.clean_img(curr_run, standardize=True)
+                        filtered_list.append(curr_run)    
+                    print('Loaded filtered data')
+                    
+                    img4d = image.concat_imgs(filtered_list)
+                    print('Loaded 4D image') 
+                    
+                    phys = extract_roi_sphere(img4d, curr_coords[['x', 'y', 'z']].values.tolist()[0])
+                    print(f"Phys stats for {rr}: Mean = {np.mean(phys)}, Std = {np.std(phys)}")
+                    
+                    # Ensure phys length matches
+                    if phys.shape[0] > 184:
+                        phys = phys[:184]
+                    
+                    # FC SECTION
                     brain_time_series_fc = brain_masker.fit_transform(img4d)
                     print(f"FC brain time series stats for {rr}: Mean = {np.mean(brain_time_series_fc)}, Std = {np.std(brain_time_series_fc)}")
 
-                    # Correlate ROI time series (phys) with whole-brain time series for FC
                     seed_to_voxel_correlations_fc = np.dot(brain_time_series_fc.T, phys) / phys.shape[0]
-                    seed_to_voxel_correlations_fc = seed_to_voxel_correlations_fc.ravel()  # Ensure it's a 1D array
+                    seed_to_voxel_correlations_fc = seed_to_voxel_correlations_fc.ravel()
                     print(f"FC correlation stats for {rr}: Min = {np.min(seed_to_voxel_correlations_fc)}, Max = {np.max(seed_to_voxel_correlations_fc)}")
 
-                    # Transform FC correlation back to brain space
                     seed_to_voxel_correlations_fc = np.arctanh(seed_to_voxel_correlations_fc)
                     print('Transformed FC correlation')
 
-                    # Transform FC correlation map back to brain
                     seed_to_voxel_correlations_img_fc = brain_masker.inverse_transform(seed_to_voxel_correlations_fc)
                     print(f"FC image stats for {rr}: Min = {np.min(seed_to_voxel_correlations_img_fc.get_fdata())}, Max = {np.max(seed_to_voxel_correlations_img_fc.get_fdata())}")
 
                     all_runs_fc.append(seed_to_voxel_correlations_img_fc)
-                    
-                mean_ppi = image.mean_img(all_runs_ppi)
-                print(f"FC all_runs stats for {rr}: Length = {len(all_runs_fc)}, First image min = {np.min(all_runs_fc[0].get_fdata())}, First image max = {np.max(all_runs_fc[0].get_fdata())}")
+                
                 mean_fc = image.mean_img(all_runs_fc)
                 print(f"FC mean image stats for {rr}: Min = {np.min(mean_fc.get_fdata())}, Max = {np.max(mean_fc.get_fdata())}")
-
                 
-                print(f"Final PPI stats for {rr}: Min = {np.min(mean_ppi.get_fdata())}, Max = {np.max(mean_ppi.get_fdata())}")
-                print(f"Final FC stats for {rr}: Min = {np.min(mean_fc.get_fdata())}, Max = {np.max(mean_fc.get_fdata())}")
-                
-                print(f"Final PPI image stats for ROI {rr} - Min: {mean_ppi.get_fdata().min()}, Max: {mean_ppi.get_fdata().max()}, Mean: {np.mean(mean_ppi.get_fdata())}")
-                print(f"Final FC image stats for ROI {rr} - Min: {mean_fc.get_fdata().min()}, Max: {mean_fc.get_fdata().max()}, Mean: {np.mean(mean_fc.get_fdata())}")
-                
-                # Save PPI results
-                nib.save(mean_ppi, ppi_file)
-                print(f'Saved PPI result: {ppi_file}')
-                
-                # Save FC results
                 print(f"Saving FC file for {rr}: {fc_file}")
                 nib.save(mean_fc, fc_file)
                 print(f'Saved FC result: {fc_file}')
-                
-                print(f"PPI correlation stats for ROI {rr} - Min: {seed_to_voxel_correlations_ppi.min()}, Max: {seed_to_voxel_correlations_ppi.max()}, Mean: {np.mean(seed_to_voxel_correlations_ppi)}")
-                print(f"FC correlation stats for ROI {rr} - Min: {seed_to_voxel_correlations_fc.min()}, Max: {seed_to_voxel_correlations_fc.max()}, Mean: {np.mean(seed_to_voxel_correlations_fc)}")
 
-conduct_ppi()
-
+# Call the function
+conduct_fc()
