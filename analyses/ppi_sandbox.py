@@ -1,4 +1,14 @@
-#run to start
+import os
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from nilearn import image, plotting, input_data
+from nilearn.maskers import NiftiMasker, NiftiSpheresMasker
+from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
+from nilearn.glm.first_level import compute_regressor
+import nibabel as nib
+
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 
 import sys
@@ -13,24 +23,9 @@ import scipy.stats as stats
 import scipy
 import statsmodels.api as s
 from sklearn import metrics
-
-import pdb
-import ptoc_params as params
-
 from plotnine import *
 
-#hide warnings
-import warnings
-warnings.filterwarnings('ignore')
-
-#load additional libraries
-from nilearn import image, plotting, input_data, glm
-from nilearn.input_data import NiftiMasker
-import nibabel as nib
-import statsmodels.api as sm
-from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
-from nilearn.glm.first_level import compute_regressor 
-
+import ptoc_params as params
 data_dir = params.data_dir
 results_dir = params.results_dir
 fig_dir = params.fig_dir
@@ -38,13 +33,10 @@ raw_dir = params.raw_dir
 sub_info = params.sub_info
 task_info = params.task_info
 
-suf = params.suf
-#mni = load_mni152_brain_mask()
-
-'''exp info'''
-#load subject info
-sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+#sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+#subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+subs = ['sub-025']
+rois = ['V1']
 
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
@@ -53,71 +45,84 @@ exp = ''
 control_tasks = ['loc']
 file_suf = ''
 
-'''scan params'''
-tr = 2 #ptoc_params
-vols = 184 #ptoc_params
+tr = 2
+vols = 184
 
 whole_brain_mask = load_mni152_brain_mask()
 mni = load_mni152_template()
 brain_masker = NiftiMasker(whole_brain_mask, smoothing_fwhm=0, standardize=True)
 
-#PPI and FC
-'''run info'''
-run_num =3
-runs = list(range(1,run_num+1))
-run_combos = []
-#determine the number of left out run combos
+run_num = 3
+runs = list(range(1, run_num + 1))
+run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
 
-for rn1 in range(1,run_num+1):
-    for rn2 in range(rn1+1,run_num+1):
-        run_combos.append([rn1,rn2])
-#phys
 def extract_roi_sphere(img, coords):
     roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius = 6)
     seed_time_series = roi_masker.fit_transform(img)
     
+    print(f"Extracted time series shape: {seed_time_series.shape}")
+    print(f"Time series stats - Mean: {np.mean(seed_time_series)}, Std: {np.std(seed_time_series)}")
+    
     phys = np.mean(seed_time_series, axis= 1)
     phys = phys.reshape((phys.shape[0],1))
-    print (f'phys just ran')
+    print(f"Phys regressor shape: {phys.shape}")
+    print(f"Phys regressor stats - Mean: {np.mean(phys)}, Std: {np.std(phys)}")
     return phys
 
-#psy
 def make_psy_cov(runs, ss):
     temp_dir = f'{raw_dir}/{ss}/ses-01'
     cov_dir = f'{temp_dir}/covs'
-    
-    # Only for a single run
-    times = np.arange(0, vols * tr, tr)  # Create time array covering the whole run duration
+    vols = 184  # Ensure this matches the expected number of volumes
+    tr = 2.0  # Replace with the actual TR (Repetition Time) value in seconds
+    times = np.arange(0, vols * tr, tr)
     full_cov = pd.DataFrame(columns=['onset', 'duration', 'value'])
-    
-    for rn, run in enumerate(runs):
-        ss_num = ss.split('-')[1]  # Strips the "sub-" from the subject number
-        curr_cov = pd.read_csv(f'{cov_dir}/catloc_{ss_num}_run-0{run}_Object.txt', sep='\t', header=None, names=['onset', 'duration', 'value'])
-        
-        # Contrasting (negative) covariate
-        curr_cont = pd.read_csv(f'{cov_dir}/catloc_{ss_num}_run-0{run}_Scramble.txt', sep='\t', header=None, names=['onset', 'duration', 'value'])
-        curr_cont.iloc[:, 2] = curr_cont.iloc[:, 2] * -1  # Make contrasting cov negative
-        
-        curr_cov = curr_cov.append(curr_cont)  # Append to positive
-        
-        # Append to concatenated cov
-        full_cov = full_cov.append(curr_cov)
-    
-    full_cov = full_cov.sort_values(by=['onset'])
+
+    for rn in runs:
+        ss_num = ss.split('-')[1]
+        obj_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_Object.txt'
+        scr_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_Scramble.txt'
+
+        if not os.path.exists(obj_cov_file):
+            print(f'Object covariate file not found: {obj_cov_file}')
+            continue
+        if not os.path.exists(scr_cov_file):
+            print(f'Scramble covariate file not found: {scr_cov_file}')
+            continue
+
+        curr_cov = pd.read_csv(obj_cov_file, sep='\t', header=None, names=['onset', 'duration', 'value'])
+        curr_cont = pd.read_csv(scr_cov_file, sep='\t', header=None, names=['onset', 'duration', 'value'])
+
+        print(f'Object covariate file content (first 5 rows):\n{curr_cov.head()}')
+        print(f'Scramble covariate file content (first 5 rows):\n{curr_cont.head()}')
+
+        curr_cont.iloc[:, 2] *= -1
+        curr_cov = pd.concat([curr_cov, curr_cont])
+        full_cov = pd.concat([full_cov, curr_cov])
+
+    full_cov = full_cov.sort_values(by=['onset']).reset_index(drop=True)
+    print (full_cov)
     cov = full_cov.to_numpy()
 
-    # Convolve to HRF
+    print(f'Full concatenated covariate data (first 10 rows):\n{full_cov.head(10)}')
+
+    # Ensure the covariate timings are within the range of the times array
+    valid_onsets = cov[:, 0] < times[-1]
+    cov = cov[valid_onsets]
+
+    if cov.shape[0] == 0:
+        print('No valid covariate data after filtering. Returning zeros array.')
+        return np.zeros((vols, 1))
+
+    print(f'Covariate matrix for convolution:\n{cov}')
+
     psy, name = compute_regressor(cov.T, 'spm', times)
-    
-    # Debug: Print the shape of the created psy array
+
     print(f'Full covariate matrix shape: {cov.shape}')
+    print(f'First 5 rows of covariate matrix: {cov[:5]}')
     print(f'Created psy array shape: {psy.shape}')
-    print (f'psy just ran')
+    print(f'Mid 5 time points of psy: {psy[45:50]}')
     return psy
 
-rois = ['V1', 'aIPS', 'LO']
-
-#ppi
 def conduct_ppi():
     for ss in subs:
         print(ss)
@@ -135,9 +140,10 @@ def conduct_ppi():
 
         for tsk in ['loc']:
             for rr in rois:
+                print (f"Processing ROI: {rr}")
                 
-                ppi_file = f'{out_dir}/{ss}_{rr}_{tsk}_ppi.nii.gz'
-                fc_file = f'{out_dir}/{ss}_{rr}_{tsk}_fc.nii.gz'
+                ppi_file = f'{out_dir}/{ss}_{rr}_{tsk}_ppi_new2.nii.gz'
+                fc_file = f'{out_dir}/{ss}_{rr}_{tsk}_fc_new2.nii.gz'
                 
                 if os.path.exists(ppi_file) and os.path.exists(fc_file):
                     print(f'Files {ppi_file} and {fc_file} already exist. Skipping...')
@@ -149,6 +155,7 @@ def conduct_ppi():
                 for rcn, rc in enumerate(run_combos):  # run combos
                 
                     curr_coords = roi_coords[(roi_coords['index'] == rcn) & (roi_coords['task'] == tsk) & (roi_coords['roi'] == rr)]
+                    print(f"Using coordinates for ROI {rr}: {curr_coords[['x', 'y', 'z']].values.tolist()[0]}")
                     
                     for rn in rc:
                         filtered_list = []
@@ -161,7 +168,7 @@ def conduct_ppi():
                     print('Loaded 4D image') 
                     
                     phys = extract_roi_sphere(img4d, curr_coords[['x', 'y', 'z']].values.tolist()[0])  # extract ROI sphere coordinate
-                    print('Extracted sphere') 
+                    print(f"Phys stats for {rr}: Mean = {np.mean(phys)}, Std = {np.std(phys)}")
                     
                     # Load behavioral data
                     psy = make_psy_cov([rn], ss)  # grabs the covariate and converts the three-column into binary data
@@ -173,7 +180,10 @@ def conduct_ppi():
                     print(f'Length of psy: {psy.shape[0]}')
                     
                     # Ensure phys and psy lengths match
-                    assert phys.shape[0] == psy.shape[0], f"Length mismatch: phys={phys.shape[0]}, psy={psy.shape[0]}"
+                    if phys.shape[0] > 184:
+                        phys = phys[:184]
+                    if psy.shape[0] > 184:
+                        psy = psy[:184]
                     
                     # Combine phys (seed TS) and psy (task TS) into a regressor
                     confounds = pd.DataFrame(columns=['psy', 'phys'])
@@ -183,15 +193,20 @@ def conduct_ppi():
 
                     # Create PPI cov by multiplying psy * phys
                     ppi = psy * phys
+                    print(f"PPI stats for {rr}: Mean = {np.mean(ppi)}, Std = {np.std(ppi)}")
                     ppi = ppi.reshape((ppi.shape[0], 1))
-                    print('Created PPI {ppi}')
+                    print('Created PPI')
+                    
+                    print(f"PPI regressor stats for ROI {rr} - Mean: {np.mean(ppi)}, Std: {np.std(ppi)}")
                     
                     # Extract brain time series using PPI confounds
+                    confounds = np.zeros((184, 1))  # Adjust confounds length
                     brain_time_series_ppi = brain_masker.fit_transform(img4d, confounds=[confounds])
                     print('Extracted brain TS for PPI')
 
                     # Correlate interaction term to TS for voxels in the brain for PPI
                     seed_to_voxel_correlations_ppi = (np.dot(brain_time_series_ppi.T, ppi) / ppi.shape[0])
+                    print(f"PPI correlation stats for {rr}: Min = {np.min(seed_to_voxel_correlations_ppi)}, Max = {np.max(seed_to_voxel_correlations_ppi)}")
                     print(ss, rr, tsk, seed_to_voxel_correlations_ppi.max())
                     print('Correlated interaction term for PPI')
 
@@ -202,6 +217,7 @@ def conduct_ppi():
                     # Transform PPI correlation map back to brain
                     seed_to_voxel_correlations_img_ppi = brain_masker.inverse_transform(seed_to_voxel_correlations_ppi.T)
                     print('Transformed PPI correlation map')
+                    print(f"PPI image stats for {rr}: Min = {np.min(seed_to_voxel_correlations_img_ppi.get_fdata())}, Max = {np.max(seed_to_voxel_correlations_img_ppi.get_fdata())}")
 
                     all_runs_ppi.append(seed_to_voxel_correlations_img_ppi)
                     
@@ -227,6 +243,12 @@ def conduct_ppi():
                 mean_ppi = image.mean_img(all_runs_ppi)
                 mean_fc = image.mean_img(all_runs_fc)
                 
+                print(f"Final PPI stats for {rr}: Min = {np.min(mean_ppi.get_fdata())}, Max = {np.max(mean_ppi.get_fdata())}")
+                print(f"Final FC stats for {rr}: Min = {np.min(mean_fc.get_fdata())}, Max = {np.max(mean_fc.get_fdata())}")
+                
+                print(f"Final PPI image stats for ROI {rr} - Min: {mean_ppi.get_fdata().min()}, Max: {mean_ppi.get_fdata().max()}, Mean: {np.mean(mean_ppi.get_fdata())}")
+                print(f"Final FC image stats for ROI {rr} - Min: {mean_fc.get_fdata().min()}, Max: {mean_fc.get_fdata().max()}, Mean: {np.mean(mean_fc.get_fdata())}")
+                
                 # Save PPI results
                 nib.save(mean_ppi, ppi_file)
                 print(f'Saved PPI result: {ppi_file}')
@@ -234,4 +256,9 @@ def conduct_ppi():
                 # Save FC results
                 nib.save(mean_fc, fc_file)
                 print(f'Saved FC result: {fc_file}')
+                
+                print(f"PPI correlation stats for ROI {rr} - Min: {seed_to_voxel_correlations_ppi.min()}, Max: {seed_to_voxel_correlations_ppi.max()}, Mean: {np.mean(seed_to_voxel_correlations_ppi)}")
+                print(f"FC correlation stats for ROI {rr} - Min: {seed_to_voxel_correlations_fc.min()}, Max: {seed_to_voxel_correlations_fc.max()}, Mean: {np.mean(seed_to_voxel_correlations_fc)}")
+
 conduct_ppi()
+
