@@ -32,8 +32,7 @@ task_info = params.task_info
 #sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 #subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 subs = ['sub-025','sub-064']
-#rois = ['LO','V1','aIPS']
-rois = ['LO','V1']
+rois = ['LO','V1','aIPS']
 
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
@@ -296,5 +295,5 @@ def conduct_fc():
                 print(f'Saved FC result: {fc_file}')
 
 # Call the function
-#conduct_ppi()
-conduct_fc()
+conduct_ppi()
+#conduct_fc()

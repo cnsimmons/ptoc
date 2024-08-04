@@ -32,7 +32,6 @@ task_info = params.task_info
 #sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 #subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 subs = ['sub-025','sub-064']
-#rois = ['LO','V1','aIPS']
 rois = ['LO','V1']
 
 study = 'ptoc'
