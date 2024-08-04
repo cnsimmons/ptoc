@@ -22,8 +22,8 @@ raw_dir = params.raw_dir
 
 #sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 #subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-subs = ['sub-107', 'sub-064', 'sub-025']
-rois = ['V1','aIPS','LO']
+subs = ['sub-038', 'sub-057', 'sub-059', 'sub-067'] #set1
+rois = ['V1','aIPS', 'LO']
 run_num = 3
 runs = list(range(1, run_num + 1))
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]

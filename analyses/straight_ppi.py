@@ -1,10 +1,11 @@
-##FUNCTIONAL FC JUST NEED TO CHECK DIFF BETWEEN ROI AND CONSISTENCY WITH A SECOND SUBJECT
+##FUNCTIONAL PPI
 import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from nilearn.maskers import NiftiMasker, NiftiSpheresMasker
+from nilearn import image, input_data
 from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
 from nilearn.glm.first_level import compute_regressor
 import nibabel as nib
@@ -32,7 +33,7 @@ task_info = params.task_info
 #sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 #subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 subs = ['sub-025','sub-064']
-rois = ['LO','V1','aIPS']
+rois = ['aIPS']
 
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
