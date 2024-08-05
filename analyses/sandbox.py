@@ -9,6 +9,7 @@ import nibabel as nib
 from multiprocessing import Pool
 import sys
 import time
+import itertools 
 
 # Import your parameters
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
@@ -17,15 +18,19 @@ import ptoc_params as params
 # Set up directories and parameters
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
-results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
-raw_dir = params.raw_dir
+ptoc_dir = f"/lab_data/behrmannlab/vlad/{study}"
+results_dir = f'/user_data/csimmon2/git_repos/ptoc/results'
+hemispace_dir = f'/lab_data/behrmannlab/vlad/hemispace' 
+raw_dir = params.raw_dir #'/lab_data/behrmannlab/vlad/hemispace'
 
-sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+#sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+#subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 #rois = ['pIPS', 'LO', 'V1'] 
+subs = ['sub-025']
 rois = ['V1']
+
 run_num = 3
-runs = list(range(1, run_num + 1))
+run_combos = list(itertools.combinations(range(1, run_num + 1), 2)) #enumerate runs
 
 whole_brain_mask = load_mni152_brain_mask()
 brain_masker = NiftiMasker(whole_brain_mask, smoothing_fwhm=0, standardize=True)
@@ -39,35 +44,41 @@ def make_psy_cov(runs, ss):
     temp_dir = f'{raw_dir}/{ss}/ses-01'
     cov_dir = f'{temp_dir}/covs'
     vols, tr = 184, 2.0
-    times = np.arange(0, vols * tr, tr)
+    times = np.arange(0, vols * len(runs) * tr, tr)
     full_cov = pd.DataFrame(columns=['onset', 'duration', 'value'])
-
-    for rn in runs:
+    
+    for rn, run in enumerate(runs):
         ss_num = ss.split('-')[1]
-        obj_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_Object.txt'
-        scr_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_Scramble.txt'
-
+        obj_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{run}_Object.txt'
+        scr_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{run}_Scramble.txt'
+        
         if not os.path.exists(obj_cov_file) or not os.path.exists(scr_cov_file):
-            print(f'Covariate file not found for run {rn}')
-            continue
-
+            print(f'Covariate file not found for run {run}')
+            raise FileNotFoundError(f"Missing covariate file for run {run}")
+        
         obj_cov = pd.read_csv(obj_cov_file, sep='\t', header=None, names=['onset', 'duration', 'value'])
         scr_cov = pd.read_csv(scr_cov_file, sep='\t', header=None, names=['onset', 'duration', 'value'])
         scr_cov['value'] *= -1
-        full_cov = pd.concat([full_cov, obj_cov, scr_cov])
-
+        
+        curr_cov = pd.concat([obj_cov, scr_cov])
+        curr_cov['onset'] += rn * vols * tr
+        full_cov = pd.concat([full_cov, curr_cov])
+    
     full_cov = full_cov.sort_values(by=['onset']).reset_index(drop=True)
+    
+    # Check if we have any events outside the expected time range
+    if full_cov['onset'].max() >= times[-1] or full_cov['onset'].min() < 0:
+        raise ValueError("Event onsets are outside the expected time range")
+    
     cov = full_cov.to_numpy()
-    valid_onsets = cov[:, 0] < times[-1]
-    cov = cov[valid_onsets]
-
-    if cov.shape[0] == 0:
-        print('No valid covariate data after filtering. Returning zeros array.')
-        return np.zeros((vols, 1))
-
+    
     psy, _ = compute_regressor(cov.T, 'spm', times)
-    #return psy
-    pass
+    
+    # Ensure psy has exactly vols * len(runs) timepoints
+    if len(psy) != vols * len(runs):
+        raise ValueError(f"Generated psy does not match expected length. Expected {vols * len(runs)}, got {len(psy)}")
+    
+    return psy
 
 def calculate_fc(brain_time_series, phys):
     min_length = min(brain_time_series.shape[0], phys.shape[0])
@@ -79,120 +90,114 @@ def calculate_fc(brain_time_series, phys):
     
     return np.arctanh(correlations)
 
-def conduct_ppi_analysis(img4d, phys, psy, brain_masker):
-    min_length = min(phys.shape[0], psy.shape[0])
-    phys = phys[:min_length]
-    psy = psy[:min_length]
-    
-    design_matrix = pd.DataFrame({
-        'psy': psy.ravel(),
-        'phys': phys.ravel(),
-        'interaction': psy.ravel() * phys.ravel()
-    })
-    
-    brain_time_series = brain_masker.fit_transform(img4d)
-    
-    fmri_glm = FirstLevelModel(t_r=2.0, noise_model='ar1')
-    fmri_glm = fmri_glm.fit(brain_time_series, design_matrix=design_matrix)
-    
-    ppi_contrast = fmri_glm.compute_contrast('interaction')
-    
-    return ppi_contrast.get_fdata()
-
-def check_registration(stat_map, output_file):
-    display = plotting.plot_stat_map(stat_map, threshold=0.01, cut_coords=(0, 0, 0),
-                                     display_mode='ortho', black_bg=False)
-    display.savefig(output_file)
-    display.close()
-
-def visualize_peak_voxel(roi_parcel, peak_coords, output_file):
-    display = plotting.plot_roi(roi_parcel, cut_coords=peak_coords, 
-                                display_mode='ortho', black_bg=False)
-    display.add_markers(peak_coords, marker_color='r', marker_size=100)
-    display.savefig(output_file)
-    display.close()
-
 def find_peak_voxel(roi_parcel, localizer_data):
-    # Implement peak voxel finding logic here
-    # This is a placeholder implementation
-    roi_mask = roi_parcel.get_fdata() > 0
-    combined_data = np.mean([d.get_fdata() for d in localizer_data], axis=0)
-    masked_data = combined_data * roi_mask
-    peak_index = np.unravel_index(np.argmax(masked_data), masked_data.shape)
-    return roi_parcel.affine[:3, :3].dot(peak_index) + roi_parcel.affine[:3, 3]
+    combined_activation = image.math_img('np.sum(np.abs(np.array(img)), axis=3)',
+                                         img=localizer_data)
+    masked_activation = image.math_img('img1 * (img2 > 0)',
+                                       img1=combined_activation,
+                                       img2=roi_parcel)
+    data = masked_activation.get_fdata()
+    peak_idx = np.unravel_index(np.argmax(data), data.shape)
+    peak_coords = nib.affines.apply_affine(masked_activation.affine, peak_idx)
+    return peak_coords
 
-def load_and_preprocess(file_path):
-    img = image.load_img(file_path)
-    return image.clean_img(img, standardize=True)
+def visualize_peak_voxel(anatomical_img, roi_parcel, peak_coords, output_file):
+    display = plotting.plot_anat(anatomical_img, cut_coords=peak_coords)
+    display.add_contours(roi_parcel, levels=[0.5], colors='r')
+    display.add_markers(peak_coords, marker_color='g', marker_size=100)
+    display.savefig(output_file)
+    display.close()
 
-def process_roi(args):
-    ss, rr, tsk, sub_dir, temp_dir, out_dir = args
+def check_roi_registration(roi_img, output_file):
+    """
+    Check the registration of the ROI to MNI space.
     
-    print(f"Processing subject: {ss}, ROI: {rr}, Task: {tsk}")
+    Args:
+    roi_img (Nifti1Image): The ROI image.
+    output_file (str): Path to save the output image.
+    """
+    mni_template = load_mni152_template()
     
-    # Update ROI directory paths
-    roi_dir = f'{sub_dir}/derivatives/rois'
-    parcel_dir = f'{roi_dir}/parcels'
-    
-    # Load localizer data for all runs
-    localizer_data = [load_and_preprocess(f'{temp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz') for rn in range(1, 4)]
-    
-    # Find peak voxel using runs 1 and 2
-    roi_parcel = nib.load(f'{parcel_dir}/{rr}_parcel.nii.gz')
-    peak_coords = find_peak_voxel(roi_parcel, localizer_data[:2])
-    
-    # Visualize peak voxel
-    visualize_peak_voxel(roi_parcel, peak_coords, f'{out_dir}/{ss}_{rr}_peak_voxel.png')
-    
-    # Use run 3 for connectivity analysis
-    img4d = localizer_data[2]
-    
-    # Extract time series from sphere around peak voxel
-    phys = extract_roi_sphere(img4d, peak_coords)
-    
-    brain_time_series = brain_masker.fit_transform(img4d)
-    
-    # FC Analysis
-    fc_correlations = calculate_fc(brain_time_series, phys)
-    fc_img = brain_masker.inverse_transform(fc_correlations)
-    
-    # PPI Analysis
-    psy = make_psy_cov([3], ss)  # Use only run 3
-    ppi_img = brain_masker.inverse_transform(conduct_ppi_analysis(img4d, phys, psy, brain_masker))
-    
-    # Check registration
-    check_registration(fc_img, f'{out_dir}/{ss}_{rr}_{tsk}_fc_reg_check.png')
-    check_registration(ppi_img, f'{out_dir}/{ss}_{rr}_{tsk}_ppi_reg_check.png')
-    
-    return fc_img, ppi_img
+    display = plotting.plot_roi(roi_img, bg_img=mni_template, 
+                                cut_coords=(0, 0, 0), display_mode='ortho',
+                                title="ROI Registration Check")
+    display.savefig(output_file)
+    display.close()
 
 def conduct_analyses():
     start_time = time.time()
     for ss in subs:
         subject_start_time = time.time()
         print(f"Processing subject: {ss}")
-        
-        ptoc_sub_dir = os.path.join(ptoc_dir, f'sub-{ss}', 'ses-01')
-        hemispace_sub_dir = os.path.join(hemispace_dir, f'sub-{ss}')
-        
-        out_dir = os.path.join(ptoc_sub_dir, 'derivatives', 'fc')
+        sub_dir = f'{study_dir}/{ss}/ses-01/'
+        roi_dir = f'{sub_dir}/derivatives/rois'
+        exp = 'loc'
+        exp_dir = f'{sub_dir}/derivatives/fsl/{exp}'
+        out_dir = os.path.join(sub_dir, 'derivatives', 'fc_ppi')
         os.makedirs(out_dir, exist_ok=True)
 
- args_list = []
-        for tsk in ['loc']:
-            for rr in rois:
-                args_list.append((ss, rr, tsk, ptoc_sub_dir, hemispace_sub_dir, out_dir))
+        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords.csv')
 
-        with Pool(processes=8) as pool:  # Adjust the number of processes as needed
-            results = pool.map(process_roi, args_list)
-
-        # Save results
-        for (ss, rr, tsk, *_), (fc_img, ppi_img) in zip(args_list, results):
-            nib.save(fc_img, os.path.join(out_dir, f'{ss}_{rr}_{tsk}_fc.nii.gz'))
-            nib.save(ppi_img, os.path.join(out_dir, f'{ss}_{rr}_{tsk}_ppi.nii.gz'))
-            print(f'Saved FC and PPI results for {ss}, {rr}')
+        for rr in rois:
+            all_ppi_runs = []
+            all_fc_runs = []
             
-            subject_end_time = time.time()
+            # Check ROI registration
+            roi_img = nib.load(os.path.join(roi_dir, 'parcels', f'{rr}.nii.gz'))
+            check_roi_registration(roi_img, os.path.join(out_dir, f'{ss}_{rr}_registration_check.png'))
+            
+            for rcn, rc in enumerate(run_combos):
+                curr_coords = roi_coords[(roi_coords['index'] == rcn) & 
+                                         (roi_coords['task'] == exp) & 
+                                         (roi_coords['roi'] == rr)]
+
+                # Load localizer data for peak voxel finding
+                localizer_data = [
+                    image.load_img(f'{exp_dir}/run-0{rn}/1stLevel.feat/stats/zstat1.nii.gz')
+                    for rn in rc
+                ]
+                
+                roi_parcel = nib.load(os.path.join(roi_dir, 'parcels', f'{rr}.nii.gz'))
+                peak_coords = find_peak_voxel(roi_parcel, localizer_data)
+                
+                # Visualize peak voxel
+                anat_img = nib.load(os.path.join(hemispace_dir, ss, 'ses-01', 'anat', f'{ss}_ses-01_T1w.nii.gz'))
+                visualize_peak_voxel(anat_img, roi_parcel, peak_coords, 
+                                     os.path.join(out_dir, f'{ss}_{rr}_rc{rc[0]}{rc[1]}_peak_voxel.png'))
+
+                # Use the held-out run for connectivity analysis
+                held_out_run = list(set(range(1, 4)) - set(rc))[0]
+                img4d = image.load_img(f'{exp_dir}/run-0{held_out_run}/1stLevel.feat/filtered_func_data_reg.nii.gz')
+                img4d = image.clean_img(img4d, standardize=True)
+
+                phys = extract_roi_sphere(img4d, peak_coords)
+                psy = make_psy_cov([held_out_run], ss)
+
+                # FC Analysis
+                brain_time_series = brain_masker.fit_transform(img4d)
+                fc_correlations = calculate_fc(brain_time_series, phys)
+                fc_img = brain_masker.inverse_transform(fc_correlations)
+                all_fc_runs.append(fc_img)
+
+                # PPI Analysis
+                confounds = pd.DataFrame({'psy': psy[:,0], 'phys': phys[:,0]})
+                ppi = psy * phys
+                ppi = ppi.reshape((ppi.shape[0], 1))
+                brain_time_series = brain_masker.fit_transform(img4d, confounds=confounds)
+                seed_to_voxel_correlations = (np.dot(brain_time_series.T, ppi) / ppi.shape[0])
+                seed_to_voxel_correlations = np.arctanh(seed_to_voxel_correlations)
+                ppi_img = brain_masker.inverse_transform(seed_to_voxel_correlations.T)
+                all_ppi_runs.append(ppi_img)
+
+                print(f"{ss}, {rr}, {exp}, RC: {rc}, PPI max: {seed_to_voxel_correlations.max()}")
+
+            mean_ppi = image.mean_img(all_ppi_runs)
+            mean_fc = image.mean_img(all_fc_runs)
+            
+            nib.save(mean_ppi, os.path.join(out_dir, f'{ss}_{rr}_{exp}_ppi.nii.gz'))
+            nib.save(mean_fc, os.path.join(out_dir, f'{ss}_{rr}_{exp}_fc.nii.gz'))
+        
+        subject_end_time = time.time()
         print(f"Finished processing subject {ss}. Time taken: {(subject_end_time - subject_start_time) / 60:.2f} minutes")
     
     end_time = time.time()
