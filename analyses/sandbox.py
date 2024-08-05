@@ -7,7 +7,13 @@ from nilearn.datasets import load_mni152_brain_mask
 from nilearn.glm.first_level import compute_regressor, FirstLevelModel
 import nibabel as nib
 from multiprocessing import Pool
+import sys
+import time
 
+# Import your parameters
+curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
+sys.path.insert(0, curr_dir)
+import ptoc_params as params
 # Set up directories and parameters
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
@@ -158,8 +164,10 @@ def process_roi(args):
     return fc_img, ppi_img
 
 def conduct_analyses():
+    start_time = time.time()
     for ss in subs:
-        print(f"Processing subject: {ss}")
+        subject_start_time = time.time()
+        print(f"Starting processing for subject: {ss}")
         sub_dir = f'{study_dir}/{ss}/ses-01/'
         temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
         
@@ -176,9 +184,15 @@ def conduct_analyses():
 
         # Save results
         for (ss, rr, tsk, *_), (fc_img, ppi_img) in zip(args_list, results):
-            nib.save(fc_img, f'{out_dir}/{ss}_{rr}_{tsk}_fc.nii.gz')
-            nib.save(ppi_img, f'{out_dir}/{ss}_{rr}_{tsk}_ppi.nii.gz')
+            nib.save(fc_img, f'{out_dir}/{ss}_{rr}_{tsk}_fc_sandbox.nii.gz')
+            nib.save(ppi_img, f'{out_dir}/{ss}_{rr}_{tsk}_ppi_sandbox.nii.gz')
             print(f'Saved FC and PPI results for {ss}, {rr}')
+            
+            subject_end_time = time.time()
+        print(f"Finished processing subject {ss}. Time taken: {(subject_end_time - subject_start_time) / 60:.2f} minutes")
+    
+    end_time = time.time()
+    print(f"Total processing time: {(end_time - start_time) / 3600:.2f} hours")
 
 if __name__ == "__main__":
     conduct_analyses()
