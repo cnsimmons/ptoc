@@ -1,41 +1,32 @@
 import os
 import pandas as pd
 import numpy as np
-from nilearn import image, input_data
+from nilearn import image, input_data, plotting
 from nilearn.maskers import NiftiMasker
 from nilearn.datasets import load_mni152_brain_mask
-from nilearn.glm.first_level import compute_regressor
+from nilearn.glm.first_level import compute_regressor, FirstLevelModel
 import nibabel as nib
-import sys
 from multiprocessing import Pool
-
-# Import your parameters
-curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
-sys.path.insert(0, curr_dir)
-import ptoc_params as params
 
 # Set up directories and parameters
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
-results_dir = '/user_data/csimmon2/GitHub_Repos/ptoc/results'
+results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
-#sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-#subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-subs = ['sub-064']
-rois = ['pIPS', 'LO', 'V1']
+sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+rois = ['pIPS', 'LO', 'V1'] 
 run_num = 3
 runs = list(range(1, run_num + 1))
-run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
 
 whole_brain_mask = load_mni152_brain_mask()
 brain_masker = NiftiMasker(whole_brain_mask, smoothing_fwhm=0, standardize=True)
 
-def extract_roi_sphere(img, coords):
-    roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
+def extract_roi_sphere(img, coords, radius=6):
+    roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=radius)
     seed_time_series = roi_masker.fit_transform(img)
-    phys = np.mean(seed_time_series, axis=1).reshape(-1, 1)
-    return phys
+    return np.mean(seed_time_series, axis=1).reshape(-1, 1)
 
 def make_psy_cov(runs, ss):
     temp_dir = f'{raw_dir}/{ss}/ses-01'
@@ -68,61 +59,109 @@ def make_psy_cov(runs, ss):
         return np.zeros((vols, 1))
 
     psy, _ = compute_regressor(cov.T, 'spm', times)
-    return psy
+    #return psy
+    pass
 
-def conduct_ppi_analysis(img4d, phys, psy, brain_masker, coords):
+def calculate_fc(brain_time_series, phys):
+    min_length = min(brain_time_series.shape[0], phys.shape[0])
+    brain_time_series = brain_time_series[:min_length]
+    phys = phys[:min_length]
+    
+    correlations = np.array([np.corrcoef(phys.ravel(), voxel_ts)[0,1] 
+                             for voxel_ts in brain_time_series.T])
+    
+    return np.arctanh(correlations)
+
+def conduct_ppi_analysis(img4d, phys, psy, brain_masker):
     min_length = min(phys.shape[0], psy.shape[0])
     phys = phys[:min_length]
     psy = psy[:min_length]
     
-    confounds = pd.DataFrame({'psy': psy.ravel(), 'phys': phys.ravel()})
+    design_matrix = pd.DataFrame({
+        'psy': psy.ravel(),
+        'phys': phys.ravel(),
+        'interaction': psy.ravel() * phys.ravel()
+    })
     
-    ppi = psy * phys
+    brain_time_series = brain_masker.fit_transform(img4d)
     
-    brain_time_series = brain_masker.fit_transform(img4d, confounds=confounds)
+    fmri_glm = FirstLevelModel(t_r=2.0, noise_model='ar1')
+    fmri_glm = fmri_glm.fit(brain_time_series, design_matrix=design_matrix)
     
-    ppi_correlations = np.dot(brain_time_series.T, ppi) / ppi.shape[0]
-    ppi_correlations = np.arctanh(ppi_correlations.ravel())
+    ppi_contrast = fmri_glm.compute_contrast('interaction')
     
-    ppi_img = brain_masker.inverse_transform(ppi_correlations)
-    
-    return ppi_img
+    return ppi_contrast.get_fdata()
+
+def check_registration(stat_map, output_file):
+    display = plotting.plot_stat_map(stat_map, threshold=0.01, cut_coords=(0, 0, 0),
+                                     display_mode='ortho', black_bg=False)
+    display.savefig(output_file)
+    display.close()
+
+def visualize_peak_voxel(roi_parcel, peak_coords, output_file):
+    display = plotting.plot_roi(roi_parcel, cut_coords=peak_coords, 
+                                display_mode='ortho', black_bg=False)
+    display.add_markers(peak_coords, marker_color='r', marker_size=100)
+    display.savefig(output_file)
+    display.close()
+
+def find_peak_voxel(roi_parcel, localizer_data):
+    # Implement peak voxel finding logic here
+    # This is a placeholder implementation
+    roi_mask = roi_parcel.get_fdata() > 0
+    combined_data = np.mean([d.get_fdata() for d in localizer_data], axis=0)
+    masked_data = combined_data * roi_mask
+    peak_index = np.unravel_index(np.argmax(masked_data), masked_data.shape)
+    return roi_parcel.affine[:3, :3].dot(peak_index) + roi_parcel.affine[:3, 3]
+
+def load_and_preprocess(file_path):
+    img = image.load_img(file_path)
+    return image.clean_img(img, standardize=True)
 
 def process_roi(args):
-    ss, rr, tsk, rc, roi_coords, sub_dir, temp_dir, out_dir = args
+    ss, rr, tsk, sub_dir, temp_dir, out_dir = args
     
-    print(f"Processing subject: {ss}, ROI: {rr}, Task: {tsk}, Runs: {rc}")
+    print(f"Processing subject: {ss}, ROI: {rr}, Task: {tsk}")
     
-    curr_coords = roi_coords[(roi_coords['index'] == rc[0]) & (roi_coords['task'] == tsk) & (roi_coords['roi'] == rr)]
-    coords = curr_coords[['x', 'y', 'z']].values.tolist()[0]
+    roi_dir = f'{sub_dir}derivatives/rois'
     
-    filtered_list = [image.clean_img(image.load_img(f'{temp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz'), standardize=True) for rn in rc]
-    img4d = image.concat_imgs(filtered_list)
+    # Load localizer data for all runs
+    localizer_data = [load_and_preprocess(f'{temp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz') for rn in range(1, 4)]
     
-    phys = extract_roi_sphere(img4d, coords)
+    # Find peak voxel using runs 1 and 2
+    roi_parcel = nib.load(f'{roi_dir}/{rr}_parcel.nii.gz')
+    peak_coords = find_peak_voxel(roi_parcel, localizer_data[:2])
     
-    if phys.shape[0] > 184 * len(rc):
-        phys = phys[:184 * len(rc)]
+    # Visualize peak voxel
+    visualize_peak_voxel(roi_parcel, peak_coords, f'{out_dir}/{ss}_{rr}_peak_voxel.png')
     
-    psy = make_psy_cov(rc, ss)
+    # Use run 3 for connectivity analysis
+    img4d = localizer_data[2]
     
-    if psy.shape[0] > phys.shape[0]:
-        psy = psy[:phys.shape[0]]
-    elif psy.shape[0] < phys.shape[0]:
-        phys = phys[:psy.shape[0]]
+    # Extract time series from sphere around peak voxel
+    phys = extract_roi_sphere(img4d, peak_coords)
     
-    ppi_img = conduct_ppi_analysis(img4d, phys, psy, brain_masker, coords)
+    brain_time_series = brain_masker.fit_transform(img4d)
     
-    return ppi_img
+    # FC Analysis
+    fc_correlations = calculate_fc(brain_time_series, phys)
+    fc_img = brain_masker.inverse_transform(fc_correlations)
+    
+    # PPI Analysis
+    psy = make_psy_cov([3], ss)  # Use only run 3
+    ppi_img = brain_masker.inverse_transform(conduct_ppi_analysis(img4d, phys, psy, brain_masker))
+    
+    # Check registration
+    check_registration(fc_img, f'{out_dir}/{ss}_{rr}_{tsk}_fc_reg_check.png')
+    check_registration(ppi_img, f'{out_dir}/{ss}_{rr}_{tsk}_ppi_reg_check.png')
+    
+    return fc_img, ppi_img
 
 def conduct_analyses():
     for ss in subs:
         print(f"Processing subject: {ss}")
         sub_dir = f'{study_dir}/{ss}/ses-01/'
-        roi_dir = f'{sub_dir}derivatives/rois'
         temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
-        
-        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords.csv')
         
         out_dir = f'{study_dir}/{ss}/ses-01/derivatives/fc'
         os.makedirs(out_dir, exist_ok=True)
@@ -130,25 +169,16 @@ def conduct_analyses():
         args_list = []
         for tsk in ['loc']:
             for rr in rois:
-                ppi_file = f'{out_dir}/{ss}_{rr}_{tsk}_ppi_sandbox.nii.gz'
-                
-                if os.path.exists(ppi_file):
-                    print(f'PPI file for {rr} already exists. Skipping...')
-                    continue
-                
-                for rc in run_combos:
-                    args_list.append((ss, rr, tsk, rc, roi_coords, sub_dir, temp_dir, out_dir))
+                args_list.append((ss, rr, tsk, sub_dir, temp_dir, out_dir))
 
         with Pool(processes=8) as pool:  # Adjust the number of processes as needed
             results = pool.map(process_roi, args_list)
 
-        # Combine results
-        for rr in rois:
-            rr_results = [img for (subj, roi, tsk, rc, *_), img in zip(args_list, results) if roi == rr and subj == ss]
-            if rr_results:
-                mean_ppi = image.mean_img(rr_results)
-                nib.save(mean_ppi, f'{out_dir}/{ss}_{rr}_{tsk}_ppi.nii.gz')
-                print(f'Saved PPI result for {ss}, {rr}')
+        # Save results
+        for (ss, rr, tsk, *_), (fc_img, ppi_img) in zip(args_list, results):
+            nib.save(fc_img, f'{out_dir}/{ss}_{rr}_{tsk}_fc.nii.gz')
+            nib.save(ppi_img, f'{out_dir}/{ss}_{rr}_{tsk}_ppi.nii.gz')
+            print(f'Saved FC and PPI results for {ss}, {rr}')
 
 if __name__ == "__main__":
     conduct_analyses()
