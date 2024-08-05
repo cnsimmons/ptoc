@@ -22,7 +22,8 @@ raw_dir = params.raw_dir
 
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-rois = ['pIPS', 'LO', 'V1'] 
+#rois = ['pIPS', 'LO', 'V1'] 
+rois = ['V1']
 run_num = 3
 runs = list(range(1, run_num + 1))
 
@@ -129,13 +130,15 @@ def process_roi(args):
     
     print(f"Processing subject: {ss}, ROI: {rr}, Task: {tsk}")
     
-    roi_dir = f'{sub_dir}derivatives/rois'
+    # Update ROI directory paths
+    roi_dir = f'{sub_dir}/derivatives/rois'
+    parcel_dir = f'{roi_dir}/parcels'
     
     # Load localizer data for all runs
     localizer_data = [load_and_preprocess(f'{temp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz') for rn in range(1, 4)]
     
     # Find peak voxel using runs 1 and 2
-    roi_parcel = nib.load(f'{roi_dir}/{rr}_parcel.nii.gz')
+    roi_parcel = nib.load(f'{parcel_dir}/{rr}_parcel.nii.gz')
     peak_coords = find_peak_voxel(roi_parcel, localizer_data[:2])
     
     # Visualize peak voxel
@@ -167,25 +170,26 @@ def conduct_analyses():
     start_time = time.time()
     for ss in subs:
         subject_start_time = time.time()
-        print(f"Starting processing for subject: {ss}")
-        sub_dir = f'{study_dir}/{ss}/ses-01/'
-        temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
+        print(f"Processing subject: {ss}")
         
-        out_dir = f'{study_dir}/{ss}/ses-01/derivatives/fc'
+        ptoc_sub_dir = os.path.join(ptoc_dir, f'sub-{ss}', 'ses-01')
+        hemispace_sub_dir = os.path.join(hemispace_dir, f'sub-{ss}')
+        
+        out_dir = os.path.join(ptoc_sub_dir, 'derivatives', 'fc')
         os.makedirs(out_dir, exist_ok=True)
 
-        args_list = []
+ args_list = []
         for tsk in ['loc']:
             for rr in rois:
-                args_list.append((ss, rr, tsk, sub_dir, temp_dir, out_dir))
+                args_list.append((ss, rr, tsk, ptoc_sub_dir, hemispace_sub_dir, out_dir))
 
         with Pool(processes=8) as pool:  # Adjust the number of processes as needed
             results = pool.map(process_roi, args_list)
 
         # Save results
         for (ss, rr, tsk, *_), (fc_img, ppi_img) in zip(args_list, results):
-            nib.save(fc_img, f'{out_dir}/{ss}_{rr}_{tsk}_fc_sandbox.nii.gz')
-            nib.save(ppi_img, f'{out_dir}/{ss}_{rr}_{tsk}_ppi_sandbox.nii.gz')
+            nib.save(fc_img, os.path.join(out_dir, f'{ss}_{rr}_{tsk}_fc.nii.gz'))
+            nib.save(ppi_img, os.path.join(out_dir, f'{ss}_{rr}_{tsk}_ppi.nii.gz'))
             print(f'Saved FC and PPI results for {ss}, {rr}')
             
             subject_end_time = time.time()
