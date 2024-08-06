@@ -27,7 +27,7 @@ raw_dir = params.raw_dir
 mni_parcel_dir = f'{curr_dir}/roiParcels' 
 
 subs = ['sub-025']
-rois = ['V1']
+rois = ['pIPS']
 
 ## Warning traceback
 def warn_with_traceback(message, category, filename, lineno, file=None, line=None):
@@ -145,7 +145,7 @@ def conduct_analyses():
         out_dir = os.path.join(sub_dir, 'derivatives', 'fc_ppi')
         os.makedirs(out_dir, exist_ok=True)
 
-        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords.csv')
+        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_sandbox.csv')
 
         for rr in rois:
             all_ppi_runs = []
