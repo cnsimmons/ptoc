@@ -27,7 +27,7 @@ raw_dir = params.raw_dir
 mni_parcel_dir = f'{curr_dir}/roiParcels' 
 
 subs = ['sub-025']
-rois = ['pIPS']
+rois = ['LO']
 
 ## Warning traceback
 def warn_with_traceback(message, category, filename, lineno, file=None, line=None):
