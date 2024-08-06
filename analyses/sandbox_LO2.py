@@ -26,7 +26,7 @@ hemispace_dir = f'/lab_data/behrmannlab/vlad/hemispace'
 raw_dir = params.raw_dir
 mni_parcel_dir = f'{curr_dir}/roiParcels' 
 
-subs = ['sub-038', 'sub-057', 'sub-059', 'sub-064', 'sub-067']
+subs = ['sub-068', 'sub-071', 'sub-083', 'sub-084', 'sub-085']
 rois = ['LO']
 
 ## Warning traceback
