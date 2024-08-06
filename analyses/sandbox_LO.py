@@ -3,14 +3,13 @@ import pandas as pd
 import numpy as np
 from nilearn import image, maskers, plotting
 from nilearn.maskers import NiftiMasker
-from nilearn.datasets import load_mni152_brain_mask
+from nilearn.datasets import load_mni152_brain_mask,load_mni152_template
 from nilearn import datasets
 from nilearn.glm.first_level import compute_regressor
 import nibabel as nib
 import sys
 import time
 import itertools 
-import warnings
 
 # Import your parameters
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
@@ -26,33 +25,40 @@ hemispace_dir = f'/lab_data/behrmannlab/vlad/hemispace'
 raw_dir = params.raw_dir
 mni_parcel_dir = f'{curr_dir}/roiParcels' 
 
-subs = ['sub-038', 'sub-057', 'sub-059', 'sub-064', 'sub-067']
-rois = ['LO']
+sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+rois = ['LO', 'pIPS']
 
-## Warning traceback
-def warn_with_traceback(message, category, filename, lineno, file=None, line=None):
-    log = file if hasattr(file, 'write') else sys.stderr
-    traceback = sys.exc_info()[2]
-    log.write(warnings.formatwarning(message, category, filename, lineno, line))
-    while traceback:
-        frame = traceback.tb_frame
-        log.write(f"  File \"{frame.f_code.co_filename}\", line {traceback.tb_lineno}\n")
-        traceback = traceback.tb_next
-warnings.showwarning = warn_with_traceback
-
-run_num = 3
-run_combos = list(itertools.combinations(range(1, run_num + 1), 2))
+'''scan params'''
+tr = 2.0
+vols = 184
 
 whole_brain_mask = load_mni152_brain_mask()
+mni = load_mni152_template()
 brain_masker = NiftiMasker(whole_brain_mask, smoothing_fwhm=0, standardize=True)
+
+#run combos
+run_num = 3
+runs = list(range(1,run_num+1))
+run_combos = []
+
+#determine the number of left out run combos
+for rn1 in range(1,run_num+1):
+    for rn2 in range(rn1+1,run_num+1):
+        run_combos.append([rn1,rn2])
+
+##def extract_roi_coords
 
 def extract_roi_sphere(img, coords, radius=6):
     roi_masker = maskers.NiftiSpheresMasker([tuple(coords)], radius=radius)
     seed_time_series = roi_masker.fit_transform(img)
-    if np.ma.is_masked(seed_time_series):
-        print("Masked values found in extract_roi_sphere output")
-        print(f"Number of masked values: {np.ma.count_masked(seed_time_series)}")
-    return np.mean(seed_time_series, axis=1).reshape(-1, 1)
+    phys = np.mean(seed_time_series, axis=1)
+    
+    #phys = (phys - np.mean(phys)) / np.std(phys) #TRY WITHOUT STANDARDIZING AT SOME POINT
+    phys = phys.reshape((phys.shape[0],1))
+    
+    return phys
+ 
 
 def make_psy_cov(runs, ss):
     temp_dir = f'{raw_dir}/{ss}/ses-01'
