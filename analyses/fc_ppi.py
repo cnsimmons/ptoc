@@ -23,6 +23,7 @@ raw_dir = params.raw_dir
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 #subs = ['sub-107', 'sub-064', 'sub-025']
+subs = ['sub-025']
 rois = ['pIPS']
 run_num = 3
 runs = list(range(1, run_num + 1))
@@ -77,7 +78,7 @@ def conduct_analyses():
         roi_dir = f'{sub_dir}derivatives/rois'
         temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
         
-        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords.csv')
+        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_sandbox.csv')
         
         out_dir = f'{study_dir}/{ss}/ses-01/derivatives'
         os.makedirs(f'{out_dir}/fc', exist_ok=True)
@@ -87,8 +88,8 @@ def conduct_analyses():
             for rr in rois:
                 print(f"Processing ROI: {rr}")
                 
-                fc_file = f'{out_dir}/fc/{ss}_{rr}_{tsk}_fc.nii.gz'
-                ppi_file = f'{out_dir}/fc/{ss}_{rr}_{tsk}_ppi.nii.gz'
+                fc_file = f'{out_dir}/fc/{ss}_{rr}_{tsk}_fc_sandbox.nii.gz'
+                ppi_file = f'{out_dir}/fc/{ss}_{rr}_{tsk}_ppi_sandbox.nii.gz'
                 
                 do_fc = not os.path.exists(fc_file)
                 do_ppi = not os.path.exists(ppi_file)
