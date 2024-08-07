@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from nilearn import image, maskers, plotting
 from nilearn.maskers import NiftiMasker
-from nilearn.datasets import load_mni152_brain_mask,load_mni152_template
+from nilearn.datasets import load_mni152_brain_mask, load_mni152_template
 from nilearn import datasets
 from nilearn.glm.first_level import compute_regressor
 import nibabel as nib
@@ -23,10 +23,10 @@ ptoc_dir = f"/lab_data/behrmannlab/vlad/{study}"
 results_dir = f'/user_data/csimmon2/git_repos/ptoc/results'
 hemispace_dir = f'/lab_data/behrmannlab/vlad/hemispace' 
 raw_dir = params.raw_dir
-mni_parcel_dir = f'{curr_dir}/roiParcels' 
 
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+#subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+subs = ['sub-025']
 rois = ['LO', 'pIPS']
 
 '''scan params'''
@@ -47,18 +47,14 @@ for rn1 in range(1,run_num+1):
     for rn2 in range(rn1+1,run_num+1):
         run_combos.append([rn1,rn2])
 
-##def extract_roi_coords
-
 def extract_roi_sphere(img, coords, radius=6):
     roi_masker = maskers.NiftiSpheresMasker([tuple(coords)], radius=radius)
     seed_time_series = roi_masker.fit_transform(img)
     phys = np.mean(seed_time_series, axis=1)
     
-    #phys = (phys - np.mean(phys)) / np.std(phys) #TRY WITHOUT STANDARDIZING AT SOME POINT
     phys = phys.reshape((phys.shape[0],1))
     
     return phys
- 
 
 def make_psy_cov(runs, ss):
     temp_dir = f'{raw_dir}/{ss}/ses-01'
@@ -127,17 +123,16 @@ def calculate_fc(brain_time_series, phys):
     print(f"  Number of NaN correlations: {np.isnan(correlations).sum()}")
     return np.arctanh(correlations)
 
-def check_roi_registration(roi_img, output_file):
+def visualize_roi_sphere(coords, radius, output_file):
     mni_template = datasets.load_mni152_template()
+    roi_sphere = maskers.NiftiSpheresMasker([tuple(coords)], radius=radius).fit()
+    roi_img = roi_sphere.mask_img_
     
     display = plotting.plot_roi(roi_img, bg_img=mni_template, 
-                                cut_coords=(0, 0, 0), display_mode='ortho',
-                                title="ROI Registration Check")
-    display.savefig(output_file)
-    display.close()
-
-def check_same_space(img1, img2):
-    return np.allclose(img1.affine, img2.affine)
+                                cut_coords=coords, display_mode='ortho',
+                                title="ROI Sphere Visualization")
+    #display.savefig(output_file)
+    #display.close()
 
 def conduct_analyses():
     start_time = time.time()
@@ -148,28 +143,20 @@ def conduct_analyses():
         roi_dir = f'{sub_dir}/derivatives/rois'
         exp = 'loc'
         exp_dir = f'{sub_dir}/derivatives/fsl/{exp}'
-        out_dir = os.path.join(sub_dir, 'derivatives', 'fc_ppi')
+        out_dir = os.path.join(sub_dir, 'derivatives', 'fc')
         os.makedirs(out_dir, exist_ok=True)
 
-        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_sandbox.csv')
+        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords.csv')
+        print(roi_coords.head())
 
         for rr in rois:
             all_ppi_runs = []
             all_fc_runs = []
             
-            roi_path = f'{mni_parcel_dir}/{rr}.nii.gz'
-            if os.path.exists(roi_path):
-                roi_img = nib.load(roi_path)
-            else:
-                print(f"Standardized ROI file not found: {roi_path}")
-                continue
-
-            check_roi_registration(roi_img, os.path.join(out_dir, f'{ss}_{rr}_registration_check.png'))
-            
             for rcn, rc in enumerate(run_combos):
                 curr_coords = roi_coords[(roi_coords['index'] == rcn) & 
-                                         (roi_coords['task'] == exp) & 
-                                         (roi_coords['roi'] == rr)]
+                                        (roi_coords['task'] == exp) & 
+                                        (roi_coords['roi'] == rr)]
                 
                 if curr_coords.empty:
                     print(f"No coordinates found for {ss}, {rr}, {exp}, RC: {rc}")
@@ -180,9 +167,6 @@ def conduct_analyses():
                 held_out_run = list(set(range(1, 4)) - set(rc))[0]
                 img4d = image.load_img(f'{exp_dir}/run-0{held_out_run}/1stLevel.feat/filtered_func_data_reg.nii.gz')
                 
-                if not check_same_space(roi_img, img4d):
-                    print(f"Warning: ROI {rr} and functional data are not in the same space")
-
                 print(f"Original img4d shape: {img4d.shape}")
                 print(f"Any NaNs in original img4d: {np.isnan(img4d.get_fdata()).any()}")
                 
@@ -217,11 +201,14 @@ def conduct_analyses():
 
                 print(f"{ss}, {rr}, {exp}, RC: {rc}, PPI max: {seed_to_voxel_correlations.max()}")
 
+                # Visualize ROI sphere
+                visualize_roi_sphere(peak_coords, radius=6, output_file=os.path.join(out_dir, f'{ss}_{rr}_RC{rc[0]}{rc[1]}_roi_sphere.png'))
+
             mean_ppi = image.mean_img(all_ppi_runs)
             mean_fc = image.mean_img(all_fc_runs)
             
-            nib.save(mean_ppi, os.path.join(out_dir, f'{ss}_{rr}_{exp}_ppi_sandbox.nii.gz'))
-            nib.save(mean_fc, os.path.join(out_dir, f'{ss}_{rr}_{exp}_fc_sandbox.nii.gz'))
+            nib.save(mean_ppi, os.path.join(out_dir, f'{ss}_{rr}_{exp}_ppi.nii.gz'))
+            nib.save(mean_fc, os.path.join(out_dir, f'{ss}_{rr}_{exp}_fc.nii.gz'))
         
         subject_end_time = time.time()
         print(f"Finished processing subject {ss}. Time taken: {(subject_end_time - subject_start_time) / 60:.2f} minutes")
