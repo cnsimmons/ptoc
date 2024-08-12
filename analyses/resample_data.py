@@ -1,0 +1,180 @@
+"""
+Resample control data
+"""
+
+curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
+import sys
+sys.path.append(curr_dir)
+
+import numpy as np
+import pandas as pd
+import ptoc_params as params
+import itertools
+import pdb
+
+data_dir = params.data_dir
+results_dir = params.results_dir
+raw_dir = params.raw_dir
+
+sub_info = params.sub_info
+task_info = params.task_info
+
+suf = params.suf
+rois = params.rois
+hemis = params.hemis
+
+# number of resamples
+#iter = 4
+iter = 10000
+
+# number of subs to pull on each resample
+n_subs = 36
+
+# make a list of all possible combinations of hemi and roi
+all_combos = list(itertools.product(task_info['cond'], hemis, rois))
+all_combos = ['_'.join(list(ele)) for ele in all_combos]
+
+def resample_selectivity():
+    """
+    Resample selectivity data
+    """
+    print('resampling selectivity data...')
+    results_dir = f'{params.results_dir}/selectivity'
+
+    #load summary file
+    summary_df = pd.read_csv(f'{results_dir}/selectivity_summary{suf}.csv')
+
+    #extract only control subs
+    summary_df = summary_df[summary_df['group'] == 'control']
+    #create dataframe with all possible combinations of condition hemi and roi as columns
+    roi_size_df = pd.DataFrame(columns =all_combos)
+    mean_act_df = pd.DataFrame(columns =all_combos)
+    cortex_vol_df = pd.DataFrame(columns =all_combos)
+    sum_selec_df = pd.DataFrame(columns =all_combos)
+    sum_selec_norm_df = pd.DataFrame(columns =all_combos)
+
+    
+
+    for ii in range(0,iter):
+        
+        for hemi in hemis:
+            for roi in rois:
+                for cond in task_info['cond']:
+                    
+                    
+                    #select data that meets cond
+                    curr_data = summary_df[(summary_df['cond'] == cond) & (summary_df['roi'] == roi) & (summary_df['hemi'] == hemi)]
+
+                    #select n_subs random subs
+                    curr_subs = curr_data.sample(n = n_subs, replace = True)
+
+                    #get mean of each value
+                    roi_size, mean_act,  cortex_vol, sum_selec, sum_selec_norm = curr_subs['roi_size'].mean(), curr_subs['mean_act'].mean(), curr_subs['volume'].mean(), curr_subs['sum_selec'].mean(), curr_subs['sum_selec_norm'].mean()
+
+                    #append to to dataframe
+                    roi_size_df.loc[ii, f'{cond}_{hemi}_{roi}'] = roi_size
+                    mean_act_df.loc[ii, f'{cond}_{hemi}_{roi}'] = mean_act
+                    cortex_vol_df.loc[ii, f'{cond}_{hemi}_{roi}'] = cortex_vol
+                    sum_selec_df.loc[ii, f'{cond}_{hemi}_{roi}'] = sum_selec
+                    sum_selec_norm_df.loc[ii, f'{cond}_{hemi}_{roi}'] = sum_selec_norm
+
+
+    #save each resample
+    roi_size_df.to_csv(f'{results_dir}/resamples/roi_size_resamples{suf}.csv', index=False)
+    mean_act_df.to_csv(f'{results_dir}/resamples/mean_act_resamples{suf}.csv', index=False)
+    cortex_vol_df.to_csv(f'{results_dir}/resamples/volume_resamples{suf}.csv', index=False)
+    sum_selec_df.to_csv(f'{results_dir}/resamples/sum_selec_resamples{suf}.csv', index=False)
+    sum_selec_norm_df.to_csv(f'{results_dir}/resamples/sum_selec_norm_resamples{suf}.csv', index=False)
+    
+resample_selectivity()
+
+quit()
+#IGNORE ME!
+def resample_decoding():
+    """
+    Resample decoding data
+    """
+
+    print('resampling decoding data...')
+
+    results_dir = f'{params.results_dir}/decoding'
+
+    #load summary file
+    summary_df = pd.read_csv(f'{results_dir}/decoding_summary{suf}.csv')
+
+    #extract only control subs
+    summary_df = summary_df[summary_df['group'] == 'control']
+    #create dataframe with all possible combinations of condition hemi and roi as columns
+    decoding_df = pd.DataFrame(columns =all_combos)
+
+
+    for ii in range(0,iter):
+        
+        for hemi in hemis:
+            for roi in rois:
+                #for cond in task_info['cond']:
+                    
+                    try:
+                        #select data that meets cond
+                        curr_data = summary_df[(summary_df['cond'] == cond) & (summary_df['roi'] == roi) & (summary_df['hemi'] == hemi)]
+
+                        #select n_subs random subs
+                        curr_subs = curr_data.sample(n = n_subs, replace = True)
+
+                        #get mean of each value
+                        acc= curr_subs['acc'].mean()
+
+                        #append to to dataframe
+                        decoding_df.loc[ii, f'{cond}_{hemi}_{roi}'] = acc
+                    except:
+                        continue
+                        
+
+    #save each resample
+    decoding_df.to_csv(f'{results_dir}/resamples/acc_resamples{suf}.csv', index=False)
+
+#IGNORE ME TOO!
+def resample_neural_map():
+    """
+    Resample neural 
+    """
+
+    print('resampling map data...')
+
+    results_dir = f'{params.results_dir}/neural_map'
+
+    #load summary file
+    summary_df = pd.read_csv(f'{results_dir}/full_map_overlap{suf}.csv')
+
+    #extract only control subs
+    summary_df = summary_df[summary_df['group'] == 'control']
+
+    
+    #create dataframe for each cond
+    resample_df = pd.DataFrame(columns =task_info['cond'])
+
+    for ii in range(0,iter):
+            
+            for cond in task_info['cond']:
+                
+                #select data that meets cond
+                curr_data = summary_df[(summary_df['cond'] == cond)]
+    
+                #select n_subs random subs
+                curr_subs = curr_data.sample(n = n_subs, replace = True)
+                
+    
+                #get mean of each value
+                overlap = curr_subs['dice'].mean()
+    
+                #append to to dataframe
+                resample_df.loc[ii, f'{cond}'] = overlap
+
+    
+    #save resamples
+    resample_df.to_csv(f'{results_dir}/map_overlap_resamples{suf}.csv', index=False)
+
+
+resample_selectivity()
+#resample_decoding()
+#resample_neural_map()
