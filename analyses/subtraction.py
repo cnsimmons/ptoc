@@ -83,8 +83,8 @@ if __name__ == "__main__":
     # Load subject info
     sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
     # Uncomment the next line to use all control subjects
-    # subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-    subs = ['sub-025']  # For testing with a single subject
+    subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+    #subs = ['sub-025']  # For testing with a single subject
     
     study = 'ptoc'
     study_dir = f"/lab_data/behrmannlab/vlad/{study}"
