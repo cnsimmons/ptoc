@@ -2,7 +2,6 @@ import os
 import pandas as pd
 import numpy as np
 from nilearn import image, input_data
-import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import grangercausalitytests
 import sys
 import nibabel as nib
@@ -18,7 +17,6 @@ study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
-mni_parcel_dir = f'{curr_dir}/roiParcels'
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 subs = ['sub-025']  # Changed to a list for consistency
 parcels = ['pIPS', 'LO']
