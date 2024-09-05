@@ -25,8 +25,7 @@ runs = list(range(1, run_num + 1))
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
 
 def extract_roi_sphere(img, coords):
-    #roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
-    roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6, standardize=False, memory='nilearn_cache', memory_level=1)
+    roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
     seed_time_series = roi_masker.fit_transform(img)
     return np.mean(seed_time_series, axis=1).reshape(-1, 1)
 
@@ -87,7 +86,7 @@ def conduct_gca_analyses():
         roi_dir = f'{sub_dir}derivatives/rois'
         temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
         
-        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere.csv')
+        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_std.csv')
         
         out_dir = f'{study_dir}/{ss}/ses-01/derivatives'
         os.makedirs(f'{out_dir}/gca', exist_ok=True)
@@ -107,7 +106,9 @@ def conduct_gca_analyses():
                                            (roi_coords['roi'] == 'LO') & 
                                            (roi_coords['hemisphere'] == hemi)][['x', 'y', 'z']].values.tolist()[0]
                     
-                    filtered_list = [image.clean_img(nib.load(f'{temp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz'), standardize=True) for rn in rc]
+                    #filtered_list = [image.clean_img(nib.load(f'/lab_data/behrmannlab/vlad/hemispace/{ss}/ses-01/derivatives/fsl/loc//run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz'), standardize=True) for rn in rc]
+                    #curr_run_path = f'/lab_data/behrmannlab/vlad/hemispace/{ss}/ses-01/derivatives/fsl/loc/run-0{rn}/1stLevel.feat/stats/zstat3_mni.nii.gz'
+                    filtered_list = [image.clean_img(nib.load(f'/lab_data/behrmannlab/vlad/ptoc/{ss}/ses-01/derivatives/fsl/loc/run-0{rn}/1stLevel.feat/reg/example_func2standard.nii.gz'), standardize=True) for rn in rc]
                     img4d = image.concat_imgs(filtered_list)
                     
                     pips_ts = extract_roi_sphere(img4d, pips_coords)
