@@ -69,111 +69,113 @@ def extract_cond_ts(ts, cov):
     """
     Extracts timeseries corresponding to blocks in a cov file
     """
-
-    block_ind = (cov==1)#not sure which cov to use? should it be 3 or 1?
+    block_ind = (cov == 1)
     block_ind = np.insert(block_ind, 0, True)
     block_ind = np.delete(block_ind, len(block_ind)-1)
     block_ind = (cov == 1).reshape((len(cov))) | block_ind
 
     new_ts = ts[block_ind]
-
-
     return new_ts
 
 def conduct_gca():
-
     print('Running GCA...')
     tasks = ['loc']
     cond = ['Object']
     
-    d_rois = ['lpIPS','rpIPS']
-    v_rois = ['lLO','rLO']
     for ss in subs:
-        sub_summary =pd.DataFrame(columns = ['sub','fold','task','condition','origin','target', 'f_diff'])
+        sub_summary = pd.DataFrame(columns=['sub', 'fold', 'task', 'origin', 'target', 'f_diff'])
         
         sub_dir = f'{study_dir}/{ss}/ses-01/'
         temp_dir = f'{raw_dir}/{ss}/ses-01'
         cov_dir = f'{temp_dir}/covs'
         roi_dir = f'{sub_dir}/derivatives/rois'
-        exp_dir = f'{sub_dir}/derivatives/fsl/loc' #not sure
+        exp_dir = f'{sub_dir}/derivatives/fsl/loc'
         os.makedirs(f'{sub_dir}/derivatives/results/beta_ts', exist_ok=True)
 
-        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords.csv') #not sure if this is right
-        print("ROI coordinates DataFrame:")
-        print(roi_coords)
-        print("\nROI coordinates shape:", roi_coords.shape)
-        print("\nROI coordinates columns:", roi_coords.columns)
-        
-        for rcn, rc in enumerate(run_combos): #determine which runs to use for creating ROIs
-            
-            #Extract timeseries from each run
+        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere.csv')
+        #print("ROI coordinates DataFrame:")
+        #print(roi_coords)
+        #print("\nROI coordinates shape:", roi_coords.shape)
+        #print("\nROI coordinates columns:", roi_coords.columns)
+
+        for rcn, rc in enumerate(run_combos):
+            # Extract timeseries from each run
             filtered_list = []
             for rn in rc:
-                
                 curr_run = image.load_img(f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz')
-                curr_run = image.clean_img(curr_run,standardize=True)
+                curr_run = image.clean_img(curr_run, standardize=True)
                 filtered_list.append(curr_run)
 
-            #concat runs
+            # concat runs
             img4d = image.concat_imgs(filtered_list)
 
-            print(ss,rcn,'loaded')
+            print(ss, rcn, 'loaded')
 
             for tsk in tasks:
-                for drr in d_rois:
-                    
-                    #load peak voxel in dorsal roi
-                    dorsal_coords = roi_coords[(roi_coords['index'] == rcn) & (roi_coords['task'] ==tsk) & (roi_coords['roi'] ==drr)]
-                    print(f"\nFiltered dorsal coordinates for rcn={rcn}, task={tsk}, roi={drr}:")
-                    print(dorsal_coords)
-                    print("Filtered dorsal coordinates shape:", dorsal_coords.shape)
-                    if dorsal_coords.empty:
-                        print(f"Warning: No coordinates found for rcn={rcn}, task={tsk}, roi={drr}")
-                        continue
-                
-                    #Extract TS from dorsal roi
-                    dorsal_ts = extract_roi_sphere(img4d,dorsal_coords[['x','y','z']].values.tolist()[0])
-                    
-                
-                    for cc in cond:
-                        #load behavioral data
-                        #time adjusted using HRF to pull out boxcar
-                        psy = make_psy_cov(rc, ss,cc)
+                for dorsal_roi in ['pIPS']:
+                    for dorsal_hemi in hemispheres:
+                        # load peak voxel in dorsal roi
+                        dorsal_coords = roi_coords[(roi_coords['index'] == rcn) & 
+                                                   (roi_coords['task'] == tsk) & 
+                                                   (roi_coords['roi'] == dorsal_roi) &
+                                                   (roi_coords['hemisphere'] == dorsal_hemi)]
+                        
+                        print(f"\nFiltered dorsal coordinates for rcn={rcn}, task={tsk}, roi={dorsal_roi}, hemisphere={dorsal_hemi}:")
+                        print(dorsal_coords)
+                        print("Filtered dorsal coordinates shape:", dorsal_coords.shape)
 
-                        #create dorsal ts for just that condition
+                        if dorsal_coords.empty:
+                            print(f"Warning: No coordinates found for rcn={rcn}, task={tsk}, roi={dorsal_roi}, hemisphere={dorsal_hemi}")
+                            continue
+
+                        # Extract TS from dorsal roi
+                        dorsal_ts = extract_roi_sphere(img4d, dorsal_coords[['x', 'y', 'z']].values.tolist()[0])
+
+                        
+                        # load behavioral data
+                        # time adjusted using HRF to pull out boxcar
+                        psy = make_psy_cov(rc, ss)
+
+                        # create dorsal ts for just that condition
                         dorsal_phys = extract_cond_ts(dorsal_ts, psy)
                         
-                        for vrr in v_rois:
-                            
-                            ventral_coords = roi_coords[(roi_coords['index'] == rcn) & (roi_coords['task'] =='loc') & (roi_coords['roi'] ==vrr)]
-                            #pdb.set_trace()
-                            ventral_ts = extract_roi_sphere(img4d,ventral_coords[['x','y','z']].values.tolist()[0])
-                            ventral_phys = extract_cond_ts(ventral_ts, psy)                            
+                        for ventral_roi in ['LO']:
+                            for ventral_hemi in hemispheres:
+                                ventral_coords = roi_coords[(roi_coords['index'] == rcn) & 
+                                                            (roi_coords['task'] == 'loc') & 
+                                                            (roi_coords['roi'] == ventral_roi) &
+                                                            (roi_coords['hemisphere'] == ventral_hemi)]
+                                
+                                if ventral_coords.empty:
+                                    print(f"Warning: No coordinates found for rcn={rcn}, task={tsk}, roi={ventral_roi}, hemisphere={ventral_hemi}")
+                                    continue
+                                
+                                ventral_ts = extract_roi_sphere(img4d, ventral_coords[['x', 'y', 'z']].values.tolist()[0])
+                                ventral_phys = extract_cond_ts(ventral_ts, psy)                            
 
-                            #Add TSs to a dataframe to prep for gca
-                            neural_ts= pd.DataFrame(columns = ['dorsal', 'ventral'])
-                            neural_ts['dorsal'] = np.squeeze(dorsal_phys)
-                            neural_ts['ventral'] = np.squeeze(ventral_phys)
-                            
-                            #calculate dorsal GCA F-test
-                            gc_res_dorsal = grangercausalitytests(neural_ts[['ventral','dorsal']], 1, verbose=False)
-                            
-                            #calculate ventral GCA F-test
-                            gc_res_ventral = grangercausalitytests(neural_ts[['dorsal','ventral']], 1,verbose=False)
+                                # Add TSs to a dataframe to prep for gca
+                                neural_ts = pd.DataFrame(columns=['dorsal', 'ventral'])
+                                neural_ts['dorsal'] = np.squeeze(dorsal_phys)
+                                neural_ts['ventral'] = np.squeeze(ventral_phys)
+                                
+                                # calculate dorsal GCA F-test
+                                gc_res_dorsal = grangercausalitytests(neural_ts[['ventral', 'dorsal']], 1, verbose=False)
+                                
+                                # calculate ventral GCA F-test
+                                gc_res_ventral = grangercausalitytests(neural_ts[['dorsal', 'ventral']], 1, verbose=False)
 
-                            #calc difference
-                            f_diff = gc_res_dorsal[1][0]['ssr_ftest'][0]-gc_res_ventral[1][0]['ssr_ftest'][0]
+                                # calc difference
+                                f_diff = gc_res_dorsal[1][0]['ssr_ftest'][0] - gc_res_ventral[1][0]['ssr_ftest'][0]
 
-                            curr_data = pd.Series([ss, rcn,tsk, cc, drr, vrr, f_diff], index=sub_summary.columns)
-                            
-                            
-                            sub_summary = sub_summary.append(curr_data,ignore_index=True)
-                            print(ss, tsk,cc, drr,vrr)
+                                dorsal_label = f"{dorsal_hemi[0]}{dorsal_roi}"
+                                ventral_label = f"{ventral_hemi[0]}{ventral_roi}"
+                                curr_data = pd.Series([ss, rcn, tsk, dorsal_label, ventral_label, f_diff], index=sub_summary.columns)
+                                
+                                sub_summary = sub_summary.append(curr_data, ignore_index=True)
+                                print(ss, tsk, dorsal_label, ventral_label)
 
-                        
         print('done GCA for', ss)                
-        sub_summary.to_csv(f'{sub_dir}/derivatives/results/beta_ts/gca_summary.csv',index=False)
-
+        sub_summary.to_csv(f'{sub_dir}/derivatives/results/beta_ts/gca_summary.csv', index=False)
 
 def summarize_gca():
     """
@@ -181,37 +183,38 @@ def summarize_gca():
     """
     print('Creating summary across subjects...')
     
-    
     df_summary = pd.DataFrame()
     tasks = ['loc']
     cond = ['Object']
-
-    d_rois = ['lpIPS','rpIPS']
-    v_rois = ['lLO','rLO']
+    
     print(subs)
     for ss in subs:
         sub_dir = f'{study_dir}/{ss}/ses-01/'
         data_dir = f'{sub_dir}/derivatives/results/beta_ts'
 
         curr_df = pd.read_csv(f'{data_dir}/gca_summary.csv')
-        #pdb.set_trace()
-        curr_df = curr_df.groupby(['task','condition', 'origin','target']).mean()
+        curr_df = curr_df.groupby(['task','origin','target']).mean()
         curr_data = [ss]
         col_index = ['sub']
         for tsk in tasks:
-            for cc in cond:
-                for drr in d_rois:
-                    for vrr in v_rois:
+            for dorsal_roi in ['pIPS']:
+                for dorsal_hemi in hemispheres:
+                    for ventral_roi in ['LO']:
+                        for ventral_hemi in hemispheres:
+                            dorsal_label = f"{dorsal_hemi[0]}{dorsal_roi}"
+                            ventral_label = f"{ventral_hemi[0]}{ventral_roi}"
+                            col_index.append(f'{tsk}_{dorsal_label}_{ventral_label}')
+                            curr_data.append(curr_df['f_diff'][tsk, dorsal_label, ventral_label])
 
-                        #for dorsal origin
-                        col_index.append(f'{tsk}_{cc}_{drr}_{vrr}')
-                        curr_data.append(curr_df['f_diff'][tsk,cc, drr, vrr])
-
+        if ss == subs[0]:
+            df_summary = pd.DataFrame(columns=col_index)
+            df_summary = df_summary.append(pd.Series(curr_data,index = col_index),ignore_index=True)
+        else:
             df_summary = df_summary.append(pd.Series(curr_data,index = col_index),ignore_index=True)
 
-    df_summary.to_csv(f"{results_dir}/gca/all_roi_summary.csv", index = False)
+    df_summary.to_csv(f"{results_dir}/gca/all_roi_summary.csv", index=False)
 
+# Main execution
 subs = ['sub-025']
 conduct_gca()
-
 summarize_gca()
