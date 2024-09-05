@@ -96,7 +96,7 @@ def conduct_gca_analyses():
         gca_results = []
         
         for rcn, rc in enumerate(run_combos):
-            filtered_list = [image.clean_img(nib.load(f'{temp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz'), standardize=True) for rn in rc]
+            filtered_list = [image.clean_img(nib.load(f'{sub_dir}derivatives/func_mni/run-0{rn}_filtered_func_data_mni.nii.gz'), standardize=True) for rn in rc]
             img4d = image.concat_imgs(filtered_list)
             
             object_timeseries = extract_condition_timeseries(rc, ss)
