@@ -1,92 +1,63 @@
 import os
 import pandas as pd
 import numpy as np
-from nilearn import image, input_data
+from nilearn import image, input_data, plotting
+from nilearn.glm import threshold_stats_img
 from statsmodels.tsa.stattools import grangercausalitytests
-import sys
 import nibabel as nib
+import warnings
 
-# Import your parameters
-curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
-sys.path.insert(0, curr_dir)
-import ptoc_params as params
+warnings.filterwarnings('ignore')
 
 # Set up directories and parameters
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
-raw_dir = params.raw_dir
-sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 subs = ['sub-038']  # Update this list as needed
-rois = ['pIPS', 'LO']  # We'll analyze the relationship between these two ROIs
+rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 run_num = 3
 runs = list(range(1, run_num + 1))
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
 
+def find_peak_coordinates(stat_img, roi_mask, hemisphere):
+    # Threshold the statistical image
+    thresholded_img, threshold = threshold_stats_img(stat_img, alpha=0.001, height_control='fpr')
+    
+    # Apply the ROI mask
+    masked_img = image.math_img('img1 * img2', img1=thresholded_img, img2=roi_mask)
+    
+    # Get the data and affine transformation
+    data = masked_img.get_fdata()
+    affine = masked_img.affine
+    
+    # Find the peak coordinate
+    if hemisphere == 'left':
+        peak_idx = np.unravel_index(np.argmax(data[:data.shape[0]//2]), data.shape)
+    else:
+        peak_idx = np.unravel_index(np.argmax(data[data.shape[0]//2:]), data.shape)
+        peak_idx = (peak_idx[0] + data.shape[0]//2, peak_idx[1], peak_idx[2])
+    
+    # Convert voxel indices to mm coordinates
+    peak_coord = nib.affines.apply_affine(affine, peak_idx)
+    
+    return peak_coord
+
 def extract_roi_sphere(img, coords):
     roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
     seed_time_series = roi_masker.fit_transform(img)
-    return np.mean(seed_time_series, axis=1).reshape(-1, 1)
+    
+    phys = np.mean(seed_time_series, axis=1)
+    phys = phys.reshape((phys.shape[0], 1))
+    
+    return phys
 
-def extract_condition_timeseries(runs, ss):
-    temp_dir = f'{raw_dir}/{ss}/ses-01'
-    cov_dir = f'{temp_dir}/covs'
-    vols, tr = 184, 2.0
-    times = np.arange(0, vols * len(runs) * tr, tr)
-    
-    object_timeseries = np.zeros(len(times))
-    
-    for rn in runs:
-        ss_num = ss.split('-')[1]
-        obj_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_Object.txt'
-        
-        if not os.path.exists(obj_cov_file):
-            print(f'Covariate file not found for run {rn}')
-            continue
-        
-        obj_cov = pd.read_csv(obj_cov_file, sep='\t', header=None, names=['onset', 'duration', 'value'])
-        
-        # Adjust onsets for current run
-        obj_cov['onset'] += (rn - 1) * vols * tr
-        
-        # Create binary timeseries for object condition
-        for _, row in obj_cov.iterrows():
-            start = int(row['onset'] / tr)
-            end = int((row['onset'] + row['duration']) / tr)
-            object_timeseries[start:end] = 1
-    
-    return object_timeseries
-
-def conduct_gca(roi1_ts, roi2_ts, condition_timeseries):
-    # Ensure all timeseries have the same length
-    min_length = min(roi1_ts.shape[0], roi2_ts.shape[0], len(condition_timeseries))
-    roi1_ts = roi1_ts[:min_length]
-    roi2_ts = roi2_ts[:min_length]
-    condition_timeseries = condition_timeseries[:min_length]
-    
-    # Extract condition-specific timeseries
-    condition_mask = condition_timeseries == 1
-    roi1_condition = roi1_ts[condition_mask]
-    roi2_condition = roi2_ts[condition_mask]
-    
-    neural_ts = pd.DataFrame({'roi1': np.squeeze(roi1_condition), 'roi2': np.squeeze(roi2_condition)})
-    
-    gc_res_1to2 = grangercausalitytests(neural_ts[['roi2', 'roi1']], 1, verbose=False)
-    gc_res_2to1 = grangercausalitytests(neural_ts[['roi1', 'roi2']], 1, verbose=False)
-    
-    f_diff = gc_res_1to2[1][0]['ssr_ftest'][0] - gc_res_2to1[1][0]['ssr_ftest'][0]
-    
-    return f_diff
+# ... [keep other functions like make_psy_cov and extract_cond_ts as they were] ...
 
 def conduct_gca_analyses():
     for ss in subs:
         print(f"Processing subject: {ss}")
         sub_dir = f'{study_dir}/{ss}/ses-01/'
-        roi_dir = f'{sub_dir}derivatives/rois'
-        temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
-        
-        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_std.csv')
         
         out_dir = f'{study_dir}/{ss}/ses-01/derivatives'
         os.makedirs(f'{out_dir}/gca', exist_ok=True)
@@ -94,37 +65,74 @@ def conduct_gca_analyses():
         gca_results = []
         
         for tsk in ['loc']:
+            # Load ROI masks (you'll need to specify the correct paths)
+            pips_mask = nib.load(f'{sub_dir}/masks/pIPS_mask.nii.gz')
+            lo_mask = nib.load(f'{sub_dir}/masks/LO_mask.nii.gz')
+            
             for hemi in hemispheres:
                 for rcn, rc in enumerate(run_combos):
-                    pips_coords = roi_coords[(roi_coords['index'] == rcn) & 
-                                             (roi_coords['task'] == tsk) & 
-                                             (roi_coords['roi'] == 'pIPS') & 
-                                             (roi_coords['hemisphere'] == hemi)][['x', 'y', 'z']].values.tolist()[0]
-                    
-                    lo_coords = roi_coords[(roi_coords['index'] == rcn) & 
-                                           (roi_coords['task'] == tsk) & 
-                                           (roi_coords['roi'] == 'LO') & 
-                                           (roi_coords['hemisphere'] == hemi)][['x', 'y', 'z']].values.tolist()[0]
-                    
-                    #filtered_list = [image.clean_img(nib.load(f'/lab_data/behrmannlab/vlad/hemispace/{ss}/ses-01/derivatives/fsl/loc//run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz'), standardize=True) for rn in rc]
-                    #curr_run_path = f'/lab_data/behrmannlab/vlad/hemispace/{ss}/ses-01/derivatives/fsl/loc/run-0{rn}/1stLevel.feat/stats/zstat3_mni.nii.gz'
-                    filtered_list = [image.clean_img(nib.load(f'/lab_data/behrmannlab/vlad/ptoc/{ss}/ses-01/derivatives/fsl/loc/run-0{rn}/1stLevel.feat/reg/example_func2standard.nii.gz'), standardize=True) for rn in rc]
-                    img4d = image.concat_imgs(filtered_list)
-                    
-                    pips_ts = extract_roi_sphere(img4d, pips_coords)
-                    lo_ts = extract_roi_sphere(img4d, lo_coords)
-                    
-                    object_timeseries = extract_condition_timeseries(rc, ss)
-                    
-                    f_diff = conduct_gca(pips_ts, lo_ts, object_timeseries)
-                    gca_results.append({
-                        'run_combo': rcn,
-                        'hemisphere': hemi,
-                        'condition': 'Object',
-                        'f_diff': f_diff
-                    })
+                    try:
+                        # Load statistical map for this run combination
+                        stat_img = nib.load(f'{sub_dir}/derivatives/fsl/{tsk}/run-0{rc[0]}/1stLevel.feat/stats/zstat1.nii.gz')
+                        
+                        # Find peak coordinates
+                        pips_coords = find_peak_coordinates(stat_img, pips_mask, hemi)
+                        lo_coords = find_peak_coordinates(stat_img, lo_mask, hemi)
+                        
+                        print(f"pIPS coordinates: {pips_coords}")
+                        print(f"LO coordinates: {lo_coords}")
+                        
+                        # Load and clean images (standardize only)
+                        filtered_list = []
+                        for rn in rc:
+                            curr_run = nib.load(f'{sub_dir}/derivatives/fsl/{tsk}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz')
+                            curr_run = image.clean_img(curr_run, standardize=True)
+                            filtered_list.append(curr_run)
+                        
+                        img4d = image.concat_imgs(filtered_list)
+                        
+                        pips_ts = extract_roi_sphere(img4d, pips_coords)
+                        lo_ts = extract_roi_sphere(img4d, lo_coords)
+                        
+                        # Diagnostic prints
+                        print(f"pIPS time series shape: {pips_ts.shape}")
+                        print(f"pIPS time series stats - min: {np.min(pips_ts)}, max: {np.max(pips_ts)}, mean: {np.mean(pips_ts)}, std: {np.std(pips_ts)}")
+                        print(f"LO time series shape: {lo_ts.shape}")
+                        print(f"LO time series stats - min: {np.min(lo_ts)}, max: {np.max(lo_ts)}, mean: {np.mean(lo_ts)}, std: {np.std(lo_ts)}")
+                        
+                        # Extract condition-specific time series
+                        psy = make_psy_cov(rc, ss, 'Object')
+                        if psy is not None:
+                            pips_cond_ts = extract_cond_ts(pips_ts, psy)
+                            lo_cond_ts = extract_cond_ts(lo_ts, psy)
+                            
+                            # Diagnostic prints for condition-specific time series
+                            print(f"Condition-specific pIPS time series shape: {pips_cond_ts.shape}")
+                            print(f"Condition-specific pIPS time series stats - min: {np.min(pips_cond_ts)}, max: {np.max(pips_cond_ts)}, mean: {np.mean(pips_cond_ts)}, std: {np.std(pips_cond_ts)}")
+                            print(f"Condition-specific LO time series shape: {lo_cond_ts.shape}")
+                            print(f"Condition-specific LO time series stats - min: {np.min(lo_cond_ts)}, max: {np.max(lo_cond_ts)}, mean: {np.mean(lo_cond_ts)}, std: {np.std(lo_cond_ts)}")
+                            
+                            neural_ts = pd.DataFrame({'pips': pips_cond_ts.flatten(), 'lo': lo_cond_ts.flatten()})
+                            
+                            gc_res_pips_to_lo = grangercausalitytests(neural_ts[['lo', 'pips']], 1, verbose=False)
+                            gc_res_lo_to_pips = grangercausalitytests(neural_ts[['pips', 'lo']], 1, verbose=False)
+                            
+                            f_diff = gc_res_pips_to_lo[1][0]['ssr_ftest'][0] - gc_res_lo_to_pips[1][0]['ssr_ftest'][0]
+                            
+                            gca_results.append({
+                                'run_combo': rcn,
+                                'hemisphere': hemi,
+                                'condition': 'Object',
+                                'f_diff': f_diff
+                            })
+                            print(f"GCA completed for {ss}, {hemi}, run combo {rcn}")
+                        else:
+                            print(f"Skipping GCA for {ss}, {hemi}, run combo {rcn} due to missing covariate data")
+                    except Exception as e:
+                        print(f"Error processing {ss}, {hemi}, run combo {rcn}: {str(e)}")
+                        import traceback
+                        traceback.print_exc()
         
-        # Save GCA results
         gca_df = pd.DataFrame(gca_results)
         gca_df.to_csv(f'{out_dir}/gca/{ss}_gca_results.csv', index=False)
         print(f'Saved GCA results for {ss}')
