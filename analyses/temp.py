@@ -23,7 +23,7 @@ results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-subs = ['sub-025']  # Update this list as needed
+subs = ['sub-057']  # Update this list as needed
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 run_num = 3
@@ -167,35 +167,35 @@ def conduct_gca():
 def summarize_gca():
     logging.info('Creating summary across subjects...')
     
-    df_summary = pd.DataFrame()
-    tasks = ['loc']
+    all_subjects_data = []
     
     for ss in subs:
         sub_dir = f'{study_dir}/{ss}/ses-01/'
         data_dir = f'{sub_dir}/derivatives/results/gca'
-
+        
         curr_df = pd.read_csv(f'{data_dir}/gca_summary.csv')
-        curr_df = curr_df.groupby(['task', 'origin', 'target']).mean()
-        curr_data = [ss]
-        col_index = ['sub']
-        for tsk in tasks:
-            for dorsal_roi in ['pIPS']:
-                for dorsal_hemi in hemispheres:
-                    for ventral_roi in ['LO']:
-                        for ventral_hemi in hemispheres:
-                            dorsal_label = f"{dorsal_hemi[0]}{dorsal_roi}"
-                            ventral_label = f"{ventral_hemi[0]}{ventral_roi}"
-                            col_index.append(f'{tsk}_{dorsal_label}_{ventral_label}')
-                            curr_data.append(curr_df['f_diff'][tsk, dorsal_label, ventral_label])
-
-        if ss == subs[0]:
-            df_summary = pd.DataFrame(columns=col_index)
-        df_summary = df_summary.append(pd.Series(curr_data, index=col_index), ignore_index=True)
-
-    df_summary.to_csv(f"{results_dir}/gca/all_roi_summary.csv", index=False)
-    logging.info('Summary across subjects completed and saved.')
+        curr_df['sub'] = ss
+        all_subjects_data.append(curr_df)
+    
+    df_all = pd.concat(all_subjects_data, ignore_index=True)
+    
+    # Group by the correct column names
+    df_summary = df_all.groupby(['fold', 'task', 'origin', 'target'])['f_diff'].agg(['mean', 'std']).reset_index()
+    
+    df_summary.columns = ['fold', 'task', 'origin', 'target', 'mean_f_diff', 'std_f_diff']
+    df_summary = df_summary.sort_values(['fold', 'task', 'origin', 'target'])
+    
+    output_dir = f"{results_dir}/gca"
+    os.makedirs(output_dir, exist_ok=True)
+    summary_file = f"{output_dir}/all_subjects_gca_summary.csv"
+    df_summary.to_csv(summary_file, index=False)
+    
+    logging.info(f'Summary across subjects completed and saved to {summary_file}')
+    print(df_summary)
+    
+    return df_summary
 
 # Main execution
 if __name__ == "__main__":
-    conduct_gca()
+    #conduct_gca()
     summarize_gca()
