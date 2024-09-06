@@ -23,18 +23,30 @@ results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-subs = ['sub-057']  # Update this list as needed
+subs = ['sub-025','sub-038','sub-057','sub-059','sub-064']  # Update this list as needed
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 run_num = 3
 runs = list(range(1, run_num + 1))
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
 
+def standardize_ts(ts):
+    """
+    Standardize timeseries to have zero mean and unit variance.
+    """
+    return (ts - np.mean(ts)) / np.std(ts)
+
+def check_variance(ts, label):
+    variance = np.var(ts)
+    if variance < 0.9 or variance > 1.1:  # allowing for some numerical imprecision
+        logging.warning(f"Unusual variance ({variance}) detected for {label} timeseries")
+
 def extract_roi_sphere(img, coords):
     roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
     seed_time_series = roi_masker.fit_transform(img)
     phys = np.mean(seed_time_series, axis=1).reshape(-1, 1)
-    return phys
+    phys_standardized = standardize_ts(phys)
+    return phys_standardized
 
 def make_psy_cov(runs, ss):
     temp_dir = f'{raw_dir}/{ss}/ses-01'
@@ -47,22 +59,17 @@ def make_psy_cov(runs, ss):
     for i, rn in enumerate(runs):
         ss_num = ss.split('-')[1]
         obj_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_Object.txt'
-        scr_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_Scramble.txt'
 
-        if not os.path.exists(obj_cov_file) or not os.path.exists(scr_cov_file):
+        if not os.path.exists(obj_cov_file):
             logging.warning(f'Covariate file not found for run {rn}')
             continue
 
         obj_cov = pd.read_csv(obj_cov_file, sep='\t', header=None, names=['onset', 'duration', 'value'])
-        scr_cov = pd.read_csv(scr_cov_file, sep='\t', header=None, names=['onset', 'duration', 'value'])
         
-        # Adjust onsets for runs after the first
         if i > 0:
             obj_cov['onset'] += i * vols_per_run * tr
-            scr_cov['onset'] += i * vols_per_run * tr
         
-        scr_cov['value'] *= -1
-        full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+        full_cov = pd.concat([full_cov, obj_cov])
 
     full_cov = full_cov.sort_values(by=['onset']).reset_index(drop=True)
     cov = full_cov.to_numpy()
@@ -79,7 +86,7 @@ def make_psy_cov(runs, ss):
 def extract_cond_ts(ts, cov):
     if len(ts) != len(cov):
         raise ValueError(f"Length mismatch: ts has {len(ts)} volumes, cov has {len(cov)} volumes")
-    block_ind = (cov > 0)  # Assuming positive values indicate the condition of interest
+    block_ind = (cov > 0)
     return ts[block_ind]
 
 def conduct_gca():
@@ -101,14 +108,12 @@ def conduct_gca():
         for rcn, rc in enumerate(run_combos):
             logging.info(f"Processing run combination {rc} for subject {ss}")
             
-            # Extract timeseries from each run
             filtered_list = []
             for rn in rc:
                 curr_run = image.load_img(f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz')
                 curr_run = image.clean_img(curr_run, standardize=True)
                 filtered_list.append(curr_run)
 
-            # Concatenate runs
             img4d = image.concat_imgs(filtered_list)
             logging.info(f"Concatenated image shape: {img4d.shape}")
 
@@ -132,6 +137,8 @@ def conduct_gca():
                             raise ValueError(f"Mismatch in volumes: dorsal_ts has {dorsal_ts.shape[0]}, psy has {psy.shape[0]}")
                         
                         dorsal_phys = extract_cond_ts(dorsal_ts, psy)
+                        dorsal_phys_standardized = standardize_ts(dorsal_phys)
+                        check_variance(dorsal_phys_standardized, f"{ss}_{tsk}_{dorsal_roi}_{dorsal_hemi}")
                         
                         for ventral_roi in ['LO']:
                             for ventral_hemi in hemispheres:
@@ -145,14 +152,22 @@ def conduct_gca():
                                     continue
                                 
                                 ventral_ts = extract_roi_sphere(img4d, ventral_coords[['x', 'y', 'z']].values.tolist()[0])
-                                ventral_phys = extract_cond_ts(ventral_ts, psy)                            
+                                ventral_phys = extract_cond_ts(ventral_ts, psy)
+                                ventral_phys_standardized = standardize_ts(ventral_phys)
+                                check_variance(ventral_phys_standardized, f"{ss}_{tsk}_{ventral_roi}_{ventral_hemi}")
 
-                                neural_ts = pd.DataFrame({'dorsal': dorsal_phys.ravel(), 'ventral': ventral_phys.ravel()})
+                                neural_ts = pd.DataFrame({
+                                    'dorsal': dorsal_phys_standardized.ravel(), 
+                                    'ventral': ventral_phys_standardized.ravel()
+                                })
                                 
                                 gc_res_dorsal = grangercausalitytests(neural_ts[['ventral', 'dorsal']], 1, verbose=False)
                                 gc_res_ventral = grangercausalitytests(neural_ts[['dorsal', 'ventral']], 1, verbose=False)
 
                                 f_diff = gc_res_dorsal[1][0]['ssr_ftest'][0] - gc_res_ventral[1][0]['ssr_ftest'][0]
+
+                                if abs(f_diff) > 10:  # Adjust this threshold as needed
+                                    logging.warning(f"Large F-diff value ({f_diff}) detected for {ss}, {tsk}, {dorsal_roi}_{dorsal_hemi}, {ventral_roi}_{ventral_hemi}")
 
                                 dorsal_label = f"{dorsal_hemi[0]}{dorsal_roi}"
                                 ventral_label = f"{ventral_hemi[0]}{ventral_roi}"
@@ -163,7 +178,7 @@ def conduct_gca():
 
         logging.info(f'Completed GCA for subject {ss}')
         sub_summary.to_csv(f'{sub_dir}/derivatives/results/gca/gca_summary.csv', index=False)
-
+    
 def summarize_gca():
     logging.info('Creating summary across subjects...')
     
@@ -197,5 +212,5 @@ def summarize_gca():
 
 # Main execution
 if __name__ == "__main__":
-    #conduct_gca()
+    conduct_gca()
     summarize_gca()
