@@ -27,7 +27,8 @@ raw_dir = params.raw_dir
 #subs = sub_info['sub'].tolist()
 #subs = ['sub-025','sub-038','sub-057','sub-059','sub-064']  # subs completed, 4.5 hours-ish
 #subs = ['sub-067','sub-068','sub-071'] #subs completed, part 2
-subs = ['sub-025','sub-038','sub-057','sub-059','sub-064','sub-067','sub-068','sub-071'] #all subs that have run
+#subs = ['sub-025','sub-038','sub-057','sub-059','sub-064','sub-067','sub-068','sub-071'] #all subs that have run
+subs = ['sub-083', 'sub-084', 'sub-085', 'sub-087', 'sub-088', 'sub-093', 'sub-094', 'sub-095', 'sub-096', 'sub-097', 'sub-107'], 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 run_num = 3
@@ -216,5 +217,5 @@ def summarize_gca():
 
 # Main execution
 if __name__ == "__main__":
-    #conduct_gca()
-    summarize_gca()
+    conduct_gca()
+    #summarize_gca()
