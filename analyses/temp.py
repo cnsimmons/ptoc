@@ -23,7 +23,10 @@ results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-subs = ['sub-025','sub-038','sub-057','sub-059','sub-064']  # Update this list as needed
+#sub_info = sub_info[sub_info['group'] == 'control']
+#subs = sub_info['subject'].tolist()
+#subs = ['sub-025','sub-038','sub-057','sub-059','sub-064']  # subs completed
+subs = ['sub-067','sub-068','sub-071','sub-057','sub-059']
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 run_num = 3
@@ -213,4 +216,4 @@ def summarize_gca():
 # Main execution
 if __name__ == "__main__":
     conduct_gca()
-    summarize_gca()
+    #summarize_gca()
