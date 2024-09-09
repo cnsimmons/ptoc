@@ -22,9 +22,13 @@ study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
-sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-sub_info = sub_info[sub_info['group'] == 'control']
-subs = sub_info['sub'].tolist()
+##TO RUN ALL
+#sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+#sub_info = sub_info[sub_info['group'] == 'control']
+#subs = sub_info['sub'].tolist()
+
+#TO RUN ONE
+subs = ['sub-025']
 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
@@ -85,10 +89,19 @@ def make_psy_cov(runs, ss):
     psy, _ = compute_regressor(cov.T, 'spm', times)
     return psy
 
+#myapproach - run Vlad's approach to see the difference
+#def extract_cond_ts(ts, cov):
+    #if len(ts) != len(cov):
+        #raise ValueError(f"Length mismatch: ts has {len(ts)} volumes, cov has {len(cov)} volumes")
+    #block_ind = (cov > 0)
+    #return ts[block_ind]
+
+##VLAD'S APPROACH
 def extract_cond_ts(ts, cov):
-    if len(ts) != len(cov):
-        raise ValueError(f"Length mismatch: ts has {len(ts)} volumes, cov has {len(cov)} volumes")
-    block_ind = (cov > 0)
+    block_ind = (cov==1)
+    block_ind = np.insert(block_ind, 0, True)
+    block_ind = np.delete(block_ind, len(block_ind)-1)
+    block_ind = (cov == 1).reshape((len(cov))) | block_ind
     return ts[block_ind]
 
 def conduct_gca():
@@ -179,7 +192,7 @@ def conduct_gca():
                                 logging.info(f"Completed GCA for {ss}, {tsk}, {dorsal_label}, {ventral_label}")
 
         logging.info(f'Completed GCA for subject {ss}')
-        sub_summary.to_csv(f'{sub_dir}/derivatives/results/gca/gca_summary.csv', index=False)
+        sub_summary.to_csv(f'{sub_dir}/derivatives/results/gca/gca_summary_vladblocks.csv', index=False)
     
 def summarize_gca():
     logging.info('Creating summary across subjects...')
@@ -204,7 +217,7 @@ def summarize_gca():
     
     output_dir = f"{results_dir}/gca"
     os.makedirs(output_dir, exist_ok=True)
-    summary_file = f"{output_dir}/all_subjects_gca_summary.csv"
+    summary_file = f"{output_dir}/all_subjects_gca_summary_vladblocks.csv"
     df_summary.to_csv(summary_file, index=False)
     
     logging.info(f'Summary across subjects completed and saved to {summary_file}')
