@@ -150,7 +150,7 @@ def conduct_gca():
                             raise ValueError(f"Mismatch in volumes: dorsal_ts has {dorsal_ts.shape[0]}, psy has {psy.shape[0]}")
                         
                         dorsal_phys = extract_cond_ts(dorsal_ts, psy)
-                        dorsal_phys_standardized = standardize_ts(dorsal_phys)
+                        dorsal_phys_standardized = (dorsal_phys) #standardize_ts(dorsal_phys)
                         check_variance(dorsal_phys_standardized, f"{ss}_{tsk}_{dorsal_roi}_{dorsal_hemi}")
                         
                         for ventral_roi in ['LO']:
@@ -166,7 +166,7 @@ def conduct_gca():
                                 
                                 ventral_ts = extract_roi_sphere(img4d, ventral_coords[['x', 'y', 'z']].values.tolist()[0])
                                 ventral_phys = extract_cond_ts(ventral_ts, psy)
-                                ventral_phys_standardized = standardize_ts(ventral_phys)
+                                ventral_phys_standardized = (ventral_phys) #standardize_ts(ventral_phys)
                                 check_variance(ventral_phys_standardized, f"{ss}_{tsk}_{ventral_roi}_{ventral_hemi}")
 
                                 neural_ts = pd.DataFrame({
