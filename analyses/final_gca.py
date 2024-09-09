@@ -51,7 +51,8 @@ def extract_roi_sphere(img, coords):
     roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
     seed_time_series = roi_masker.fit_transform(img)
     phys = np.mean(seed_time_series, axis=1).reshape(-1, 1)
-    phys_standardized = standardize_ts(phys)
+    #phys_standardized = standardize_ts(phys)#remove standardization for Vlad's approach
+    phys_standardized = phys
     return phys_standardized
 
 def make_psy_cov(runs, ss):
@@ -87,6 +88,9 @@ def make_psy_cov(runs, ss):
         return np.zeros((total_vols, 1))
 
     psy, _ = compute_regressor(cov.T, 'spm', times)
+    #VLAD BINARIZES THE PSY COVARIATE I USED CONTINUOUS VALUES TO TRY VLADS APPROACH RUN BELOW TWO LINES TO SEE THE DIFFERENCE
+    psy[psy > 0] = 1 #remove if run my approach
+    psy[psy < 0] = 0 #remove if run my approach
     return psy
 
 #myapproach - run Vlad's approach to see the difference
@@ -227,5 +231,5 @@ def summarize_gca():
 
 # Main execution
 if __name__ == "__main__":
-    #conduct_gca()
-    summarize_gca()
+    conduct_gca()
+    #summarize_gca()
