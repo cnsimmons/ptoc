@@ -23,12 +23,12 @@ results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
 ##TO RUN ALL
-#sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-#sub_info = sub_info[sub_info['group'] == 'control']
-#subs = sub_info['sub'].tolist()
+sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+sub_info = sub_info[sub_info['group'] == 'control']
+subs = sub_info['sub'].tolist()
 
 #TO RUN ONE
-subs = ['sub-025']
+#subs = ['sub-025']
 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
@@ -36,11 +36,12 @@ run_num = 3
 runs = list(range(1, run_num + 1))
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
 
-def standardize_ts(ts):
-    """
-    Standardize timeseries to have zero mean and unit variance.
-    """
-    return (ts - np.mean(ts)) / np.std(ts)
+##no longer necessary
+#def standardize_ts(ts):
+   # """
+   # Standardize timeseries to have zero mean and unit variance.
+   # """
+   # return (ts - np.mean(ts)) / np.std(ts)
 
 def check_variance(ts, label):
     variance = np.var(ts)
@@ -88,19 +89,12 @@ def make_psy_cov(runs, ss):
         return np.zeros((total_vols, 1))
 
     psy, _ = compute_regressor(cov.T, 'spm', times)
-    #VLAD BINARIZES THE PSY COVARIATE I USED CONTINUOUS VALUES TO TRY VLADS APPROACH RUN BELOW TWO LINES TO SEE THE DIFFERENCE
-    psy[psy > 0] = 1 #remove if run my approach
-    psy[psy < 0] = 0 #remove if run my approach
     return psy
+    #VLAD BINARIZES THE PSY COVARIATE I USED CONTINUOUS VALUES TO TRY VLADS APPROACH RUN BELOW TWO LINES TO SEE THE DIFFERENCE
+    #psy[psy > 0] = 1 #remove if run my approach
+    #psy[psy < 0] = 0 #remove if run my approach
+    #return psy
 
-#myapproach - run Vlad's approach to see the difference
-#def extract_cond_ts(ts, cov):
-    #if len(ts) != len(cov):
-        #raise ValueError(f"Length mismatch: ts has {len(ts)} volumes, cov has {len(cov)} volumes")
-    #block_ind = (cov > 0)
-    #return ts[block_ind]
-
-##VLAD'S APPROACH
 def extract_cond_ts(ts, cov):
     block_ind = (cov==1)
     block_ind = np.insert(block_ind, 0, True)
@@ -196,7 +190,7 @@ def conduct_gca():
                                 logging.info(f"Completed GCA for {ss}, {tsk}, {dorsal_label}, {ventral_label}")
 
         logging.info(f'Completed GCA for subject {ss}')
-        sub_summary.to_csv(f'{sub_dir}/derivatives/results/gca/gca_summary_vladblocks.csv', index=False)
+        sub_summary.to_csv(f'{sub_dir}/derivatives/results/gca/gca_summary.csv', index=False)
     
 def summarize_gca():
     logging.info('Creating summary across subjects...')
@@ -221,7 +215,7 @@ def summarize_gca():
     
     output_dir = f"{results_dir}/gca"
     os.makedirs(output_dir, exist_ok=True)
-    summary_file = f"{output_dir}/all_subjects_gca_summary_vladblocks.csv"
+    summary_file = f"{output_dir}/all_subjects_gca_summary.csv"
     df_summary.to_csv(summary_file, index=False)
     
     logging.info(f'Summary across subjects completed and saved to {summary_file}')
