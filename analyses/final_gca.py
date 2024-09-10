@@ -23,12 +23,18 @@ results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
 ##TO RUN ALL
-sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-sub_info = sub_info[sub_info['group'] == 'control']
-subs = sub_info['sub'].tolist()
+#sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+#sub_info = sub_info[sub_info['group'] == 'control']
+#subs = sub_info['sub'].tolist()
 
 #TO RUN ONE
 #subs = ['sub-025']
+
+# TO RUN ALL EXCEPT SUB-025
+sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+sub_info = sub_info[sub_info['group'] == 'control']
+all_subs = sub_info['sub'].tolist()
+subs = [sub for sub in all_subs if sub != 'sub-025']
 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
@@ -36,12 +42,11 @@ run_num = 3
 runs = list(range(1, run_num + 1))
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
 
-##no longer necessary
-#def standardize_ts(ts):
-   # """
-   # Standardize timeseries to have zero mean and unit variance.
-   # """
-   # return (ts - np.mean(ts)) / np.std(ts)
+def standardize_ts(ts):
+    """
+    Standardize timeseries to have zero mean and unit variance.
+    """
+    return (ts - np.mean(ts)) / np.std(ts)
 
 def check_variance(ts, label):
     variance = np.var(ts)
@@ -89,13 +94,19 @@ def make_psy_cov(runs, ss):
         return np.zeros((total_vols, 1))
 
     psy, _ = compute_regressor(cov.T, 'spm', times)
+    #VLAD BINARIZES THE PSY COVARIATE I USED CONTINUOUS VALUES TO TRY VLADS APPROACH RUN BELOW TWO LINES TO SEE THE DIFFERENCE
+    psy[psy > 0] = 1 #remove if run my approach
+    psy[psy < 0] = 0 #remove if run my approach
     return psy
 
-    #VLAD BINARIZES THE PSY COVARIATE I USED CONTINUOUS VALUES TO TRY VLAD'S APPROACH RUN BELOW TWO LINES TO SEE THE DIFFERENCE
-    #psy[psy > 0] = 1 #remove if run my approach
-    #psy[psy < 0] = 0 #remove if run my approach
-    #return psy
+#my_approach - run Vlad's approach to see the difference
+#def extract_cond_ts(ts, cov):
+    #if len(ts) != len(cov):
+        #raise ValueError(f"Length mismatch: ts has {len(ts)} volumes, cov has {len(cov)} volumes")
+    #block_ind = (cov > 0)
+    #return ts[block_ind]
 
+##VLAD'S APPROACH
 def extract_cond_ts(ts, cov):
     block_ind = (cov==1)
     block_ind = np.insert(block_ind, 0, True)
@@ -151,7 +162,7 @@ def conduct_gca():
                             raise ValueError(f"Mismatch in volumes: dorsal_ts has {dorsal_ts.shape[0]}, psy has {psy.shape[0]}")
                         
                         dorsal_phys = extract_cond_ts(dorsal_ts, psy)
-                        dorsal_phys_standardized = dorsal_phys #standardize_ts(dorsal_phys)
+                        dorsal_phys_standardized = standardize_ts(dorsal_phys)
                         check_variance(dorsal_phys_standardized, f"{ss}_{tsk}_{dorsal_roi}_{dorsal_hemi}")
                         
                         for ventral_roi in ['LO']:
@@ -167,7 +178,7 @@ def conduct_gca():
                                 
                                 ventral_ts = extract_roi_sphere(img4d, ventral_coords[['x', 'y', 'z']].values.tolist()[0])
                                 ventral_phys = extract_cond_ts(ventral_ts, psy)
-                                ventral_phys_standardized = ventral_phys #standardize_ts(ventral_phys)
+                                ventral_phys_standardized = standardize_ts(ventral_phys)
                                 check_variance(ventral_phys_standardized, f"{ss}_{tsk}_{ventral_roi}_{ventral_hemi}")
 
                                 neural_ts = pd.DataFrame({
