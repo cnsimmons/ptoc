@@ -103,7 +103,7 @@ def extract_cond_ts(ts, cov):
     return ts[block_ind]
 
 #main analysis
-def searchlight_gca(data, mask, bcvar):
+def searchlight_gca(data, mask, bcvar, myrad):
     # Extract the time series for the current searchlight sphere
     sphere_ts = data[0]
     
@@ -175,23 +175,21 @@ def conduct_mini_searchlight_gca():
         rc = run_combos[0]  # This will use the first run combination
         logging.info(f"Processing run combination {rc} for subject {ss}")
         
+        # 1. Prepare the data (4D volume)
         filtered_list = []
         for rn in rc:
             curr_run = image.load_img(f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz')
             curr_run = image.clean_img(curr_run, standardize=True)
             filtered_list.append(curr_run)
 
-        # Handle both single and multiple runs
-        if len(filtered_list) > 1:
-            img4d = image.concat_imgs(filtered_list)
-        else:
-            img4d = filtered_list[0]  # If there's only one run, use it directly
+        img4d = image.concat_imgs(filtered_list)
+        data = img4d.get_fdata()
+        logging.info(f"Data shape: {data.shape}")
 
-        logging.info(f"Image shape: {img4d.shape}")
-
-        # Create a 3D whole-brain mask
+        # 2. Prepare the mask (3D binary mask)
         whole_brain_mask = image.math_img("np.any(img > 0, axis=-1)", img=img4d)
-        logging.info(f"Whole-brain mask shape: {whole_brain_mask.shape}")
+        mask = whole_brain_mask.get_fdata().astype(bool)
+        logging.info(f"Mask shape: {mask.shape}")
 
         for tsk in tasks:
             # Select only one comparison ROI and hemisphere
@@ -211,17 +209,22 @@ def conduct_mini_searchlight_gca():
             
             psy = make_psy_cov(rc, ss)
             
-            # Set up the searchlight
+            # 3. Prepare bcvar (dictionary with additional variables)
+            bcvar = {'comparison_ts': comparison_ts, 'psy': psy}
+
+            # 4. Set searchlight parameters
             sl_rad = 3  # This gives approximately 9 mm radius for 3 mm isotropic voxels
             max_blk_edge = 5  # Adjust as needed
             pool_size = 1
+
+            # Set up the searchlight
             sl = Searchlight(sl_rad=sl_rad, max_blk_edge=max_blk_edge)
 
             # Distribute data to the searchlights
-            sl.distribute([img4d.get_fdata()], whole_brain_mask.get_fdata())
+            sl.distribute([data], mask)
 
-            # Broadcast the comparison time series and psychological covariate
-            sl.broadcast({'comparison_ts': comparison_ts, 'psy': psy})
+            # Broadcast the additional variables
+            sl.broadcast(bcvar)
 
             # Run the searchlight
             sl_result = sl.run_searchlight(searchlight_gca, pool_size=pool_size)
