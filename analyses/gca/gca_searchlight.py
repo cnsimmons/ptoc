@@ -300,5 +300,5 @@ def conduct_searchlight_gca():
 
         logging.info(f'Completed Searchlight GCA for subject {ss}')
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     #conduct_searchlight_gca()
