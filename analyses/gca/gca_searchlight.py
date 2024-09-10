@@ -181,11 +181,17 @@ def conduct_mini_searchlight_gca():
             curr_run = image.clean_img(curr_run, standardize=True)
             filtered_list.append(curr_run)
 
-        img4d = image.concat_imgs(filtered_list)
-        logging.info(f"Concatenated image shape: {img4d.shape}")
+        # Handle both single and multiple runs
+        if len(filtered_list) > 1:
+            img4d = image.concat_imgs(filtered_list)
+        else:
+            img4d = filtered_list[0]  # If there's only one run, use it directly
 
-        # Create a whole-brain mask
-        whole_brain_mask = image.math_img("img > 0", img=img4d.mean_img())
+        logging.info(f"Image shape: {img4d.shape}")
+
+        # Create a 3D whole-brain mask
+        whole_brain_mask = image.math_img("np.any(img > 0, axis=-1)", img=img4d)
+        logging.info(f"Whole-brain mask shape: {whole_brain_mask.shape}")
 
         for tsk in tasks:
             # Select only one comparison ROI and hemisphere
