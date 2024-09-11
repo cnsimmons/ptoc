@@ -39,13 +39,71 @@ run_num = 3
 runs = list(range(1, run_num + 1))
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
 
-# Helper functions (keep these as they were)
+def check_variance(ts, label):
+    variance = np.var(ts)
+    if variance < 0.9 or variance > 1.1:  # allowing for some numerical imprecision
+        logging.warning(f"Unusual variance ({variance}) detected for {label} timeseries")
 
-def searchlight_gca(data, mask, bcvar, myrad):
+def extract_roi_sphere(img, coords):
+    roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
+    seed_time_series = roi_masker.fit_transform(img)
+    phys = np.mean(seed_time_series, axis=1).reshape(-1, 1)
+    #phys_standardized = standardize_ts(phys) #remove standardization for Vlad's approach
+    phys_standardized = phys
+    return phys_standardized
+
+def make_psy_cov(runs, ss):
+    temp_dir = f'{raw_dir}/{ss}/ses-01'
+    cov_dir = f'{temp_dir}/covs'
+    vols_per_run, tr = 184, 2.0
+    total_vols = vols_per_run * len(runs)
+    times = np.arange(0, total_vols * tr, tr)
+    full_cov = pd.DataFrame(columns=['onset', 'duration', 'value'])
+
+    for i, rn in enumerate(runs):
+        ss_num = ss.split('-')[1]
+        obj_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_Object.txt'
+
+        if not os.path.exists(obj_cov_file):
+            logging.warning(f'Covariate file not found for run {rn}')
+            continue
+
+        obj_cov = pd.read_csv(obj_cov_file, sep='\t', header=None, names=['onset', 'duration', 'value'])
+        
+        if i > 0:
+            obj_cov['onset'] += i * vols_per_run * tr
+        
+        full_cov = pd.concat([full_cov, obj_cov])
+
+    full_cov = full_cov.sort_values(by=['onset']).reset_index(drop=True)
+    cov = full_cov.to_numpy()
+    valid_onsets = cov[:, 0] < times[-1]
+    cov = cov[valid_onsets]
+
+    if cov.shape[0] == 0:
+        logging.warning('No valid covariate data after filtering. Returning zeros array.')
+        return np.zeros((total_vols, 1))
+
+    psy, _ = compute_regressor(cov.T, 'spm', times)
+    #VLAD BINARIZES THE PSY COVARIATE I USED CONTINUOUS VALUES TO TRY VLADS APPROACH RUN BELOW TWO LINES TO SEE THE DIFFERENCE
+    psy[psy > 0] = 1 #remove if run my approach
+    psy[psy < 0] = 0 #remove if run my approach
+    return psy
+
+
+def extract_cond_ts(ts, cov):
+    block_ind = (cov==1)
+    block_ind = np.insert(block_ind, 0, True)
+    block_ind = np.delete(block_ind, len(block_ind)-1)
+    block_ind = (cov == 1).reshape((len(cov))) | block_ind
+    return ts[block_ind]
+
+def searchlight_gca(data, mask, sl_rad, comparison_ts, psy):
     logging.info(f"searchlight_gca called with: data shape: {data[0].shape if isinstance(data, list) else data.shape}")
     logging.info(f"mask shape: {mask.shape}")
-    logging.info(f"bcvar type: {type(bcvar)}")
-    logging.info(f"myrad: {myrad}")
+    logging.info(f"sl_rad: {sl_rad}")
+    logging.info(f"comparison_ts shape: {comparison_ts.shape}")
+    logging.info(f"psy shape: {psy.shape}")
 
     try:
         # Extract the time series for the current searchlight sphere
@@ -63,10 +121,6 @@ def searchlight_gca(data, mask, bcvar, myrad):
         # Check if the sphere has enough voxels
         if n_voxels < min_voxels:
             return np.nan
-        
-        # Extract the time series for the comparison region and the psychological covariate
-        comparison_ts = bcvar['comparison_ts']
-        psy = bcvar['psy']
         
         # Perform condition-specific extraction
         sphere_phys = extract_cond_ts(sphere_ts, psy)
@@ -153,11 +207,8 @@ def conduct_mini_searchlight_gca():
                 comparison_ts = extract_roi_sphere(img4d, comparison_coords[['x', 'y', 'z']].values.tolist()[0])
                 psy = make_psy_cov(rc, ss)
                 
-                # Prepare bcvar (dictionary with additional variables)
-                bcvar = {'comparison_ts': comparison_ts.ravel(), 'psy': psy.ravel()}
-                logging.info(f"bcvar keys: {bcvar.keys()}")
-                logging.info(f"comparison_ts shape: {bcvar['comparison_ts'].shape}")
-                logging.info(f"psy shape: {bcvar['psy'].shape}")
+                logging.info(f"comparison_ts shape: {comparison_ts.shape}")
+                logging.info(f"psy shape: {psy.shape}")
 
                 # Set up the searchlight
                 sl_rad = 3
@@ -170,13 +221,12 @@ def conduct_mini_searchlight_gca():
                 sl.distribute([data], mask)
                 logging.info("Data distributed to searchlights")
 
-                # Broadcast the additional variables
-                sl.broadcast(bcvar)
-                logging.info("Additional variables broadcasted")
-
                 # Run the searchlight
                 logging.info("Starting searchlight analysis...")
-                sl_result = sl.run_searchlight(searchlight_gca, pool_size=pool_size)
+                sl_result = sl.run_searchlight(searchlight_gca, pool_size=pool_size, 
+                                               sl_rad=sl_rad, 
+                                               comparison_ts=comparison_ts.ravel(), 
+                                               psy=psy.ravel())
                 logging.info("Searchlight analysis completed")
                 logging.info(f"Searchlight result shape: {sl_result.shape}")
 
