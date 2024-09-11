@@ -23,18 +23,13 @@ results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
 ##TO RUN ALL
-#sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-#sub_info = sub_info[sub_info['group'] == 'control']
-#subs = sub_info['sub'].tolist()
+sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+sub_info = sub_info[sub_info['group'] == 'control']
+subs = sub_info['sub'].tolist()
+#subs = [sub for sub in all_subs if sub != 'sub-025'] #all subs but 25
 
 #TO RUN ONE
 #subs = ['sub-107']
-
-# TO RUN ALL EXCEPT SUB-025
-sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-sub_info = sub_info[sub_info['group'] == 'control']
-all_subs = sub_info['sub'].tolist()
-subs = [sub for sub in all_subs if sub != 'sub-025']
 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
@@ -99,14 +94,7 @@ def make_psy_cov(runs, ss):
     psy[psy < 0] = 0 #remove if run my approach
     return psy
 
-#my_approach - run Vlad's approach to see the difference
-#def extract_cond_ts(ts, cov):
-    #if len(ts) != len(cov):
-        #raise ValueError(f"Length mismatch: ts has {len(ts)} volumes, cov has {len(cov)} volumes")
-    #block_ind = (cov > 0)
-    #return ts[block_ind]
-
-##VLAD'S APPROACH
+##VLAD'S APPROACH cont'd
 def extract_cond_ts(ts, cov):
     block_ind = (cov==1)
     block_ind = np.insert(block_ind, 0, True)
