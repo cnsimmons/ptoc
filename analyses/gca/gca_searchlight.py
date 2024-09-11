@@ -85,7 +85,6 @@ def make_psy_cov(runs, ss):
         return np.zeros((total_vols, 1))
 
     psy, _ = compute_regressor(cov.T, 'spm', times)
-    #VLAD BINARIZES THE PSY COVARIATE I USED CONTINUOUS VALUES TO TRY VLADS APPROACH RUN BELOW TWO LINES TO SEE THE DIFFERENCE
     psy[psy > 0] = 1 #remove if run my approach
     psy[psy < 0] = 0 #remove if run my approach
     return psy
@@ -98,14 +97,18 @@ def extract_cond_ts(ts, cov):
     block_ind = (cov == 1).reshape((len(cov))) | block_ind
     return ts[block_ind]
 
-def searchlight_gca(data, mask, sl_rad, comparison_ts, psy):
+def searchlight_gca(data, mask, bcvar, myrad):
     logging.info(f"searchlight_gca called with: data shape: {data[0].shape if isinstance(data, list) else data.shape}")
     logging.info(f"mask shape: {mask.shape}")
-    logging.info(f"sl_rad: {sl_rad}")
-    logging.info(f"comparison_ts shape: {comparison_ts.shape}")
-    logging.info(f"psy shape: {psy.shape}")
+    logging.info(f"bcvar type: {type(bcvar)}")
+    logging.info(f"bcvar keys: {bcvar.keys()}")
+    logging.info(f"myrad: {myrad}")
 
     try:
+        # Extract the variables from bcvar
+        comparison_ts = bcvar['comparison_ts']
+        psy = bcvar['psy']
+
         # Extract the time series for the current searchlight sphere
         sphere_ts = data[0]
         
@@ -191,6 +194,7 @@ def conduct_mini_searchlight_gca():
             logging.info(f"Mask shape: {mask.shape}")
             
             for tsk in tasks:
+                
                 # Select only one comparison ROI and hemisphere
                 comparison_roi = 'pIPS'
                 comparison_hemi = 'left'
@@ -217,16 +221,23 @@ def conduct_mini_searchlight_gca():
                 sl = Searchlight(sl_rad=sl_rad, max_blk_edge=max_blk_edge)
                 logging.info(f"Searchlight initialized with sl_rad={sl_rad}, max_blk_edge={max_blk_edge}")
 
+                # Prepare bcvar (dictionary with additional variables)
+                bcvar = {
+                    'comparison_ts': comparison_ts.ravel(),
+                    'psy': psy.ravel()
+                }
+
                 # Distribute data to the searchlights
                 sl.distribute([data], mask)
                 logging.info("Data distributed to searchlights")
 
+                # Broadcast the additional variables
+                sl.broadcast(bcvar)
+                logging.info("Additional variables broadcasted")
+
                 # Run the searchlight
                 logging.info("Starting searchlight analysis...")
-                sl_result = sl.run_searchlight(searchlight_gca, pool_size=pool_size, 
-                                               sl_rad=sl_rad, 
-                                               comparison_ts=comparison_ts.ravel(), 
-                                               psy=psy.ravel())
+                sl_result = sl.run_searchlight(searchlight_gca, pool_size=pool_size)
                 logging.info("Searchlight analysis completed")
                 logging.info(f"Searchlight result shape: {sl_result.shape}")
 
