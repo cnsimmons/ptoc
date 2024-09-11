@@ -38,6 +38,7 @@ hemispheres = ['left', 'right']
 run_num = 3
 runs = list(range(1, run_num + 1))
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
+global_bcvar = None
 
 def check_variance(ts, label):
     variance = np.var(ts)
@@ -97,17 +98,20 @@ def extract_cond_ts(ts, cov):
     block_ind = (cov == 1).reshape((len(cov))) | block_ind
     return ts[block_ind]
 
+# Global variable to store our additional data
+global_bcvar = None
+
 def searchlight_gca(data, mask, bcvar, myrad):
+    global global_bcvar
     logging.info(f"searchlight_gca called with: data shape: {data[0].shape if isinstance(data, list) else data.shape}")
     logging.info(f"mask shape: {mask.shape}")
     logging.info(f"bcvar type: {type(bcvar)}")
-    logging.info(f"bcvar keys: {bcvar.keys()}")
     logging.info(f"myrad: {myrad}")
 
     try:
-        # Extract the variables from bcvar
-        comparison_ts = bcvar['comparison_ts']
-        psy = bcvar['psy']
+        # Use the global variable instead of the passed bcvar
+        comparison_ts = global_bcvar['comparison_ts']
+        psy = global_bcvar['psy']
 
         # Extract the time series for the current searchlight sphere
         sphere_ts = data[0]
@@ -221,8 +225,8 @@ def conduct_mini_searchlight_gca():
                 sl = Searchlight(sl_rad=sl_rad, max_blk_edge=max_blk_edge)
                 logging.info(f"Searchlight initialized with sl_rad={sl_rad}, max_blk_edge={max_blk_edge}")
 
-                # Prepare bcvar (dictionary with additional variables)
-                bcvar = {
+                # Prepare global_bcvar (dictionary with additional variables)
+                global_bcvar = {
                     'comparison_ts': comparison_ts.ravel(),
                     'psy': psy.ravel()
                 }
@@ -230,10 +234,6 @@ def conduct_mini_searchlight_gca():
                 # Distribute data to the searchlights
                 sl.distribute([data], mask)
                 logging.info("Data distributed to searchlights")
-
-                # Broadcast the additional variables
-                sl.broadcast(bcvar)
-                logging.info("Additional variables broadcasted")
 
                 # Run the searchlight
                 logging.info("Starting searchlight analysis...")
