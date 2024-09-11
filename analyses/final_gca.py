@@ -28,7 +28,7 @@ raw_dir = params.raw_dir
 #subs = sub_info['sub'].tolist()
 
 #TO RUN ONE
-#subs = ['sub-025']
+#subs = ['sub-107']
 
 # TO RUN ALL EXCEPT SUB-025
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
@@ -237,5 +237,5 @@ def summarize_gca():
 
 # Main execution
 if __name__ == "__main__":
-    conduct_gca()
-    #summarize_gca()
+    #conduct_gca()
+    summarize_gca()
