@@ -20,7 +20,7 @@ raw_dir = params.raw_dir
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
 subs = sub_info['sub'].tolist()
-subs = [sub for sub in subs if sub != 'sub-025'] #all subs but 25
+#subs = [sub for sub in subs if sub != 'sub-025'] #all subs but 25
 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
