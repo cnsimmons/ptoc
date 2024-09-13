@@ -226,4 +226,4 @@ def summarize_gca():
 # Main execution
 if __name__ == "__main__":
     #conduct_gca()
-    summarize_gca()
+    summarize_gca()  
