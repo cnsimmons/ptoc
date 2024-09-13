@@ -24,11 +24,11 @@ raw_dir = params.raw_dir
 ##TO RUN ALL
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
-subs = sub_info['sub'].tolist()
+#subs = sub_info['sub'].tolist()
 #subs = [sub for sub in all_subs if sub != 'sub-025'] #all subs but 25
 
 #TO RUN ONE
-#subs = ['sub-107']
+subs = ['sub-025']
 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
@@ -167,4 +167,4 @@ def summarize_fc_gca():
 # Main execution
 if __name__ == "__main__":
     conduct_fc_gca()
-    summarize_fc_gca()
+    #summarize_fc_gca()
