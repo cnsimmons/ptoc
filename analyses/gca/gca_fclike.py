@@ -24,11 +24,11 @@ raw_dir = params.raw_dir
 ##TO RUN ALL
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
-#subs = sub_info['sub'].tolist()
-#subs = [sub for sub in all_subs if sub != 'sub-025'] #all subs but 25
+subs = sub_info['sub'].tolist()
+subs = [sub for sub in subs if sub != 'sub-025'] #all subs but 25
 
 #TO RUN ONE
-subs = ['sub-025']
+#subs = ['sub-025']
 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
