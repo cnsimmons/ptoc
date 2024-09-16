@@ -25,7 +25,7 @@ raw_dir = params.raw_dir
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
 subs = sub_info['sub'].tolist()
-#subs = [sub for sub in subs if sub != 'sub-025'] #all subs but 25
+#subs = [sub for sub in subs if sub != 'sub-025', 'sub-038', 'sub-057', 'sub-059', 'sub-064', 'sub-067', 'sub-068', 'sub-071','sub-083'] #all subs but _____
 
 #TO RUN ONE
 #subs = ['sub-025']
@@ -59,9 +59,16 @@ def conduct_fc_gca():
     tasks = ['loc']
     
     for ss in subs:
+        sub_dir = f'{study_dir}/{ss}/ses-01/'
+        output_file = f'{sub_dir}/derivatives/results/fc_gca/gca_summary_fc.csv'
+        
+        # Check if the output file already exists
+        if os.path.exists(output_file):
+            logging.info(f"Output file already exists for subject {ss}. Skipping...")
+            continue
+        
         sub_summary = pd.DataFrame(columns=['sub', 'fold', 'task', 'origin', 'target', 'f_diff'])
         
-        sub_dir = f'{study_dir}/{ss}/ses-01/'
         temp_dir = f'{raw_dir}/{ss}/ses-01'
         roi_dir = f'{sub_dir}/derivatives/rois'
         exp_dir = f'{temp_dir}/derivatives/fsl/loc'
@@ -132,8 +139,7 @@ def conduct_fc_gca():
                                 logging.info(f"Completed FC-GCA for {ss}, {tsk}, {dorsal_label}, {ventral_label}")
 
         logging.info(f'Completed FC-GCA for subject {ss}')
-        sub_summary.to_csv(f'{sub_dir}/derivatives/results/fc_gca/gca_summary_fc.csv', index=False)
-        
+        sub_summary.to_csv(output_file, index=False)
 
 def summarize_fc_gca():
     logging.info('Creating summary across subjects...')
@@ -177,5 +183,5 @@ def summarize_fc_gca():
 
 # Main execution
 if __name__ == "__main__":
-    #conduct_fc_gca()
-    summarize_fc_gca()
+    conduct_fc_gca()
+    #summarize_fc_gca()
