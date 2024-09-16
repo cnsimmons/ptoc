@@ -25,7 +25,7 @@ raw_dir = params.raw_dir
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
 subs = sub_info['sub'].tolist()
-subs = [sub for sub in subs if sub != 'sub-025'] #all subs but 25
+#subs = [sub for sub in subs if sub != 'sub-025'] #all subs but 25
 
 #TO RUN ONE
 #subs = ['sub-025']
@@ -133,6 +133,7 @@ def conduct_fc_gca():
 
         logging.info(f'Completed FC-GCA for subject {ss}')
         sub_summary.to_csv(f'{sub_dir}/derivatives/results/fc_gca/gca_summary_fc.csv', index=False)
+        
 
 def summarize_fc_gca():
     logging.info('Creating summary across subjects...')
@@ -142,10 +143,19 @@ def summarize_fc_gca():
     for ss in subs:
         sub_dir = f'{study_dir}/{ss}/ses-01/'
         data_dir = f'{sub_dir}/derivatives/results/fc_gca'
+        input_file = f'{data_dir}/gca_summary_fc.csv'
         
-        curr_df = pd.read_csv(f'{data_dir}/gca_summary_fc.csv')
+        if not os.path.exists(input_file):
+            logging.warning(f"Input file not found for subject {ss}. Skipping this subject.")
+            continue
+        
+        curr_df = pd.read_csv(input_file)
         curr_df['sub'] = ss
         all_subjects_data.append(curr_df)
+    
+    if not all_subjects_data:
+        logging.warning("No data found for any subjects. Cannot create summary.")
+        return None
     
     df_all = pd.concat(all_subjects_data, ignore_index=True)
     
@@ -164,7 +174,8 @@ def summarize_fc_gca():
     
     return df_summary
 
+
 # Main execution
 if __name__ == "__main__":
-    conduct_fc_gca()
-    #summarize_fc_gca()
+    #conduct_fc_gca()
+    summarize_fc_gca()
