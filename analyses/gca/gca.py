@@ -95,7 +95,7 @@ def conduct_gca():
         temp_dir = f'{raw_dir}/{ss}/ses-01'
         roi_dir = f'{sub_dir}/derivatives/rois'
         exp_dir = f'{temp_dir}/derivatives/fsl/loc'
-        os.makedirs(f'{sub_dir}/derivatives/results/gca', exist_ok=True)
+        os.makedirs(f'{sub_dir}/derivatives/gca', exist_ok=True)
 
         roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere.csv')
         logging.info(f"ROI coordinates loaded for subject {ss}")
@@ -168,7 +168,7 @@ def conduct_gca():
                                 logging.info(f"Completed GCA for {ss}, {tsk}, {dorsal_label}, {ventral_label}")
 
         logging.info(f'Completed GCA for subject {ss}')
-        sub_summary.to_csv(f'{sub_dir}/derivatives/results/gca/gca_summary.csv', index=False)
+        sub_summary.to_csv(f'{sub_dir}/derivatives/gca/gca_summary.csv', index=False)
 
 def summarize_gca():
     logging.info('Creating summary across subjects...')
@@ -177,7 +177,7 @@ def summarize_gca():
     
     for ss in subs:
         sub_dir = f'{study_dir}/{ss}/ses-01/'
-        data_dir = f'{sub_dir}/derivatives/results/gca'
+        data_dir = f'{sub_dir}/derivatives/gca'
         
         curr_df = pd.read_csv(f'{data_dir}/gca_summary.csv')
         curr_df['sub'] = ss
