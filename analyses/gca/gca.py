@@ -25,8 +25,8 @@ raw_dir = params.raw_dir
 # Load subject information
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
-#subs = sub_info['sub'].tolist()
-subs = ['sub-025', 'sub-038']
+subs = sub_info['sub'].tolist()
+#subs = ['sub-057']
 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
@@ -168,7 +168,7 @@ def conduct_gca():
                                 logging.info(f"Completed GCA for {ss}, {tsk}, {dorsal_label}, {ventral_label}")
 
         logging.info(f'Completed GCA for subject {ss}')
-        sub_summary.to_csv(f'{sub_dir}/derivatives/results/gca/gca_summary_trial.csv', index=False)
+        sub_summary.to_csv(f'{sub_dir}/derivatives/results/gca/gca_summary.csv', index=False)
 
 def summarize_gca():
     logging.info('Creating summary across subjects...')
@@ -179,7 +179,7 @@ def summarize_gca():
         sub_dir = f'{study_dir}/{ss}/ses-01/'
         data_dir = f'{sub_dir}/derivatives/results/gca'
         
-        curr_df = pd.read_csv(f'{data_dir}/gca_summary_trial.csv')
+        curr_df = pd.read_csv(f'{data_dir}/gca_summary.csv')
         curr_df['sub'] = ss
         all_subjects_data.append(curr_df)
     
@@ -192,7 +192,7 @@ def summarize_gca():
     
     output_dir = f"{results_dir}/gca"
     os.makedirs(output_dir, exist_ok=True)
-    summary_file = f"{output_dir}/all_subjects_gca_summary_trial.csv"
+    summary_file = f"{output_dir}/all_subjects_gca_summary.csv"
     df_summary.to_csv(summary_file, index=False)
     
     logging.info(f'Summary across subjects completed and saved to {summary_file}')
