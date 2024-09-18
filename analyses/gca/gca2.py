@@ -25,8 +25,8 @@ raw_dir = params.raw_dir
 # Load subject information
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
-subs = sub_info['sub'].tolist()
-#subs = ['sub-057']
+#subs = sub_info['sub'].tolist()
+subs = ['sub-107', 'sub-097','sub-096','sub-095', 'sub-094', 'sub-093','sub-088', 'sub-087', 'sub-085']
 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
@@ -202,5 +202,5 @@ def summarize_gca():
 
 # Main execution
 if __name__ == "__main__":
-    #conduct_gca()
+    conduct_gca()
     summarize_gca()
