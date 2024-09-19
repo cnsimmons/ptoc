@@ -21,8 +21,8 @@ raw_dir = params.raw_dir
 #subjects = ['sub-025']  # Add more subjects as needed
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
-#subjects = sub_info['sub'].tolist()
-subjects = ['sub-025']
+subjects = sub_info['sub'].tolist()
+#subjects = ['sub-025']
 
 rois = ['pIPS', 'LO']  # Update this list as needed
 hemispheres = ['left', 'right']
