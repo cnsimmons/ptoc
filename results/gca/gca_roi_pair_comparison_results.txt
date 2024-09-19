@@ -1,0 +1,9 @@
+GCA ROI Pair Comparison Results:
+
+lpIPS-lLO vs rpIPS-lLO:
+t-statistic: 2.892572464178214
+p-value: 0.009699711497479016
+
+lpIPS-rLO vs rpIPS-rLO:
+t-statistic: 3.165709233510401
+p-value: 0.005350708723379199
