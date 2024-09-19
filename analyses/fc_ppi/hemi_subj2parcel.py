@@ -24,8 +24,8 @@ mni_brain = os.path.join(os.environ['FSLDIR'], "data/standard/MNI152_T1_2mm_brai
 # Set the subject to sub-025
 #subs = ['sub-025', 'sub-038', 'sub-057', 'sub-059', 'sub-064', 'sub-067', 'sub-068', 'sub-071', 'sub-083', 'sub-084']
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-#subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-subs = ['sub-107']
+subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+#subs = ['sub-107']
 
 for sub in subs:
     print(f"Processing subject: {sub}")
