@@ -24,7 +24,7 @@ raw_dir = params.raw_dir
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 #subs = ['sub-095', 'sub-094', 'sub-096', 'sub-097', 'sub-107']  # Update this list as needed
-rois = ['PFS', 'aIPS'] # Run for one ROI initially
+rois = ['LO', 'pIPS'] # Run for one ROI initially
 hemispheres = ['left', 'right']
 run_num = 3
 runs = list(range(1, run_num + 1))
