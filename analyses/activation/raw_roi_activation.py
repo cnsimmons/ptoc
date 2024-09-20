@@ -1,3 +1,8 @@
+
+# all that is necessary for this file is to call /user_data/csimmon2/git_repos/ptoc/results/selectivity/selectivity_summary.csv which was created with calc_summary_vals.py 
+
+
+# no need to run below code, but it is here for future reference | see plot in visualize_roi_activation.py
 import os
 import pandas as pd
 import numpy as np
