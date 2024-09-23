@@ -90,7 +90,6 @@ def make_psy_cov(runs, ss):
     psy[psy < 0] = 0 #remove if run my approach
     return psy
 
-
 def extract_cond_ts(ts, cov):
     block_ind = (cov==1)
     block_ind = np.insert(block_ind, 0, True)
