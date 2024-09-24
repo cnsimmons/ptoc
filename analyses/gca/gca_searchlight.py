@@ -13,6 +13,11 @@ from mpi4py import MPI
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# Set up MPI
+comm = MPI.COMM_WORLD
+rank = comm.Get_rank()
+size = comm.Get_size()
+
 # Import your parameters
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 sys.path.insert(0, curr_dir)
