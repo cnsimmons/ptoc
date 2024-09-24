@@ -96,41 +96,6 @@ def extract_cond_ts(ts, cov):
     block_ind = (cov == 1).reshape((len(cov))) | block_ind
     return ts[block_ind]
 
-def searchlight_gca(data, mask, myrad, seed_ts, psy):
-    # Extract time series for current searchlight sphere
-    sphere_ts = data[0]
-    sphere_ts = np.mean(sphere_ts, axis=0)  # Average across voxels in the sphere
-    
-    # Perform condition-specific extraction
-    sphere_phys = extract_cond_ts(sphere_ts, psy)
-    seed_phys = extract_cond_ts(seed_ts.ravel(), psy)
-    
-    # Ensure we have enough data points for the analysis
-    if len(sphere_phys) < 2 or len(seed_phys) < 2:
-        return np.nan
-    
-    # Perform Granger causality tests
-    neural_ts = pd.DataFrame({
-        'seed': seed_phys,
-        'sphere': sphere_phys
-    })
-    
-    try:
-        gc_res_seed_to_sphere = grangercausalitytests(neural_ts[['seed', 'sphere']], 1, verbose=False)
-        gc_res_sphere_to_seed = grangercausalitytests(neural_ts[['sphere', 'seed']], 1, verbose=False)
-        
-        f_seed_to_sphere = gc_res_seed_to_sphere[1][0]['ssr_ftest'][0]
-        f_sphere_to_seed = gc_res_sphere_to_seed[1][0]['ssr_ftest'][0]
-        
-        # Calculate the difference in F-statistics
-        f_diff = f_seed_to_sphere - f_sphere_to_seed
-    except:
-        # If there's any error in the GC calculation, return NaN
-        f_diff = np.nan
-    
-    return f_diff
-
-
 def conduct_gca():
     logging.info('Running GCA...')
     tasks = ['loc']
@@ -138,8 +103,6 @@ def conduct_gca():
     hemispheres = ['left', 'right']
     
     for ss in subs:
-        sub_summary = pd.DataFrame(columns=['sub', 'fold', 'task', 'origin', 'target', 'f_diff'])
-        
         sub_dir = f'{study_dir}/{ss}/ses-01/'
         temp_dir = f'{raw_dir}/{ss}/ses-01'
         roi_dir = f'{sub_dir}/derivatives/rois'
@@ -186,8 +149,7 @@ def conduct_gca():
                         mask = whole_brain_mask.get_fdata().astype(bool)
                         
                         sl.distribute([data], mask)
-                        sl.broadcast(seed_ts)
-                        sl.broadcast(psy)
+                        sl.broadcast((seed_ts, psy))
                         
                         sl_result = sl.run_searchlight(searchlight_gca, pool_size=pool_size)
                         
@@ -200,37 +162,43 @@ def conduct_gca():
 
         logging.info(f'Completed Searchlight GCA for subject {ss}')
 
-def summarize_gca():
-    logging.info('Creating summary across subjects...')
+def searchlight_gca(data, sl_mask, myrad, bcvar):
+    # Extract time series for current searchlight sphere
+    sphere_ts = data[0]
+    sphere_ts = np.mean(sphere_ts, axis=0)  # Average across voxels in the sphere
     
-    all_subjects_data = []
+    # Extract seed time series and psy from bcvar
+    seed_ts, psy = bcvar
     
-    for ss in subs:
-        sub_dir = f'{study_dir}/{ss}/ses-01/'
-        data_dir = f'{sub_dir}/derivatives/gca'
+    # Perform condition-specific extraction
+    sphere_phys = extract_cond_ts(sphere_ts, psy)
+    seed_phys = extract_cond_ts(seed_ts.ravel(), psy)
+    
+    # Ensure we have enough data points for the analysis
+    if len(sphere_phys) < 2 or len(seed_phys) < 2:
+        return np.nan
+    
+    # Perform Granger causality tests
+    neural_ts = pd.DataFrame({
+        'seed': seed_phys,
+        'sphere': sphere_phys
+    })
+    
+    try:
+        gc_res_seed_to_sphere = grangercausalitytests(neural_ts[['seed', 'sphere']], 1, verbose=False)
+        gc_res_sphere_to_seed = grangercausalitytests(neural_ts[['sphere', 'seed']], 1, verbose=False)
         
-        curr_df = pd.read_csv(f'{data_dir}/gca_summary.csv')
-        curr_df['sub'] = ss
-        all_subjects_data.append(curr_df)
+        f_seed_to_sphere = gc_res_seed_to_sphere[1][0]['ssr_ftest'][0]
+        f_sphere_to_seed = gc_res_sphere_to_seed[1][0]['ssr_ftest'][0]
+        
+        # Calculate the difference in F-statistics
+        f_diff = f_seed_to_sphere - f_sphere_to_seed
+    except:
+        # If there's any error in the GC calculation, return NaN
+        f_diff = np.nan
     
-    df_all = pd.concat(all_subjects_data, ignore_index=True)
-    
-    df_summary = df_all.groupby(['fold', 'task', 'origin', 'target'])['f_diff'].agg(['mean', 'std']).reset_index()
-    
-    df_summary.columns = ['fold', 'task', 'origin', 'target', 'mean_f_diff', 'std_f_diff']
-    df_summary = df_summary.sort_values(['fold', 'task', 'origin', 'target'])
-    
-    output_dir = f"{results_dir}/gca"
-    os.makedirs(output_dir, exist_ok=True)
-    summary_file = f"{output_dir}/all_subjects_gca_summary_searchlight.csv"
-    df_summary.to_csv(summary_file, index=False)
-    
-    logging.info(f'Summary across subjects completed and saved to {summary_file}')
-    print(df_summary)
-    
-    return df_summary
+    return f_diff
 
 # Main execution
 if __name__ == "__main__":
     conduct_gca()
-    #summarize_gca() # do not run until this has been changed for the searchlight version
