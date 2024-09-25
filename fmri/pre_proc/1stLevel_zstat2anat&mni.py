@@ -19,7 +19,7 @@ sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 task = 'loc'
 runs = [1,2,3]
-cope = 3
+cope = 4 #3 object and 4 scramble (i think might be 5)
 
 mni='/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz' #this is the MNI we use for analysis
 
