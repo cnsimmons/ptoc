@@ -9,6 +9,7 @@ from nilearn.datasets import load_mni152_brain_mask
 from nilearn.glm.first_level import compute_regressor
 import nibabel as nib
 import sys
+import time
 
 # Import your parameters
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
@@ -112,6 +113,7 @@ def conduct_analyses():
                     all_runs_ppi = []
                     
                     for rcn, rc in enumerate(run_combos):
+                        print(f"Completed run combination {rc} for {rr} {hemi} in {time.time() - combo_start_time:.2f} seconds")
                         curr_coords = roi_coords[(roi_coords['index'] == rcn) & 
                                                  (roi_coords['task'] == tsk) & 
                                                  (roi_coords['roi'] == rr) &
@@ -157,6 +159,8 @@ def conduct_analyses():
                             ppi_correlations = np.arctanh(ppi_correlations.ravel())
                             ppi_img = brain_masker.inverse_transform(ppi_correlations)
                             all_runs_ppi.append(ppi_img)
+                        
+                        print(f"Completed run combination {rc} for {rr} {hemi} in {time.time() - combo_start_time:.2f} seconds")
                     
                     if do_fc:
                         mean_fc = image.mean_img(all_runs_fc)
