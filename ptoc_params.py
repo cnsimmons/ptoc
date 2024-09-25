@@ -28,7 +28,7 @@ hemis = ['left','right']
 rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aIPS', 'V1'] #adding V1 for early vision scramble and full hemispace || I need to add 'hemi' but at the moment I can't find the roi file so I'm leaving as is with just the added V1
 
 ##temporary
-cope = '3' #3 #5 #short cut until I can recode scripts for task_info csv instead of the discrete
+cope = '4' #3 #5 #short cut until I can recode scripts for task_info csv instead of the discrete || i thought 3 is for object and 5 is for scramble but 4 is for scramble and 5 is for word? Needs to verify. 
 #task_info = 'loc' #pre 2024# 
 #cond = '' #'object' #'scramble'
 #task = 'loc'
