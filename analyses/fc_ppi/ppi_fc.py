@@ -23,8 +23,8 @@ results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-#subs = ['sub-095', 'sub-094', 'sub-096', 'sub-097', 'sub-107']  # Update this list as needed
+#subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+subs = ['sub-083', 'sub-084', 'sub-085', 'sub-087', 'sub-088']  # Update this list as needed
 rois = ['LO', 'pIPS'] # Run for one ROI initially
 hemispheres = ['left', 'right']
 run_num = 3
@@ -95,6 +95,7 @@ def conduct_analyses():
         for tsk in ['loc']:
             for rr in rois:
                 for hemi in hemispheres:
+                    roi_start_time = time.time()
                     print(f"Processing ROI: {rr}, Hemisphere: {hemi}")
                     
                     #fc_file = f'{out_dir}/fc/{ss}_{rr}_{hemi}_{tsk}_fc.nii.gz' # object
@@ -113,6 +114,7 @@ def conduct_analyses():
                     all_runs_ppi = []
                     
                     for rcn, rc in enumerate(run_combos):
+                        combo_start_time = time.time()
                         print(f"Completed run combination {rc} for {rr} {hemi} in {time.time() - combo_start_time:.2f} seconds")
                         curr_coords = roi_coords[(roi_coords['index'] == rcn) & 
                                                  (roi_coords['task'] == tsk) & 
@@ -160,6 +162,7 @@ def conduct_analyses():
                             ppi_img = brain_masker.inverse_transform(ppi_correlations)
                             all_runs_ppi.append(ppi_img)
                         
+                        combo_end_time = time.time()
                         print(f"Completed run combination {rc} for {rr} {hemi} in {time.time() - combo_start_time:.2f} seconds")
                     
                     if do_fc:
@@ -171,6 +174,8 @@ def conduct_analyses():
                         mean_ppi = image.mean_img(all_runs_ppi)
                         nib.save(mean_ppi, ppi_file)
                         print(f'Saved PPI result for {rr} {hemi}')
-
+                        
+                roi_end_time = time.time()
+                print(f"Completed {rr} {hemi} in {roi_end_time - roi_start_time:.2f} seconds")
 # Call the function
 conduct_analyses()
