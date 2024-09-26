@@ -21,8 +21,7 @@ raw_dir = "/lab_data/behrmannlab/vlad/hemispace"  # Update this path
 results_dir = "/user_data/csimmon2/git_repos/ptoc/results"
 mni_brain = os.path.join(os.environ['FSLDIR'], "data/standard/MNI152_T1_2mm_brain.nii.gz")
 
-# Set the subject to sub-025
-#subs = ['sub-025', 'sub-038', 'sub-057', 'sub-059', 'sub-064', 'sub-067', 'sub-068', 'sub-071', 'sub-083', 'sub-084']
+# subjects
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 #subs = ['sub-107']
@@ -39,8 +38,9 @@ for sub in subs:
         exit(1)
 
     # Create output directories if they don't exist
-    os.makedirs(f"{out_dir}/fc_mni", exist_ok=True)
-
+    #os.makedirs(f"{out_dir}/fc_mni", exist_ok=True) #object
+    os.makedirs(f"{out_dir}/scramble", exist_ok=True) #scrabmle
+    
     # Generate transformation matrix if it doesn't exist
     anat2mni_mat = f"{out_dir}/anat2mni.mat"
     if not os.path.isfile(anat2mni_mat):
@@ -59,11 +59,13 @@ for sub in subs:
         ], check=True)
 
     # Loop through ROIs and hemispheres
-    for roi in ['PFS','aIPS']:
+    for roi in ['LO','pIPS']:
         for hemi in ['left', 'right']:
+            
             # FC to MNI
             fc_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_loc_fc.nii.gz"
             fc_mni = f"{out_dir}/fc_mni/{sub}_{roi}_{hemi}_loc_fc_mni.nii.gz"
+            
             if os.path.isfile(fc_native) and not os.path.isfile(fc_mni):
                 print(f"Registering FC for {sub}, ROI {roi}, Hemisphere {hemi} to MNI space")
                 subprocess.run([
