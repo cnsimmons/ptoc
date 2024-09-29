@@ -19,7 +19,6 @@ import ptoc_params as params
 # Set up directories and parameters
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
-localizer = 'Scramble' # scramble or object. This is the localizer task.
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
@@ -51,7 +50,7 @@ def make_psy_cov(runs, ss):
 
     for i, rn in enumerate(runs):
         ss_num = ss.split('-')[1]
-        obj_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_{localizer}.txt'
+        obj_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_Object.txt'
 
         if not os.path.exists(obj_cov_file):
             logging.warning(f'Covariate file not found for run {rn}')
@@ -86,7 +85,7 @@ def extract_cond_ts(ts, cov):
     return ts[block_ind]
 
 def conduct_gca():
-    logging.info('Running GCA for {localizer}...')
+    logging.info('Running GCA...')
     tasks = ['loc']
     
     for ss in subs:
@@ -98,7 +97,7 @@ def conduct_gca():
         exp_dir = f'{temp_dir}/derivatives/fsl/loc'
         os.makedirs(f'{sub_dir}/derivatives/gca', exist_ok=True)
 
-        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere_{localizer.lower()}.csv') #remove _{localizer} to run object
+        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere.csv')
         logging.info(f"ROI coordinates loaded for subject {ss}")
 
         for rcn, rc in enumerate(run_combos):
@@ -180,7 +179,7 @@ def summarize_gca():
         sub_dir = f'{study_dir}/{ss}/ses-01/'
         data_dir = f'{sub_dir}/derivatives/gca'
         
-        curr_df = pd.read_csv(f'{data_dir}/gca_summary_{localizer.lower()}.csv')
+        curr_df = pd.read_csv(f'{data_dir}/gca_summary.csv')
         curr_df['sub'] = ss
         all_subjects_data.append(curr_df)
     
@@ -193,7 +192,7 @@ def summarize_gca():
     
     output_dir = f"{results_dir}/gca"
     os.makedirs(output_dir, exist_ok=True)
-    summary_file = f"{output_dir}/all_subjects_gca_summary_{localizer.lower()}.csv"
+    summary_file = f"{output_dir}/all_subjects_gca_summary.csv"
     df_summary.to_csv(summary_file, index=False)
     
     logging.info(f'Summary across subjects completed and saved to {summary_file}')
@@ -203,5 +202,5 @@ def summarize_gca():
 
 # Main execution
 if __name__ == "__main__":
-    #conduct_gca()
+    conduct_gca()
     #summarize_gca()
