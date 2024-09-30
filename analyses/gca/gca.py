@@ -28,8 +28,8 @@ raw_dir = params.raw_dir
 # Load subject information
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
-#subs = sub_info['sub'].tolist()
-subs = ['sub-025', 'sub-038']
+subs = sub_info['sub'].tolist()
+#subs = ['sub-068']
 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
@@ -203,7 +203,47 @@ def summarize_gca():
     
     return df_summary
 
+def summarize_gca_wcheck():
+    logging.info('Creating summary across subjects...')
+    all_subjects_data = []
+    for ss in subs:
+        sub_dir = f'{study_dir}/{ss}/ses-01/'
+        data_dir = f'{sub_dir}/derivatives/gca'
+        file_path = f'{data_dir}/gca_summary_{localizer.lower()}.csv'
+        
+        if not os.path.exists(file_path):
+            logging.warning(f"File not found: {file_path}. Skipping this subject.")
+            continue
+        
+        try:
+            curr_df = pd.read_csv(file_path)
+            curr_df['sub'] = ss
+            all_subjects_data.append(curr_df)
+        except pd.errors.EmptyDataError:
+            logging.warning(f"Empty file: {file_path}. Skipping this subject.")
+        except Exception as e:
+            logging.error(f"Error reading file {file_path}: {str(e)}. Skipping this subject.")
+    
+    if not all_subjects_data:
+        logging.error("No valid data found for any subjects. Cannot create summary.")
+        return None
+
+    df_all = pd.concat(all_subjects_data, ignore_index=True)
+    df_summary = df_all.groupby(['fold', 'task', 'origin', 'target'])['f_diff'].agg(['mean', 'std']).reset_index()
+    df_summary.columns = ['fold', 'task', 'origin', 'target', 'mean_f_diff', 'std_f_diff']
+    df_summary = df_summary.sort_values(['fold', 'task', 'origin', 'target'])
+
+    output_dir = f"{results_dir}/gca"
+    os.makedirs(output_dir, exist_ok=True)
+    summary_file = f"{output_dir}/all_subjects_gca_summary_{localizer.lower()}.csv"
+    df_summary.to_csv(summary_file, index=False)
+    logging.info(f'Summary across subjects completed and saved to {summary_file}')
+    print(df_summary)
+    return df_summary
+
+
 # Main execution
 if __name__ == "__main__":
-    conduct_gca()
+    #conduct_gca()
     #summarize_gca()
+    summarize_gca_wcheck()
