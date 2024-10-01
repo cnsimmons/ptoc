@@ -1,0 +1,5 @@
+origin,target,Mean f_diff,SE f_diff,W_statistic,p_value,Effect size,significant
+lpIPS,lLO,1.05,0.86,71.0,0.35246,0.4,False
+lpIPS,rLO,0.82,1.41,65.0,0.24125,0.19,False
+rpIPS,lLO,0.63,1.16,89.0,0.82878,0.18,False
+rpIPS,rLO,0.79,0.94,79.0,0.54122,0.27,False

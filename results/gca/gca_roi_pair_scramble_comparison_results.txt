@@ -1,0 +1,9 @@
+GCA ROI Pair Comparison Results:
+
+lpIPS-lLO vs rpIPS-lLO:
+t-statistic: nan
+p-value: nan
+
+lpIPS-rLO vs rpIPS-rLO:
+t-statistic: nan
+p-value: nan
