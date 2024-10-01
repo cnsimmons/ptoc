@@ -1,0 +1,19 @@
+GCA ROI Pair Combined Comparison Results:
+
+Object Condition:
+lpIPS-lLO vs rpIPS-lLO:
+t-statistic: 2.892572464178214
+p-value: 0.009699711497479016
+
+lpIPS-rLO vs rpIPS-rLO:
+t-statistic: 3.165709233510401
+p-value: 0.005350708723379199
+
+Scramble Condition:
+lpIPS-lLO vs rpIPS-lLO:
+t-statistic: 0.48760461760449814
+p-value: 0.6317157386114138
+
+lpIPS-rLO vs rpIPS-rLO:
+t-statistic: 0.02705735729658044
+p-value: 0.9787117123356462

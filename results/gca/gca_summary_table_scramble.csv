@@ -1,5 +1,0 @@
-origin,target,Mean f_diff,Std f_diff,W_statistic,p_value,Effect size,significant
-lpIPS,lLO,,,,,,False
-lpIPS,rLO,,,,,,False
-rpIPS,lLO,,,,,,False
-rpIPS,rLO,,,,,,False
