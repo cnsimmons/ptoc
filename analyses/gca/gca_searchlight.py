@@ -25,7 +25,6 @@ import ptoc_params as params
 # Set up directories and parameters
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
-localizer = 'Object'  # Changed to Object as per your request
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
@@ -100,6 +99,7 @@ def make_psy_cov(runs, ss):
     psy, _ = compute_regressor(cov.T, 'spm', times)
     psy[psy > 0] = 1 
     psy[psy < 0] = 0  
+    
     return psy
 
 def extract_cond_ts(ts, cov):
@@ -138,7 +138,7 @@ def process_subject(ss):
     exp_dir = f'{temp_dir}/derivatives/fsl/loc'
     os.makedirs(f'{sub_dir}/derivatives/gca_searchlight', exist_ok=True)
 
-    roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere_{localizer.lower()}.csv')
+    roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere.csv')
 
     for rcn, rc in enumerate(run_combos):
         logging.info(f"Processing run combination {rc} for subject {ss}")
@@ -168,7 +168,7 @@ def process_subject(ss):
         sl.broadcast(psy)  # Broadcast psy to all processes
         
         # Modify the gca function call to include psy
-        sl_result = sl.run_searchlight(lambda x, y, z, seed_ts, psy: gca(x, y, z, seed_ts, psy), pool_size=pool_size)
+        sl_result = sl.run_searchlight(gca, pool_size=pool_size)
         
         # Save results
         result_img = nib.Nifti1Image(sl_result, affine)
