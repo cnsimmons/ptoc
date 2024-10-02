@@ -1,22 +1,24 @@
+import warnings
+warnings.filterwarnings("ignore")
+import resource
+import sys
+import time
 import os
+import gc
 import pandas as pd
 import numpy as np
-from nilearn import image, input_data
-from nilearn.glm.first_level import compute_regressor
-from statsmodels.tsa.stattools import grangercausalitytests
-import sys
+import pdb
+
+from sklearn.decomposition import PCA
+from sklearn.model_selection import ShuffleSplit
+from sklearn.linear_model import LinearRegression
+
+from nilearn import image, datasets
 import nibabel as nib
-import logging
-from brainiak.searchlight.searchlight import Searchlight
-from mpi4py import MPI
+from brainiak.searchlight.searchlight import Searchlight, Ball
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-# Set up MPI
-comm = MPI.COMM_WORLD
-rank = comm.rank
-size = comm.size
 
 # Import parameters
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
@@ -26,10 +28,14 @@ import ptoc_params as params
 # Set up directories and parameters
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
+localizer = 'Scramble' # scramble or object. This is the localizer task.
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
-# Run one subject
+# Load subject information
+sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
+sub_info = sub_info[sub_info['group'] == 'control']
+#subs = sub_info['sub'].tolist()
 subs = ['sub-025']
 
 # Other parameters
@@ -38,18 +44,33 @@ hemispheres = ['left', 'right']
 run_num = 3
 runs = list(range(1, run_num + 1))
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
-global_bcvar = None
 
-def check_variance(ts, label):
-    variance = np.var(ts)
-    if variance < 0.9 or variance > 1.1:  # allowing for some numerical imprecision
-        logging.warning(f"Unusual variance ({variance}) detected for {label} timeseries")
+whole_brain_mask = image.load_img('/user_data/csimmon2/git_repos/ptoc/roiParcels/mruczek_parcels/binary/all_visual_areas.nii.gz')
+affine = whole_brain_mask.affine
+dimsizes = whole_brain_mask.header.get_zooms() # get dimensions
+
+# scan parameters
+vols = 184
+tr = 2.0
+#first_fix = 8 #I'm not sure if I should change this for my data - will need to run by Vlad
+
+'''
+Set up Searchlight
+'''
+
+print ("Setting up searchlight...")
+mask = image.get_data(whole_brain_mask) #the mask to search within
+sl_rad = 2 #searchlight radius in voxels
+max_blk_edge = 10 #how many blocks to send on each parallelized search
+pool_size = 1 #how many cores to use
+
+voxels_proprotion = 1
+shape = Ball
 
 def extract_roi_sphere(img, coords):
     roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
     seed_time_series = roi_masker.fit_transform(img)
     phys = np.mean(seed_time_series, axis=1).reshape(-1, 1)
-    #phys_standardized = standardize_ts(phys) #remove standardization for Vlad's approach
     phys_standardized = phys
     return phys_standardized
 
@@ -97,164 +118,168 @@ def extract_cond_ts(ts, cov):
     block_ind = (cov == 1).reshape((len(cov))) | block_ind
     return ts[block_ind]
 
-# Global variable to store our additional data
-global_bcvar = None
-
-def searchlight_gca(data, mask, bcvar, myrad):
-    global global_bcvar
-    logging.info(f"searchlight_gca called with: data shape: {data[0].shape if isinstance(data, list) else data.shape}")
-    logging.info(f"mask shape: {mask.shape}")
-    logging.info(f"bcvar type: {type(bcvar)}")
-    logging.info(f"myrad: {myrad}")
-
-    try:
-        # Use the global variable instead of the passed bcvar
-        comparison_ts = global_bcvar['comparison_ts']
-        psy = global_bcvar['psy']
-
-        # Extract the time series for the current searchlight sphere
-        sphere_ts = data[0]
-        
-        # Get the mask for the current sphere
-        sphere_mask = mask[0] if isinstance(mask, np.ndarray) and mask.ndim > 2 else mask
-        
-        # Count the number of voxels in the sphere
-        n_voxels = np.sum(sphere_mask)
-        
-        # Set minimum voxels threshold
-        min_voxels = 30
-        
-        # Check if the sphere has enough voxels
-        if n_voxels < min_voxels:
-            return np.nan
-        
-        # Perform condition-specific extraction
-        sphere_phys = extract_cond_ts(sphere_ts, psy)
-        comparison_phys = extract_cond_ts(comparison_ts, psy)
-        
-        # Ensure both arrays have the same length
-        min_length = min(len(sphere_phys), len(comparison_phys))
-        sphere_phys = sphere_phys[:min_length]
-        comparison_phys = comparison_phys[:min_length]
-
-        # Perform Granger causality tests
-        neural_ts = pd.DataFrame({
-            'sphere': sphere_phys.ravel(),
-            'comparison': comparison_phys.ravel()
-        })
-        
-        gc_res_sphere_to_comparison = grangercausalitytests(neural_ts[['sphere', 'comparison']], 1, verbose=False)
-        gc_res_comparison_to_sphere = grangercausalitytests(neural_ts[['comparison', 'sphere']], 1, verbose=False)
-        
-        f_sphere_to_comparison = gc_res_sphere_to_comparison[1][0]['ssr_ftest'][0]
-        f_comparison_to_sphere = gc_res_comparison_to_sphere[1][0]['ssr_ftest'][0]
-        f_diff = f_sphere_to_comparison - f_comparison_to_sphere
-    except Exception as e:
-        logging.error(f"Error in searchlight_gca: {str(e)}")
-        return np.nan
-    
-    return f_diff
-
-def conduct_mini_searchlight_gca():
-    logging.info('Running Mini Searchlight GCA...')
+def gca(data, sl_mask, myrad, seed_ts):
+    logging.info(f'Running GCA for {localizer}...')
     tasks = ['loc']
     
+    #pull out data
+    data4d = data[0]
+    data4d = np.transpose(data4d.reshape (-1,data[0].shape[3]))
+
+    # Perform condition-specific extraction
+    sphere_phys = extract_cond_ts(sphere_ts, psy)
+    comparison_phys = extract_cond_ts(comparison_ts, psy)
+
+    # Extract the time series for the current searchlight sphere
+    sphere_ts = data[0]
+    
+    # Get the mask for the current sphere
+    sphere_mask = mask[0] if isinstance(mask, np.ndarray) and mask.ndim > 2 else mask
+
     for ss in subs:
-        try:
-            sub_dir = f'{study_dir}/{ss}/ses-01/'
-            temp_dir = f'{raw_dir}/{ss}/ses-01'
-            roi_dir = f'{sub_dir}/derivatives/rois'
-            exp_dir = f'{temp_dir}/derivatives/fsl/loc'
-            os.makedirs(f'{sub_dir}/derivatives/results/searchlight_gca', exist_ok=True)
+        sub_summary = pd.DataFrame(columns=['sub', 'fold', 'task', 'origin', 'target', 'f_diff'])
+        
+        sub_dir = f'{study_dir}/{ss}/ses-01/'
+        temp_dir = f'{raw_dir}/{ss}/ses-01'
+        roi_dir = f'{sub_dir}/derivatives/rois'
+        exp_dir = f'{temp_dir}/derivatives/fsl/loc'
+        os.makedirs(f'{sub_dir}/derivatives/gca', exist_ok=True)
 
-            roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere.csv')
-            logging.info(f"ROI coordinates loaded for subject {ss}")
+        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere_{localizer.lower()}.csv') #remove _{localizer} to run object
+        logging.info(f"ROI coordinates loaded for subject {ss}")
 
-            # Select only one run combination
-            rc = run_combos[0]  # This will use the first run combination
+        for rcn, rc in enumerate(run_combos):
             logging.info(f"Processing run combination {rc} for subject {ss}")
             
-            # Load and preprocess the data
             filtered_list = []
             for rn in rc:
                 curr_run = image.load_img(f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz')
-                curr_run = image.clean_img(curr_run, standardize=False)
+                curr_run = image.clean_img(curr_run, standardize=True)
                 filtered_list.append(curr_run)
 
-            # Concatenate runs if more than one
-            if len(filtered_list) > 1:
-                img4d = image.concat_imgs(filtered_list)
-            else:
-                img4d = filtered_list[0]
+            img4d = image.concat_imgs(filtered_list)
+            logging.info(f"Concatenated image shape: {img4d.shape}")
 
-            # Get the data as a 4D numpy array
-            data = img4d.get_fdata()
-            logging.info(f"Data shape: {data.shape}")
-
-            # Create a whole-brain mask
-            whole_brain_mask = image.math_img("np.any(img > 0, axis=-1)", img=img4d)
-            mask = whole_brain_mask.get_fdata().astype(bool)
-            logging.info(f"Mask shape: {mask.shape}")
-            
             for tsk in tasks:
-                
-                # Select only one comparison ROI and hemisphere
-                comparison_roi = 'pIPS'
-                comparison_hemi = 'left'
-                
-                comparison_coords = roi_coords[(roi_coords['index'] == 0) & 
-                                               (roi_coords['task'] == tsk) & 
-                                               (roi_coords['roi'] == comparison_roi) &
-                                               (roi_coords['hemisphere'] == comparison_hemi)]
-                
-                if comparison_coords.empty:
-                    logging.warning(f"No coordinates found for {comparison_roi}, {comparison_hemi}, run combo {rc}")
-                    continue
+                for dorsal_roi in ['pIPS']:
+                    for dorsal_hemi in hemispheres:
+                        dorsal_coords = roi_coords[(roi_coords['index'] == rcn) & 
+                                                   (roi_coords['task'] == tsk) & 
+                                                   (roi_coords['roi'] == dorsal_roi) &
+                                                   (roi_coords['hemisphere'] == dorsal_hemi)]
+                        
+                        if dorsal_coords.empty:
+                            logging.warning(f"No coordinates found for {dorsal_roi}, {dorsal_hemi}, run combo {rc}")
+                            continue
 
-                comparison_ts = extract_roi_sphere(img4d, comparison_coords[['x', 'y', 'z']].values.tolist()[0])
-                psy = make_psy_cov(rc, ss)
-                
-                logging.info(f"comparison_ts shape: {comparison_ts.shape}")
-                logging.info(f"psy shape: {psy.shape}")
+                        dorsal_ts = extract_roi_sphere(img4d, dorsal_coords[['x', 'y', 'z']].values.tolist()[0])
+                        
+                        psy = make_psy_cov(rc, ss)
+                        
+                        if dorsal_ts.shape[0] != psy.shape[0]:
+                            raise ValueError(f"Mismatch in volumes: dorsal_ts has {dorsal_ts.shape[0]}, psy has {psy.shape[0]}")
+                        
+                        dorsal_phys = extract_cond_ts(dorsal_ts, psy)
+                        
+                        for ventral_roi in ['LO']:
+                            for ventral_hemi in hemispheres:
+                                ventral_coords = roi_coords[(roi_coords['index'] == rcn) & 
+                                                            (roi_coords['task'] == tsk) & 
+                                                            (roi_coords['roi'] == ventral_roi) &
+                                                            (roi_coords['hemisphere'] == ventral_hemi)]
+                                
+                                if ventral_coords.empty:
+                                    logging.warning(f"No coordinates found for {ventral_roi}, {ventral_hemi}, run combo {rc}")
+                                    continue
+                                
+                                ventral_ts = extract_roi_sphere(img4d, ventral_coords[['x', 'y', 'z']].values.tolist()[0])
+                                ventral_phys = extract_cond_ts(ventral_ts, psy)
 
-                # Set up the searchlight
-                sl_rad = 2
-                max_blk_edge = 10
-                pool_size = 1
-                sl = Searchlight(sl_rad=sl_rad, max_blk_edge=max_blk_edge)
-                logging.info(f"Searchlight initialized with sl_rad={sl_rad}, max_blk_edge={max_blk_edge}")
+                                neural_ts = pd.DataFrame({
+                                    'dorsal': dorsal_phys.ravel(), 
+                                    'ventral': ventral_phys.ravel()
+                                })
+                                
+                                gc_res_dorsal = grangercausalitytests(neural_ts[['ventral', 'dorsal']], 1, verbose=False)
+                                gc_res_ventral = grangercausalitytests(neural_ts[['dorsal', 'ventral']], 1, verbose=False)
 
-                # Prepare global_bcvar (dictionary with additional variables)
-                global_bcvar = {
-                    'comparison_ts': comparison_ts.ravel(),
-                    'psy': psy.ravel()
-                }
+                                f_diff = gc_res_dorsal[1][0]['ssr_ftest'][0] - gc_res_ventral[1][0]['ssr_ftest'][0]
 
-                # Distribute data to the searchlights
-                sl.distribute([data], mask)
-                logging.info("Data distributed to searchlights")
+                                if abs(f_diff) > 10:  # Adjust this threshold as needed
+                                    logging.warning(f"Large F-diff value ({f_diff}) detected for {ss}, {tsk}, {dorsal_roi}_{dorsal_hemi}, {ventral_roi}_{ventral_hemi}")
 
-                # Run the searchlight
-                logging.info("Starting searchlight analysis...")
-                sl_result = sl.run_searchlight(searchlight_gca, pool_size=pool_size)
-                logging.info("Searchlight analysis completed")
-                logging.info(f"Searchlight result shape: {sl_result.shape}")
+                                dorsal_label = f"{dorsal_hemi[0]}{dorsal_roi}"
+                                ventral_label = f"{ventral_hemi[0]}{ventral_roi}"
+                                curr_data = pd.Series([ss, rcn, tsk, dorsal_label, ventral_label, f_diff], index=sub_summary.columns)
+                                
+                                sub_summary = sub_summary.append(curr_data, ignore_index=True)
+                                logging.info(f"Completed GCA for {ss}, {tsk}, {dorsal_label}, {ventral_label}")
 
-                # Save the searchlight results
-                sl_img = nib.Nifti1Image(sl_result, img4d.affine, img4d.header)
-                output_file = f'{sub_dir}/derivatives/results/searchlight_gca/sub-{ss}_task-{tsk}_comp-{comparison_roi}_{comparison_hemi}_searchlight_gca.nii.gz'
-                nib.save(sl_img, output_file)
-                logging.info(f"Saved searchlight results to {output_file}")
+        logging.info(f'Completed GCA for subject {ss}')
+        sub_summary.to_csv(f'{sub_dir}/derivatives/gca/gca_searchlight.csv', index=False)
+        
+        
+def load_data():
+    print('Loading data...')
 
-            logging.info(f'Completed Searchlight GCA for subject {ss}')
+    all_runs = []
+    for run in runs:
+        print(run)
 
-        except Exception as e:
-            logging.error(f"Error processing subject {ss}: {str(e)}")
+        curr_run = image.load_img(f'{exp_dir}/run-0{run}/1stLevel.feat/filtered_func_data_reg.nii.gz') #load data
+        curr_run = image.get_data(image.clean_img(curr_run,standardize=True,mask_img=whole_brain_mask)) #standardize within mask and convert to numpy
+        #curr_run = curr_run[:,:,:,first_fix:] #remove first few fixation volumes
 
-    logging.info('Mini Searchlight GCA completed for all subjects')
+        all_runs.append(curr_run) #append to list
 
-if __name__ == "__main__":
-    try:
-        conduct_mini_searchlight_gca()
-    except Exception as e:
-        logging.error(f"Fatal error in main script execution: {str(e)}")
+
+        del curr_run
+        print((resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024)/1024)
+
+    print('data loaded..')
+
+    print('concatenating data..')
+    bold_vol = np.concatenate(np.array(all_runs),axis = 3) #compile into 4D
+    del all_runs
+    print((resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024)/1024)
+    print('data concatenated...')
+    gc.collect()
+
+    return bold_vol
+
+def extract_seed_ts(bold_vol):
+    """
+    extract all data from seed region
+    """
+
+    #load seed
+    seed_roi = image.get_data(image.load_img(f'{roi_dir}/spheres/{dorsal}_sphere.nii.gz'))
+    reshaped_roi = np.reshape(seed_roi, (91,109,91,1))
+    masked_img = reshaped_roi*bold_vol
+
+    #extract voxel resposnes from within mask
+    seed_ts = masked_img.reshape(-1, bold_vol.shape[3]) #reshape into rows (voxels) x columns (time)
+    seed_ts =seed_ts[~np.all(seed_ts == 0, axis=1)] #remove voxels that are 0 (masked out)
+    seed_ts = np.transpose(seed_ts)
+
+    print('Seed data extracted...')
+
+    return seed_ts
+
+
+bold_vol = load_data()
+seed_ts = extract_seed_ts(bold_vol)
+
+#run searchlight
+t1 = time.time()
+print("Begin Searchlight", print((resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024)/1024))
+sl = Searchlight(sl_rad=sl_rad,max_blk_edge=max_blk_edge, shape = shape) #setup the searchlight
+print('Distribute', (resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024)/1024)
+sl.distribute([bold_vol], mask) #send the 4dimg and mask
+
+print('Broadcast', (resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024)/1024)
+sl.broadcast(seed_ts) #send the relevant analysis vars
+print('Run', (resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024)/1024, flush= True)
+sl_result = sl.run_searchlight(gca, pool_size=pool_size)
+print("End Searchlight\n", (time.time()-t1)/60)
+        
