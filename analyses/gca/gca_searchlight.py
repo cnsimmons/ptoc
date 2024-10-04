@@ -100,6 +100,8 @@ def extract_cond_ts(ts, cov):
     block_ind = (cov == 1).reshape((len(cov))) | block_ind
     return ts[block_ind]
 
+#where changes begin#
+
 def gca_searchlight_kernel(data, sl_mask, myrad, bcvar):
     sl_data = data[0][sl_mask]
     sl_data = sl_data.reshape(-1, sl_data.shape[-1]).T
