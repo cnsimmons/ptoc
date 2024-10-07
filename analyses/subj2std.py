@@ -14,6 +14,7 @@ def transform_func_to_mni(func_file, anat2mni_mat, mni_brain, output_file):
             '-init', anat2mni_mat,
             '-interp', 'trilinear'
         ], check=True)
+        print(f"Output saved to: {output_file}")
     else:
         print(f"MNI-space functional data already exists: {output_file}")
 
