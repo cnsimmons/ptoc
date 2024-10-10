@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 from nilearn import image, maskers
 from nilearn.decoding import SearchLight
+from nilearn.glm.first_level import compute_regressor
 from statsmodels.tsa.stattools import grangercausalitytests
 import nibabel as nib
 import time
@@ -142,8 +143,8 @@ def conduct_gca():
                 verbose=1
             )
             
-            for roi in rois:
-                for hemisphere in hemispheres:
+                        for roi in tqdm(rois, desc="Processing ROIs", leave=False):
+                for hemisphere in tqdm(hemispheres, desc="Processing hemispheres", leave=False):
                     logging.info(f"Processing {hemisphere} {roi}")
                     
                     roi_coord = roi_coords[(roi_coords['index'] == rcn) & 
@@ -178,33 +179,33 @@ def conduct_gca():
                     logging.info(f"Starting searchlight analysis for {hemisphere} {roi}...")
                     searchlight_results = searchlight.fit(img4d, searchlight_function)
 
-            # Save searchlight results
-            logging.info("Saving searchlight results...")
-            searchlight_img = nib.Nifti1Image(searchlight_results, combined_brain_mask.affine)
-            output_path = f'{sub_dir}/derivatives/gca_searchlight/searchlight_results_{rc[0]}-{rc[-1]}.nii.gz'
-            nib.save(searchlight_img, output_path)
-            logging.info(f"Searchlight results saved to: {output_path}")
+                    # Save searchlight results
+                    logging.info("Saving searchlight results...")
+                    searchlight_img = nib.Nifti1Image(searchlight_results, combined_brain_mask.affine)
+                    output_path = f'{sub_dir}/derivatives/gca_searchlight/searchlight_results_{hemisphere}_{roi}_{rc[0]}-{rc[-1]}.nii.gz'
+                    nib.save(searchlight_img, output_path)
+                    logging.info(f"Searchlight results saved to: {output_path}")
 
-            # Extract top N results for summary
-            logging.info("Extracting top results for summary...")
-            top_n = 100
-            flat_results = searchlight_results.ravel()
-            top_indices = np.argsort(np.abs(flat_results))[-top_n:]
+                    # Extract top N results for summary
+                    logging.info("Extracting top results for summary...")
+                    top_n = 100
+                    flat_results = searchlight_results.ravel()
+                    top_indices = np.argsort(np.abs(flat_results))[-top_n:]
 
-            for idx in top_indices:
-                xyz = np.unravel_index(idx, searchlight_results.shape)
-                f_diff = flat_results[idx]
-                curr_data = pd.Series({
-                    'sub': ss,
-                    'origin': 'pIPS',
-                    'x': xyz[0],
-                    'y': xyz[1],
-                    'z': xyz[2],
-                    'task': 'loc',
-                    'f_diff': f_diff
-                })
-                sub_summary = sub_summary.append(curr_data, ignore_index=True)
-
+                    for idx in top_indices:
+                        xyz = np.unravel_index(idx, searchlight_results.shape)
+                        f_diff = flat_results[idx]
+                        curr_data = pd.Series({
+                            'sub': ss,
+                            'roi': roi,
+                            'hemisphere': hemisphere,
+                            'x': xyz[0],
+                            'y': xyz[1],
+                            'z': xyz[2],
+                            'task': 'loc',
+                            'f_diff': f_diff
+                        })
+                        sub_summary = sub_summary.append(curr_data, ignore_index=True)
 
         logging.info(f'Completed GCA searchlight for subject {ss}')
         summary_path = f'{sub_dir}/derivatives/gca_searchlight/gca_searchlight_summary_{localizer.lower()}.csv'
