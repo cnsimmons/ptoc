@@ -99,18 +99,23 @@ def gca_calculation(sphere_data, sphere_mask, roi_ts, psy):
         logging.warning(f"Mismatch in volumes: sphere_ts has {sphere_mean_ts.shape[0]}, roi_ts has {roi_ts.shape[0]}")
         return 0
 
+    #not sure if the below section is different because of searchlight
     sphere_phys = extract_cond_ts(sphere_mean_ts, psy)
     roi_phys = extract_cond_ts(roi_ts, psy)
+    
+    #temp edits to parse out:
+    #sphere_ts = extract_roi_sphere(img4d, roi_coord[['x', 'y', 'z']].values.tolist()[0])
+    sphere_phys = extract_cond_ts(sphere_mean_ts, psy)
+    roi_ts = extract_roi_sphere(img4d, roi_coord[['x', 'y', 'z']].values.tolist()[0])
+    roi_phys = extract_cond_ts(roi_ts, psy)
+    ##done##
     
     try:
         neural_ts = pd.DataFrame({'sphere': sphere_phys.ravel(), 'roi': roi_phys.ravel()})
         gc_res_sphere_to_roi = grangercausalitytests(neural_ts[['sphere', 'roi']], 1, verbose=False)
         gc_res_roi_to_sphere = grangercausalitytests(neural_ts[['roi', 'sphere']], 1, verbose=False)
+        
         f_diff = gc_res_sphere_to_roi[1][0]['ssr_ftest'][0] - gc_res_roi_to_sphere[1][0]['ssr_ftest'][0]
-            
-    except Exception as e:
-        logging.warning(f"Error in GCA calculation: {str(e)}")
-        f_diff = 0
     
     return f_diff
 
@@ -152,7 +157,7 @@ def conduct_gca_searchlight():
                                    (roi_coords['task'] == 'loc') & 
                                    (roi_coords['roi'] == 'pIPS') &
                                    (roi_coords['hemisphere'] == 'left')].iloc[0]
-            roi_ts = extract_roi_sphere(img4d, roi_coord[['x', 'y', 'z']].values.tolist()[0])
+            roi_ts = extract_roi_sphere(img4d, roi_coord[['x', 'y', 'z']].values.tolist())
             
             # Create searchlight object
             searchlight = SearchLight(
