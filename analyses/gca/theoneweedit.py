@@ -11,6 +11,7 @@ from statsmodels.tsa.stattools import grangercausalitytests
 import nibabel as nib
 import time
 from tqdm import tqdm
+from functools import partial
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -89,22 +90,38 @@ def extract_cond_ts(ts, cov):
     block_ind = (cov == 1).reshape((len(cov))) | block_ind
     return ts[block_ind]
 
+def searchlight_function(sphere_data, sphere_mask, roi_phys, psy):
+    sphere_ts = np.mean(sphere_data, axis=1).reshape(-1, 1)
+    sphere_phys = extract_cond_ts(sphere_ts, psy)
+    
+    try:
+        neural_ts = pd.DataFrame({'roi': roi_phys.ravel(), 'sphere': sphere_phys.ravel()})
+        gc_res_sphere_to_roi = grangercausalitytests(neural_ts[['sphere', 'roi']], 1, verbose=False)
+        gc_res_roi_to_sphere = grangercausalitytests(neural_ts[['roi', 'sphere']], 1, verbose=False)
+        f_diff = gc_res_sphere_to_roi[1][0]['ssr_ftest'][0] - gc_res_roi_to_sphere[1][0]['ssr_ftest'][0]
+    except Exception as e:
+        logging.warning(f"Error in GCA calculation: {str(e)}")
+        f_diff = 0
+    
+    return f_diff
+
+# Create a wrapper function that only takes sphere_data and sphere_mask
+def searchlight_wrapper(sphere_data, sphere_mask, roi_phys, psy):
+    return searchlight_function(sphere_data, sphere_mask, roi_phys, psy)
+
 
 def conduct_gca():
     logging.info(f'Running GCA for {localizer}...')
     tasks = ['loc']
-    rois = ['pIPS', 'LO']
-    hemispheres = ['left', 'right']
     
-    for ss in subs:
-        sub_summary = pd.DataFrame(columns=['sub', 'roi', 'hemisphere', 
-                                            'task', 'x', 'y', 'z', 'f_diff'])
+    for ss in tqdm(subs, desc="Processing subjects"):
+        sub_summary = pd.DataFrame(columns=['sub', 'roi', 'hemisphere', 'task', 'x', 'y', 'z', 'f_diff'])
         
         sub_dir = f'{study_dir}/{ss}/ses-01/'
         temp_dir = f'{raw_dir}/{ss}/ses-01'
         roi_dir = f'{sub_dir}/derivatives/rois'
         exp_dir = f'{temp_dir}/derivatives/fsl/loc'
-        os.makedirs(f'{sub_dir}/derivatives/gca', exist_ok=True)
+        os.makedirs(f'{sub_dir}/derivatives/gca_searchlight', exist_ok=True)
 
         roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere.csv')
         logging.info(f"ROI coordinates loaded for subject {ss}")
@@ -131,20 +148,38 @@ def conduct_gca():
                 combined_brain_mask = nib.Nifti1Image(combined_mask_data.astype(np.int32), brain_masks[0].affine)
             else:
                 combined_brain_mask = brain_masks[0]
-            
-            psy = make_psy_cov(rc, ss)
 
+            psy = make_psy_cov(rc, ss)
+            
+            ''''
+            #when not testing
             # Create searchlight object
             searchlight = SearchLight(
                 combined_brain_mask, 
                 process_mask_img=combined_brain_mask, 
                 radius=6,
-                n_jobs=-1,  # Use all available cores 
-                verbose=1
+                n_jobs=-1,  # Use all available cores
+                verbose=0
             )
+           ''''
+           
+            #for TESTING Create a small test mask (3x3x3 cube)
+            test_mask = np.zeros_like(combined_brain_mask.get_fdata())
+            center = np.array(test_mask.shape) // 2
+            test_mask[center[0]-1:center[0]+2, center[1]-1:center[1]+2, center[2]-1:center[2]+2] = 1
+            test_mask = nib.Nifti1Image(test_mask, combined_brain_mask.affine)
             
-            for roi in rois:
-                for hemisphere in hemispheres:
+            searchlight = SearchLight(
+                test_mask,  # Use test_mask instead of combined_brain_mask
+                process_mask_img=test_mask,  # Use test_mask here as well
+                radius=2,
+                n_jobs=1,
+                verbose=0
+                )
+ 
+
+            for roi in tqdm(rois, desc="Processing ROIs", leave=False):
+                for hemisphere in tqdm(hemispheres, desc="Processing hemispheres", leave=False):
                     logging.info(f"Processing {hemisphere} {roi}")
                     
                     roi_coord = roi_coords[(roi_coords['index'] == rcn) & 
@@ -158,60 +193,51 @@ def conduct_gca():
                         raise ValueError(f"Mismatch in volumes: roi_ts has {roi_ts.shape[0]}, psy has {psy.shape[0]}")
 
                     roi_phys = extract_cond_ts(roi_ts, psy)
+    
+                    # Ensure roi_phys and psy are numpy arrays
+                    roi_phys = np.array(roi_phys)
+                    psy = np.array(psy)
 
-                    # Define the searchlight function
-                    def searchlight_function(sphere_data, sphere_mask):
-                        sphere_ts = np.mean(sphere_data, axis=1).reshape(-1, 1)
-                        sphere_phys = extract_cond_ts(sphere_ts, psy)
-                        
-                        try:
-                            neural_ts = pd.DataFrame({'roi': roi_phys.ravel(), 'sphere': sphere_phys.ravel()})
-                            gc_res_sphere_to_roi = grangercausalitytests(neural_ts[['sphere', 'roi']], 1, verbose=False)
-                            gc_res_roi_to_sphere = grangercausalitytests(neural_ts[['roi', 'sphere']], 1, verbose=False)
-                            f_diff = gc_res_sphere_to_roi[1][0]['ssr_ftest'][0] - gc_res_roi_to_sphere[1][0]['ssr_ftest'][0]
-                        except Exception as e:
-                            logging.warning(f"Error in GCA calculation: {str(e)}")
-                            f_diff = 0
-                        
-                        return f_diff
+                    # Create a partial function with fixed arguments
+                    process_sphere = partial(searchlight_wrapper, roi_phys=roi_phys, psy=psy)
 
                     # Run searchlight
                     logging.info(f"Starting searchlight analysis for {hemisphere} {roi}...")
-                    searchlight_results = searchlight.fit(img4d, searchlight_function)
+                    searchlight_results = searchlight.fit(img4d, process_sphere)
 
-            # Save searchlight results
-            logging.info("Saving searchlight results...")
-            searchlight_img = nib.Nifti1Image(searchlight_results, combined_brain_mask.affine)
-            output_path = f'{sub_dir}/derivatives/gca_searchlight/searchlight_results_{rc[0]}-{rc[-1]}.nii.gz'
-            nib.save(searchlight_img, output_path)
-            logging.info(f"Searchlight results saved to: {output_path}")
+                    # Save searchlight results
+                    logging.info("Saving searchlight results...")
+                    searchlight_img = nib.Nifti1Image(searchlight_results, combined_brain_mask.affine)
+                    output_path = f'{sub_dir}/derivatives/gca_searchlight/searchlight_results_{hemisphere}_{roi}_{rc[0]}-{rc[-1]}.nii.gz'
+                    nib.save(searchlight_img, output_path)
+                    logging.info(f"Searchlight results saved to: {output_path}")
 
-            # Extract top N results for summary
-            logging.info("Extracting top results for summary...")
-            top_n = 100
-            flat_results = searchlight_results.ravel()
-            top_indices = np.argsort(np.abs(flat_results))[-top_n:]
+                    # Extract top N results for summary
+                    logging.info("Extracting top results for summary...")
+                    top_n = 100
+                    flat_results = searchlight_results.ravel()
+                    top_indices = np.argsort(np.abs(flat_results))[-top_n:]
 
-            for idx in top_indices:
-                xyz = np.unravel_index(idx, searchlight_results.shape)
-                f_diff = flat_results[idx]
-                curr_data = pd.Series({
-                    'sub': ss,
-                    'origin': 'pIPS',
-                    'x': xyz[0],
-                    'y': xyz[1],
-                    'z': xyz[2],
-                    'task': 'loc',
-                    'f_diff': f_diff
-                })
-                sub_summary = sub_summary.append(curr_data, ignore_index=True)
-
+                    for idx in top_indices:
+                        xyz = np.unravel_index(idx, searchlight_results.shape)
+                        f_diff = flat_results[idx]
+                        curr_data = pd.Series({
+                            'sub': ss,
+                            'roi': roi,
+                            'hemisphere': hemisphere,
+                            'x': xyz[0],
+                            'y': xyz[1],
+                            'z': xyz[2],
+                            'task': 'loc',
+                            'f_diff': f_diff
+                        })
+                        sub_summary = sub_summary.append(curr_data, ignore_index=True)
 
         logging.info(f'Completed GCA searchlight for subject {ss}')
         summary_path = f'{sub_dir}/derivatives/gca_searchlight/gca_searchlight_summary_{localizer.lower()}.csv'
         sub_summary.to_csv(summary_path, index=False)
         logging.info(f"Summary saved to: {summary_path}")
-
+        
 # Main execution
 if __name__ == "__main__":
     conduct_gca()
