@@ -29,7 +29,8 @@ raw_dir = params.raw_dir
 # Load subject information
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
-subs = sub_info['sub'].tolist()
+#subs = sub_info['sub'].tolist()
+subs = ['sub-025']
 
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
@@ -37,14 +38,11 @@ run_num = 3
 runs = list(range(1, run_num + 1))
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
 
-def extract_roi_sphere(img, coords, radius=6):
-    if not isinstance(coords, (list, tuple)):
-        coords = [coords]
-    coords = [tuple(coord) if isinstance(coord, (list, np.ndarray)) else (coord,) for coord in coords]
-    
-    roi_masker = input_data.NiftiSpheresMasker(coords, radius=radius)
+def extract_roi_sphere(img, coords):
+    roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
     seed_time_series = roi_masker.fit_transform(img)
-    return np.mean(seed_time_series, axis=1).reshape(-1, 1)
+    phys = np.mean(seed_time_series, axis=1).reshape(-1, 1)
+    return phys  # Return non-standardized time series
 
 def make_psy_cov(runs, ss):
     temp_dir = f'{raw_dir}/{ss}/ses-01'
