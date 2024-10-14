@@ -130,7 +130,9 @@ def conduct_gca():
                 combined_brain_mask = nib.Nifti1Image(combined_mask_data.astype(np.int32), brain_masks[0].affine)
             else:
                 combined_brain_mask = brain_masks[0]
-
+                
+             logging.info(f'brain mask has been created...') #no idea if this is the right place to put this
+            
             # Create searchlight object
             searchlight = SearchLight(
                 combined_brain_mask, 
@@ -163,6 +165,8 @@ def conduct_gca():
 
                         # Function to compute GCA for each searchlight sphere
                         def compute_gca(sphere_signals):
+                            logging.info(f'computing gca...')
+                            
                             sphere_ts = np.mean(sphere_signals, axis=1)
                             sphere_phys = extract_cond_ts(sphere_ts.reshape(-1, 1), psy)
 
