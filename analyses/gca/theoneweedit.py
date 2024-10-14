@@ -18,20 +18,19 @@
                         #verbose=0
                     #)
                                         
-## GCA with localizer specified ##
+## GCA with localizer specified using Brainiak ##
 import sys
 import os
 import logging
 import pandas as pd
 import numpy as np
 from nilearn import image, maskers
-from nilearn.decoding import SearchLight
 from nilearn.glm.first_level import compute_regressor
 from statsmodels.tsa.stattools import grangercausalitytests
 import nibabel as nib
 from tqdm import tqdm
-from sklearn.base import BaseEstimator
-from sklearn.model_selection import PredefinedSplit
+from brainiak.searchlight.searchlight import Ball
+from mpi4py import MPI
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -109,27 +108,19 @@ def extract_cond_ts(ts, cov):
     block_ind = (cov == 1).reshape((len(cov))) | block_ind
     return ts[block_ind]
 
-class GCAEstimator(BaseEstimator):
-    def __init__(self, roi_ts):
-        self.roi_ts = roi_ts
-
-    def fit(self, X, y=None):
-        return self
-
-    def predict(self, X):
-        # X is the time series data for the current searchlight sphere
-        sphere_ts = np.mean(X, axis=1).reshape(-1, 1)
-        
-        try:
-            neural_ts = pd.DataFrame({'roi': self.roi_ts.ravel(), 'sphere': sphere_ts.ravel()})
-            gc_res_sphere_to_roi = grangercausalitytests(neural_ts[['sphere', 'roi']], 1, verbose=False)
-            gc_res_roi_to_sphere = grangercausalitytests(neural_ts[['roi', 'sphere']], 1, verbose=False)
-            f_diff = gc_res_sphere_to_roi[1][0]['ssr_ftest'][0] - gc_res_roi_to_sphere[1][0]['ssr_ftest'][0]
-        except Exception as e:
-            logging.warning(f"Error in GCA calculation: {str(e)}")
-            f_diff = 0
-        
-        return f_diff
+def gca_function(data, roi_ts):
+    sphere_ts = np.mean(data, axis=0).reshape(-1, 1)
+    
+    try:
+        neural_ts = pd.DataFrame({'roi': roi_ts.ravel(), 'sphere': sphere_ts.ravel()})
+        gc_res_sphere_to_roi = grangercausalitytests(neural_ts[['sphere', 'roi']], 1, verbose=False)
+        gc_res_roi_to_sphere = grangercausalitytests(neural_ts[['roi', 'sphere']], 1, verbose=False)
+        f_diff = gc_res_sphere_to_roi[1][0]['ssr_ftest'][0] - gc_res_roi_to_sphere[1][0]['ssr_ftest'][0]
+    except Exception as e:
+        logging.warning(f"Error in GCA calculation: {str(e)}")
+        f_diff = 0
+    
+    return f_diff
 
 def conduct_gca():
     logging.info(f'Running GCA for {localizer}...')
@@ -150,12 +141,7 @@ def conduct_gca():
             logging.info(f"Processing run combination {rc} for subject {ss}")
             
             filtered_list = []
-            brain_masks = []
             for rn in rc:
-                brain_mask_path = f'{sub_dir}/derivatives/fsl/loc/run-0{rn}/1stLevel.feat/mask.nii.gz'
-                brain_mask = nib.load(brain_mask_path)
-                brain_masks.append(brain_mask)
-            
                 curr_run = image.load_img(f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz')
                 curr_run = image.clean_img(curr_run, standardize='zscore_sample')
                 filtered_list.append(curr_run)
@@ -163,11 +149,19 @@ def conduct_gca():
             img4d = image.concat_imgs(filtered_list)
             logging.info(f"Concatenated image shape: {img4d.shape}")
 
-            if len(brain_masks) > 1:
-                combined_mask_data = np.all([mask.get_fdata() > 0 for mask in brain_masks], axis=0)
-                combined_brain_mask = nib.Nifti1Image(combined_mask_data.astype(np.int32), brain_masks[0].affine)
-            else:
-                combined_brain_mask = brain_masks[0]
+            # Create a small test mask (3x3x3 cube)
+            test_mask_shape = (10, 10, 10)  # Adjust size as needed
+            test_mask_data = np.zeros(test_mask_shape)
+            center = np.array(test_mask_shape) // 2
+            test_mask_data[center[0]-1:center[0]+2, center[1]-1:center[1]+2, center[2]-1:center[2]+2] = 1
+
+            # Create a NIfTI image from the test mask data
+            affine = img4d.affine
+            test_mask_nifti = nib.Nifti1Image(test_mask_data, affine)
+
+            # Crop the 4D data to match the test mask size
+            img4d_data = img4d.get_fdata()
+            cropped_data = img4d_data[:test_mask_shape[0], :test_mask_shape[1], :test_mask_shape[2], :]
 
             for roi in tqdm(rois, desc="Processing ROIs", leave=False):
                 for hemisphere in tqdm(hemispheres, desc="Processing hemispheres", leave=False):
@@ -180,71 +174,67 @@ def conduct_gca():
                     
                     roi_ts = extract_roi_sphere(img4d, roi_coord[['x', 'y', 'z']].values.tolist())
                     
-                    # Create a small test mask (3x3x3 cube)
-                    test_mask_shape = (10, 10, 10)  # Adjust size as needed
-                    test_mask_data = np.zeros(test_mask_shape)
-                    center = np.array(test_mask_shape) // 2
-                    test_mask_data[center[0]-1:center[0]+2, center[1]-1:center[1]+2, center[2]-1:center[2]+2] = 1
+                    # Prepare data for Brainiak searchlight
+                    data = cropped_data.transpose((3, 0, 1, 2))
 
-                    # Create a NIfTI image from the test mask data
-                    affine = np.eye(4)
-                    test_mask_nifti = nib.Nifti1Image(test_mask_data, affine)
+                    # Set up the searchlight parameters
+                    comm = MPI.COMM_WORLD
+                    rank = comm.rank
+                    size = comm.size
 
-                    # Extract ROI time series
-                    roi_ts = extract_roi_sphere(img4d, roi_coord[['x', 'y', 'z']].values.tolist())
+                    # Create and run Brainiak searchlight
+                    sl_rad = 1  # Small radius for test mask
+                    ball = Ball(sl_rad)
+                    sl_mask = test_mask_data.astype(bool)
 
-                    # Create the GCAEstimator instance
-                    estimator = GCAEstimator(roi_ts)
+                    # Define the searchlight function
+                    def brainiak_gca(data, mask):
+                        if not np.any(mask):
+                            return 0
+                        f_diff = gca_function(data, roi_ts)
+                        return f_diff
 
-                    # Create a custom CV iterator that doesn't actually split the data
-                    no_split_cv = PredefinedSplit(test_fold=[-1]*img4d.shape[3])
+                    logging.info(f"Starting Brainiak searchlight analysis for {hemisphere} {roi}...")
+                    sl_result = ball.run(data, sl_mask, brainiak_gca)
 
-                    # Now use this test_mask_nifti in your SearchLight constructor
-                    searchlight = SearchLight(
-                        mask_img=test_mask_nifti,
-                        estimator=estimator,
-                        radius=2,
-                        n_jobs=1,
-                        verbose=1,
-                        cv=no_split_cv
-                    )
+                    # Gather results from all processes
+                    gathered_results = comm.gather(sl_result, root=0)
 
-                    # Run searchlight
-                    logging.info(f"Starting searchlight analysis for {hemisphere} {roi}...")
-                    searchlight.fit(img4d)
+                    if rank == 0:
+                        # Combine results
+                        searchlight_results = np.zeros(test_mask_shape)
+                        for result in gathered_results:
+                            searchlight_results += result
 
-                    # Save searchlight results
-                    logging.info("Saving searchlight results...")
-                    searchlight_img = nib.Nifti1Image(searchlight_results, test_mask.affine)
-                    output_path = f'{sub_dir}/derivatives/gca_searchlight/searchlight_results_{hemisphere}_{roi}_{rc[0]}-{rc[-1]}.nii.gz'
-                    nib.save(searchlight_img, output_path)
-                    logging.info(f"Searchlight results saved to: {output_path}")
+                        # Save searchlight results
+                        logging.info("Saving searchlight results...")
+                        searchlight_img = nib.Nifti1Image(searchlight_results, affine)
+                        output_path = f'{sub_dir}/derivatives/gca_searchlight/test_brainiak_searchlight_results_{hemisphere}_{roi}_{rc[0]}-{rc[-1]}.nii.gz'
+                        nib.save(searchlight_img, output_path)
+                        logging.info(f"Searchlight results saved to: {output_path}")
 
-                    # Extract top N results for summary
-                    logging.info("Extracting top results for summary...")
-                    top_n = 100
-                    flat_results = searchlight_results.ravel()
-                    top_indices = np.argsort(np.abs(flat_results))[-top_n:]
+                        # Extract results for summary
+                        logging.info("Extracting results for summary...")
+                        non_zero_indices = np.nonzero(searchlight_results)
 
-                    for idx in top_indices:
-                        xyz = np.unravel_index(idx, searchlight_results.shape)
-                        f_diff = flat_results[idx]
-                        curr_data = pd.Series({
-                            'sub': ss,
-                            'roi': roi,
-                            'hemisphere': hemisphere,
-                            'x': xyz[0],
-                            'y': xyz[1],
-                            'z': xyz[2],
-                            'task': 'loc',
-                            'f_diff': f_diff
-                        })
-                        sub_summary = sub_summary.append(curr_data, ignore_index=True)
+                        for x, y, z in zip(*non_zero_indices):
+                            f_diff = searchlight_results[x, y, z]
+                            curr_data = pd.Series({
+                                'sub': ss,
+                                'roi': roi,
+                                'hemisphere': hemisphere,
+                                'x': x,
+                                'y': y,
+                                'z': z,
+                                'task': 'loc',
+                                'f_diff': f_diff
+                            })
+                            sub_summary = sub_summary.append(curr_data, ignore_index=True)
 
         logging.info(f'Completed GCA searchlight for subject {ss}')
-        summary_path = f'{sub_dir}/derivatives/gca_searchlight/gca_searchlight_summary_{localizer.lower()}.csv'
+        summary_path = f'{sub_dir}/derivatives/gca_searchlight/brainiak_gca_searchlight_summary_{localizer.lower()}.csv'
         sub_summary.to_csv(summary_path, index=False)
         logging.info(f"Summary saved to: {summary_path}")
-
+        
 if __name__ == "__main__":
     conduct_gca()
