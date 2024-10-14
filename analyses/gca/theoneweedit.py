@@ -1,4 +1,24 @@
 ## GCA with localizer specified ##
+
+            #img4d = image.concat_imgs(filtered_list)
+            #logging.info(f"Concatenated image shape: {img4d.shape}")
+
+            #if len(brain_masks) > 1:
+                #combined_mask_data = np.all([mask.get_fdata() > 0 for mask in brain_masks], axis=0)
+                #combined_brain_mask = nib.Nifti1Image(combined_mask_data.astype(np.int32), brain_masks[0].affine)
+            #else:
+                #combined_brain_mask = brain_masks[0]
+
+                    # Create searchlight object
+                    #searchlight = SearchLight(
+                        #combined_brain_mask, 
+                        #process_mask_img=combined_brain_mask, 
+                        #radius=6,
+                        #n_jobs=-1,  # Use all available cores
+                        #verbose=0
+                    #)
+                                        
+## GCA with localizer specified ##
 import sys
 import os
 import logging
@@ -9,9 +29,9 @@ from nilearn.decoding import SearchLight
 from nilearn.glm.first_level import compute_regressor
 from statsmodels.tsa.stattools import grangercausalitytests
 import nibabel as nib
-import time
 from tqdm import tqdm
-from functools import partial
+from sklearn.base import BaseEstimator
+from sklearn.model_selection import PredefinedSplit
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -24,18 +44,17 @@ import ptoc_params as params
 # Set up directories and parameters
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
-localizer = 'Object' # scramble or object. This is the localizer task.
+localizer = 'Object'
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 raw_dir = params.raw_dir
 
 # Load subject information
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
-#subs = sub_info['sub'].tolist()
 subs = ['sub-025']
+rois = ['pIPS']
+hemispheres = ['left']
 
-rois = ['pIPS', 'LO']
-hemispheres = ['left', 'right']
 run_num = 3
 runs = list(range(1, run_num + 1))
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
@@ -90,29 +109,30 @@ def extract_cond_ts(ts, cov):
     block_ind = (cov == 1).reshape((len(cov))) | block_ind
     return ts[block_ind]
 
-def searchlight_function(sphere_data, sphere_mask, roi_phys, psy):
-    sphere_ts = np.mean(sphere_data, axis=1).reshape(-1, 1)
-    sphere_phys = extract_cond_ts(sphere_ts, psy)
-    
-    try:
-        neural_ts = pd.DataFrame({'roi': roi_phys.ravel(), 'sphere': sphere_phys.ravel()})
-        gc_res_sphere_to_roi = grangercausalitytests(neural_ts[['sphere', 'roi']], 1, verbose=False)
-        gc_res_roi_to_sphere = grangercausalitytests(neural_ts[['roi', 'sphere']], 1, verbose=False)
-        f_diff = gc_res_sphere_to_roi[1][0]['ssr_ftest'][0] - gc_res_roi_to_sphere[1][0]['ssr_ftest'][0]
-    except Exception as e:
-        logging.warning(f"Error in GCA calculation: {str(e)}")
-        f_diff = 0
-    
-    return f_diff
+class GCAEstimator(BaseEstimator):
+    def __init__(self, roi_ts):
+        self.roi_ts = roi_ts
 
-# Create a wrapper function that only takes sphere_data and sphere_mask
-def searchlight_wrapper(sphere_data, sphere_mask, roi_phys, psy):
-    return searchlight_function(sphere_data, sphere_mask, roi_phys, psy)
+    def fit(self, X, y=None):
+        return self
 
+    def predict(self, X):
+        # X is the time series data for the current searchlight sphere
+        sphere_ts = np.mean(X, axis=1).reshape(-1, 1)
+        
+        try:
+            neural_ts = pd.DataFrame({'roi': self.roi_ts.ravel(), 'sphere': sphere_ts.ravel()})
+            gc_res_sphere_to_roi = grangercausalitytests(neural_ts[['sphere', 'roi']], 1, verbose=False)
+            gc_res_roi_to_sphere = grangercausalitytests(neural_ts[['roi', 'sphere']], 1, verbose=False)
+            f_diff = gc_res_sphere_to_roi[1][0]['ssr_ftest'][0] - gc_res_roi_to_sphere[1][0]['ssr_ftest'][0]
+        except Exception as e:
+            logging.warning(f"Error in GCA calculation: {str(e)}")
+            f_diff = 0
+        
+        return f_diff
 
 def conduct_gca():
     logging.info(f'Running GCA for {localizer}...')
-    tasks = ['loc']
     
     for ss in tqdm(subs, desc="Processing subjects"):
         sub_summary = pd.DataFrame(columns=['sub', 'roi', 'hemisphere', 'task', 'x', 'y', 'z', 'f_diff'])
@@ -149,65 +169,53 @@ def conduct_gca():
             else:
                 combined_brain_mask = brain_masks[0]
 
-            psy = make_psy_cov(rc, ss)
-            
-            ''''
-            #when not testing
-            # Create searchlight object
-            searchlight = SearchLight(
-                combined_brain_mask, 
-                process_mask_img=combined_brain_mask, 
-                radius=6,
-                n_jobs=-1,  # Use all available cores
-                verbose=0
-            )
-           ''''
-           
-            #for TESTING Create a small test mask (3x3x3 cube)
-            test_mask = np.zeros_like(combined_brain_mask.get_fdata())
-            center = np.array(test_mask.shape) // 2
-            test_mask[center[0]-1:center[0]+2, center[1]-1:center[1]+2, center[2]-1:center[2]+2] = 1
-            test_mask = nib.Nifti1Image(test_mask, combined_brain_mask.affine)
-            
-            searchlight = SearchLight(
-                test_mask,  # Use test_mask instead of combined_brain_mask
-                process_mask_img=test_mask,  # Use test_mask here as well
-                radius=2,
-                n_jobs=1,
-                verbose=0
-                )
- 
-
             for roi in tqdm(rois, desc="Processing ROIs", leave=False):
                 for hemisphere in tqdm(hemispheres, desc="Processing hemispheres", leave=False):
                     logging.info(f"Processing {hemisphere} {roi}")
                     
                     roi_coord = roi_coords[(roi_coords['index'] == rcn) & 
-                                           (roi_coords['task'] == 'loc') & 
-                                           (roi_coords['roi'] == roi) &
-                                           (roi_coords['hemisphere'] == hemisphere)].iloc[0]
+                                        (roi_coords['task'] == 'loc') & 
+                                        (roi_coords['roi'] == roi) &
+                                        (roi_coords['hemisphere'] == hemisphere)].iloc[0]
                     
                     roi_ts = extract_roi_sphere(img4d, roi_coord[['x', 'y', 'z']].values.tolist())
                     
-                    if roi_ts.shape[0] != psy.shape[0]:
-                        raise ValueError(f"Mismatch in volumes: roi_ts has {roi_ts.shape[0]}, psy has {psy.shape[0]}")
+                    # Create a small test mask (3x3x3 cube)
+                    test_mask_shape = (10, 10, 10)  # Adjust size as needed
+                    test_mask_data = np.zeros(test_mask_shape)
+                    center = np.array(test_mask_shape) // 2
+                    test_mask_data[center[0]-1:center[0]+2, center[1]-1:center[1]+2, center[2]-1:center[2]+2] = 1
 
-                    roi_phys = extract_cond_ts(roi_ts, psy)
-    
-                    # Ensure roi_phys and psy are numpy arrays
-                    roi_phys = np.array(roi_phys)
-                    psy = np.array(psy)
+                    # Create a NIfTI image from the test mask data
+                    affine = np.eye(4)
+                    test_mask_nifti = nib.Nifti1Image(test_mask_data, affine)
 
-                    # Create a partial function with fixed arguments
-                    process_sphere = partial(searchlight_wrapper, roi_phys=roi_phys, psy=psy)
+                    # Extract ROI time series
+                    roi_ts = extract_roi_sphere(img4d, roi_coord[['x', 'y', 'z']].values.tolist())
+
+                    # Create the GCAEstimator instance
+                    estimator = GCAEstimator(roi_ts)
+
+                    # Create a custom CV iterator that doesn't actually split the data
+                    no_split_cv = PredefinedSplit(test_fold=[-1]*img4d.shape[3])
+
+                    # Now use this test_mask_nifti in your SearchLight constructor
+                    searchlight = SearchLight(
+                        mask_img=test_mask_nifti,
+                        estimator=estimator,
+                        radius=2,
+                        n_jobs=1,
+                        verbose=1,
+                        cv=no_split_cv
+                    )
 
                     # Run searchlight
                     logging.info(f"Starting searchlight analysis for {hemisphere} {roi}...")
-                    searchlight_results = searchlight.fit(img4d, process_sphere)
+                    searchlight.fit(img4d)
 
                     # Save searchlight results
                     logging.info("Saving searchlight results...")
-                    searchlight_img = nib.Nifti1Image(searchlight_results, combined_brain_mask.affine)
+                    searchlight_img = nib.Nifti1Image(searchlight_results, test_mask.affine)
                     output_path = f'{sub_dir}/derivatives/gca_searchlight/searchlight_results_{hemisphere}_{roi}_{rc[0]}-{rc[-1]}.nii.gz'
                     nib.save(searchlight_img, output_path)
                     logging.info(f"Searchlight results saved to: {output_path}")
@@ -237,7 +245,6 @@ def conduct_gca():
         summary_path = f'{sub_dir}/derivatives/gca_searchlight/gca_searchlight_summary_{localizer.lower()}.csv'
         sub_summary.to_csv(summary_path, index=False)
         logging.info(f"Summary saved to: {summary_path}")
-        
-# Main execution
+
 if __name__ == "__main__":
     conduct_gca()
