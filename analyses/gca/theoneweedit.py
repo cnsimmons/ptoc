@@ -1,4 +1,5 @@
 #GCA Searchlight
+#running niilearn searchlight analysis
 
 import sys
 import os
@@ -131,17 +132,19 @@ def conduct_gca():
             else:
                 combined_brain_mask = brain_masks[0]
                 
-             logging.info(f'brain mask has been created...') #no idea if this is the right place to put this
-            
+            logging.info(f'brain mask has been created...')
+        
             # Create searchlight object
             searchlight = SearchLight(
                 combined_brain_mask, 
                 process_mask_img=combined_brain_mask, 
                 radius=6,
-                n_jobs=-1,  # Use all available cores
-                verbose=0
+                n_jobs=2,  # to use all available cores us '-1' || consider using 2 the system keeps crashing
+                verbose=2 # Output progress
             )
 
+            logging.info(f'searchlight created...') #this may be redundant since outside the loop
+            
             for tsk in tasks:
                 for dorsal_roi in rois:
                     for dorsal_hemi in hemispheres:
@@ -162,10 +165,21 @@ def conduct_gca():
                             raise ValueError(f"Mismatch in volumes: dorsal_ts has {dorsal_ts.shape[0]}, psy has {psy.shape[0]}")
                         
                         dorsal_phys = extract_cond_ts(dorsal_ts, psy)
-
-                        # Function to compute GCA for each searchlight sphere
+                        
+                        #temporary for troubleshooting
+                        call_count = 0
                         def compute_gca(sphere_signals):
-                            logging.info(f'computing gca...')
+                            global call_count
+                            call_count += 1
+                            if call_count % 1000 == 0:
+                                logging.info(f"compute_gca called {call_count} times")
+                            return np.array([1.0])  # Always return 1.0
+                        #end of temporary
+
+                        '''
+                        # Function to compute GCA for each searchlight sphere
+                        def compute_gca_no(sphere_signals):
+                            logging.info(f'Computing GCA... Shape of sphere_signals: {sphere_signals.shape}')
                             
                             sphere_ts = np.mean(sphere_signals, axis=1)
                             sphere_phys = extract_cond_ts(sphere_ts.reshape(-1, 1), psy)
@@ -178,11 +192,18 @@ def conduct_gca():
                             gc_res_dorsal = grangercausalitytests(neural_ts[['sphere', 'dorsal']], 1, verbose=False)
                             gc_res_sphere = grangercausalitytests(neural_ts[['dorsal', 'sphere']], 1, verbose=False)
 
-                            return gc_res_dorsal[1][0]['ssr_ftest'][0] - gc_res_sphere[1][0]['ssr_ftest'][0]
-
+                            result = gc_res_dorsal[1][0]['ssr_ftest'][0] - gc_res_sphere[1][0]['ssr_ftest'][0]
+                            
+                            logging.info(f'GCA computation complete. Result: {result}')
+                            #return np.array([result])  # Return as a single-element numpy array
+                            return np.array([gc_res_dorsal[1][0]['ssr_ftest'][0] - gc_res_sphere[1][0]['ssr_ftest'][0]]) # try to return multiple element array
+                        '''
+                        logging.info("About to start GCA computation...") 
+                        
                         # Run searchlight analysis
-                        f_diff_map = searchlight.fit(img4d, compute_gca)
-
+                        f_diff_map = searchlight.fit(img4d, compute_gca) #key part of the code
+                        logging.info("searchlight.fit() completed")
+                        
                         # Save the f_diff_map
                         f_diff_img = nib.Nifti1Image(f_diff_map, img4d.affine)
                         nib.save(f_diff_img, f'{sub_dir}/derivatives/gca/f_diff_map_{localizer.lower()}_{dorsal_roi}_{dorsal_hemi}_rc{rcn}.nii.gz')
