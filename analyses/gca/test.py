@@ -8,6 +8,11 @@ import nibabel as nib
 from brainiak.searchlight.searchlight import Searchlight, Ball
 import time
 import gc
+import warnings
+
+# suppress warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
