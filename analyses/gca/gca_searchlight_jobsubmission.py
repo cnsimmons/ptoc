@@ -9,7 +9,7 @@ job_name = 'gca_searchlight'
 mem = 120  # GB
 run_time = "48:00:00"  # 48 hours
 
-pause_crit = 1  # number of jobs to request before pausing (3 is conservative 5 is an option)
+pause_crit = 2  # number of jobs to request before pausing (3 is conservative 5 is an option)
 pause_time = 40  # how long to wait between job batches in minutes
 
 exp = 'ptoc'
@@ -28,8 +28,8 @@ sub_info = pd.read_csv(os.path.join(project_dir, 'sub_info.csv'))
 #sub_list = sub_info['sub'].tolist()
 
 # For testing, you might want to use a smaller list:
-sub_list = ['sub-038']
-# sub_list = ['sub-038', 'sub-057', 'sub-059', 'sub-064']
+#sub_list = ['sub-038']
+sub_list = ['sub-038', 'sub-057', 'sub-059', 'sub-064']
 
 print(f"Processing subjects: {sub_list}")
 
