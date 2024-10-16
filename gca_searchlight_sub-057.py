@@ -40,7 +40,7 @@ raw_dir = params.raw_dir
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
 #subs = sub_info['sub'].tolist()
-subs = ['sub-025']  # For testing, we're using just one subject
+subs = ['sub-057']  # For testing, we're using just one subject
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 
@@ -201,8 +201,8 @@ def conduct_searchlight():
 
                 psy = make_psy_cov(rc, ss)
 
-                for hemi in hemispheres: # hemispheres = ['left', 'right']
-                    for roi in rois: # rois = ['pIPS', 'LO']
+                for roi in rois:  # rois = ['pIPS', 'LO']
+                    for hemi in hemispheres:  # hemispheres = ['left', 'right']
                         coords = roi_coords[(roi_coords['index'] == rcn) & 
                                             (roi_coords['roi'] == roi) &
                                             (roi_coords['hemisphere'] == hemi)]
