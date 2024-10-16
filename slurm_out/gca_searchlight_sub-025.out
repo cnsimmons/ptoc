@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
+  _python_deprecation_warnings()
+2024-10-16 18:53:34,691 - INFO - Running searchlight analysis with GCA for Object...
+2024-10-16 18:53:34,695 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-025
+2024-10-16 18:53:34,695 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-025/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-16 18:53:34,702 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+[[ 9.99702632e-01 -2.03442201e-02 -1.33508909e-02 -8.24147644e+01]
+ [ 2.25902833e-02  9.79854107e-01  1.98432773e-01 -1.30027405e+02]
+ [ 9.04495362e-03 -1.98675618e-01  9.80023563e-01 -1.08843857e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-16 18:54:15,772 - INFO - Generated mask: shape=(176, 256, 256), affine=
+[[ 9.99702632e-01 -2.03442201e-02 -1.33508909e-02 -8.24147644e+01]
+ [ 2.25902833e-02  9.79854107e-01  1.98432773e-01 -1.30027405e+02]
+ [ 9.04495362e-03 -1.98675618e-01  9.80023563e-01 -1.08843857e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-16 18:55:04,501 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-8.010056495666504, max=7.608198642730713, mean=1.0477874857293747e-12
+2024-10-16 18:55:04,570 - INFO - Memory usage after after loading and cleaning run: 16402.38 MB
+2024-10-16 18:55:04,570 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-025/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-16 18:55:04,577 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+[[ 9.99702632e-01 -2.03442201e-02 -1.33508909e-02 -8.24147644e+01]
+ [ 2.25902833e-02  9.79854107e-01  1.98432773e-01 -1.30027405e+02]
+ [ 9.04495362e-03 -1.98675618e-01  9.80023563e-01 -1.08843857e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
