@@ -44,14 +44,10 @@ subs = ['sub-025']  # For testing, we're using just one subject
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 
-# Use only one run
-run_num = 1
-runs = [1]
-
 ## Full run list
-#run_num = 3
-#runs = list(range(1, run_num + 1))
-#run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
+run_num = 3
+runs = list(range(1, run_num + 1))
+run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
 
 # Searchlight parameters
 sl_rad = 2
@@ -108,6 +104,10 @@ def make_psy_cov(runs, ss):
             continue
 
         obj_cov = pd.read_csv(obj_cov_file, sep='\t', header=None, names=['onset', 'duration', 'value'])
+        
+        if i > 0:
+            obj_cov['onset'] += i * vols_per_run * tr
+        
         full_cov = pd.concat([full_cov, obj_cov])
 
     full_cov = full_cov.sort_values(by=['onset']).reset_index(drop=True)
@@ -171,48 +171,67 @@ def conduct_searchlight():
 
             roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere.csv')
             
-            run_path = f'{exp_dir}/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz'
-            logging.info(f"Loading run 1 from {run_path}")
-            run_data, mask_img, affine = load_and_clean_run(run_path)
+            for rcn, rc in enumerate(run_combos):
+                logging.info(f"Processing run combination {rc} for subject {ss}")
+                
+                filtered_list = []
+                for rn in rc:
+                    run_path = f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz'
+                    logging.info(f"Loading run {rn} from {run_path}")
+                    run_data, mask_img, affine = load_and_clean_run(run_path)
+                    filtered_list.append(run_data)
 
-            logging.info(f"Run data shape: {run_data.shape}")
-            log_memory_usage("after loading run data")
-            
-            mask = mask_img.get_fdata() > 0
+                concat_data = np.concatenate(filtered_list, axis=-1)
+                logging.info(f"Concatenated data shape: {concat_data.shape}")
+                log_memory_usage("after concatenating runs")
+                
+                mask = mask_img.get_fdata() > 0
 
-            seed_coords = roi_coords[(roi_coords['roi'] == 'pIPS') & (roi_coords['hemisphere'] == 'left')]
-            seed_coords = tuple(seed_coords[['x', 'y', 'z']].values[0])
-            seed_ts = extract_roi_sphere(nib.Nifti1Image(run_data, affine), seed_coords)
+                psy = make_psy_cov(rc, ss)
 
-            psy = make_psy_cov(runs, ss)
+                for roi in rois:  # rois = ['pIPS', 'LO']
+                    for hemi in hemispheres:  # hemispheres = ['left', 'right']
+                        coords = roi_coords[(roi_coords['index'] == rcn) & 
+                                            (roi_coords['roi'] == roi) &
+                                            (roi_coords['hemisphere'] == hemi)]
+                        
+                        if coords.empty:
+                            logging.warning(f"No coordinates found for {roi}, {hemi}, run combo {rc}")
+                            continue
 
-            logging.info("About to create Searchlight object...")
-            sl = Searchlight(sl_rad=sl_rad, max_blk_edge=max_blk_edge, shape=shape)
-            logging.info("Searchlight object created.")
+                        coord = tuple(coords[['x', 'y', 'z']].values[0])
+                        roi_ts = extract_roi_sphere(nib.Nifti1Image(concat_data, affine), coord)
 
-            logging.info("About to call sl.distribute()...")
-            sl.distribute([run_data], mask)
-            logging.info("sl.distribute() completed.")
+                        logging.info(f"Creating Searchlight object for {roi} {hemi}...")
+                        sl = Searchlight(sl_rad=sl_rad, max_blk_edge=max_blk_edge, shape=shape)
+                        logging.info("Searchlight object created.")
 
-            logging.info("About to call sl.broadcast()...")
-            sl.broadcast((seed_ts, psy))
-            logging.info("sl.broadcast() completed.")
+                        logging.info("Distributing data...")
+                        sl.distribute([concat_data], mask)
+                        logging.info("Data distribution completed.")
 
-            logging.info("About to start sl.run_searchlight()...")
-            sl_result = sl.run_searchlight(compute_gca, pool_size=pool_size)
-            logging.info("sl.run_searchlight() completed.")
+                        logging.info(f"Broadcasting {roi} time series and psychological covariate...")
+                        sl.broadcast((roi_ts, psy))
+                        logging.info("Broadcasting completed.")
 
-            log_memory_usage("after searchlight")
+                        logging.info("Starting searchlight analysis...")
+                        sl_result = sl.run_searchlight(compute_gca, pool_size=pool_size)
+                        logging.info("Searchlight analysis completed.")
 
-            sl_result = sl_result.astype('double')
-            sl_result[np.isnan(sl_result)] = 0
-            result_img = nib.Nifti1Image(sl_result, affine)
-            output_path = f'{sub_dir}/derivatives/gca/searchlight_result_{localizer.lower()}_run01.nii.gz'
-            nib.save(result_img, output_path)
-            logging.info(f"Saved searchlight result to {output_path}")
+                        log_memory_usage("after searchlight")
 
-            del run_data, mask, sl_result, seed_ts, psy
-            gc.collect()
+                        sl_result = sl_result.astype('double')
+                        sl_result[np.isnan(sl_result)] = 0
+                        result_img = nib.Nifti1Image(sl_result, affine)
+                        output_path = f'{sub_dir}/derivatives/gca/searchlight_result_{localizer.lower()}_runs{rc[0]}{rc[1]}_{roi}_{hemi}.nii.gz'
+                        nib.save(result_img, output_path)
+                        logging.info(f"Saved searchlight result to {output_path}")
+
+                        del sl_result, roi_ts
+                        gc.collect()
+
+                del concat_data, mask
+                gc.collect()
 
         except Exception as e:
             logging.error(f"Error processing subject {ss}: {str(e)}")
