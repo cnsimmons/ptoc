@@ -40,7 +40,7 @@ raw_dir = params.raw_dir
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
 #subs = sub_info['sub'].tolist()
-subs = ['sub-038']  # For testing, we're using just one subject
+subs = ['sub-064']  # For testing, we're using just one subject
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 
