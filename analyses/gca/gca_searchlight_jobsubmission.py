@@ -29,7 +29,7 @@ sub_info = pd.read_csv(os.path.join(project_dir, 'sub_info.csv'))
 
 # For testing, you might want to use a smaller list:
 #sub_list = ['sub-038']
-sub_list = ['sub-038', 'sub-057', 'sub-059', 'sub-064']
+sub_list = ['sub-038', 'sub-059']
 
 print(f"Processing subjects: {sub_list}")
 
@@ -59,7 +59,7 @@ def setup_sbatch(job_name, script_name, sub):
 #SBATCH --output={os.path.join(slurm_out_dir, f"{job_name}_{sub}.out")}
 
 module load fsl-6.0.3
-module load cuda  # Load CUDA module if available
+#module load cuda  # Load CUDA module if available
 conda activate brainiak_env
 
 # Check Brainiak GPU configuration
@@ -67,7 +67,7 @@ python -c "
 import brainiak.utils.fmriroi
 import brainiak.searchlight.searchlight
 print('Brainiak searchlight backend:', brainiak.searchlight.searchlight.Searchlight._backend)
-print('Brainiak CUDA available:', brainiak.utils.fmriroi.cuda_available())
+#print('Brainiak CUDA available:', brainiak.utils.fmriroi.cuda_available())
 "
 
 {script_name}
