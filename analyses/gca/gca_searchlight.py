@@ -40,7 +40,19 @@ raw_dir = params.raw_dir
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
 #subs = sub_info['sub'].tolist()
-subs = ['sub-025']  # For testing, we're using just one subject
+#subs = ['sub-025']  # For testing, we're using just one subject
+
+# Check if subject argument is provided
+if len(sys.argv) != 2:
+    print("Usage: python gca_searchlight.py <subject>")
+    sys.exit(1)
+
+# Get subject from command-line argument
+sub = sys.argv[1]
+subs = [sub]  # Create a list with a single subject
+
+print(f"Processing subject: {sub}")
+
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 
@@ -171,40 +183,36 @@ def conduct_searchlight():
 
             roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere.csv')
             
-            for rcn, rc in enumerate(run_combos):
-                logging.info(f"Processing run combination {rc} for subject {ss}")
-                
-                # Construct the output path for the searchlight result
-                output_path = f'{sub_dir}/derivatives/gca/searchlight_result_{localizer.lower()}_runs{rc[0]}{rc[1]}_{rois[rcn]}_{hemispheres[rcn]}.nii.gz'
-                
-                # Check if the output file already exists
-                if os.path.exists(output_path):
-                    logging.info(f"Output file {output_path} already exists. Skipping this run.")
-                    continue  # Skip to the next iteration of the loop
-                
-                filtered_list = []
-                for rn in rc:
-                    run_path = f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz'
-                    logging.info(f"Loading run {rn} from {run_path}")
-                    run_data, mask_img, affine = load_and_clean_run(run_path)
-                    filtered_list.append(run_data)
-                    
-                concat_data = np.concatenate(filtered_list, axis=-1)
-                logging.info(f"Concatenated data shape: {concat_data.shape}")
-                
-                # Clear memory after processing all runs in the combination
-                del filtered_list  # Optionally delete the filtered_list if no longer needed
-                gc.collect()  # Clear unused memory
-                log_memory_usage("after concatenating runs")
-                
-                mask = mask_img.get_fdata() > 0
+            for roi in rois:
+                for hemi in hemispheres:
+                    for rc in run_combos:
+                        logging.info(f"Processing {roi} {hemi} for run combination {rc} for subject {ss}")
+                        
+                        output_path = f'{sub_dir}/derivatives/gca/searchlight_result_{localizer.lower()}_runs{rc[0]}{rc[1]}_{roi}_{hemi}.nii.gz'
+                        
+                        if os.path.exists(output_path):
+                            logging.info(f"Output file {output_path} already exists. Skipping this run.")
+                            continue
+                        
+                        filtered_list = []
+                        for rn in rc:
+                            run_path = f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz'
+                            logging.info(f"Loading run {rn} from {run_path}")
+                            run_data, mask_img, affine = load_and_clean_run(run_path)
+                            filtered_list.append(run_data)
+                            
+                        concat_data = np.concatenate(filtered_list, axis=-1)
+                        logging.info(f"Concatenated data shape: {concat_data.shape}")
+                        
+                        del filtered_list
+                        gc.collect()
+                        log_memory_usage("after concatenating runs")
+                        
+                        mask = mask_img.get_fdata() > 0
 
-                psy = make_psy_cov(rc, ss)
+                        psy = make_psy_cov(rc, ss)
 
-                for hemi in hemispheres: # hemispheres = ['left', 'right']
-                    for roi in rois: # rois = ['pIPS', 'LO']
-                        coords = roi_coords[(roi_coords['index'] == rcn) & 
-                                            (roi_coords['roi'] == roi) &
+                        coords = roi_coords[(roi_coords['roi'] == roi) & 
                                             (roi_coords['hemisphere'] == hemi)]
                         
                         if coords.empty:
@@ -239,11 +247,8 @@ def conduct_searchlight():
                         nib.save(result_img, output_path)
                         logging.info(f"Saved searchlight result to {output_path}")
 
-                        del sl_result, roi_ts
+                        del sl_result, roi_ts, concat_data, mask
                         gc.collect()
-
-                del concat_data, mask
-                gc.collect()
 
         except Exception as e:
             logging.error(f"Error processing subject {ss}: {str(e)}")
