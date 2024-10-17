@@ -19,3 +19,24 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 2024-10-16 18:55:07,851 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-13.077775955200195, max=12.635976791381836, mean=1.0764216445754773e-12
 2024-10-16 18:55:07,922 - INFO - Memory usage after after loading and cleaning run: 16396.74 MB
 2024-10-16 18:55:07,922 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-038/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-16 18:55:08,089 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+[[ 9.96910036e-01 -2.73250714e-02 -7.36571252e-02 -7.30209122e+01]
+ [ 4.13804762e-02  9.79599476e-01  1.96653351e-01 -1.36845352e+02]
+ [ 6.67809695e-02 -1.99093506e-01  9.77702439e-01 -1.12796982e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-16 18:55:49,795 - INFO - Generated mask: shape=(176, 256, 256), affine=
+[[ 9.96910036e-01 -2.73250714e-02 -7.36571252e-02 -7.30209122e+01]
+ [ 4.13804762e-02  9.79599476e-01  1.96653351e-01 -1.36845352e+02]
+ [ 6.67809695e-02 -1.99093506e-01  9.77702439e-01 -1.12796982e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-16 18:56:40,121 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-9.45079231262207, max=10.991277694702148, mean=-6.805074498046116e-13
+2024-10-16 18:56:40,192 - INFO - Memory usage after after loading and cleaning run: 32606.73 MB
+2024-10-16 18:56:55,469 - INFO - Concatenated data shape: (176, 256, 256, 368)
+2024-10-16 18:56:55,559 - INFO - Memory usage after after concatenating runs: 48799.23 MB
+2024-10-16 19:00:28,325 - INFO - Creating Searchlight object for pIPS left...
+2024-10-16 19:00:28,328 - INFO - Searchlight object created.
+2024-10-16 19:00:28,328 - INFO - Distributing data...
+2024-10-16 19:01:54,362 - INFO - Data distribution completed.
+2024-10-16 19:01:54,363 - INFO - Broadcasting pIPS time series and psychological covariate...
+2024-10-16 19:01:54,363 - INFO - Broadcasting completed.
+2024-10-16 19:01:54,363 - INFO - Starting searchlight analysis...

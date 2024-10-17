@@ -24,3 +24,19 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
  [ 2.25902833e-02  9.79854107e-01  1.98432773e-01 -1.30027405e+02]
  [ 9.04495362e-03 -1.98675618e-01  9.80023563e-01 -1.08843857e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-16 18:55:48,892 - INFO - Generated mask: shape=(176, 256, 256), affine=
+[[ 9.99702632e-01 -2.03442201e-02 -1.33508909e-02 -8.24147644e+01]
+ [ 2.25902833e-02  9.79854107e-01  1.98432773e-01 -1.30027405e+02]
+ [ 9.04495362e-03 -1.98675618e-01  9.80023563e-01 -1.08843857e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-16 18:56:37,729 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-8.139216423034668, max=7.172977447509766, mean=-4.0045710557987474e-13
+2024-10-16 18:56:37,815 - INFO - Memory usage after after loading and cleaning run: 32608.82 MB
+2024-10-16 18:57:00,813 - INFO - Concatenated data shape: (176, 256, 256, 368)
+2024-10-16 18:57:00,902 - INFO - Memory usage after after concatenating runs: 48800.82 MB
+2024-10-16 19:00:50,650 - INFO - Creating Searchlight object for pIPS left...
+2024-10-16 19:00:50,652 - INFO - Searchlight object created.
+2024-10-16 19:00:50,652 - INFO - Distributing data...
+2024-10-16 19:02:11,725 - INFO - Data distribution completed.
+2024-10-16 19:02:11,725 - INFO - Broadcasting pIPS time series and psychological covariate...
+2024-10-16 19:02:11,726 - INFO - Broadcasting completed.
+2024-10-16 19:02:11,726 - INFO - Starting searchlight analysis...
