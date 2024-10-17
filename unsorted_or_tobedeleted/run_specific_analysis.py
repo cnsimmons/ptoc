@@ -12,6 +12,7 @@ from statsmodels.tsa.stattools import grangercausalitytests
 import gc
 import psutil
 from nilearn.masking import compute_epi_mask
+from tqdm import tqdm
 
 # Suppress warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -220,7 +221,25 @@ def conduct_searchlight():
                         logging.info("Broadcasting completed.")
 
                         logging.info("Starting searchlight analysis...")
-                        sl_result = sl.run_searchlight(compute_gca, pool_size=pool_size)
+                        
+                        # Get the total number of voxels to process
+                        total_voxels = np.sum(mask)
+                        
+                        # Create a custom progress bar
+                        pbar = tqdm(total=total_voxels, desc="Searchlight Progress", unit="voxel")
+                        
+                        # Define a wrapper function to update the progress bar
+                        def compute_gca_with_progress(data, mask, myrad, bcast_var):
+                            result = compute_gca(data, mask, myrad, bcast_var)
+                            pbar.update(1)
+                            return result
+                        
+                        # Run the searchlight with the progress-tracking wrapper
+                        sl_result = sl.run_searchlight(compute_gca_with_progress, pool_size=pool_size)
+                        
+                        # Close the progress bar
+                        pbar.close()
+                        
                         logging.info("Searchlight analysis completed.")
 
                         log_memory_usage("after searchlight")
