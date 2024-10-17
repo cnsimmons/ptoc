@@ -23,7 +23,7 @@ slurm_out_dir = os.path.join(project_dir, 'slurm_out')
 os.makedirs(slurm_out_dir, exist_ok=True)
 
 # For testing, you might want to use a smaller list:
-sub_list = ['sub-025','sub-038', 'sub-057', 'sub-059', 'sub-064']
+sub_list = ['sub-025','sub-038', 'sub-057']
 
 print(f"Processing subjects: {sub_list}")
 
