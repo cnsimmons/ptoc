@@ -159,3 +159,32 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 2024-10-17 07:30:14,882 - INFO - Broadcasting pIPS time series and psychological covariate...
 2024-10-17 07:30:14,882 - INFO - Broadcasting completed.
 2024-10-17 07:30:14,882 - INFO - Starting searchlight analysis...
+2024-10-17 11:32:15,685 - INFO - Searchlight analysis completed.
+2024-10-17 11:32:15,686 - INFO - Memory usage after after searchlight: 85743.89 MB
+2024-10-17 11:32:17,390 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-025/ses-01//derivatives/gca/searchlight_result_object_runs13_pIPS_right.nii.gz
+2024-10-17 11:32:19,451 - INFO - Processing pIPS right for run combination [2, 3] for subject sub-025
+2024-10-17 11:32:19,453 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-025/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-17 11:32:19,772 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+[[ 9.99702632e-01 -2.03442201e-02 -1.33508909e-02 -8.24147644e+01]
+ [ 2.25902833e-02  9.79854107e-01  1.98432773e-01 -1.30027405e+02]
+ [ 9.04495362e-03 -1.98675618e-01  9.80023563e-01 -1.08843857e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-17 11:32:58,645 - INFO - Generated mask: shape=(176, 256, 256), affine=
+[[ 9.99702632e-01 -2.03442201e-02 -1.33508909e-02 -8.24147644e+01]
+ [ 2.25902833e-02  9.79854107e-01  1.98432773e-01 -1.30027405e+02]
+ [ 9.04495362e-03 -1.98675618e-01  9.80023563e-01 -1.08843857e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-17 11:34:04,730 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-8.139216423034668, max=7.172977447509766, mean=-4.0045710557987474e-13
+2024-10-17 11:34:04,771 - INFO - Memory usage after after loading and cleaning run: 68707.68 MB
+2024-10-17 11:34:05,561 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-025/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-17 11:34:05,794 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+[[ 9.99702632e-01 -2.03442201e-02 -1.33508909e-02 -8.24147644e+01]
+ [ 2.25902833e-02  9.79854107e-01  1.98432773e-01 -1.30027405e+02]
+ [ 9.04495362e-03 -1.98675618e-01  9.80023563e-01 -1.08843857e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-17 11:34:42,282 - INFO - Generated mask: shape=(176, 256, 256), affine=
+[[ 9.99702632e-01 -2.03442201e-02 -1.33508909e-02 -8.24147644e+01]
+ [ 2.25902833e-02  9.79854107e-01  1.98432773e-01 -1.30027405e+02]
+ [ 9.04495362e-03 -1.98675618e-01  9.80023563e-01 -1.08843857e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+slurmstepd: error: *** JOB 2067433 ON mind-0-25 CANCELLED AT 2024-10-17T11:35:37 ***
