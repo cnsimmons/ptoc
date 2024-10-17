@@ -3,41 +3,40 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 /home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
   _python_deprecation_warnings()
-2024-10-16 15:41:59,126 - INFO - Running searchlight analysis with GCA for Object...
-2024-10-16 15:41:59,170 - INFO - Processing run combination [1, 2] for subject sub-064
-2024-10-16 15:41:59,170 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-064/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-16 15:41:59,324 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+2024-10-16 19:03:34,966 - INFO - Running searchlight analysis with GCA for Object...
+2024-10-16 19:03:34,971 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-064
+2024-10-16 19:03:34,971 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-064/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-16 19:03:34,978 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
 [[ 9.97329295e-01 -3.86160687e-02 -6.19004332e-02 -7.35597305e+01]
  [ 4.95810248e-02  9.81152356e-01  1.86766446e-01 -1.40299942e+02]
  [ 5.35212681e-02 -1.89337820e-01  9.80452240e-01 -1.25973587e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-16 15:42:38,186 - INFO - Generated mask: shape=(176, 256, 256), affine=
+2024-10-16 19:04:14,345 - INFO - Generated mask: shape=(176, 256, 256), affine=
 [[ 9.97329295e-01 -3.86160687e-02 -6.19004332e-02 -7.35597305e+01]
  [ 4.95810248e-02  9.81152356e-01  1.86766446e-01 -1.40299942e+02]
  [ 5.35212681e-02 -1.89337820e-01  9.80452240e-01 -1.25973587e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-16 15:43:29,297 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-7.750011920928955, max=10.121736526489258, mean=1.6217395394869002e-12
-2024-10-16 15:43:29,363 - INFO - Memory usage after after loading and cleaning run: 16400.31 MB
-2024-10-16 15:43:29,364 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-064/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-16 15:43:29,455 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+2024-10-16 19:05:06,129 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-7.750011920928955, max=10.121736526489258, mean=1.6217395394869002e-12
+2024-10-16 19:05:06,196 - INFO - Memory usage after after loading and cleaning run: 16396.32 MB
+2024-10-16 19:05:06,196 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-064/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-16 19:05:06,204 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
 [[ 9.97329295e-01 -3.86160687e-02 -6.19004332e-02 -7.35597305e+01]
  [ 4.95810248e-02  9.81152356e-01  1.86766446e-01 -1.40299942e+02]
  [ 5.35212681e-02 -1.89337820e-01  9.80452240e-01 -1.25973587e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-16 15:44:08,031 - INFO - Generated mask: shape=(176, 256, 256), affine=
+2024-10-16 19:05:44,438 - INFO - Generated mask: shape=(176, 256, 256), affine=
 [[ 9.97329295e-01 -3.86160687e-02 -6.19004332e-02 -7.35597305e+01]
  [ 4.95810248e-02  9.81152356e-01  1.86766446e-01 -1.40299942e+02]
  [ 5.35212681e-02 -1.89337820e-01  9.80452240e-01 -1.25973587e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-16 15:44:59,401 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-9.130242347717285, max=11.021026611328125, mean=3.488988303362839e-15
-2024-10-16 15:44:59,480 - INFO - Memory usage after after loading and cleaning run: 32606.73 MB
-2024-10-16 15:45:17,803 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-16 15:45:17,878 - INFO - Memory usage after after concatenating runs: 48798.73 MB
-2024-10-16 15:49:02,582 - INFO - Creating Searchlight object for pIPS left...
-2024-10-16 15:49:02,586 - INFO - Searchlight object created.
-2024-10-16 15:49:02,586 - INFO - Distributing data...
-2024-10-16 15:50:27,823 - INFO - Data distribution completed.
-2024-10-16 15:50:27,824 - INFO - Broadcasting pIPS time series and psychological covariate...
-2024-10-16 15:50:27,824 - INFO - Broadcasting completed.
-2024-10-16 15:50:27,824 - INFO - Starting searchlight analysis...
-slurmstepd: error: *** JOB 2067423 ON mind-1-7 CANCELLED AT 2024-10-16T18:51:13 ***
+2024-10-16 19:06:35,865 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-9.130242347717285, max=11.021026611328125, mean=3.488988303362839e-15
+2024-10-16 19:06:35,945 - INFO - Memory usage after after loading and cleaning run: 32602.73 MB
+2024-10-16 19:06:55,680 - INFO - Concatenated data shape: (176, 256, 256, 368)
+2024-10-16 19:06:55,755 - INFO - Memory usage after after concatenating runs: 48794.73 MB
+2024-10-16 19:10:54,569 - INFO - Creating Searchlight object for pIPS left...
+2024-10-16 19:10:54,571 - INFO - Searchlight object created.
+2024-10-16 19:10:54,571 - INFO - Distributing data...
+2024-10-16 19:12:28,516 - INFO - Data distribution completed.
+2024-10-16 19:12:28,517 - INFO - Broadcasting pIPS time series and psychological covariate...
+2024-10-16 19:12:28,517 - INFO - Broadcasting completed.
+2024-10-16 19:12:28,517 - INFO - Starting searchlight analysis...
