@@ -40,7 +40,7 @@ raw_dir = params.raw_dir
 # Specific subject and run combination
 sub = 'sub-025'
 subs = [sub]
-run_combos = [[1, 2]]
+run_combos = [[1, 3]]
 
 print(f"Processing subject: {sub} with run combination: ...")
 
