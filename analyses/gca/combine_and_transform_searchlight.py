@@ -26,8 +26,10 @@ mni_brain = os.path.join(os.environ['FSLDIR'], "data/standard/MNI152_T1_2mm_brai
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
 
-rois = ['pIPS', 'LO']
-hemispheres = ['left', 'right']
+#rois = ['pIPS', 'LO']
+rois = ['pIPS']
+#hemispheres = ['left', 'right']
+hemispheres = ['right']
 localizer = 'Object'  # or 'Scramble'
 run_combos = ['12', '13', '23']
 
