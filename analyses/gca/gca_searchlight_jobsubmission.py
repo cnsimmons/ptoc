@@ -6,7 +6,7 @@ import pandas as pd
 # Job parameters
 job_name = 'gca_searchlight'
 mem = 120  # GB
-run_time = "48:00:00"  # 48 hours
+run_time = "72:00:00"  # 72 hours
 
 pause_crit = 3  # number of jobs to request before pausing
 pause_time = 10  # how long to wait between job batches in minutes
@@ -23,7 +23,11 @@ slurm_out_dir = os.path.join(project_dir, 'slurm_out')
 os.makedirs(slurm_out_dir, exist_ok=True)
 
 # For testing, you might want to use a smaller list:
-sub_list = ['sub-025','sub-038', 'sub-057']
+sub_list = ['sub-071','sub-068', 'sub-067', 'sub-083', 'sub-084']
+#sub_list = ['sub-085', 'sub-087', 'sub-088', 'sub-093', 'sub-094']
+#sub_list = ['sub-095', 'sub-096', 'sub-097', 'sub-107']
+
+#completed 25, 38, 57, 59, 64
 
 print(f"Processing subjects: {sub_list}")
 
