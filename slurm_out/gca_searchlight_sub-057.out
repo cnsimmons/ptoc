@@ -282,3 +282,42 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 2024-10-19 07:08:39,447 - INFO - Broadcasting LO time series and psychological covariate...
 2024-10-19 07:08:39,447 - INFO - Broadcasting completed.
 2024-10-19 07:08:39,448 - INFO - Starting searchlight analysis...
+2024-10-19 11:53:30,697 - INFO - Searchlight analysis completed.
+2024-10-19 11:53:30,702 - INFO - Memory usage after after searchlight: 85260.11 MB
+2024-10-19 11:53:33,519 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-057/ses-01//derivatives/gca/searchlight_result_object_runs13_LO_right.nii.gz
+2024-10-19 11:53:35,717 - INFO - Processing LO right for run combination [2, 3] for subject sub-057
+2024-10-19 11:53:35,719 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-057/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-19 11:53:36,466 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+[[ 9.98748958e-01 -3.69351618e-02 -3.37602757e-02 -7.90089111e+01]
+ [ 4.35439907e-02  9.73920584e-01  2.22671375e-01 -1.34343277e+02]
+ [ 2.46554669e-02 -2.23862469e-01  9.74308789e-01 -1.18989662e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-19 11:54:18,505 - INFO - Generated mask: shape=(176, 256, 256), affine=
+[[ 9.98748958e-01 -3.69351618e-02 -3.37602757e-02 -7.90089111e+01]
+ [ 4.35439907e-02  9.73920584e-01  2.22671375e-01 -1.34343277e+02]
+ [ 2.46554669e-02 -2.23862469e-01  9.74308789e-01 -1.18989662e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-19 11:55:09,483 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.941486358642578, max=11.691728591918945, mean=1.575157737966116e-12
+2024-10-19 11:55:09,539 - INFO - Memory usage after after loading and cleaning run: 68219.87 MB
+2024-10-19 11:55:10,468 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-057/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-19 11:55:10,684 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+[[ 9.98748958e-01 -3.69351618e-02 -3.37602757e-02 -7.90089111e+01]
+ [ 4.35439907e-02  9.73920584e-01  2.22671375e-01 -1.34343277e+02]
+ [ 2.46554669e-02 -2.23862469e-01  9.74308789e-01 -1.18989662e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-19 11:55:52,620 - INFO - Generated mask: shape=(176, 256, 256), affine=
+[[ 9.98748958e-01 -3.69351618e-02 -3.37602757e-02 -7.90089111e+01]
+ [ 4.35439907e-02  9.73920584e-01  2.22671375e-01 -1.34343277e+02]
+ [ 2.46554669e-02 -2.23862469e-01  9.74308789e-01 -1.18989662e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-19 11:56:48,217 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-10.66965103149414, max=10.375877380371094, mean=3.3768643143607876e-14
+2024-10-19 11:56:48,273 - INFO - Memory usage after after loading and cleaning run: 68219.87 MB
+2024-10-19 11:57:25,291 - INFO - Concatenated data shape: (176, 256, 256, 368)
+2024-10-19 11:57:26,100 - INFO - Memory usage after after concatenating runs: 84411.87 MB
+2024-10-19 12:02:35,390 - INFO - Creating Searchlight object for LO right...
+2024-10-19 12:02:35,416 - INFO - Searchlight object created.
+2024-10-19 12:02:35,416 - INFO - Distributing data...
+2024-10-19 12:04:02,651 - INFO - Data distribution completed.
+2024-10-19 12:04:02,653 - INFO - Broadcasting LO time series and psychological covariate...
+2024-10-19 12:04:02,653 - INFO - Broadcasting completed.
+2024-10-19 12:04:02,654 - INFO - Starting searchlight analysis...
