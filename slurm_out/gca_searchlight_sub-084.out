@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
+  _python_deprecation_warnings()
+2024-10-19 10:05:06,083 - INFO - Running searchlight analysis with GCA for Object...
+2024-10-19 10:05:06,310 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-084
+2024-10-19 10:05:06,311 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-084/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-19 10:05:07,059 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+[[ 9.98191535e-01 -2.23936848e-02 -5.57595193e-02 -7.64593658e+01]
+ [ 3.58945057e-02  9.66419578e-01  2.54449964e-01 -1.34799622e+02]
+ [ 4.81889434e-02 -2.55991668e-01  9.65477109e-01 -7.69272232e+01]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-19 10:05:42,863 - INFO - Generated mask: shape=(176, 256, 256), affine=
+[[ 9.98191535e-01 -2.23936848e-02 -5.57595193e-02 -7.64593658e+01]
+ [ 3.58945057e-02  9.66419578e-01  2.54449964e-01 -1.34799622e+02]
+ [ 4.81889434e-02 -2.55991668e-01  9.65477109e-01 -7.69272232e+01]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-19 10:07:38,318 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.874370574951172, max=12.039669036865234, mean=-6.981554633525437e-13
+2024-10-19 10:07:38,397 - INFO - Memory usage after after loading and cleaning run: 16381.01 MB
+2024-10-19 10:07:38,397 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-084/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-19 10:07:38,595 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+[[ 9.98191535e-01 -2.23936848e-02 -5.57595193e-02 -7.64593658e+01]
+ [ 3.58945057e-02  9.66419578e-01  2.54449964e-01 -1.34799622e+02]
+ [ 4.81889434e-02 -2.55991668e-01  9.65477109e-01 -7.69272232e+01]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-19 10:08:15,575 - INFO - Generated mask: shape=(176, 256, 256), affine=
+[[ 9.98191535e-01 -2.23936848e-02 -5.57595193e-02 -7.64593658e+01]
+ [ 3.58945057e-02  9.66419578e-01  2.54449964e-01 -1.34799622e+02]
+ [ 4.81889434e-02 -2.55991668e-01  9.65477109e-01 -7.69272232e+01]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
