@@ -26,11 +26,9 @@ mni_brain = os.path.join(os.environ['FSLDIR'], "data/standard/MNI152_T1_2mm_brai
 sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info = sub_info[sub_info['group'] == 'control']
 
-#rois = ['pIPS', 'LO']
-rois = ['pIPS']
-#hemispheres = ['left', 'right']
-hemispheres = ['right']
-localizer = 'Object'  # or 'Scramble'
+rois = ['pIPS', 'LO']
+hemispheres = ['left', 'right']
+localizer = 'Object'
 run_combos = ['12', '13', '23']
 
 def combine_and_transform(subject):
@@ -81,19 +79,16 @@ def combine_and_transform(subject):
 
             # Transform to MNI space
             mni_output_path = f'{gca_dir}/combined_{localizer.lower()}_{roi}_{hemi}_mni.nii.gz'
-            if not os.path.isfile(mni_output_path):
-                logging.info(f"Registering GCA for {subject}, ROI {roi}, Hemisphere {hemi} to MNI space")
-                subprocess.run([
-                    'flirt',
-                    '-in', native_output_path,
-                    '-ref', mni_brain,
-                    '-out', mni_output_path,
-                    '-applyxfm',
-                    '-init', anat2mni_mat,
-                    '-interp', 'trilinear'
-                ], check=True)
-            else:
-                logging.info(f"GCA MNI file already exists for {subject}, ROI {roi}, Hemisphere {hemi}")
+            logging.info(f"Registering GCA for {subject}, ROI {roi}, Hemisphere {hemi} to MNI space")
+            subprocess.run([
+                'flirt',
+                '-in', native_output_path,
+                '-ref', mni_brain,
+                '-out', mni_output_path,
+                '-applyxfm',
+                '-init', anat2mni_mat,
+                '-interp', 'trilinear'
+            ], check=True)
 
     logging.info(f"Combination and transformation to MNI space completed for {subject}.")
 
