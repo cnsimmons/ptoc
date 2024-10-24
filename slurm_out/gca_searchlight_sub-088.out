@@ -3,430 +3,104 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 /home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
   _python_deprecation_warnings()
-2024-10-21 12:17:19,721 - INFO - Running searchlight analysis with GCA for Object...
-2024-10-21 12:17:21,139 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-088
-2024-10-21 12:17:21,141 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-21 12:17:22,055 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+2024-10-23 22:00:55,477 - INFO - Running searchlight analysis with GCA for Object...
+2024-10-23 22:00:55,946 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-088
+2024-10-23 22:00:55,977 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs12_pIPS_left.nii.gz already exists. Skipping this run.
+2024-10-23 22:00:55,977 - INFO - Processing pIPS left for run combination [1, 3] for subject sub-088
+2024-10-23 22:00:55,993 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs13_pIPS_left.nii.gz already exists. Skipping this run.
+2024-10-23 22:00:55,993 - INFO - Processing pIPS left for run combination [2, 3] for subject sub-088
+2024-10-23 22:00:55,994 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs23_pIPS_left.nii.gz already exists. Skipping this run.
+2024-10-23 22:00:55,994 - INFO - Processing pIPS right for run combination [1, 2] for subject sub-088
+2024-10-23 22:00:55,998 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs12_pIPS_right.nii.gz already exists. Skipping this run.
+2024-10-23 22:00:55,998 - INFO - Processing pIPS right for run combination [1, 3] for subject sub-088
+2024-10-23 22:00:55,998 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs13_pIPS_right.nii.gz already exists. Skipping this run.
+2024-10-23 22:00:55,998 - INFO - Processing pIPS right for run combination [2, 3] for subject sub-088
+2024-10-23 22:00:55,998 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs23_pIPS_right.nii.gz already exists. Skipping this run.
+2024-10-23 22:00:55,999 - INFO - Processing LO left for run combination [1, 2] for subject sub-088
+2024-10-23 22:00:55,999 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs12_LO_left.nii.gz already exists. Skipping this run.
+2024-10-23 22:00:55,999 - INFO - Processing LO left for run combination [1, 3] for subject sub-088
+2024-10-23 22:00:55,999 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs13_LO_left.nii.gz already exists. Skipping this run.
+2024-10-23 22:00:55,999 - INFO - Processing LO left for run combination [2, 3] for subject sub-088
+2024-10-23 22:00:56,000 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs23_LO_left.nii.gz already exists. Skipping this run.
+2024-10-23 22:00:56,000 - INFO - Processing LO right for run combination [1, 2] for subject sub-088
+2024-10-23 22:00:56,000 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs12_LO_right.nii.gz already exists. Skipping this run.
+2024-10-23 22:00:56,000 - INFO - Processing LO right for run combination [1, 3] for subject sub-088
+2024-10-23 22:00:56,000 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-23 22:00:56,562 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
 [[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
  [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
  [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 12:18:09,149 - INFO - Generated mask: shape=(176, 256, 256), affine=
+2024-10-23 22:01:43,738 - INFO - Generated mask: shape=(176, 256, 256), affine=
 [[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
  [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
  [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 12:19:02,385 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-12.396031379699707, max=12.713006973266602, mean=1.3628480737849225e-12
-2024-10-21 12:19:02,462 - INFO - Memory usage after after loading and cleaning run: 16398.86 MB
-2024-10-21 12:19:02,462 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-21 12:19:03,023 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+2024-10-23 22:02:36,668 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-12.396031379699707, max=12.713006973266602, mean=1.3628480737849225e-12
+2024-10-23 22:02:36,740 - INFO - Memory usage after after loading and cleaning run: 16397.10 MB
+2024-10-23 22:02:36,740 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-23 22:02:37,026 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
 [[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
  [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
  [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 12:19:49,957 - INFO - Generated mask: shape=(176, 256, 256), affine=
+2024-10-23 22:03:23,567 - INFO - Generated mask: shape=(176, 256, 256), affine=
 [[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
  [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
  [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 12:20:53,979 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.023037910461426, max=11.170205116271973, mean=1.7516252399188974e-12
-2024-10-21 12:20:54,076 - INFO - Memory usage after after loading and cleaning run: 32605.28 MB
-2024-10-21 12:21:23,927 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-21 12:21:24,023 - INFO - Memory usage after after concatenating runs: 48797.28 MB
-2024-10-21 12:25:28,619 - INFO - Creating Searchlight object for pIPS left...
-2024-10-21 12:25:28,639 - INFO - Searchlight object created.
-2024-10-21 12:25:28,639 - INFO - Distributing data...
-2024-10-21 12:26:53,836 - INFO - Data distribution completed.
-2024-10-21 12:26:53,844 - INFO - Broadcasting pIPS time series and psychological covariate...
-2024-10-21 12:26:53,844 - INFO - Broadcasting completed.
-2024-10-21 12:26:53,844 - INFO - Starting searchlight analysis...
-2024-10-21 17:42:38,099 - INFO - Searchlight analysis completed.
-2024-10-21 17:42:38,106 - INFO - Memory usage after after searchlight: 84624.07 MB
-2024-10-21 17:42:41,282 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs12_pIPS_left.nii.gz
-2024-10-21 17:42:43,343 - INFO - Processing pIPS left for run combination [1, 3] for subject sub-088
-2024-10-21 17:42:43,363 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-21 17:42:44,175 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+2024-10-23 22:04:16,536 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.523661613464355, max=11.75534725189209, mean=-4.218959684930835e-14
+2024-10-23 22:04:16,639 - INFO - Memory usage after after loading and cleaning run: 32603.50 MB
+2024-10-23 22:04:38,723 - INFO - Concatenated data shape: (176, 256, 256, 368)
+2024-10-23 22:04:38,802 - INFO - Memory usage after after concatenating runs: 48795.50 MB
+2024-10-23 22:08:29,939 - INFO - Creating Searchlight object for LO right...
+2024-10-23 22:08:29,945 - INFO - Searchlight object created.
+2024-10-23 22:08:29,945 - INFO - Distributing data...
+2024-10-23 22:09:57,286 - INFO - Data distribution completed.
+2024-10-23 22:09:57,290 - INFO - Broadcasting LO time series and psychological covariate...
+2024-10-23 22:09:57,290 - INFO - Broadcasting completed.
+2024-10-23 22:09:57,290 - INFO - Starting searchlight analysis...
+2024-10-24 03:18:58,594 - INFO - Searchlight analysis completed.
+2024-10-24 03:18:58,596 - INFO - Memory usage after after searchlight: 84592.16 MB
+2024-10-24 03:19:01,035 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs13_LO_right.nii.gz
+2024-10-24 03:19:02,652 - INFO - Processing LO right for run combination [2, 3] for subject sub-088
+2024-10-24 03:19:02,701 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-24 03:19:03,039 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
 [[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
  [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
  [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 17:43:41,607 - INFO - Generated mask: shape=(176, 256, 256), affine=
+2024-10-24 03:20:00,758 - INFO - Generated mask: shape=(176, 256, 256), affine=
 [[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
  [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
  [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 17:44:37,792 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-12.396031379699707, max=12.713006973266602, mean=1.3628480737849225e-12
-2024-10-21 17:44:37,847 - INFO - Memory usage after after loading and cleaning run: 67582.28 MB
-2024-10-21 17:44:38,998 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-21 17:44:39,643 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+2024-10-24 03:20:58,320 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.023037910461426, max=11.170205116271973, mean=1.7516252399188974e-12
+2024-10-24 03:20:58,369 - INFO - Memory usage after after loading and cleaning run: 67550.00 MB
+2024-10-24 03:20:58,414 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-24 03:20:58,605 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
 [[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
  [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
  [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 17:45:29,644 - INFO - Generated mask: shape=(176, 256, 256), affine=
+2024-10-24 03:21:46,954 - INFO - Generated mask: shape=(176, 256, 256), affine=
 [[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
  [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
  [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 17:46:32,494 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.523661613464355, max=11.75534725189209, mean=-4.218959684930835e-14
-2024-10-21 17:46:32,555 - INFO - Memory usage after after loading and cleaning run: 67494.28 MB
-2024-10-21 17:47:08,397 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-21 17:47:08,538 - INFO - Memory usage after after concatenating runs: 83675.30 MB
-2024-10-21 17:52:16,583 - INFO - Creating Searchlight object for pIPS left...
-2024-10-21 17:52:17,752 - INFO - Searchlight object created.
-2024-10-21 17:52:17,752 - INFO - Distributing data...
-2024-10-21 17:53:49,376 - INFO - Data distribution completed.
-2024-10-21 17:53:49,407 - INFO - Broadcasting pIPS time series and psychological covariate...
-2024-10-21 17:53:49,407 - INFO - Broadcasting completed.
-2024-10-21 17:53:49,407 - INFO - Starting searchlight analysis...
-2024-10-21 23:15:21,081 - INFO - Searchlight analysis completed.
-2024-10-21 23:15:21,082 - INFO - Memory usage after after searchlight: 84565.43 MB
-2024-10-21 23:15:24,264 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs13_pIPS_left.nii.gz
-2024-10-21 23:15:27,025 - INFO - Processing pIPS left for run combination [2, 3] for subject sub-088
-2024-10-21 23:15:27,040 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-21 23:15:27,807 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 23:16:16,660 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 23:17:16,113 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.023037910461426, max=11.170205116271973, mean=1.7516252399188974e-12
-2024-10-21 23:17:16,179 - INFO - Memory usage after after loading and cleaning run: 67523.50 MB
-2024-10-21 23:17:17,331 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-21 23:17:17,789 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 23:18:07,001 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-21 23:19:09,696 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.523661613464355, max=11.75534725189209, mean=-4.218959684930835e-14
-2024-10-21 23:19:09,757 - INFO - Memory usage after after loading and cleaning run: 67604.64 MB
-2024-10-21 23:19:43,514 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-21 23:19:43,611 - INFO - Memory usage after after concatenating runs: 83796.64 MB
-2024-10-21 23:24:44,794 - INFO - Creating Searchlight object for pIPS left...
-2024-10-21 23:24:46,366 - INFO - Searchlight object created.
-2024-10-21 23:24:46,367 - INFO - Distributing data...
-2024-10-21 23:26:10,257 - INFO - Data distribution completed.
-2024-10-21 23:26:10,263 - INFO - Broadcasting pIPS time series and psychological covariate...
-2024-10-21 23:26:10,263 - INFO - Broadcasting completed.
-2024-10-21 23:26:10,263 - INFO - Starting searchlight analysis...
-2024-10-22 04:45:53,506 - INFO - Searchlight analysis completed.
-2024-10-22 04:45:53,516 - INFO - Memory usage after after searchlight: 84668.50 MB
-2024-10-22 04:45:56,825 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs23_pIPS_left.nii.gz
-2024-10-22 04:45:59,541 - INFO - Processing pIPS right for run combination [1, 2] for subject sub-088
-2024-10-22 04:45:59,560 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-22 04:46:00,443 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 04:46:49,271 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 04:47:48,720 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-12.396031379699707, max=12.713006973266602, mean=1.3628480737849225e-12
-2024-10-22 04:47:48,793 - INFO - Memory usage after after loading and cleaning run: 67625.55 MB
-2024-10-22 04:47:49,662 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-22 04:47:49,991 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 04:48:38,062 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 04:49:39,801 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.023037910461426, max=11.170205116271973, mean=1.7516252399188974e-12
-2024-10-22 04:49:39,855 - INFO - Memory usage after after loading and cleaning run: 67625.55 MB
-2024-10-22 04:50:14,101 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-22 04:50:14,184 - INFO - Memory usage after after concatenating runs: 83817.55 MB
-2024-10-22 04:55:15,916 - INFO - Creating Searchlight object for pIPS right...
-2024-10-22 04:55:15,956 - INFO - Searchlight object created.
-2024-10-22 04:55:15,957 - INFO - Distributing data...
-2024-10-22 04:56:38,812 - INFO - Data distribution completed.
-2024-10-22 04:56:38,819 - INFO - Broadcasting pIPS time series and psychological covariate...
-2024-10-22 04:56:38,819 - INFO - Broadcasting completed.
-2024-10-22 04:56:38,819 - INFO - Starting searchlight analysis...
-2024-10-22 10:14:59,287 - INFO - Searchlight analysis completed.
-2024-10-22 10:14:59,303 - INFO - Memory usage after after searchlight: 84714.86 MB
-2024-10-22 10:15:02,811 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs12_pIPS_right.nii.gz
-2024-10-22 10:15:05,553 - INFO - Processing pIPS right for run combination [1, 3] for subject sub-088
-2024-10-22 10:15:06,378 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-22 10:15:07,001 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 10:16:04,016 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 10:17:35,604 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-12.396031379699707, max=12.713006973266602, mean=1.3628480737849225e-12
-2024-10-22 10:17:35,653 - INFO - Memory usage after after loading and cleaning run: 67672.28 MB
-2024-10-22 10:17:36,508 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-22 10:17:37,133 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 10:18:28,506 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 10:19:57,233 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.523661613464355, max=11.75534725189209, mean=-4.218959684930835e-14
-2024-10-22 10:19:57,287 - INFO - Memory usage after after loading and cleaning run: 67672.28 MB
-2024-10-22 10:20:33,717 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-22 10:20:34,710 - INFO - Memory usage after after concatenating runs: 83864.28 MB
-2024-10-22 10:26:05,364 - INFO - Creating Searchlight object for pIPS right...
-2024-10-22 10:26:06,575 - INFO - Searchlight object created.
-2024-10-22 10:26:06,575 - INFO - Distributing data...
-2024-10-22 10:27:31,342 - INFO - Data distribution completed.
-2024-10-22 10:27:31,345 - INFO - Broadcasting pIPS time series and psychological covariate...
-2024-10-22 10:27:31,345 - INFO - Broadcasting completed.
-2024-10-22 10:27:31,345 - INFO - Starting searchlight analysis...
-2024-10-22 15:42:07,965 - INFO - Searchlight analysis completed.
-2024-10-22 15:42:07,975 - INFO - Memory usage after after searchlight: 84677.46 MB
-2024-10-22 15:42:10,793 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs13_pIPS_right.nii.gz
-2024-10-22 15:42:13,232 - INFO - Processing pIPS right for run combination [2, 3] for subject sub-088
-2024-10-22 15:42:13,235 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-22 15:42:13,767 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 15:43:02,203 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 15:44:04,177 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.023037910461426, max=11.170205116271973, mean=1.7516252399188974e-12
-2024-10-22 15:44:04,240 - INFO - Memory usage after after loading and cleaning run: 67634.51 MB
-2024-10-22 15:44:05,121 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-22 15:44:05,838 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 15:44:54,082 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 15:46:00,066 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.523661613464355, max=11.75534725189209, mean=-4.218959684930835e-14
-2024-10-22 15:46:00,128 - INFO - Memory usage after after loading and cleaning run: 67634.51 MB
-2024-10-22 15:46:34,970 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-22 15:46:35,729 - INFO - Memory usage after after concatenating runs: 83826.51 MB
-2024-10-22 15:51:55,979 - INFO - Creating Searchlight object for pIPS right...
-2024-10-22 15:51:56,000 - INFO - Searchlight object created.
-2024-10-22 15:51:56,000 - INFO - Distributing data...
-2024-10-22 15:53:19,178 - INFO - Data distribution completed.
-2024-10-22 15:53:19,196 - INFO - Broadcasting pIPS time series and psychological covariate...
-2024-10-22 15:53:19,197 - INFO - Broadcasting completed.
-2024-10-22 15:53:19,197 - INFO - Starting searchlight analysis...
-2024-10-22 21:10:31,990 - INFO - Searchlight analysis completed.
-2024-10-22 21:10:31,998 - INFO - Memory usage after after searchlight: 84677.71 MB
-2024-10-22 21:10:34,574 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs23_pIPS_right.nii.gz
-2024-10-22 21:10:37,301 - INFO - Processing LO left for run combination [1, 2] for subject sub-088
-2024-10-22 21:10:37,302 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-22 21:10:37,579 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 21:11:27,519 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 21:12:39,869 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-12.396031379699707, max=12.713006973266602, mean=1.3628480737849225e-12
-2024-10-22 21:12:39,922 - INFO - Memory usage after after loading and cleaning run: 67634.76 MB
-2024-10-22 21:12:40,821 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-22 21:12:41,176 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 21:13:30,113 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-22 21:14:38,416 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.023037910461426, max=11.170205116271973, mean=1.7516252399188974e-12
-2024-10-22 21:14:38,486 - INFO - Memory usage after after loading and cleaning run: 67634.76 MB
-2024-10-22 21:15:13,650 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-22 21:15:14,564 - INFO - Memory usage after after concatenating runs: 83826.76 MB
-2024-10-22 21:20:44,385 - INFO - Creating Searchlight object for LO left...
-2024-10-22 21:20:45,295 - INFO - Searchlight object created.
-2024-10-22 21:20:45,296 - INFO - Distributing data...
-2024-10-22 21:22:09,618 - INFO - Data distribution completed.
-2024-10-22 21:22:09,623 - INFO - Broadcasting LO time series and psychological covariate...
-2024-10-22 21:22:09,623 - INFO - Broadcasting completed.
-2024-10-22 21:22:09,623 - INFO - Starting searchlight analysis...
-2024-10-23 02:36:47,890 - INFO - Searchlight analysis completed.
-2024-10-23 02:36:47,892 - INFO - Memory usage after after searchlight: 84716.62 MB
-2024-10-23 02:36:50,457 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs12_LO_left.nii.gz
-2024-10-23 02:36:52,839 - INFO - Processing LO left for run combination [1, 3] for subject sub-088
-2024-10-23 02:36:52,868 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-23 02:36:53,407 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 02:37:41,975 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 02:38:43,282 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-12.396031379699707, max=12.713006973266602, mean=1.3628480737849225e-12
-2024-10-23 02:38:43,335 - INFO - Memory usage after after loading and cleaning run: 67673.79 MB
-2024-10-23 02:38:44,292 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-23 02:38:44,582 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 02:39:32,918 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 02:40:36,686 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.523661613464355, max=11.75534725189209, mean=-4.218959684930835e-14
-2024-10-23 02:40:36,752 - INFO - Memory usage after after loading and cleaning run: 67673.79 MB
-2024-10-23 02:41:10,866 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-23 02:41:11,639 - INFO - Memory usage after after concatenating runs: 83865.79 MB
-2024-10-23 02:46:24,228 - INFO - Creating Searchlight object for LO left...
-2024-10-23 02:46:24,249 - INFO - Searchlight object created.
-2024-10-23 02:46:24,249 - INFO - Distributing data...
-2024-10-23 02:47:46,621 - INFO - Data distribution completed.
-2024-10-23 02:47:46,621 - INFO - Broadcasting LO time series and psychological covariate...
-2024-10-23 02:47:46,621 - INFO - Broadcasting completed.
-2024-10-23 02:47:46,621 - INFO - Starting searchlight analysis...
-2024-10-23 08:00:47,628 - INFO - Searchlight analysis completed.
-2024-10-23 08:00:47,630 - INFO - Memory usage after after searchlight: 84718.00 MB
-2024-10-23 08:00:50,454 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs13_LO_left.nii.gz
-2024-10-23 08:00:52,713 - INFO - Processing LO left for run combination [2, 3] for subject sub-088
-2024-10-23 08:00:52,714 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-23 08:00:53,199 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 08:01:42,645 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 08:02:53,979 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.023037910461426, max=11.170205116271973, mean=1.7516252399188974e-12
-2024-10-23 08:02:54,044 - INFO - Memory usage after after loading and cleaning run: 67674.54 MB
-2024-10-23 08:02:55,019 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-23 08:02:55,662 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 08:03:44,675 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 08:04:54,119 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.523661613464355, max=11.75534725189209, mean=-4.218959684930835e-14
-2024-10-23 08:04:54,171 - INFO - Memory usage after after loading and cleaning run: 67674.54 MB
-2024-10-23 08:05:34,608 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-23 08:05:35,600 - INFO - Memory usage after after concatenating runs: 83866.54 MB
-2024-10-23 08:10:56,499 - INFO - Creating Searchlight object for LO left...
-2024-10-23 08:10:56,513 - INFO - Searchlight object created.
-2024-10-23 08:10:56,514 - INFO - Distributing data...
-2024-10-23 08:12:14,955 - INFO - Data distribution completed.
-2024-10-23 08:12:14,965 - INFO - Broadcasting LO time series and psychological covariate...
-2024-10-23 08:12:14,966 - INFO - Broadcasting completed.
-2024-10-23 08:12:14,966 - INFO - Starting searchlight analysis...
-2024-10-23 13:29:18,568 - INFO - Searchlight analysis completed.
-2024-10-23 13:29:18,581 - INFO - Memory usage after after searchlight: 84718.00 MB
-2024-10-23 13:29:21,685 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs23_LO_left.nii.gz
-2024-10-23 13:29:24,332 - INFO - Processing LO right for run combination [1, 2] for subject sub-088
-2024-10-23 13:29:24,336 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-23 13:29:24,843 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 13:30:14,148 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 13:31:21,470 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-12.396031379699707, max=12.713006973266602, mean=1.3628480737849225e-12
-2024-10-23 13:31:21,561 - INFO - Memory usage after after loading and cleaning run: 67675.04 MB
-2024-10-23 13:31:22,558 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-23 13:31:22,790 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 13:32:11,826 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 13:33:21,585 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.023037910461426, max=11.170205116271973, mean=1.7516252399188974e-12
-2024-10-23 13:33:21,634 - INFO - Memory usage after after loading and cleaning run: 67675.04 MB
-2024-10-23 13:34:02,432 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-23 13:34:03,330 - INFO - Memory usage after after concatenating runs: 83867.04 MB
-2024-10-23 13:39:27,140 - INFO - Creating Searchlight object for LO right...
-2024-10-23 13:39:27,281 - INFO - Searchlight object created.
-2024-10-23 13:39:27,281 - INFO - Distributing data...
-2024-10-23 13:40:50,170 - INFO - Data distribution completed.
-2024-10-23 13:40:50,171 - INFO - Broadcasting LO time series and psychological covariate...
-2024-10-23 13:40:50,171 - INFO - Broadcasting completed.
-2024-10-23 13:40:50,171 - INFO - Starting searchlight analysis...
-2024-10-23 18:55:49,197 - INFO - Searchlight analysis completed.
-2024-10-23 18:55:49,198 - INFO - Memory usage after after searchlight: 84715.30 MB
-2024-10-23 18:55:51,922 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs12_LO_right.nii.gz
-2024-10-23 18:55:54,665 - INFO - Processing LO right for run combination [1, 3] for subject sub-088
-2024-10-23 18:55:54,667 - INFO - Loading run 1 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-23 18:55:55,240 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 18:56:44,533 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 18:57:51,817 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-12.396031379699707, max=12.713006973266602, mean=1.3628480737849225e-12
-2024-10-23 18:57:51,882 - INFO - Memory usage after after loading and cleaning run: 67673.17 MB
-2024-10-23 18:57:52,903 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-088/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
-2024-10-23 18:57:53,200 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 18:58:42,265 - INFO - Generated mask: shape=(176, 256, 256), affine=
-[[ 9.97581422e-01 -3.32648084e-02  6.10834546e-02 -8.98650665e+01]
- [ 1.69079360e-02  9.67853844e-01  2.50944257e-01 -1.43418625e+02]
- [-6.74676895e-02 -2.49303713e-01  9.66072381e-01 -9.45160065e+01]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-10-23 18:59:52,491 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.523661613464355, max=11.75534725189209, mean=-4.218959684930835e-14
-2024-10-23 18:59:52,551 - INFO - Memory usage after after loading and cleaning run: 67673.17 MB
-2024-10-23 19:00:33,440 - INFO - Concatenated data shape: (176, 256, 256, 368)
-2024-10-23 19:00:34,324 - INFO - Memory usage after after concatenating runs: 83865.17 MB
-2024-10-23 19:05:55,750 - INFO - Creating Searchlight object for LO right...
-2024-10-23 19:05:55,763 - INFO - Searchlight object created.
-2024-10-23 19:05:55,763 - INFO - Distributing data...
-2024-10-23 19:07:12,467 - INFO - Data distribution completed.
-2024-10-23 19:07:12,468 - INFO - Broadcasting LO time series and psychological covariate...
-2024-10-23 19:07:12,468 - INFO - Broadcasting completed.
-2024-10-23 19:07:12,468 - INFO - Starting searchlight analysis...
+2024-10-24 03:22:43,775 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-11.523661613464355, max=11.75534725189209, mean=-4.218959684930835e-14
+2024-10-24 03:22:43,824 - INFO - Memory usage after after loading and cleaning run: 67462.00 MB
+2024-10-24 03:23:14,026 - INFO - Concatenated data shape: (176, 256, 256, 368)
+2024-10-24 03:23:14,180 - INFO - Memory usage after after concatenating runs: 83654.00 MB
+2024-10-24 03:28:13,014 - INFO - Creating Searchlight object for LO right...
+2024-10-24 03:28:14,282 - INFO - Searchlight object created.
+2024-10-24 03:28:14,283 - INFO - Distributing data...
+2024-10-24 03:29:41,163 - INFO - Data distribution completed.
+2024-10-24 03:29:41,163 - INFO - Broadcasting LO time series and psychological covariate...
+2024-10-24 03:29:41,164 - INFO - Broadcasting completed.
+2024-10-24 03:29:41,164 - INFO - Starting searchlight analysis...
+2024-10-24 08:43:44,800 - INFO - Searchlight analysis completed.
+2024-10-24 08:43:44,801 - INFO - Memory usage after after searchlight: 84698.27 MB
+2024-10-24 08:43:47,553 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-088/ses-01//derivatives/gca/searchlight_result_object_runs23_LO_right.nii.gz
+2024-10-24 08:43:50,245 - INFO - Completed searchlight analysis with GCA for all subjects
+Processing subject: sub-088
