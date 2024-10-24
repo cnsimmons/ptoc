@@ -430,3 +430,47 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 2024-10-23 07:52:46,821 - INFO - Broadcasting LO time series and psychological covariate...
 2024-10-23 07:52:46,821 - INFO - Broadcasting completed.
 2024-10-23 07:52:46,821 - INFO - Starting searchlight analysis...
+2024-10-23 11:50:19,115 - INFO - Searchlight analysis completed.
+2024-10-23 11:50:19,178 - INFO - Memory usage after after searchlight: 83066.62 MB
+2024-10-23 11:50:26,505 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-093/ses-01//derivatives/gca/searchlight_result_object_runs13_LO_right.nii.gz
+2024-10-23 11:50:30,252 - INFO - Processing LO right for run combination [2, 3] for subject sub-093
+2024-10-23 11:50:30,725 - INFO - Loading run 2 from /lab_data/behrmannlab/vlad/hemispace/sub-093/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-23 11:50:36,798 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+[[ 9.99023795e-01 -4.30920534e-02 -9.46749002e-03 -8.23895416e+01]
+ [ 4.39980812e-02  9.88986790e-01  1.41312614e-01 -1.34235443e+02]
+ [ 3.27376416e-03 -1.41591564e-01  9.89919722e-01 -1.22206581e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-23 11:51:15,299 - INFO - Generated mask: shape=(176, 256, 256), affine=
+[[ 9.99023795e-01 -4.30920534e-02 -9.46749002e-03 -8.23895416e+01]
+ [ 4.39980812e-02  9.88986790e-01  1.41312614e-01 -1.34235443e+02]
+ [ 3.27376416e-03 -1.41591564e-01  9.89919722e-01 -1.22206581e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-23 11:52:33,934 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-12.978113174438477, max=12.255973815917969, mean=1.080511420585918e-12
+2024-10-23 11:52:34,677 - INFO - Memory usage after after loading and cleaning run: 66022.25 MB
+2024-10-23 11:52:36,491 - INFO - Loading run 3 from /lab_data/behrmannlab/vlad/hemispace/sub-093/ses-01/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz
+2024-10-23 11:52:42,671 - INFO - Functional image: shape=(176, 256, 256, 184), affine=
+[[ 9.99023795e-01 -4.30920534e-02 -9.46749002e-03 -8.23895416e+01]
+ [ 4.39980812e-02  9.88986790e-01  1.41312614e-01 -1.34235443e+02]
+ [ 3.27376416e-03 -1.41591564e-01  9.89919722e-01 -1.22206581e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-23 11:53:20,647 - INFO - Generated mask: shape=(176, 256, 256), affine=
+[[ 9.99023795e-01 -4.30920534e-02 -9.46749002e-03 -8.23895416e+01]
+ [ 4.39980812e-02  9.88986790e-01  1.41312614e-01 -1.34235443e+02]
+ [ 3.27376416e-03 -1.41591564e-01  9.89919722e-01 -1.22206581e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-10-23 11:54:38,309 - INFO - Cleaned data: shape=(176, 256, 256, 184), min=-12.571433067321777, max=12.099506378173828, mean=4.108786942720835e-13
+2024-10-23 11:54:39,067 - INFO - Memory usage after after loading and cleaning run: 66022.25 MB
+2024-10-23 11:55:08,600 - INFO - Concatenated data shape: (176, 256, 256, 368)
+2024-10-23 11:55:10,130 - INFO - Memory usage after after concatenating runs: 82214.25 MB
+2024-10-23 11:58:37,808 - INFO - Creating Searchlight object for LO right...
+2024-10-23 11:58:38,138 - INFO - Searchlight object created.
+2024-10-23 11:58:38,139 - INFO - Distributing data...
+2024-10-23 11:59:49,618 - INFO - Data distribution completed.
+2024-10-23 11:59:49,748 - INFO - Broadcasting LO time series and psychological covariate...
+2024-10-23 11:59:49,748 - INFO - Broadcasting completed.
+2024-10-23 11:59:49,748 - INFO - Starting searchlight analysis...
+2024-10-23 15:56:49,947 - INFO - Searchlight analysis completed.
+2024-10-23 15:56:49,998 - INFO - Memory usage after after searchlight: 83038.66 MB
+2024-10-23 15:56:57,648 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-093/ses-01//derivatives/gca/searchlight_result_object_runs23_LO_right.nii.gz
+2024-10-23 15:57:01,960 - INFO - Completed searchlight analysis with GCA for all subjects
+Processing subject: sub-093
