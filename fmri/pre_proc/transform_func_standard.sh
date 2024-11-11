@@ -28,6 +28,8 @@ subjects=(
     "sub-107"
 )
 
+#subjects=('sub-096')
+
 # Array of runs (now including run 3)
 runs=("01" "02" "03")
 
