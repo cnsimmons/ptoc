@@ -1,9 +1,15 @@
-# first line: 25
+# first line: 20
 def _filter_and_extract(
-    imgs, extraction_function, parameters,
-    memory_level=0, memory=Memory(location=None),
-    verbose=0, confounds=None, sample_mask=None,
-    copy=True, dtype=None
+    imgs,
+    extraction_function,
+    parameters,
+    memory_level=0,
+    memory=Memory(location=None),
+    verbose=0,
+    confounds=None,
+    sample_mask=None,
+    copy=True,
+    dtype=None,
 ):
     """Extract representative time series using given function.
 
@@ -40,9 +46,10 @@ def _filter_and_extract(
         copy = False
 
     if verbose > 0:
-        print("[%s] Loading data from %s" % (
-            class_name,
-            _utils._repr_niimgs(imgs, shorten=False)))
+        print(
+            f"[{class_name}] Loading data "
+            f"from {_utils._repr_niimgs(imgs, shorten=False)}"
+        )
 
     # Convert input to niimg to check shape.
     # This must be repeated after the shape check because check_niimg will
@@ -52,43 +59,55 @@ def _filter_and_extract(
     # Raise warning if a 3D niimg is provided.
     if temp_imgs.ndim == 3:
         warnings.warn(
-            'Starting in version 0.12, 3D images will be transformed to '
-            '1D arrays. '
-            'Until then, 3D images will be coerced to 2D arrays, with a '
-            'singleton first dimension representing time.',
+            "Starting in version 0.12, 3D images will be transformed to "
+            "1D arrays. "
+            "Until then, 3D images will be coerced to 2D arrays, with a "
+            "singleton first dimension representing time.",
             DeprecationWarning,
         )
 
-    imgs = _utils.check_niimg(imgs, atleast_4d=True, ensure_ndim=4,
-                              dtype=dtype)
+    imgs = _utils.check_niimg(
+        imgs, atleast_4d=True, ensure_ndim=4, dtype=dtype
+    )
 
-    target_shape = parameters.get('target_shape')
-    target_affine = parameters.get('target_affine')
+    target_shape = parameters.get("target_shape")
+    target_affine = parameters.get("target_affine")
     if target_shape is not None or target_affine is not None:
         if verbose > 0:
-            print("[%s] Resampling images" % class_name)
+            print(f"[{class_name}] Resampling images")
         imgs = cache(
-            image.resample_img, memory, func_memory_level=2,
-            memory_level=memory_level, ignore=['copy'])(
-                imgs, interpolation="continuous",
-                target_shape=target_shape,
-                target_affine=target_affine,
-                copy=copy)
+            image.resample_img,
+            memory,
+            func_memory_level=2,
+            memory_level=memory_level,
+            ignore=["copy"],
+        )(
+            imgs,
+            interpolation="continuous",
+            target_shape=target_shape,
+            target_affine=target_affine,
+            copy=copy,
+        )
 
-    smoothing_fwhm = parameters.get('smoothing_fwhm')
+    smoothing_fwhm = parameters.get("smoothing_fwhm")
     if smoothing_fwhm is not None:
         if verbose > 0:
-            print("[%s] Smoothing images" % class_name)
+            print(f"[{class_name}] Smoothing images")
         imgs = cache(
-            image.smooth_img, memory, func_memory_level=2,
-            memory_level=memory_level)(
-                imgs, parameters['smoothing_fwhm'])
+            image.smooth_img,
+            memory,
+            func_memory_level=2,
+            memory_level=memory_level,
+        )(imgs, parameters["smoothing_fwhm"])
 
     if verbose > 0:
-        print("[%s] Extracting region signals" % class_name)
-    region_signals, aux = cache(extraction_function, memory,
-                                func_memory_level=2,
-                                memory_level=memory_level)(imgs)
+        print(f"[{class_name}] Extracting region signals")
+    region_signals, aux = cache(
+        extraction_function,
+        memory,
+        func_memory_level=2,
+        memory_level=memory_level,
+    )(imgs)
 
     # Temporal
     # --------
@@ -97,20 +116,25 @@ def _filter_and_extract(
     # Confounds removing (from csv file or numpy array)
     # Normalizing
     if verbose > 0:
-        print("[%s] Cleaning extracted signals" % class_name)
-    runs = parameters.get('runs', None)
+        print(f"[{class_name}] Cleaning extracted signals")
+    runs = parameters.get("runs", None)
     region_signals = cache(
-        signal.clean, memory=memory, func_memory_level=2,
-        memory_level=memory_level)(
-            region_signals,
-            detrend=parameters['detrend'],
-            standardize=parameters['standardize'],
-            standardize_confounds=parameters['standardize_confounds'],
-            t_r=parameters['t_r'],
-            low_pass=parameters['low_pass'],
-            high_pass=parameters['high_pass'],
-            confounds=confounds,
-            sample_mask=sample_mask,
-            runs=runs)
+        signal.clean,
+        memory=memory,
+        func_memory_level=2,
+        memory_level=memory_level,
+    )(
+        region_signals,
+        detrend=parameters["detrend"],
+        standardize=parameters["standardize"],
+        standardize_confounds=parameters["standardize_confounds"],
+        t_r=parameters["t_r"],
+        low_pass=parameters["low_pass"],
+        high_pass=parameters["high_pass"],
+        confounds=confounds,
+        sample_mask=sample_mask,
+        runs=runs,
+        **parameters["clean_kwargs"],
+    )
 
     return region_signals, aux
