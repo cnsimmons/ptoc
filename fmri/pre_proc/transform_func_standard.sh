@@ -6,6 +6,7 @@ ptoc_dir="/lab_data/behrmannlab/vlad/ptoc"
 mni_brain="${FSLDIR}/data/standard/MNI152_T1_2mm_brain.nii.gz"
 
 # Array of subjects with proper formatting
+# running in registration
 subjects=(
     "sub-025"
     "sub-038"
@@ -28,7 +29,16 @@ subjects=(
     "sub-107"
 )
 
-#subjects=('sub-096')
+subjects=('sub-095') #running in vs
+
+# running on reg2
+#subjects=(
+    #"sub-085"
+    #"sub-087"
+    #"sub-088"
+    #"sub-093"
+    #"sub-094"
+#)
 
 # Array of runs (now including run 3)
 runs=("01" "02" "03")
