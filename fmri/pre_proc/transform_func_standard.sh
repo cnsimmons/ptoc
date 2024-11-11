@@ -1,53 +1,99 @@
 #!/bin/bash
 
-# Setup FSL
-. /etc/fsl/5.0/fsl.sh
+# Set up main directories
+hemispace_dir="/lab_data/behrmannlab/vlad/hemispace"
+ptoc_dir="/lab_data/behrmannlab/vlad/ptoc"
+mni_brain="${FSLDIR}/data/standard/MNI152_T1_2mm_brain.nii.gz"
 
-# Base directory
-RAW_DIR="/lab_data/behrmannlab/vlad/hemispace"
+# Array of subjects with proper formatting
+subjects=(
+    "sub-025"
+    "sub-038"
+    "sub-057"
+    "sub-059"
+    "sub-064"
+    "sub-067"
+    "sub-068"
+    "sub-071"
+    "sub-083"
+    "sub-084"
+    "sub-085"
+    "sub-087"
+    "sub-088"
+    "sub-093"
+    "sub-094"
+    "sub-095"
+    "sub-096"
+    "sub-097"
+    "sub-107"
+)
 
-process_run() {
-    sub=$1
-    run=$2
+# Array of runs (now including run 3)
+runs=("01" "02" "03")
+
+# Loop through each subject
+for sub in "${subjects[@]}"; do
+    echo "Processing subject: ${sub}"
     
-    echo "Processing ${sub} run-${run}"
-    
-    # Setup directories
-    FEAT_DIR="${RAW_DIR}/${sub}/ses-01/derivatives/fsl/loc/run-${run}/1stLevel.feat"
-    REG_STD_DIR="${FEAT_DIR}/reg_standard"
-    REG_DIR="${FEAT_DIR}/reg"
-    
-    if [ -d "${FEAT_DIR}" ]; then
-        mkdir -p "${REG_STD_DIR}"
-        
-        # First concatenate the transformations
-        echo "Creating combined transformation..."
-        convert_xfm -omat ${REG_DIR}/func2standard.mat \
-                   -concat ${REG_DIR}/example_func2standard.mat ${REG_DIR}/example_func2highres.mat
-        
-        # Transform filtered_func_data to standard space using the combined transform
-        echo "Transforming filtered_func_data to standard space..."
-        applywarp --in="${FEAT_DIR}/filtered_func_data" \
-                 --ref="${FSLDIR}/data/standard/MNI152_T1_2mm_brain" \
-                 --out="${REG_STD_DIR}/filtered_func_data_standard" \
-                 --premat="${REG_DIR}/func2standard.mat" \
-                 --interp=spline
-        
-        # Verify the output exists and has reasonable dimensions
-        if [ -f "${REG_STD_DIR}/filtered_func_data_standard.nii.gz" ]; then
-            dims=$(fslinfo "${REG_STD_DIR}/filtered_func_data_standard.nii.gz" | grep ^dim[123])
-            echo "Output dimensions: ${dims}"
-        else
-            echo "Warning: Output file not created"
-        fi
-        
-        echo "Completed ${sub} run-${run}"
-    else
-        echo "Directory not found: ${FEAT_DIR}"
+    # Set up subject-specific directories
+    # Note: Handling different session numbers might be needed
+    hemi_sub_dir="${hemispace_dir}/${sub}/ses-01"
+    ptoc_sub_dir="${ptoc_dir}/${sub}/ses-01"
+    hemi_out_dir="${hemi_sub_dir}/derivatives"
+    ptoc_out_dir="${ptoc_sub_dir}/derivatives"
+
+    # Check for transformation matrix in ptoc
+    ptoc_mat="${ptoc_out_dir}/anat2mni.mat"
+    if [ ! -f "$ptoc_mat" ]; then
+        echo "Transformation matrix not found at: ${ptoc_mat}"
+        echo "Skipping subject ${sub}"
+        continue
     fi
-}
 
-# Test on one subject first
-sub="sub-064"
-run="03"
-process_run "$sub" "$run"
+    # Create reg_standard directory if it doesn't exist
+    mkdir -p "${hemi_out_dir}/reg_standard"
+
+    # Loop through each run
+    for run in "${runs[@]}"; do
+        echo "Processing run: ${run}"
+
+        # Define input and output filenames
+        filtered_func="${hemi_out_dir}/fsl/loc/run-${run}/1stLevel.feat/filtered_func_data_reg.nii.gz"
+        filtered_func_standard="${hemi_out_dir}/reg_standard/filtered_func_run-${run}_standard.nii.gz"
+
+        # Check if input file exists
+        if [ ! -f "$filtered_func" ]; then
+            echo "Filtered func file not found at: ${filtered_func}"
+            echo "Skipping run ${run} for subject ${sub}"
+            continue
+        fi
+
+        # Check if output already exists
+        if [ -f "$filtered_func_standard" ]; then
+            echo "Standard space file already exists at: ${filtered_func_standard}"
+            echo "Skipping run ${run} for subject ${sub}"
+            continue
+        fi
+
+        # Perform the transformation
+        echo "Registering filtered_func for ${sub}, Run ${run} to standard space"
+        flirt \
+            -in "$filtered_func" \
+            -ref "$mni_brain" \
+            -out "$filtered_func_standard" \
+            -applyxfm \
+            -init "$ptoc_mat" \
+            -interp trilinear
+
+        # Check if the transformation was successful
+        if [ $? -eq 0 ]; then
+            echo "Successfully converted Run ${run} to standard space"
+            echo "Output saved to: ${filtered_func_standard}"
+        else
+            echo "Error during conversion for subject ${sub}, run ${run}"
+            continue
+        fi
+    done
+done
+
+echo "Script execution completed for all subjects and runs."

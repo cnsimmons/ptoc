@@ -17,7 +17,7 @@ sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 #subs = ['sub-107']
 
-for ss in subs:  # Changed 'sub' to 'ss' to match your naming convention
+for ss in subs:  
     print(f"Processing subject: {ss}")
     sub_dir = f"{study_dir}/{ss}/ses-01"
     out_dir = f"{sub_dir}/derivatives"
