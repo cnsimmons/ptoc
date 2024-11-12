@@ -29,17 +29,6 @@ subjects=(
     "sub-107"
 )
 
-subjects=('sub-095') #running in vs
-
-# running on reg2
-#subjects=(
-    #"sub-085"
-    #"sub-087"
-    #"sub-088"
-    #"sub-093"
-    #"sub-094"
-#)
-
 # Array of runs (now including run 3)
 runs=("01" "02" "03")
 
