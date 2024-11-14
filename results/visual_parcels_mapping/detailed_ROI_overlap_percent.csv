@@ -1,0 +1,240 @@
+
+Detailed ROI List for Each Parcel:
+================================================================================
+
+LO Parcel ROIs:
+----------------------------------------
+
+Vis Network:
+Index 2: 7Networks_LH_Vis_3
+  Overlap: 15.4%
+  Unique Coverage: 15.4%
+Index 104: 7Networks_RH_Vis_5
+  Overlap: 14.4%
+  Unique Coverage: 14.4%
+Index 7: 7Networks_LH_Vis_8
+  Overlap: 5.5%
+  Unique Coverage: 5.5%
+Index 10: 7Networks_LH_Vis_11
+  Overlap: 4.5%
+  Unique Coverage: 4.5%
+Index 110: 7Networks_RH_Vis_11
+  Overlap: 3.2%
+  Unique Coverage: 3.2%
+Index 107: 7Networks_RH_Vis_8
+  Overlap: 3.0%
+  Unique Coverage: 3.0%
+Index 1: 7Networks_LH_Vis_2
+  Overlap: 2.9%
+  Unique Coverage: 2.9%
+Index 102: 7Networks_RH_Vis_3
+  Overlap: 2.7%
+  Unique Coverage: 2.7%
+Index 4: 7Networks_LH_Vis_5
+  Overlap: 2.1%
+  Unique Coverage: 2.1%
+Index 8: 7Networks_LH_Vis_9
+  Overlap: 1.6%
+  Unique Coverage: 1.6%
+
+DorsAttn Network:
+Index 134: 7Networks_RH_DorsAttn_Post_1
+  Overlap: 7.2%
+  Unique Coverage: 7.2%
+Index 135: 7Networks_RH_DorsAttn_Post_2
+  Overlap: 6.8%
+  Unique Coverage: 6.8%
+Index 31: 7Networks_LH_DorsAttn_Post_2
+  Overlap: 5.1%
+  Unique Coverage: 5.1%
+Index 30: 7Networks_LH_DorsAttn_Post_1
+  Overlap: 1.8%
+  Unique Coverage: 1.8%
+
+SalVentAttn Network:
+Index 147: 7Networks_RH_SalVentAttn_TempOccPar_1
+  Overlap: 1.2%
+  Unique Coverage: 1.2%
+
+Total ROIs for LO: 15
+Total Coverage: 77.7%
+
+ROI indices for connectivity matrices:
+indices_lo = [2, 104, 134, 135, 7, 31, 10, 110, 107, 1, 102, 4, 30, 8, 147]
+
+pIPS Parcel ROIs:
+----------------------------------------
+
+Vis Network:
+Index 114: 7Networks_RH_Vis_15
+  Overlap: 10.5%
+  Unique Coverage: 10.5%
+Index 13: 7Networks_LH_Vis_14
+  Overlap: 7.2%
+  Unique Coverage: 7.2%
+Index 12: 7Networks_LH_Vis_13
+  Overlap: 5.2%
+  Unique Coverage: 5.2%
+Index 113: 7Networks_RH_Vis_14
+  Overlap: 5.1%
+  Unique Coverage: 5.1%
+Index 111: 7Networks_RH_Vis_12
+  Overlap: 4.0%
+  Unique Coverage: 4.0%
+Index 10: 7Networks_LH_Vis_11
+  Overlap: 2.2%
+  Unique Coverage: 2.2%
+Index 110: 7Networks_RH_Vis_11
+  Overlap: 1.6%
+  Unique Coverage: 1.6%
+Index 112: 7Networks_RH_Vis_13
+  Overlap: 0.9%
+  Unique Coverage: 0.9%
+
+DorsAttn Network:
+Index 36: 7Networks_LH_DorsAttn_Post_7
+  Overlap: 7.7%
+  Unique Coverage: 7.7%
+Index 32: 7Networks_LH_DorsAttn_Post_3
+  Overlap: 7.5%
+  Unique Coverage: 7.5%
+Index 141: 7Networks_RH_DorsAttn_Post_8
+  Overlap: 5.5%
+  Unique Coverage: 5.5%
+Index 139: 7Networks_RH_DorsAttn_Post_6
+  Overlap: 3.6%
+  Unique Coverage: 3.6%
+Index 38: 7Networks_LH_DorsAttn_Post_9
+  Overlap: 1.3%
+  Unique Coverage: 1.3%
+Index 37: 7Networks_LH_DorsAttn_Post_8
+  Overlap: 0.9%
+  Unique Coverage: 0.9%
+
+Default Network:
+Index 79: 7Networks_LH_Default_Par_2
+  Overlap: 5.9%
+  Unique Coverage: 5.9%
+Index 181: 7Networks_RH_Default_Par_1
+  Overlap: 2.8%
+  Unique Coverage: 2.8%
+Index 81: 7Networks_LH_Default_Par_4
+  Overlap: 1.2%
+  Unique Coverage: 1.2%
+
+Cont Network:
+Index 166: 7Networks_RH_Cont_Par_3
+  Overlap: 4.5%
+  Unique Coverage: 4.5%
+Index 61: 7Networks_LH_Cont_Par_2
+  Overlap: 3.7%
+  Unique Coverage: 3.7%
+Index 70: 7Networks_LH_Cont_pCun_1
+  Overlap: 3.4%
+  Unique Coverage: 3.4%
+Index 176: 7Networks_RH_Cont_pCun_1
+  Overlap: 2.1%
+  Unique Coverage: 2.1%
+
+Total ROIs for pIPS: 21
+Total Coverage: 86.9%
+
+ROI indices for connectivity matrices:
+indices_pips = [114, 36, 32, 13, 79, 141, 12, 113, 166, 111, 61, 139, 70, 181, 10, 176, 110, 38, 81, 112, 37]
+
+aIPS Parcel ROIs:
+----------------------------------------
+
+DorsAttn Network:
+Index 141: 7Networks_RH_DorsAttn_Post_8
+  Overlap: 9.7%
+  Unique Coverage: 9.7%
+Index 36: 7Networks_LH_DorsAttn_Post_7
+  Overlap: 7.0%
+  Unique Coverage: 7.0%
+Index 32: 7Networks_LH_DorsAttn_Post_3
+  Overlap: 5.5%
+  Unique Coverage: 5.5%
+Index 142: 7Networks_RH_DorsAttn_Post_9
+  Overlap: 5.4%
+  Unique Coverage: 5.4%
+Index 139: 7Networks_RH_DorsAttn_Post_6
+  Overlap: 5.0%
+  Unique Coverage: 5.0%
+Index 143: 7Networks_RH_DorsAttn_Post_10
+  Overlap: 4.8%
+  Unique Coverage: 4.8%
+Index 38: 7Networks_LH_DorsAttn_Post_9
+  Overlap: 4.4%
+  Unique Coverage: 4.4%
+Index 39: 7Networks_LH_DorsAttn_Post_10
+  Overlap: 3.9%
+  Unique Coverage: 3.9%
+Index 37: 7Networks_LH_DorsAttn_Post_8
+  Overlap: 3.7%
+  Unique Coverage: 3.7%
+Index 140: 7Networks_RH_DorsAttn_Post_7
+  Overlap: 3.2%
+  Unique Coverage: 3.2%
+Index 35: 7Networks_LH_DorsAttn_Post_6
+  Overlap: 2.8%
+  Unique Coverage: 2.8%
+
+Vis Network:
+Index 114: 7Networks_RH_Vis_15
+  Overlap: 6.0%
+  Unique Coverage: 6.0%
+Index 113: 7Networks_RH_Vis_14
+  Overlap: 1.9%
+  Unique Coverage: 1.9%
+Index 111: 7Networks_RH_Vis_12
+  Overlap: 1.5%
+  Unique Coverage: 1.5%
+Index 13: 7Networks_LH_Vis_14
+  Overlap: 1.4%
+  Unique Coverage: 1.4%
+Index 12: 7Networks_LH_Vis_13
+  Overlap: 1.2%
+  Unique Coverage: 1.2%
+
+Cont Network:
+Index 166: 7Networks_RH_Cont_Par_3
+  Overlap: 4.6%
+  Unique Coverage: 4.6%
+Index 61: 7Networks_LH_Cont_Par_2
+  Overlap: 4.4%
+  Unique Coverage: 4.4%
+Index 70: 7Networks_LH_Cont_pCun_1
+  Overlap: 2.5%
+  Unique Coverage: 2.5%
+Index 176: 7Networks_RH_Cont_pCun_1
+  Overlap: 1.5%
+  Unique Coverage: 1.5%
+
+SomMot Network:
+Index 24: 7Networks_LH_SomMot_11
+  Overlap: 1.6%
+  Unique Coverage: 1.6%
+Index 127: 7Networks_RH_SomMot_13
+  Overlap: 0.7%
+  Unique Coverage: 0.7%
+
+Default Network:
+Index 199: 7Networks_RH_Default_pCunPCC_3
+  Overlap: 0.9%
+  Unique Coverage: 0.9%
+Index 81: 7Networks_LH_Default_Par_4
+  Overlap: 0.9%
+  Unique Coverage: 0.9%
+Index 98: 7Networks_LH_Default_pCunPCC_4
+  Overlap: 0.8%
+  Unique Coverage: 0.8%
+Index 79: 7Networks_LH_Default_Par_2
+  Overlap: 0.5%
+  Unique Coverage: 0.5%
+
+Total ROIs for aIPS: 26
+Total Coverage: 86.2%
+
+ROI indices for connectivity matrices:
+indices_aips = [141, 36, 114, 32, 142, 139, 143, 166, 38, 61, 39, 37, 140, 35, 70, 113, 24, 111, 176, 13, 12, 199, 81, 98, 127, 79]
