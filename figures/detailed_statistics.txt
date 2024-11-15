@@ -1,0 +1,16 @@
+Summary Statistics for Connectivity Analysis
+==========================================
+
+       mean_correlation  std_deviation  min_correlation  max_correlation  median_correlation  abs_mean_correlation
+count         19.000000      19.000000        19.000000        19.000000                19.0             19.000000
+mean           0.054430       0.148919        -0.576339         0.881964                 0.0              0.080964
+std            0.012727       0.020013         0.102329         0.039362                 0.0              0.013060
+min            0.025084       0.115653        -0.807836         0.792472                 0.0              0.060865
+25%            0.048034       0.136182        -0.624709         0.841077                 0.0              0.071831
+50%            0.052557       0.143988        -0.561366         0.897680                 0.0              0.077701
+75%            0.061490       0.159952        -0.513428         0.905128                 0.0              0.090032
+max            0.074845       0.185962        -0.397413         0.937521                 0.0              0.105177
+
+Value Ranges:
+Mean correlation range: 0.025 to 0.075
+Absolute mean correlation range: 0.061 to 0.105
