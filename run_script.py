@@ -14,9 +14,9 @@ import subprocess
 from glob import glob as glob
 import ptoc_params as params
 
-#curr_script = f'{curr_dir}/fmri/pre_proc/preprocess.py'
+curr_script = f'{curr_dir}/fmri/pre_proc/preprocess.py'
 
-curr_script = f'{curr_dir}/fmri/pre_proc/register_1stlevel.py' ##This script register the time series data from each run (the 1stlevel) to that individual's anatomical
+#curr_script = f'{curr_dir}/fmri/pre_proc/register_1stlevel.py' ##This script register the time series data from each run (the 1stlevel) to that individual's anatomical
 
 sub_info = params.sub_info #run all subjects
 
