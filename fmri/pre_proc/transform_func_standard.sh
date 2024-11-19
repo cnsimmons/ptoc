@@ -29,8 +29,13 @@ subjects=(
     "sub-107"
 )
 
+subjects=(
+    'sub-084'
+)
+
 # Array of runs (now including run 3)
-runs=("01" "02" "03")
+#runs=("01" "02" "03")
+runs=("01")
 
 # Loop through each subject
 for sub in "${subjects[@]}"; do

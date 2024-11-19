@@ -21,8 +21,7 @@ curr_script = f'{curr_dir}/fmri/pre_proc/register_1stlevel.py' ##This script reg
 sub_info = params.sub_info #run all subjects
 
 #sub_info = sub_info.head(4) #DELETE THIS WHEN YOU RUN THE WHOLE THING
-#sub_info = sub_info.iloc[3:] #to prevent redundancies I am adding this line since rows 1-4 were already preprocessed.
-target_subject = sub_info['sub'].iloc[13] #this is the subject that I want to run the script on. I can change this to any subject in the sub_info dataframe.
+target_subject = sub_info['sub'].iloc[14] #this is the subject that I want to run the script on. I can change this to any subject in the sub_info dataframe.
 
 print(target_subject) 
 
@@ -32,10 +31,11 @@ print(target_subject)
       #  subprocess.run(bash_cmd.split(),check = True)
     #except:
     #    print(f'failed on {sub}')
-            
+    
+      
 try:
     bash_cmd = f'python {curr_script} {target_subject}'
     subprocess.run(bash_cmd.split(),check = True)
 except:
     print(f'failed on {target_subject}')
-    
+

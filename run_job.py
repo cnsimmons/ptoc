@@ -6,7 +6,7 @@ import pdb
 import pandas as pd
 
 job_name = 'fsl_job'
-mem = 28
+mem = 32
 run_time = "1-00:00:00"
 
 pause_crit = 12 #number of jobs to request
@@ -29,7 +29,7 @@ sub_list = ['sub-064', 'sub-066', 'sub-069', 'sub-078', 'sub-079', 'sub-090',
  'sub-077', 'sub-089', 'sub-091', 'sub-109', 'sub-hemispace1004', 
  'sub-hemispace1007', 'sub-hemispace1006']
 
-
+sub_list = ['sub-084']
 print(sub_list)
 
 

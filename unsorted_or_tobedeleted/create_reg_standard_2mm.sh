@@ -43,11 +43,11 @@ process_run() {
 }
 
 # List of subjects to process
-subjects=("sub-057" "sub-059" "sub-064" "sub-067" "sub-068" "sub-071" "sub-083" "sub-084" "sub-085" "sub-087" "sub-088" "sub-093" "sub-094" "sub-095" "sub-096" "sub-097" "sub-107")
+subjects=("sub-084")
 
 # Process each subject's run-03
 for sub in "${subjects[@]}"; do
-    process_run "$sub" "03"
+    process_run "$sub" "01"
 done
 
 echo "All processing complete"

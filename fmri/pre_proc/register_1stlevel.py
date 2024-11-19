@@ -25,7 +25,7 @@ suf = params.suf
 thresh = params.thresh
 rois = params.rois
 
-runs = params.runs
+#runs = params.runs
 firstlevel_suf = ''
 
 cope = params.cope
@@ -40,27 +40,27 @@ task = 'loc' #tasks = ['loc']; ses = 1; runs = [1,2,3]
 
 #for task in task_info['task']:
 for task in ['loc']:
-    for run in runs:
-        
-        print (sub, run)
-        
-        run_dir = f'{sub_data}/derivatives/fsl/{task}/run-0{run}/1stLevel{firstlevel_suf}.feat'
-        filtered_func = f'{run_dir}/filtered_func_data.nii.gz'
-        out_func = f'{run_dir}/filtered_func_data_reg.nii.gz'
-        
-        zstat_func = f'{run_dir}/stats/zstat{cope}.nii.gz'
-        zstat_out = f'{run_dir}/stats/zstat{cope}_reg.nii.gz'
- 
-        #check if run exists
-        if os.path.exists(filtered_func):
-            #register filtered func
-            bash_cmd = f'flirt -in {filtered_func} -ref {anat} -out {out_func} -applyxfm -init {run_dir}/reg/example_func2standard.mat -interp trilinear'
-            subprocess.run(bash_cmd.split(), check=True)
-            
-            #register zstat
-            bash_cmd = f'flirt -in {zstat_func} -ref {anat} -out {zstat_out} -applyxfm -init {run_dir}/reg/example_func2standard.mat -interp trilinear'
-            subprocess.run(bash_cmd.split(), check=True)
+    #for run in runs:
+    run = 1    
+    print (sub, run)
+    
+    run_dir = f'{sub_data}/derivatives/fsl/{task}/run-0{run}/1stLevel{firstlevel_suf}.feat'
+    filtered_func = f'{run_dir}/filtered_func_data.nii.gz'
+    out_func = f'{run_dir}/filtered_func_data_reg.nii.gz'
+    
+    zstat_func = f'{run_dir}/stats/zstat{cope}.nii.gz'
+    zstat_out = f'{run_dir}/stats/zstat{cope}_reg.nii.gz'
 
-        else:
-            print(f'run {run} for task {task} does not exist for subject {sub}')
-            print(run_dir)
+    #check if run exists
+    if os.path.exists(filtered_func):
+        #register filtered func
+        bash_cmd = f'flirt -in {filtered_func} -ref {anat} -out {out_func} -applyxfm -init {run_dir}/reg/example_func2standard.mat -interp trilinear'
+        subprocess.run(bash_cmd.split(), check=True)
+        
+        #register zstat
+        bash_cmd = f'flirt -in {zstat_func} -ref {anat} -out {zstat_out} -applyxfm -init {run_dir}/reg/example_func2standard.mat -interp trilinear'
+        subprocess.run(bash_cmd.split(), check=True)
+
+    else:
+        print(f'run {run} for task {task} does not exist for subject {sub}')
+        print(run_dir)
