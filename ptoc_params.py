@@ -26,7 +26,8 @@ sub_info_OTC = pd.read_csv(f'{curr_dir}/sub_info_OTC.csv')
 task_info = pd.read_csv(f'/user_data/csimmon2/git_repos/ptoc/task_info{suf}.csv')
 
 hemis = ['left','right']
-rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aIPS', 'V1'] #adding V1 for early vision scramble and full hemispace || I need to add 'hemi' but at the moment I can't find the roi file so I'm leaving as is with just the added V1
+#rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aIPS', 'V1'] #adding V1 for early vision scramble and full hemispace || I need to add 'hemi' but at the moment I can't find the roi file so I'm leaving as is with just the added V1
+rois = ['LO', 'PFS', 'pIPS','aIPS'] 
 
 ##temporary
 #cope = '4' #3 #5 #short cut until I can recode scripts for task_info csv instead of the discrete || i thought 3 is for object and 5 is for scramble but 4 is for scramble and 5 is for word? Needs to verify. 
