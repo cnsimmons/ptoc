@@ -1,4 +1,0 @@
-Average Path Length: N/A
-Modularity: 0.06590833715495138
-Assortativity: N/A
-Average Clustering: 0.23917315609703363
