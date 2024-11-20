@@ -1,0 +1,1 @@
+{"duration": 9.614957094192505, "input_args": {"imgs": "'/lab_data/behrmannlab/vlad/hemispace/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz'", "n_confounds": "5", "percentile": "2.0", "detrend": "True", "mask_img": "None"}, "time": 1731956931.8495774}
