@@ -51,7 +51,7 @@ def make_psy_cov(runs, ss, raw_dir):
     """
     temp_dir = f'{raw_dir}/{ss}/ses-01'
     cov_dir = f'{temp_dir}/covs'
-    vols, tr = 341, 1.0
+    vols, tr = 321, 1.0 #(341? - it said 341 in the file but 321 was in vlad's script so... idk)
     times = np.arange(0, vols * tr, tr)
     full_cov = pd.DataFrame(columns=['onset', 'duration', 'value'])
 
