@@ -1,17 +1,16 @@
 # PPI_FC for ToolLoc data
+# runs 2nd level analyses for PPI and FC
 import sys
 sys.path.insert(0, '/user_data/csimmon2/git_repos/ptoc')
+import glob
 import pandas as pd
 import gc
-from nilearn import image, plotting, input_data, glm
+from nilearn import image, input_data
 import numpy as np
-from nilearn.input_data import NiftiMasker
 import nibabel as nib
 import os
-from nilearn.glm import first_level
-import warnings
-from nilearn import image, input_data
 from nilearn.glm.first_level import compute_regressor
+import warnings
 import ptoc_params as params
 import argparse
 
@@ -19,8 +18,11 @@ raw_dir = params.raw_dir
 results_dir = params.results_dir
 warnings.filterwarnings('ignore')
 
-# Analysis parameters
-run_num = 2
+# Set up run combinations like obj script
+run_num = 2  # Adjust based on your data
+runs = list(range(1, run_num + 1))
+run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) 
+              for rn2 in range(rn1 + 1, run_num + 1)]
 tr = 1
 vols = 341
 
@@ -60,6 +62,7 @@ def make_psy_cov(runs, ss, temp_dir):
                                     names=['onset', 'duration', 'value'])
             nontool_cov['value'] *= -1
 
+            # Adjust onsets for concatenated runs
             run_offset = vols * runs.index(run)
             tool_cov['onset'] += run_offset
             nontool_cov['onset'] += run_offset
@@ -72,13 +75,13 @@ def make_psy_cov(runs, ss, temp_dir):
     return psy
 
 def conduct_analyses(sub, rois=['LO', 'pIPS']):
-    """Main analysis function processing run combinations separately."""
+    import glob  # Add at top
+    
     temp_dir = f'{raw_dir}/{sub}/ses-01/derivatives/fsl/toolloc'
     roi_dir = f'{raw_dir}/{sub}/ses-01/derivatives/rois'
     out_dir = f'/user_data/csimmon2/temp_derivatives/{sub}/ses-01/derivatives'
     os.makedirs(f'{out_dir}/fc', exist_ok=True)
     
-    # Load brain mask
     mask_path = f'{raw_dir}/{sub}/ses-01/anat/{sub}_ses-01_T1w_brain_mask.nii.gz'
     whole_brain_mask = nib.load(mask_path)
     brain_masker = input_data.NiftiMasker(whole_brain_mask, standardize=True)
@@ -103,9 +106,6 @@ def conduct_analyses(sub, rois=['LO', 'pIPS']):
                 print(f'Both FC and PPI files exist for {rr} {hemi}. Skipping...')
                 continue
             
-            all_runs_fc = []
-            all_runs_ppi = []
-            
             for rc in run_combos:
                 print(f"Processing run combination: {rc}")
                 
@@ -125,7 +125,8 @@ def conduct_analyses(sub, rois=['LO', 'pIPS']):
                     correlations = np.arctanh(correlations)
                     correlations = correlations.reshape(1, -1)
                     correlation_img = brain_masker.inverse_transform(correlations)
-                    all_runs_fc.append(correlation_img)
+                    temp_fc_file = f'{out_dir}/fc/{sub}_{rr}_{hemi}_run{rc[0]}{rc[1]}_fc_temp.nii.gz'
+                    nib.save(correlation_img, temp_fc_file)
                 
                 if do_ppi:
                     psy = make_psy_cov(rc, sub, f'{raw_dir}/{sub}/ses-01')
@@ -140,23 +141,33 @@ def conduct_analyses(sub, rois=['LO', 'pIPS']):
                     correlations = np.arctanh(correlations)
                     correlations = correlations.reshape(1, -1)
                     correlation_img = brain_masker.inverse_transform(correlations)
-                    all_runs_ppi.append(correlation_img)
+                    temp_ppi_file = f'{out_dir}/fc/{sub}_{rr}_{hemi}_run{rc[0]}{rc[1]}_ppi_temp.nii.gz'
+                    nib.save(correlation_img, temp_ppi_file)
                 
+                del img4d, phys, brain_time_series, correlations, correlation_img
+                if 'ppi' in locals(): del ppi
                 gc.collect()
             
-            if do_fc and all_runs_fc:
-                mean_fc = image.mean_img(all_runs_fc)
+            # After processing all run combinations, average temp files
+            if do_fc:
+                temp_fc_files = sorted(glob.glob(f'{out_dir}/fc/{sub}_{rr}_{hemi}_run*_fc_temp.nii.gz'))
+                mean_fc = image.mean_img(temp_fc_files)
                 nib.save(mean_fc, fc_file)
+                for f in temp_fc_files: os.remove(f)
                 print(f'Saved FC result for {rr} {hemi}')
             
-            if do_ppi and all_runs_ppi:
-                mean_ppi = image.mean_img(all_runs_ppi)
+            if do_ppi:
+                temp_ppi_files = sorted(glob.glob(f'{out_dir}/fc/{sub}_{rr}_{hemi}_run*_ppi_temp.nii.gz'))
+                mean_ppi = image.mean_img(temp_ppi_files)
                 nib.save(mean_ppi, ppi_file)
+                for f in temp_ppi_files: os.remove(f)
                 print(f'Saved PPI result for {rr} {hemi}')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run PPI and FC analyses for a subject')
     parser.add_argument('subject', type=str, help='Subject ID (e.g., sub-spaceloc1002)')
+    parser.add_argument('--rois', nargs='+', default=['LO', 'pIPS'],
+                      help='List of ROIs to process (default: LO pIPS)')
     args = parser.parse_args()
     
-    conduct_analyses(args.subject)
+    conduct_analyses(args.subject, args.rois)
