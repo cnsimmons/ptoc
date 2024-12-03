@@ -164,10 +164,8 @@ def conduct_analyses(sub, rois=['LO', 'pIPS']):
                 print(f'Saved PPI result for {rr} {hemi}')
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Run PPI and FC analyses for a subject')
-    parser.add_argument('subject', type=str, help='Subject ID (e.g., sub-spaceloc1002)')
-    parser.add_argument('--rois', nargs='+', default=['LO', 'pIPS'],
-                      help='List of ROIs to process (default: LO pIPS)')
+    rois = ['LO', 'pIPS']  # Keep this hardcoded since it works
+    parser = argparse.ArgumentParser()
+    parser.add_argument('subject', type=str)
     args = parser.parse_args()
-    
-    conduct_analyses(args.subject, args.rois)
+    conduct_analyses(args.subject, rois)  # Just pass in the subject from args
