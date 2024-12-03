@@ -35,8 +35,6 @@ control_tasks = ['distloc','toolloc','depthloc']
 file_suf = '_supp'
 
 '''scan params'''
-tr = 1
-vols = 321
 
 whole_brain_mask = load_mni152_brain_mask()
 mni = load_mni152_template()
