@@ -1,0 +1,26 @@
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/input_data/__init__.py:23: FutureWarning: The import path 'nilearn.input_data' is deprecated in version 0.9. Importing from 'nilearn.input_data' will be possible at least until release 0.13.0. Please import from 'nilearn.maskers' instead.
+  warnings.warn(message, FutureWarning)
+Processing ROI: LO, Hemisphere: left
+Both FC and PPI files exist for LO left. Skipping...
+Processing ROI: LO, Hemisphere: right
+Both FC and PPI files exist for LO right. Skipping...
+Processing ROI: pIPS, Hemisphere: left
+Processing run combination: [1, 2]
+Saved FC result for pIPS left
+Saved PPI result for pIPS left
+Processing ROI: pIPS, Hemisphere: right
+Processing run combination: [1, 2]
+Traceback (most recent call last):
+  File "/user_data/csimmon2/git_repos/ptoc/tools/ppi_fc.py", line 171, in <module>
+    conduct_analyses(args.subject, rois)  # Just pass in the subject from args
+  File "/user_data/csimmon2/git_repos/ptoc/tools/ppi_fc.py", line 116, in conduct_analyses
+    curr_run = image.clean_img(curr_run, standardize=True)
+  File "/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/_utils/helpers.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py", line 1224, in clean_img
+    data = signal.clean(
+  File "/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/signal.py", line 680, in clean
+    signals = _standardize(signals, standardize=standardize,
+  File "/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/signal.py", line 76, in _standardize
+    signals = signals - signals.mean(axis=0)
+numpy.core._exceptions._ArrayMemoryError: Unable to allocate 16.2 GiB for an array with shape (341, 12779520) and data type float32

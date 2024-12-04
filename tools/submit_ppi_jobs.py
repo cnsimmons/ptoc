@@ -1,58 +1,67 @@
 import subprocess
-from glob import glob
 import os
 import time
 
-# SLURM configuration
-job_name = 'ppi_job'
-mem = "120GB"
-run_time = "1-00:00:00"
-pause_crit = 4  # number of jobs to request
-pause_time = 40  # how long to wait between jobs in minutes
+# Job parameters
+job_name = 'fc_ppi'
+mem = 120  # GB
+run_time = "72:00:00"  # 72 hours
 
-# Define spaceloc subjects
-subjects = [f'sub-spaceloc{i:04d}' for i in range(1003, 1013)]  # 1007-1012
-subjects.extend([f'sub-spaceloc{i}' for i in range(2013, 2018)])  # 2013-2017
+pause_crit = 3  # number of jobs to request before pausing
+pause_time = 10  # minutes to wait between job batches
 
-def setup_sbatch(job_name, subject):
+# Add import for params
+import sys
+sys.path.insert(0, '/user_data/csimmon2/git_repos/ptoc')
+import ptoc_params as params
+
+# Output directory for slurm logs
+slurm_out_dir = os.path.join('/user_data/csimmon2/git_repos/ptoc', 'slurm_out')
+os.makedirs(slurm_out_dir, exist_ok=True)
+
+# Path to analysis script - full path
+fc_script = '/user_data/csimmon2/git_repos/ptoc/tools/ppi_fc.py'
+
+def setup_sbatch(job_name, script_path, sub):
     sbatch_setup = f"""#!/bin/bash -l
-#SBATCH --job-name={job_name}
+
+#SBATCH --job-name={job_name}_{sub}
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=csimmon2@andrew.cmu.edu
 #SBATCH -p gpu
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=1
 #SBATCH --gres=gpu:1
-#SBATCH --mem={mem}
+#SBATCH --mem={mem}gb
 #SBATCH --time={run_time}
-#SBATCH --output=slurm_out/{job_name}_%j.out
+#SBATCH --output={os.path.join(slurm_out_dir, f"{job_name}_{sub}.out")}
 
 module load fsl-6.0.3
 conda activate fmri
-python tools/ppi_fc.py {subject}
+
+python {script_path} {sub}
 """
     return sbatch_setup
 
-def create_job(job_name, subject):
-    print(f"Creating job for {subject}")
-    with open(f"{job_name}.sh", "w") as f:
-        f.write(setup_sbatch(job_name, subject))
-    subprocess.run(['sbatch', f"{job_name}.sh"], check=True, capture_output=True, text=True)
-    os.remove(f"{job_name}.sh")
+def create_job(job_name, script_path, sub):
+    print(f"Creating job: {job_name}_{sub}")
+    
+    batch_filename = f"{job_name}_{sub}.sh"
+    with open(batch_filename, "w") as f:
+        f.write(setup_sbatch(job_name, script_path, sub))
 
-if __name__ == "__main__":
-    print(f"Processing {len(subjects)} subjects")
-    print(subjects)
-    
-    # Create output directory for SLURM logs
-    os.makedirs('slurm_out', exist_ok=True)
-    
-    # Submit jobs
-    n = 0
-    for sub in subjects:
-        job_name = f'ppi_{sub}'
-        create_job(job_name, sub)
-        n += 1
-        if n >= pause_crit:
-            print(f"Reached {pause_crit} jobs, waiting {pause_time} minutes...")
-            time.sleep(pause_time * 60)
-            n = 0
+    subprocess.run(['sbatch', batch_filename], check=True, capture_output=True, text=True)
+    os.remove(batch_filename)
+
+# Submit jobs
+n = 0
+sub_list = ['sub-spaceloc2013']  # Add your subjects here
+for sub in sub_list:
+    create_job(job_name, fc_script, sub)
+    n += 1
+
+    if n >= pause_crit:
+        print(f"Pausing for {pause_time} minutes...")
+        time.sleep(pause_time * 60)
+        n = 0
+
+print("All jobs submitted!")
