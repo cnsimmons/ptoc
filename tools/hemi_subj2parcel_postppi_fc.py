@@ -16,15 +16,14 @@ import os
 import subprocess
 
 # Set up directories and parameters
-study_dir = "/lab_data/behrmannlab/vlad/ptoc"
+study_dir = "/user_data/csimmon2/temp_derivatives"
 raw_dir = "/lab_data/behrmannlab/vlad/hemispace"  # Update this path
-results_dir = "/user_data/csimmon2/git_repos/ptoc/results"
+results_dir = "/user_data/csimmon2/git_repos/ptoc/results/tools"
 mni_brain = os.path.join(os.environ['FSLDIR'], "data/standard/MNI152_T1_2mm_brain.nii.gz")
 
 # subjects
-sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
-subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-#subs = ['sub-107']
+sub_info = pd.read_csv(f'{curr_dir}/sub_info_tool.csv')
+subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
 
 for sub in subs:
     print(f"Processing subject: {sub}")
@@ -36,13 +35,9 @@ for sub in subs:
     if not os.path.isfile(anat_brain):
         print(f"Anatomical image not found for {sub}. Exiting...")
         exit(1)
-
-    # Create output directories if they don't exist
-    #os.makedirs(f"{out_dir}/fc_mni", exist_ok=True) #object
-    os.makedirs(f"{out_dir}/scramble", exist_ok=True) #scrabmle
     
     # Generate transformation matrix if it doesn't exist
-    anat2mni_mat = f"{out_dir}/anat2mni.mat"
+    anat2mni_mat = f"{out_dir}/fc/anat2mni.mat"
     if not os.path.isfile(anat2mni_mat):
         print(f"Generating transformation matrix for {sub}")
         subprocess.run([
@@ -63,8 +58,8 @@ for sub in subs:
         for hemi in ['left', 'right']:
             
             # FC to MNI
-            fc_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_loc_fc.nii.gz"
-            fc_mni = f"{out_dir}/fc_mni/{sub}_{roi}_{hemi}_loc_fc_mni.nii.gz"
+            fc_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_toolloc_fc_native.nii.gz"
+            fc_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_toolloc_fc_mni.nii.gz"
             
             if os.path.isfile(fc_native) and not os.path.isfile(fc_mni):
                 print(f"Registering FC for {sub}, ROI {roi}, Hemisphere {hemi} to MNI space")
@@ -83,8 +78,8 @@ for sub in subs:
                 print(f"FC file not found for {sub}, ROI {roi}, Hemisphere {hemi}")
 
             # PPI to MNI
-            ppi_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_loc_ppi.nii.gz"
-            ppi_mni = f"{out_dir}/fc_mni/{sub}_{roi}_{hemi}_loc_ppi_mni.nii.gz"
+            ppi_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_toolloc_ppi_native.nii.gz"
+            ppi_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_toolloc_ppi_mni.nii.gz"
             if os.path.isfile(ppi_native) and not os.path.isfile(ppi_mni):
                 print(f"Registering PPI for {sub}, ROI {roi}, Hemisphere {hemi} to MNI space")
                 subprocess.run([
