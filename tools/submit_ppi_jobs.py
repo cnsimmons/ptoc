@@ -1,3 +1,4 @@
+#this never worked - i kept clearing memory but it kept hitting out of memory errors
 import subprocess
 import os
 import time

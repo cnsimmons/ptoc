@@ -1,3 +1,4 @@
+# works unreliably, but is a good starting point for PPI and FC analyses
 # PPI_FC for ToolLoc data
 # runs 2nd level analyses for PPI and FC
 import sys
