@@ -30,7 +30,7 @@ hemis = ['left','right']
 rois = ['LO', 'PFS', 'pIPS','aIPS'] 
 
 ##temporary
-#cope = '4' #3 #5 #short cut until I can recode scripts for task_info csv instead of the discrete || i thought 3 is for object and 5 is for scramble but 4 is for scramble and 5 is for word? Needs to verify. 
+#cope = '3' # 3 is object, 5 is scramble
 #task_info = 'loc' #pre 2024# 
 #cond = '' #'object' #'scramble'
 task = 'toolloc'
