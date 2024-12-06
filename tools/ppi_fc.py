@@ -1,5 +1,5 @@
-# works unreliably, but is a good starting point for PPI and FC analyses
-# PPI_FC for ToolLoc data
+#fc_ppi native space with hemispheres
+
 # runs 2nd level analyses for PPI and FC
 import sys
 sys.path.insert(0, '/user_data/csimmon2/git_repos/ptoc')
@@ -19,42 +19,39 @@ raw_dir = params.raw_dir
 results_dir = params.results_dir
 warnings.filterwarnings('ignore')
 
-# Set up run combinations like obj script
-run_num = 2  # Adjust based on your data
-runs = list(range(1, run_num + 1))
-run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) 
-              for rn2 in range(rn1 + 1, run_num + 1)]
 tr = 1
 vols = 341
 
-def extract_roi_timeseries(img, roi_mask, hemisphere='left'):
-    """Extract ROI timeseries using parcels and hemisphere masking."""
-    roi_data = roi_mask.get_fdata()
-    mid_x = roi_data.shape[0] // 2
-    
-    hemi_mask = np.zeros_like(roi_data)
-    if hemisphere == 'left':
-        hemi_mask[:mid_x, :, :] = 1
-    else:
-        hemi_mask[mid_x:, :, :] = 1
-    
-    combined_mask = roi_data * hemi_mask
-    mask_img = nib.Nifti1Image(combined_mask, roi_mask.affine)
-    
-    roi_masker = input_data.NiftiMasker(mask_img, standardize=True)
-    seed_time_series = roi_masker.fit_transform(img)
-    return np.mean(seed_time_series, axis=1).reshape(-1, 1)
+# Explicitly set the path to sub_info.csv
+sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'  # Adjust this path as needed
 
-def make_psy_cov(runs, ss, temp_dir):
-    """Create psychological covariates for specified runs."""
+# Define subjects and ROIs
+sub_info = pd.read_csv(sub_info_path)
+subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
+rois = ['pIPS', 'LO']
+hemispheres = ['left', 'right']
+
+run_num = 2
+runs = list(range(1, run_num + 1))
+run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) for rn2 in range(rn1 + 1, run_num + 1)]
+
+def extract_roi_sphere(img, coords):
+    roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
+    seed_time_series = roi_masker.fit_transform(img)
+    phys = np.mean(seed_time_series, axis=1).reshape(-1, 1)
+    return phys
+
+def make_psy_cov(runs, ss):
+    temp_dir = f'{raw_dir}/{ss}/ses-01'
     cov_dir = f'{temp_dir}/covs'
-    times = np.arange(0, vols * len(runs), tr)
+    vols, tr = 184, 2.0
+    times = np.arange(0, vols * tr, tr)
     full_cov = pd.DataFrame(columns=['onset', 'duration', 'value'])
 
-    for run in runs:
+    for rn in runs:
         ss_num = ss.split('-')[1].replace('spaceloc', '')
         tool_cov_file = f'{cov_dir}/ToolLoc_spaceloc{ss_num}_run{run}_tool.txt'
-        nontool_cov_file = f'{cov_dir}/ToolLoc_spaceloc{ss_num}_run{run}_non_tool.txt'
+        nontool_cov_file = f'{cov_dir}/ToolLoc_spaceloc{ss_num}_run{run}_scramble.txt'
 
         if os.path.exists(tool_cov_file) and os.path.exists(nontool_cov_file):
             tool_cov = pd.read_csv(tool_cov_file, sep='\t', header=None, 
@@ -75,98 +72,116 @@ def make_psy_cov(runs, ss, temp_dir):
     psy, _ = compute_regressor(cov.T, 'spm', times)
     return psy
 
-def conduct_analyses(sub, rois=['LO', 'pIPS']):
-    import glob  # Add at top
-    
-    temp_dir = f'{raw_dir}/{sub}/ses-01/derivatives/fsl/toolloc'
-    roi_dir = f'{raw_dir}/{sub}/ses-01/derivatives/rois'
-    out_dir = f'/user_data/csimmon2/temp_derivatives/{sub}/ses-01/derivatives'
-    os.makedirs(f'{out_dir}/fc', exist_ok=True)
-    
-    mask_path = f'{raw_dir}/{sub}/ses-01/anat/{sub}_ses-01_T1w_brain_mask.nii.gz'
-    whole_brain_mask = nib.load(mask_path)
-    brain_masker = input_data.NiftiMasker(whole_brain_mask, standardize=True)
-
-    run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1) 
-                  for rn2 in range(rn1 + 1, run_num + 1)]
-
-    for rr in rois:
-        roi_path = f'{roi_dir}/parcels/{rr}.nii.gz'
-        roi_img = nib.load(roi_path)
+def conduct_analyses():
+    for ss in subs:
+        print(f"Processing subject: {ss}")
         
-        for hemi in ['left', 'right']:
-            print(f"Processing ROI: {rr}, Hemisphere: {hemi}")
+        temp_dir = f'{raw_dir}/{sub}/ses-01/derivatives/fsl/toolloc'
+        roi_dir = f'{raw_dir}/{sub}/ses-01/derivatives/rois'
+        out_dir = f'/user_data/csimmon2/temp_derivatives/{sub}/ses-01/derivatives'
+        os.makedirs(f'{out_dir}/fc', exist_ok=True)
+        
+        mask_path = f'{raw_dir}/{sub}/ses-01/anat/{sub}_ses-01_T1w_brain_mask.nii.gz'
+        whole_brain_mask = nib.load(mask_path)
+        brain_masker = input_data.NiftiMasker(whole_brain_mask, standardize=True)
             
-            fc_file = f'{out_dir}/fc/{sub}_{rr}_{hemi}_toolloc_fc_native.nii.gz'
-            ppi_file = f'{out_dir}/fc/{sub}_{rr}_{hemi}_toolloc_ppi_native.nii.gz'
-            
-            do_fc = not os.path.exists(fc_file)
-            do_ppi = not os.path.exists(ppi_file)
-            
-            if not do_fc and not do_ppi:
-                print(f'Both FC and PPI files exist for {rr} {hemi}. Skipping...')
-                continue
-            
-            for rc in run_combos:
-                print(f"Processing run combination: {rc}")
-                
-                filtered_list = []
-                for run in rc:
-                    curr_run = image.load_img(
-                        f'{temp_dir}/run-0{run}/1stLevel.feat/filtered_func_data_reg.nii.gz')
-                    curr_run = image.clean_img(curr_run, standardize=True)
-                    filtered_list.append(curr_run)
+        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere_tools.csv') #need to create this file
+        
+        out_dir = f'/user_data/csimmon2/temp_derivatives/{sub}/ses-01/derivatives'
+        os.makedirs(f'{out_dir}/fc', exist_ok=True)
+        
+        # subject-specific brain mask
+        def get_subject_mask(ss):
+            mask_path  = f'{raw_dir}/{ss}/ses-01/anat/{ss}_ses-01_T1w_brain_mask.nii.gz'
+            return nib.load(mask_path)
+        
+        # Load subject-specific mask
+        whole_brain_mask = get_subject_mask(ss)
+        brain_masker = NiftiMasker(whole_brain_mask, smoothing_fwhm=0, standardize=True)
 
-                img4d = image.concat_imgs(filtered_list)
-                phys = extract_roi_timeseries(img4d, roi_img, hemisphere=hemi)
-                brain_time_series = brain_masker.fit_transform(img4d)
-                
-                if do_fc:
-                    correlations = np.dot(brain_time_series.T, phys) / phys.shape[0]
-                    correlations = np.arctanh(correlations)
-                    correlations = correlations.reshape(1, -1)
-                    correlation_img = brain_masker.inverse_transform(correlations)
-                    temp_fc_file = f'{out_dir}/fc/{sub}_{rr}_{hemi}_run{rc[0]}{rc[1]}_fc_temp.nii.gz'
-                    nib.save(correlation_img, temp_fc_file)
-                
-                if do_ppi:
-                    psy = make_psy_cov(rc, sub, f'{raw_dir}/{sub}/ses-01')
+        for tsk in ['ToolLoc']:
+            for rr in rois:
+                for hemi in hemispheres:
+                    roi_start_time = time.time()
+                    print(f"Processing ROI: {rr}, Hemisphere: {hemi}")
                     
-                    min_length = min(psy.shape[0], phys.shape[0])
-                    psy = psy[:min_length]
-                    phys = phys[:min_length]
-                    brain_time_series = brain_time_series[:min_length]
+                    fc_file = f'{out_dir}/fc/{ss}_{rr}_{hemi}_{tsk}_fc_tool.nii.gz' # object
+                    ppi_file = f'{out_dir}/fc/{ss}_{rr}_{hemi}_{tsk}_ppi_tool-scramble.nii.gz'
                     
-                    ppi = psy * phys
-                    correlations = np.dot(brain_time_series.T, ppi) / ppi.shape[0]
-                    correlations = np.arctanh(correlations)
-                    correlations = correlations.reshape(1, -1)
-                    correlation_img = brain_masker.inverse_transform(correlations)
-                    temp_ppi_file = f'{out_dir}/fc/{sub}_{rr}_{hemi}_run{rc[0]}{rc[1]}_ppi_temp.nii.gz'
-                    nib.save(correlation_img, temp_ppi_file)
-                
-                del img4d, phys, brain_time_series, correlations, correlation_img
-                if 'ppi' in locals(): del ppi
-                gc.collect()
-            
-            # After processing all run combinations, average temp files
-            if do_fc:
-                temp_fc_files = sorted(glob.glob(f'{out_dir}/fc/{sub}_{rr}_{hemi}_run*_fc_temp.nii.gz'))
-                mean_fc = image.mean_img(temp_fc_files)
-                nib.save(mean_fc, fc_file)
-                for f in temp_fc_files: os.remove(f)
-                print(f'Saved FC result for {rr} {hemi}')
-            
-            if do_ppi:
-                temp_ppi_files = sorted(glob.glob(f'{out_dir}/fc/{sub}_{rr}_{hemi}_run*_ppi_temp.nii.gz'))
-                mean_ppi = image.mean_img(temp_ppi_files)
-                nib.save(mean_ppi, ppi_file)
-                for f in temp_ppi_files: os.remove(f)
-                print(f'Saved PPI result for {rr} {hemi}')
-
-if __name__ == "__main__":
-    rois = ['LO', 'pIPS']  # Keep this hardcoded since it works
-    parser = argparse.ArgumentParser()
-    parser.add_argument('subject', type=str)
-    args = parser.parse_args()
-    conduct_analyses(args.subject, rois)  # Just pass in the subject from args
+                    do_fc = not os.path.exists(fc_file)
+                    do_ppi = not os.path.exists(ppi_file)
+                    do_ppi = True
+                    
+                    if not do_fc and not do_ppi:
+                        print(f'Both FC and PPI files for {rr} {hemi} already exist. Skipping...')
+                        continue
+                    
+                    all_runs_fc = []
+                    all_runs_ppi = []
+                    
+                    for rcn, rc in enumerate(run_combos):
+                        combo_start_time = time.time()
+                        print(f"Completed run combination {rc} for {rr} {hemi} in {time.time() - combo_start_time:.2f} seconds")
+                        curr_coords = roi_coords[(roi_coords['index'] == rcn) & 
+                                                 (roi_coords['task'] == tsk) & 
+                                                 (roi_coords['roi'] == rr) &
+                                                 (roi_coords['hemisphere'] == hemi)]
+                        
+                        if curr_coords.empty:
+                            print(f"No coordinates found for {rr}, {hemi}, run combo {rc}")
+                            continue
+                        
+                        coords = curr_coords[['x', 'y', 'z']].values.tolist()[0]
+                        
+                        filtered_list = [image.clean_img(image.load_img(f'{temp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz'), standardize=True) for rn in rc]
+                        img4d = image.concat_imgs(filtered_list)
+                        
+                        phys = extract_roi_sphere(img4d, coords)
+                        
+                        # Ensure phys length matches the number of volumes
+                        if phys.shape[0] > 184 * len(rc):
+                            phys = phys[:184 * len(rc)]
+                        
+                        brain_time_series = brain_masker.fit_transform(img4d)
+                        
+                        if do_fc:
+                            # FC Analysis
+                            correlations = np.dot(brain_time_series.T, phys) / phys.shape[0]
+                            correlations = np.arctanh(correlations.ravel())
+                            correlation_img = brain_masker.inverse_transform(correlations)
+                            all_runs_fc.append(correlation_img)
+                        
+                        if do_ppi:
+                            # PPI Analysis
+                            psy = make_psy_cov(rc, ss)  # Generate psy for the current run combination
+                            
+                            # Ensure psy length matches phys
+                            if psy.shape[0] > phys.shape[0]:
+                                psy = psy[:phys.shape[0]]
+                            elif psy.shape[0] < phys.shape[0]:
+                                phys = phys[:psy.shape[0]]
+                                brain_time_series = brain_time_series[:psy.shape[0]]
+                            
+                            ppi_regressor = phys * psy
+                            ppi_correlations = np.dot(brain_time_series.T, ppi_regressor) / ppi_regressor.shape[0]
+                            ppi_correlations = np.arctanh(ppi_correlations.ravel())
+                            ppi_img = brain_masker.inverse_transform(ppi_correlations)
+                            all_runs_ppi.append(ppi_img)
+                        
+                        combo_end_time = time.time()
+                        print(f"Completed run combination {rc} for {rr} {hemi} in {time.time() - combo_start_time:.2f} seconds")
+                    
+                    if do_fc:
+                        mean_fc = image.mean_img(all_runs_fc)
+                        nib.save(mean_fc, fc_file)
+                        print(f'Saved FC result for {rr} {hemi}')
+                    
+                    if do_ppi:
+                        mean_ppi = image.mean_img(all_runs_ppi)
+                        nib.save(mean_ppi, ppi_file)
+                        print(f'Saved PPI result for {rr} {hemi}')
+                        
+                roi_end_time = time.time()
+                print(f"Completed {rr} {hemi} in {roi_end_time - roi_start_time:.2f} seconds")
+# Call the function
+conduct_analyses()
