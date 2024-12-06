@@ -67,6 +67,7 @@ def extract_roi_coords():
         exp_dir = f'{sub_dir}/derivatives/fsl'
         parcel_dir = f'{roi_dir}/parcels'
         roi_coords = pd.DataFrame(columns = ['index','task','roi','x','y','z'])
+        
         for rcn, rc in enumerate(run_combos): #determine which runs to use for creating ROIs
             roi_runs = [ele for ele in runs if ele not in rc]
 
