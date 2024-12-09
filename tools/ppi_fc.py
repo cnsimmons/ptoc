@@ -134,110 +134,171 @@ def extract_roi_sphere(img, coords):
     seed_time_series = roi_masker.fit_transform(img)
     return np.mean(seed_time_series, axis=1).reshape(-1, 1)
 
-def make_psy_cov(run, ss, zstat_num):
-    cov_dir = f'{raw_dir}/hemispace/{ss}/ses-01/covs'
+def make_psy_cov(run, ss):
+    """Generate psychological covariates combining tool and scramble conditions"""
+    cov_dir = f'{raw_dir}/{ss}/ses-01/covs'
     times = np.arange(0, vols * tr, tr)
     
-    ss_num = ss.split('-')[1].replace('toolloc', '')
-    tool_cov = pd.read_csv(f'{cov_dir}/ToolLoc_toolloc{ss_num}_run{run}_zstat{zstat_num}.txt', 
+    # Load tool condition
+    tool_cov = pd.read_csv(f'{cov_dir}/ToolLoc_spaceloc{ss}_run{run}_tool.txt', 
                           sep='\t', header=None, names=['onset', 'duration', 'value'])
     
-    full_cov = tool_cov.sort_values(by=['onset'])
+    # Load and negate scramble condition
+    scramble_cov = pd.read_csv(f'{cov_dir}/ToolLoc_spaceloc{ss}_run{run}_scramble.txt', 
+                              sep='\t', header=None, names=['onset', 'duration', 'value'])
+    scramble_cov['value'] *= -1
+    
+    # Combine conditions
+    full_cov = pd.concat([tool_cov, scramble_cov])
+    full_cov = full_cov.sort_values(by=['onset'])
+    
+    # Create regressor
     cov = full_cov.to_numpy()
     psy, _ = compute_regressor(cov.T, 'spm', times)
     return psy
 
+def extract_roi_sphere(img, coords):
+    """Extract mean time series from spherical ROI"""
+    roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
+    seed_time_series = roi_masker.fit_transform(img)
+    return np.mean(seed_time_series, axis=1).reshape(-1, 1)
+
 def conduct_analyses():
+    """Conduct PPI analyses for all subjects and ROIs"""
     logger = setup_logging()
     
     for ss in subs:
         logger.info(f"Processing subject: {ss}")
         
-        temp_dir = f'{raw_dir}/hemispace/{ss}/ses-01/derivatives/fsl/toolloc'
+        temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/toolloc'
+        mask_path = f'{raw_dir}/{ss}/ses-01/anat/{ss}_ses-01_T1w_brain_mask.nii.gz'
         out_dir = f'/user_data/csimmon2/temp_derivatives/{ss}/ses-01/derivatives'
         os.makedirs(f'{out_dir}/fc', exist_ok=True)
-        roi_coords = pd.read_csv(f'{out_dir}/spheres/sphere_coords_hemisphere_tools.csv')
+        
+        roi_coords = pd.read_csv(f'{output_dir}/roi_coordinates.csv')
         
         try:
-            mask_path = f'{raw_dir}/hemispace/{ss}/ses-01/anat/{ss}_ses-01_T1w_brain_mask.nii.gz'
             whole_brain_mask = nib.load(mask_path)
             brain_masker = NiftiMasker(whole_brain_mask, standardize=True)
             
             for roi in rois:
                 for hemi in hemispheres:
-                    for contrast in ['object', 'scramble']:
-                        logger.info(f"Processing {roi} {hemi} {contrast}")
+                    hemi_prefix = hemi[0]
+                    logger.info(f"Processing {roi} {hemi}")
+                    
+                    fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_fc.nii.gz'
+                    ppi_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_ppi.nii.gz'
+                    
+                    all_runs_fc = []
+                    all_runs_ppi = []
+                    
+                    for rcn, rc in enumerate(run_combos):
+                        roi_run = rc[0]
+                        analysis_run = rc[1]
                         
-                        fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_{contrast}_fc.nii.gz'
-                        ppi_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_{contrast}_ppi.nii.gz'
-                        
-                        all_runs_fc = []
-                        all_runs_ppi = []
-                        
-                        for rcn, rc in enumerate(run_combos):
-                            roi_run = rc[0]
-                            analysis_run = rc[1]
+                        try:
+                            curr_coords = roi_coords[
+                                (roi_coords['subject'] == ss) &
+                                (roi_coords['run_combo'] == rcn) & 
+                                (roi_coords['roi'] == f"{hemi_prefix}{roi}") &
+                                (roi_coords['hemisphere'] == hemi_prefix)
+                            ]
                             
-                            try:
-                                curr_coords = roi_coords[
-                                    (roi_coords['index'] == rcn) & 
-                                    (roi_coords['task'] == f'ToolLoc_{contrast}') & 
-                                    (roi_coords['roi'] == roi) &
-                                    (roi_coords['hemisphere'] == hemi)
-                                ]
-                                
-                                if curr_coords.empty:
-                                    continue
-                                    
-                                coords = curr_coords[['x', 'y', 'z']].values.tolist()[0]
-                                
-                                img = image.clean_img(
-                                    image.load_img(f'{temp_dir}/run-0{analysis_run}/1stLevel.feat/filtered_func_data_reg.nii.gz'),
-                                    standardize=True
-                                )
-                                
-                                phys = extract_roi_sphere(img, coords)
-                                brain_time_series = brain_masker.fit_transform(img)
-                                
-                                # FC Analysis
-                                correlations = np.dot(brain_time_series.T, phys) / phys.shape[0]
-                                correlations = np.arctanh(correlations.ravel())
-                                correlation_img = brain_masker.inverse_transform(correlations)
-                                all_runs_fc.append(correlation_img)
-                                
-                                # PPI Analysis
-                                zstat_num = 3 if contrast == 'object' else 8
-                                psy = make_psy_cov(analysis_run, ss, zstat_num)
-                                
-                                min_length = min(psy.shape[0], phys.shape[0], brain_time_series.shape[0])
-                                psy = psy[:min_length]
-                                phys = phys[:min_length]
-                                brain_time_series = brain_time_series[:min_length]
-                                
-                                ppi_regressor = phys * psy
-                                ppi_correlations = np.dot(brain_time_series.T, ppi_regressor) / ppi_regressor.shape[0]
-                                ppi_correlations = np.arctanh(ppi_correlations.ravel())
-                                ppi_img = brain_masker.inverse_transform(ppi_correlations)
-                                all_runs_ppi.append(ppi_img)
-                            
-                            except Exception as e:
-                                logger.error(f"Error in run combo {rc}: {str(e)}")
+                            if curr_coords.empty:
+                                logger.warning(f"No coordinates found for {ss} {roi} {hemi} run_combo {rcn}")
                                 continue
+                                
+                            coords = [
+                                curr_coords['x'].values[0],
+                                curr_coords['y'].values[0],
+                                curr_coords['z'].values[0]
+                            ]
+                            
+                            img = image.clean_img(
+                                image.load_img(f'{temp_dir}/run-0{analysis_run}/1stLevel.feat/filtered_func_data_reg.nii.gz'),
+                                standardize=True
+                            )
+                            
+                            phys = extract_roi_sphere(img, coords)
+                            brain_time_series = brain_masker.fit_transform(img)
+                            
+                            # FC Analysis
+                            correlations = np.dot(brain_time_series.T, phys) / phys.shape[0]
+                            correlations = np.arctanh(correlations.ravel())
+                            correlation_img = brain_masker.inverse_transform(correlations)
+                            all_runs_fc.append(correlation_img)
+                            
+                            # PPI Analysis
+                            psy = make_psy_cov(analysis_run, ss)
+                            
+                            min_length = min(psy.shape[0], phys.shape[0], brain_time_series.shape[0])
+                            psy = psy[:min_length]
+                            phys = phys[:min_length]
+                            
+                            confounds = pd.DataFrame({
+                                'psy': psy[:,0],
+                                'phys': phys[:,0]
+                            })
+                            
+                            brain_time_series = brain_masker.fit_transform(img, confounds=[confounds])
+                            
+                            ppi_regressor = phys * psy
+                            ppi_correlations = np.dot(brain_time_series.T, ppi_regressor) / ppi_regressor.shape[0]
+                            ppi_correlations = np.arctanh(ppi_correlations.ravel())
+                            ppi_img = brain_masker.inverse_transform(ppi_correlations)
+                            all_runs_ppi.append(ppi_img)
                         
-                        if all_runs_fc:
-                            mean_fc = image.mean_img(all_runs_fc)
-                            nib.save(mean_fc, fc_file)
-                        
-                        if all_runs_ppi:
-                            mean_ppi = image.mean_img(all_runs_ppi)
-                            nib.save(mean_ppi, ppi_file)
+                        except Exception as e:
+                            logger.error(f"Error in run combo {rc}: {str(e)}")
+                            continue
+                    
+                    if all_runs_fc:
+                        mean_fc = image.mean_img(all_runs_fc)
+                        nib.save(mean_fc, fc_file)
+                    
+                    if all_runs_ppi:
+                        mean_ppi = image.mean_img(all_runs_ppi)
+                        nib.save(mean_ppi, ppi_file)
         
         except Exception as e:
             logger.error(f"Error processing subject {ss}: {str(e)}")
             continue
 
+def create_summary():
+    """Extract average PPI values for each ROI pair"""
+    
+    summary_df = pd.DataFrame(columns=['sub'] + [f"{h}{r}" for h in hemispheres for r in rois])
+    
+    for ss in subs:
+        roi_means = [ss]
+        
+        # For each target ROI
+        for target_hemi in hemispheres:
+            for target_roi in rois:
+                roi = f"{target_hemi[0]}{target_roi}"
+                
+                try:
+                    # Load ROI mask
+                    roi_mask = image.load_img(f'{raw_dir}/{ss}/ses-01/derivatives/rois/{roi}.nii.gz')
+                    roi_masker = input_data.NiftiMasker(roi_mask)
+                    
+                    # Load PPI map
+                    ppi_img = image.load_img(f'{out_dir}/sub-{ss}_{roi}_fc.nii.gz')
+                    
+                    # Extract mean value
+                    acts = roi_masker.fit_transform(ppi_img)
+                    roi_means.append(acts.mean())
+                    
+                except Exception as e:
+                    roi_means.append(np.nan)
+                    
+        summary_df = summary_df.append(pd.Series(roi_means, index=summary_df.columns), ignore_index=True)
+    
+    summary_df.to_csv(f'{results_dir}/roi_ppi_summary.csv', index=False)
+    
 if __name__ == "__main__":
     warnings.filterwarnings('ignore')
     logger = setup_logging()
     #extract_roi_coords() # completed and saved to roi_coordinates.csv
+    create_summary()
     conduct_analyses()
