@@ -140,11 +140,11 @@ def make_psy_cov(run, ss):
     times = np.arange(0, vols * tr, tr)
     
     # Load tool condition
-    tool_cov = pd.read_csv(f'{cov_dir}/ToolLoc_spaceloc{ss}_run{run}_tool.txt', 
+    tool_cov = pd.read_csv(f'{cov_dir}/ToolLoc_spaceloc{str(ss).replace("sub-spaceloc","")}_run{run}_tool.txt', 
                           sep='\t', header=None, names=['onset', 'duration', 'value'])
     
     # Load and negate scramble condition
-    scramble_cov = pd.read_csv(f'{cov_dir}/ToolLoc_spaceloc{ss}_run{run}_scramble.txt', 
+    scramble_cov = pd.read_csv(f'{cov_dir}/ToolLoc_spaceloc{str(ss).replace("sub-spaceloc","")}_run{run}_scramble.txt', 
                               sep='\t', header=None, names=['onset', 'duration', 'value'])
     scramble_cov['value'] *= -1
     
@@ -230,10 +230,6 @@ def conduct_analyses():
                             
                             # PPI Analysis
                             psy = make_psy_cov(analysis_run, ss)
-                            
-                            min_length = min(psy.shape[0], phys.shape[0], brain_time_series.shape[0])
-                            psy = psy[:min_length]
-                            phys = phys[:min_length]
                             
                             confounds = pd.DataFrame({
                                 'psy': psy[:,0],
