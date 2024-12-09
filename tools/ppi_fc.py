@@ -55,10 +55,6 @@ roi_dir = os.path.join(raw_dir, '{sub}/ses-01/derivatives/rois')
 parcel_dir = os.path.join(raw_dir, '{sub}/ses-01/derivatives/rois/parcels')
 output_dir = '/user_data/csimmon2/git_repos/ptoc/tools'
 
-# Read subject information and filter for spaceloc
-sub_info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv')
-subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
-
 # Define parameters
 parcels = ['pIPS', 'LO', 'PFS', 'aIPS']
 run_combos = [[1, 2], [2, 1]]
