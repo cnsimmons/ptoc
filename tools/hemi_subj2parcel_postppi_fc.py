@@ -1,21 +1,10 @@
-#run to start
-curr_dir = '/user_data/csimmon2/git_repos/ptoc'
-
-import sys
-sys.path.insert(0, curr_dir)
-
 import os
+import sys
 import subprocess
 import pandas as pd
 
-## run in terminal
-# module load fsl-6.0.3
-#python analyses/subj2parcel.py
-
-import os
-import subprocess
-
 # Set up directories and parameters
+curr_dir = '/user_data/csimmon2/git_repos/ptoc'
 study_dir = "/user_data/csimmon2/temp_derivatives"
 raw_dir = "/lab_data/behrmannlab/vlad/hemispace"
 results_dir = "/user_data/csimmon2/git_repos/ptoc/results/tools"
@@ -29,14 +18,28 @@ for sub in subs:
     print(f"Processing subject: {sub}")
     sub_dir = f"{study_dir}/{sub}/ses-01"
     out_dir = f"{sub_dir}/derivatives"
-    temp_dir = f'{raw_dir}/{sub}/ses-01/derivatives/fsl/toolloc'
-    
-    # Use existing transformation matrix from functional preprocessing
-    anat2mni_mat = f"{temp_dir}/run-01/1stLevel.feat/reg/example_func2standard.mat"
+    anat_brain = f"{raw_dir}/{sub}/ses-01/anat/{sub}_ses-01_T1w_brain.nii.gz"
 
-    if not os.path.isfile(anat2mni_mat):
-        print(f"Transform matrix not found at {anat2mni_mat} for {sub}. Skipping...")
+    # Check if anatomical image exists
+    if not os.path.isfile(anat_brain):
+        print(f"Anatomical image not found for {sub}. Skipping...")
         continue
+    
+    # Always generate a new transformation matrix
+    anat2mni_mat = f"{out_dir}/fc/anat2mni.mat"
+    print(f"Generating transformation matrix for {sub}")
+    subprocess.run([
+        'flirt',
+        '-in', anat_brain,
+        '-ref', mni_brain,
+        '-omat', anat2mni_mat,
+        '-bins', '256',
+        '-cost', 'corratio',
+        '-searchrx', '-90', '90',
+        '-searchry', '-90', '90',
+        '-searchrz', '-90', '90',
+        '-dof', '12'
+    ], check=True)
 
     # Loop through ROIs and hemispheres
     rois = ['pIPS', 'LO', 'PFS', 'aIPS']
@@ -44,11 +47,11 @@ for sub in subs:
     
     for roi in rois:
         for hemi in hemispheres:
-            # Match the file naming from your PPI/FC script
+            # FC to MNI - force rerun
             fc_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_fc.nii.gz"
             fc_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_fc_mni.nii.gz"
             
-            if os.path.isfile(fc_native) and not os.path.isfile(fc_mni):
+            if os.path.isfile(fc_native):
                 print(f"Registering FC for {sub}, ROI {roi}, Hemisphere {hemi} to MNI space")
                 subprocess.run([
                     'flirt',
@@ -59,16 +62,14 @@ for sub in subs:
                     '-init', anat2mni_mat,
                     '-interp', 'trilinear'
                 ], check=True)
-            elif os.path.isfile(fc_mni):
-                print(f"FC MNI file already exists for {sub}, ROI {roi}, Hemisphere {hemi}")
             else:
                 print(f"FC file not found for {sub}, ROI {roi}, Hemisphere {hemi}")
 
-            # Match the PPI file naming from your script
+            # PPI to MNI - force rerun
             ppi_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_ppi.nii.gz"
             ppi_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_ppi_mni.nii.gz"
             
-            if os.path.isfile(ppi_native) and not os.path.isfile(ppi_mni):
+            if os.path.isfile(ppi_native):
                 print(f"Registering PPI for {sub}, ROI {roi}, Hemisphere {hemi} to MNI space")
                 subprocess.run([
                     'flirt',
@@ -79,8 +80,6 @@ for sub in subs:
                     '-init', anat2mni_mat,
                     '-interp', 'trilinear'
                 ], check=True)
-            elif os.path.isfile(ppi_mni):
-                print(f"PPI MNI file already exists for {sub}, ROI {roi}, Hemisphere {hemi}")
             else:
                 print(f"PPI file not found for {sub}, ROI {roi}, Hemisphere {hemi}")
 

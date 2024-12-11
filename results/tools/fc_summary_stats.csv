@@ -1,0 +1,9 @@
+Region,Hemisphere,mean,std,min,max,count
+left LO,Left,0.161,0.07,0.036,0.328,18
+left PFS,Left,0.067,0.03,0.026,0.146,18
+left aIPS,Left,0.147,0.086,0.041,0.392,18
+left pIPS,Left,0.128,0.086,0.021,0.356,18
+right LO,Right,0.152,0.061,0.043,0.258,18
+right PFS,Right,0.059,0.023,0.03,0.119,18
+right aIPS,Right,0.129,0.085,0.026,0.356,18
+right pIPS,Right,0.124,0.06,0.031,0.221,18
