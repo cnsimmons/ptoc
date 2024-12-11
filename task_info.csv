@@ -1,6 +1,6 @@
 task,cond,cope
 loc,object,3
-loc,scramble,4
+loc,scramble,5
 toolloc,tool,3
 toolloc,nontool,4
 toolloc,scramble,8

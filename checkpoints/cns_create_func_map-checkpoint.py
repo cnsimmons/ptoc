@@ -179,7 +179,7 @@ def create_group_map():
         #save binary group
         np.save(f'{results_dir}/neural_map/{cond}_binary.npy', binary_group)
 
-def create_3d_group_map():
+def create_3d_group_map2():
     '''
     Create non-parametric group map for controls
     '''
@@ -234,6 +234,57 @@ def create_3d_group_map():
         #np.save(f'{results_dir}/neural_map/{cond}_func.npy', func_group)
 
         #save binary group
+        
+        
+def create_3d_group_map():
+    '''
+    Create non-parametric group map for controls - both ROI and whole brain
+    '''
+    print('Creating 3d group maps...')
+    control_subs = sub_info[sub_info['group']=='control']
+
+    for task,cond, cope in zip(task_info['task'], task_info['cond'],task_info['cope']):
+        print(f'Processing {cond} {task}')
+        n = 0
+        binary_list = []
+        whole_brain_list = []     
+        for sub in control_subs['sub']:
+            sub_dir = f'{data_dir}/{sub}/ses-01'
+
+            #check if neural maps exist
+            neural_map_path = f'{sub_dir}/derivatives/neural_map/{cond}_binary_3d.npy'
+            whole_brain_path = f'{sub_dir}/derivatives/neural_map/{cond}_whole_brain.npy'
+
+            if os.path.exists(neural_map_path) and os.path.exists(whole_brain_path):
+                print(f'paths exist for {sub}')
+                if n == 0:
+                    #load zstat reg to get affine and header
+                    zstat_path = f'{sub_dir}/derivatives/fsl/{task}/HighLevel{suf}.gfeat/cope{cope}.feat/stats/zstat1_reg.nii.gz'
+                    zstat_reg = image.load_img(zstat_path)
+                    affine = zstat_reg.affine
+                    header = zstat_reg.header
+                    n+=1
+
+                binary_map = np.load(neural_map_path)
+                whole_brain_map = np.load(whole_brain_path)
+                
+                # Ensure 3D shape is maintained
+                binary_list.append(binary_map)
+                whole_brain_list.append(whole_brain_map)
+
+        binary_group = np.nansum(binary_list, axis=0)
+        whole_brain_group = np.nansum(whole_brain_list, axis=0)
+
+        # Create and save nifti images maintaining 3D structure
+        binary_group_nii = nib.Nifti1Image(binary_group, affine, header)
+        whole_brain_group_nii = nib.Nifti1Image(whole_brain_group, affine, header)
+        
+        nib.save(binary_group_nii, f'{results_dir}/neural_map/{cond}_group.nii.gz')
+        nib.save(whole_brain_group_nii, f'{results_dir}/neural_map/{cond}_whole_brain_group.nii.gz')
+
+        # Save numpy arrays if needed
+        np.save(f'{results_dir}/neural_map/{cond}_group_map.npy', binary_group)
+        np.save(f'{results_dir}/neural_map/{cond}_whole_brain_group_map.npy', whole_brain_group)
         
 
 
