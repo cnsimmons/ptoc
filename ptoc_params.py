@@ -12,7 +12,7 @@ import subprocess
 from glob import glob as glob
 import pdb
 
-suf = 'toolloc'
+suf = ''
 
 #runs = [1,2,3]
 runs = [1,2] #change to 2 for sub_057
