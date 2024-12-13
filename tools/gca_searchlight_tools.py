@@ -1,3 +1,4 @@
+# conda activate brainiak_env
 import sys
 import os
 import logging
@@ -37,7 +38,7 @@ import ptoc_params as params
 raw_dir = params.raw_dir
 
 # Load subject information
-sub_info = pd.read_csv(f'{curr_dir}/sub_info_tools.csv')
+sub_info = pd.read_csv(f'{curr_dir}/sub_info_tool.csv')
 sub_info = sub_info[sub_info['exp'] == 'spaceloc']
 
 # Check if subject argument is provided
@@ -100,14 +101,14 @@ def extract_roi_sphere(img, coords):
 def make_psy_cov(runs, ss):
     temp_dir = f'{raw_dir}/{ss}/ses-01'
     cov_dir = f'{temp_dir}/covs'
-    vols_per_run, tr = 184, 2.0
+    vols_per_run, tr = 341, 1.0
     total_vols = vols_per_run * len(runs)
     times = np.arange(0, total_vols * tr, tr)
     full_cov = pd.DataFrame(columns=['onset', 'duration', 'value'])
 
     for i, rn in enumerate(runs):
-        ss_num = ss.split('-')[1]
-        obj_cov_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_{localizer}.txt'
+        ss_num = str(ss).replace("sub-spaceloc","")
+        obj_cov_file = f'{cov_dir}/ToolLoc_spaceloc{ss_num}_run{rn}_tool.txt' # tools in this case
 
         if not os.path.exists(obj_cov_file):
             logging.warning(f'Covariate file not found for run {rn}')
@@ -177,15 +178,23 @@ def conduct_searchlight():
             sub_dir = f'{study_dir}/{ss}/ses-01/'
             temp_dir = f'{raw_dir}/{ss}/ses-01'
             roi_dir = f'{sub_dir}/derivatives/rois'
-            exp_dir = f'{temp_dir}/derivatives/fsl/toolloc'  # Changed from loc
+            exp_dir = f'{temp_dir}/derivatives/fsl/toolloc'
             os.makedirs(f'{sub_dir}/derivatives/gca', exist_ok=True)
 
-            # Load ROI coordinates with new file structure
+            # Load ROI coordinates
             roi_coords = pd.read_csv('tools/roi_coordinates.csv')
             
             for roi in rois:
                 for hemi in hemispheres:
+                    # Force cleanup between ROI/hemisphere iterations
+                    gc.collect()
+                    log_memory_usage("start of ROI/hemi iteration")
+                    
                     for combo_idx, rc in run_pairs.items():
+                        # Force cleanup at start of each combo
+                        gc.collect()
+                        log_memory_usage("start of run combination")
+                        
                         logging.info(f"Processing {roi} {hemi} for run combination {rc} for subject {ss}")
                         
                         output_path = f'{sub_dir}/derivatives/gca/searchlight_result_tool_runs{rc[0]}{rc[1]}_{roi}_{hemi}.nii.gz'
@@ -194,30 +203,30 @@ def conduct_searchlight():
                             logging.info(f"Output file {output_path} already exists. Skipping this run.")
                             continue
                         
-                        filtered_list = []
-                        for rn in rc:
-                            run_path = f'{exp_dir}/run-0{rn}/1stLevel.feat/filtered_func_data_reg.nii.gz'
-                            logging.info(f"Loading run {rn} from {run_path}")
-                            run_data, mask_img, affine = load_and_clean_run(run_path)
-                            filtered_list.append(run_data)
-                            
-                        concat_data = np.concatenate(filtered_list, axis=-1)
-                        logging.info(f"Concatenated data shape: {concat_data.shape}")
-                        
-                        del filtered_list
+                        # Clear any existing large variables
+                        locals_to_clear = ['analysis_data', 'mask_img', 'sl_result', 'roi_ts', 'sl']
+                        for var in locals_to_clear:
+                            if var in locals():
+                                del locals()[var]
                         gc.collect()
-                        log_memory_usage("after concatenating runs")
+                        
+                        # Load analysis run
+                        analysis_run_path = f'{exp_dir}/run-0{rc[1]}/1stLevel.feat/filtered_func_data_reg.nii.gz'
+                        analysis_data, mask_img, affine = load_and_clean_run(analysis_run_path)
+                        log_memory_usage("after loading analysis run")
                         
                         mask = mask_img.get_fdata() > 0
+                        del mask_img
+                        gc.collect()
 
-                        psy = make_psy_cov(rc, ss)
+                        psy = make_psy_cov([rc[1]], ss)
 
-                        # Filter coordinates for current subject, run combo, and ROI
+                        # Get coordinates
                         coords = roi_coords[
                             (roi_coords['subject'] == ss) & 
                             (roi_coords['run_combo'] == combo_idx) & 
                             (roi_coords['roi'] == f"{hemi[0]}{roi}") &
-                            (roi_coords['condition'] == 'tools')  # Using tools condition
+                            (roi_coords['condition'] == 'tools')
                         ]
                         
                         if coords.empty:
@@ -225,16 +234,25 @@ def conduct_searchlight():
                             continue
 
                         coord = (coords['x'].iloc[0], coords['y'].iloc[0], coords['z'].iloc[0])
-                        roi_ts = extract_roi_sphere(nib.Nifti1Image(concat_data, affine), coord)
+                        
+                        # Create temporary image for ROI extraction
+                        temp_img = nib.Nifti1Image(analysis_data, affine)
+                        roi_ts = extract_roi_sphere(temp_img, coord)
+                        del temp_img
+                        gc.collect()
+                        log_memory_usage("after ROI extraction")
 
                         logging.info(f"Creating Searchlight object for {roi} {hemi}...")
                         sl = Searchlight(sl_rad=sl_rad, max_blk_edge=max_blk_edge, shape=shape)
                         logging.info("Searchlight object created.")
 
                         logging.info("Distributing data...")
-                        sl.distribute([concat_data], mask)
-                        logging.info("Data distribution completed.")
-
+                        sl.distribute([analysis_data], mask)
+                        # Clear analysis_data after distribution
+                        del analysis_data
+                        gc.collect()
+                        log_memory_usage("after data distribution")
+                        
                         logging.info(f"Broadcasting {roi} time series and psychological covariate...")
                         sl.broadcast((roi_ts, psy))
                         logging.info("Broadcasting completed.")
@@ -252,15 +270,17 @@ def conduct_searchlight():
                         nib.save(result_img, output_path)
                         logging.info(f"Saved searchlight result to {output_path}")
 
-                        del sl_result, roi_ts, concat_data, mask
+                        # Cleanup after saving
+                        del sl_result, roi_ts, mask, sl, result_img
                         gc.collect()
+                        log_memory_usage("after cleanup")
 
         except Exception as e:
             logging.error(f"Error processing subject {ss}: {str(e)}")
             continue
 
     logging.info(f'Completed searchlight analysis with GCA for all subjects')
-
+    
 if __name__ == "__main__":
     try:
         conduct_searchlight()
