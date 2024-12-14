@@ -1,0 +1,33 @@
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
+  _python_deprecation_warnings()
+2024-12-14 16:01:27,049 - INFO - Running searchlight analysis with GCA for Tool localizer...
+2024-12-14 16:01:27,103 - INFO - Memory usage after start of ROI/hemi iteration: 142.45 MB
+2024-12-14 16:01:27,140 - INFO - Memory usage after start of run combination: 142.45 MB
+2024-12-14 16:01:27,140 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc1011
+2024-12-14 16:01:27,141 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1011/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_left.nii.gz already exists. Skipping this run.
+2024-12-14 16:01:27,179 - INFO - Memory usage after start of run combination: 142.45 MB
+2024-12-14 16:01:27,179 - INFO - Processing pIPS left for run combination [2, 1] for subject sub-spaceloc1011
+2024-12-14 16:01:27,334 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.97695804e-01 -6.22371174e-02  2.69117914e-02 -9.92922287e+01]
+ [ 5.37742451e-02  9.68010366e-01  2.45080069e-01 -1.28576981e+02]
+ [-4.13038582e-02 -2.43068859e-01  9.69129264e-01 -1.15319489e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-14 16:02:44,851 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.97695804e-01 -6.22371174e-02  2.69117914e-02 -9.92922287e+01]
+ [ 5.37742451e-02  9.68010366e-01  2.45080069e-01 -1.28576981e+02]
+ [-4.13038582e-02 -2.43068859e-01  9.69129264e-01 -1.15319489e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-14 16:06:12,021 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-15.408204078674316, max=14.087169647216797, mean=-1.0302772239125523e-12
+2024-12-14 16:06:13,031 - INFO - Memory usage after after loading and cleaning run: 33458.25 MB
+2024-12-14 16:06:13,031 - INFO - Memory usage after after loading analysis run: 33458.25 MB
+2024-12-14 16:11:24,599 - INFO - Memory usage after after ROI extraction: 33460.00 MB
+2024-12-14 16:11:24,599 - INFO - Creating Searchlight object for pIPS left...
+2024-12-14 16:11:24,601 - INFO - Searchlight object created.
+2024-12-14 16:11:24,601 - INFO - Distributing data...
+2024-12-14 16:13:24,934 - INFO - Memory usage after after data distribution: 36161.71 MB
+2024-12-14 16:13:24,935 - INFO - Broadcasting pIPS time series and psychological covariate...
+2024-12-14 16:13:24,935 - INFO - Broadcasting completed.
+2024-12-14 16:13:24,935 - INFO - Starting searchlight analysis...

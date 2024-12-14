@@ -279,7 +279,7 @@ def conduct_searchlight():
             logging.error(f"Error processing subject {ss}: {str(e)}")
             continue
 
-    logging.info(f'Completed searchlight analysis with GCA for all subjects')
+    logging.info(f'Completed searchlight analysis with GCA for all subjects')  
     
 if __name__ == "__main__":
     try:

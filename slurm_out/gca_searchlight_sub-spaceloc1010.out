@@ -1,0 +1,50 @@
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
+  _python_deprecation_warnings()
+2024-12-14 10:58:42,243 - INFO - Running searchlight analysis with GCA for Tool localizer...
+2024-12-14 10:58:42,302 - INFO - Memory usage after start of ROI/hemi iteration: 142.47 MB
+2024-12-14 10:58:42,340 - INFO - Memory usage after start of run combination: 142.47 MB
+2024-12-14 10:58:42,340 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc1010
+2024-12-14 10:58:42,576 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.98817623e-01 -1.29146278e-02 -4.68586534e-02 -9.70467224e+01]
+ [ 1.65977441e-02  9.96729910e-01  7.90833682e-02 -1.10643188e+02]
+ [ 4.56840619e-02 -7.97676519e-02  9.95766103e-01 -1.21894188e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-14 11:00:00,059 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.98817623e-01 -1.29146278e-02 -4.68586534e-02 -9.70467224e+01]
+ [ 1.65977441e-02  9.96729910e-01  7.90833682e-02 -1.10643188e+02]
+ [ 4.56840619e-02 -7.97676519e-02  9.95766103e-01 -1.21894188e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-14 11:03:40,587 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-13.429178237915039, max=13.94739055633545, mean=8.300415029946197e-13
+2024-12-14 11:03:41,653 - INFO - Memory usage after after loading and cleaning run: 33458.39 MB
+2024-12-14 11:03:41,653 - INFO - Memory usage after after loading analysis run: 33458.39 MB
+2024-12-14 11:08:59,958 - INFO - Memory usage after after ROI extraction: 33460.15 MB
+2024-12-14 11:08:59,958 - INFO - Creating Searchlight object for pIPS left...
+2024-12-14 11:08:59,960 - INFO - Searchlight object created.
+2024-12-14 11:08:59,960 - INFO - Distributing data...
+2024-12-14 11:11:03,759 - INFO - Memory usage after after data distribution: 36218.84 MB
+2024-12-14 11:11:03,760 - INFO - Broadcasting pIPS time series and psychological covariate...
+2024-12-14 11:11:03,760 - INFO - Broadcasting completed.
+2024-12-14 11:11:03,760 - INFO - Starting searchlight analysis...
+2024-12-14 15:21:20,950 - INFO - Searchlight analysis completed.
+2024-12-14 15:21:20,952 - INFO - Memory usage after after searchlight: 37156.86 MB
+2024-12-14 15:21:22,654 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1010/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_left.nii.gz
+2024-12-14 15:21:23,602 - INFO - Memory usage after after cleanup: 20742.23 MB
+2024-12-14 15:21:23,635 - INFO - Memory usage after start of run combination: 20742.23 MB
+2024-12-14 15:21:23,635 - INFO - Processing pIPS left for run combination [2, 1] for subject sub-spaceloc1010
+2024-12-14 15:21:23,959 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.98817623e-01 -1.29146278e-02 -4.68586534e-02 -9.70467224e+01]
+ [ 1.65977441e-02  9.96729910e-01  7.90833682e-02 -1.10643188e+02]
+ [ 4.56840619e-02 -7.97676519e-02  9.95766103e-01 -1.21894188e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-14 15:22:55,217 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.98817623e-01 -1.29146278e-02 -4.68586534e-02 -9.70467224e+01]
+ [ 1.65977441e-02  9.96729910e-01  7.90833682e-02 -1.10643188e+02]
+ [ 4.56840619e-02 -7.97676519e-02  9.95766103e-01 -1.21894188e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-14 15:27:22,198 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-12.507290840148926, max=13.702102661132812, mean=2.4314343288420023e-12
+2024-12-14 15:27:22,543 - INFO - Memory usage after after loading and cleaning run: 53989.73 MB
+2024-12-14 15:27:22,544 - INFO - Memory usage after after loading analysis run: 53989.73 MB
+/var/spool/slurmd/job2071097/slurm_script: line 32: 10388 Killed                  python /user_data/csimmon2/git_repos/ptoc/tools/gca_searchlight_tools.py sub-spaceloc1010

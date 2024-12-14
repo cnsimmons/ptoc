@@ -3,35 +3,39 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 /home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
   _python_deprecation_warnings()
-2024-12-13 10:44:05,929 - INFO - Running searchlight analysis with GCA for Tool localizer...
-2024-12-13 10:44:05,984 - INFO - Memory usage after start of ROI/hemi iteration: 142.45 MB
-2024-12-13 10:44:06,022 - INFO - Memory usage after start of run combination: 142.45 MB
-2024-12-13 10:44:06,022 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc1004
-2024-12-13 10:44:06,038 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1004/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_left.nii.gz already exists. Skipping this run.
-2024-12-13 10:44:06,079 - INFO - Memory usage after start of run combination: 142.45 MB
-2024-12-13 10:44:06,079 - INFO - Processing pIPS left for run combination [2, 1] for subject sub-spaceloc1004
-2024-12-13 10:44:06,080 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1004/ses-01//derivatives/gca/searchlight_result_tool_runs21_pIPS_left.nii.gz already exists. Skipping this run.
-2024-12-13 10:44:06,121 - INFO - Memory usage after start of ROI/hemi iteration: 142.45 MB
-2024-12-13 10:44:06,162 - INFO - Memory usage after start of run combination: 142.45 MB
-2024-12-13 10:44:06,162 - INFO - Processing pIPS right for run combination [1, 2] for subject sub-spaceloc1004
-2024-12-13 10:44:06,344 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+2024-12-13 18:13:08,927 - INFO - Running searchlight analysis with GCA for Tool localizer...
+2024-12-13 18:13:09,002 - INFO - Memory usage after start of ROI/hemi iteration: 142.45 MB
+2024-12-13 18:13:09,038 - INFO - Memory usage after start of run combination: 142.45 MB
+2024-12-13 18:13:09,038 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc1004
+2024-12-13 18:13:09,039 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1004/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_left.nii.gz already exists. Skipping this run.
+2024-12-13 18:13:09,073 - INFO - Memory usage after start of run combination: 142.45 MB
+2024-12-13 18:13:09,073 - INFO - Processing pIPS left for run combination [2, 1] for subject sub-spaceloc1004
+2024-12-13 18:13:09,073 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1004/ses-01//derivatives/gca/searchlight_result_tool_runs21_pIPS_left.nii.gz already exists. Skipping this run.
+2024-12-13 18:13:09,107 - INFO - Memory usage after start of ROI/hemi iteration: 142.45 MB
+2024-12-13 18:13:09,141 - INFO - Memory usage after start of run combination: 142.45 MB
+2024-12-13 18:13:09,141 - INFO - Processing pIPS right for run combination [1, 2] for subject sub-spaceloc1004
+2024-12-13 18:13:09,141 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1004/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_right.nii.gz already exists. Skipping this run.
+2024-12-13 18:13:09,175 - INFO - Memory usage after start of run combination: 142.45 MB
+2024-12-13 18:13:09,175 - INFO - Processing pIPS right for run combination [2, 1] for subject sub-spaceloc1004
+2024-12-13 18:13:09,258 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
 [[ 9.99816656e-01 -1.42442789e-02 -1.27897514e-02 -1.00044151e+02]
  [ 1.52876880e-02  9.96214092e-01  8.55791494e-02 -1.04554688e+02]
  [ 1.15223164e-02 -8.57589915e-02  9.96249259e-01 -1.37633972e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-12-13 10:45:25,204 - INFO - Generated mask: shape=(208, 240, 256), affine=
+2024-12-13 18:14:21,455 - INFO - Generated mask: shape=(208, 240, 256), affine=
 [[ 9.99816656e-01 -1.42442789e-02 -1.27897514e-02 -1.00044151e+02]
  [ 1.52876880e-02  9.96214092e-01  8.55791494e-02 -1.04554688e+02]
  [ 1.15223164e-02 -8.57589915e-02  9.96249259e-01 -1.37633972e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-12-13 10:49:04,213 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-15.431136131286621, max=13.80940055847168, mean=-1.3051714238539273e-12
-2024-12-13 10:49:05,396 - INFO - Memory usage after after loading and cleaning run: 33458.31 MB
-2024-12-13 10:49:05,396 - INFO - Memory usage after after loading analysis run: 33458.31 MB
-2024-12-13 10:54:23,830 - INFO - Memory usage after after ROI extraction: 33459.92 MB
-2024-12-13 10:54:23,831 - INFO - Creating Searchlight object for pIPS right...
-2024-12-13 10:54:23,833 - INFO - Searchlight object created.
-2024-12-13 10:54:23,833 - INFO - Distributing data...
-2024-12-13 10:56:26,767 - INFO - Memory usage after after data distribution: 36161.72 MB
-2024-12-13 10:56:26,767 - INFO - Broadcasting pIPS time series and psychological covariate...
-2024-12-13 10:56:26,767 - INFO - Broadcasting completed.
-2024-12-13 10:56:26,767 - INFO - Starting searchlight analysis...
+2024-12-13 18:16:07,959 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-11.062562942504883, max=13.917350769042969, mean=2.3787038834882655e-13
+2024-12-13 18:16:08,063 - INFO - Memory usage after after loading and cleaning run: 33464.28 MB
+2024-12-13 18:16:08,063 - INFO - Memory usage after after loading analysis run: 33464.28 MB
+2024-12-13 18:18:59,104 - INFO - Memory usage after after ROI extraction: 33466.75 MB
+2024-12-13 18:18:59,104 - INFO - Creating Searchlight object for pIPS right...
+2024-12-13 18:18:59,106 - INFO - Searchlight object created.
+2024-12-13 18:18:59,106 - INFO - Distributing data...
+2024-12-13 18:19:54,559 - INFO - Memory usage after after data distribution: 36082.80 MB
+2024-12-13 18:19:54,559 - INFO - Broadcasting pIPS time series and psychological covariate...
+2024-12-13 18:19:54,559 - INFO - Broadcasting completed.
+2024-12-13 18:19:54,559 - INFO - Starting searchlight analysis...
+slurmstepd: error: *** JOB 2071084 ON mind-1-30 CANCELLED AT 2024-12-13T18:53:29 ***
