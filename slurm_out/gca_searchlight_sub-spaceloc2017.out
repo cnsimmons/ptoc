@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
+  _python_deprecation_warnings()
+2024-12-15 15:45:31,603 - INFO - Running searchlight analysis with GCA for Tool localizer...
+2024-12-15 15:45:31,659 - INFO - Memory usage after start of ROI/hemi iteration: 142.45 MB
+2024-12-15 15:45:31,692 - INFO - Memory usage after start of run combination: 142.45 MB
+2024-12-15 15:45:31,693 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc2017
+2024-12-15 15:45:31,922 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.99977112e-01 -5.03203087e-03  4.09750594e-03 -1.02518242e+02]
+ [ 4.18111077e-03  9.82502997e-01  1.86199844e-01 -1.24265518e+02]
+ [-4.96276561e-03 -1.86178789e-01  9.82503355e-01 -1.20453804e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-15 15:47:03,552 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.99977112e-01 -5.03203087e-03  4.09750594e-03 -1.02518242e+02]
+ [ 4.18111077e-03  9.82502997e-01  1.86199844e-01 -1.24265518e+02]
+ [-4.96276561e-03 -1.86178789e-01  9.82503355e-01 -1.20453804e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-15 15:51:29,436 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-11.527119636535645, max=13.279486656188965, mean=2.7076144498818664e-12
+2024-12-15 15:51:30,888 - INFO - Memory usage after after loading and cleaning run: 33458.21 MB
+2024-12-15 15:51:30,888 - INFO - Memory usage after after loading analysis run: 33458.21 MB
+2024-12-15 15:57:08,398 - INFO - Memory usage after after ROI extraction: 33459.89 MB
+2024-12-15 15:57:08,399 - INFO - Creating Searchlight object for pIPS left...
+2024-12-15 15:57:08,402 - INFO - Searchlight object created.
+2024-12-15 15:57:08,402 - INFO - Distributing data...

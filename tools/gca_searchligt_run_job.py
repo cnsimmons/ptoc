@@ -31,7 +31,7 @@ sub_info = pd.read_csv(f'{project_dir}/sub_info_tool.csv')
     #(sub_info['sub'] != 'sub-spaceloc1001')
 #]['sub'].tolist()
 
-sub_list = ['sub-spaceloc1010', 'sub-spaceloc1011', 'sub-spaceloc1012']  # Test
+sub_list = ['sub-spaceloc2013', 'sub-spaceloc2014', 'sub-spaceloc2017', 'sub-spaceloc2018']  # Test
 
 print(f"Processing subjects: {sub_list}")
 

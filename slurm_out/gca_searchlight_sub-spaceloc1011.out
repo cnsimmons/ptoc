@@ -31,3 +31,24 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 2024-12-14 16:13:24,935 - INFO - Broadcasting pIPS time series and psychological covariate...
 2024-12-14 16:13:24,935 - INFO - Broadcasting completed.
 2024-12-14 16:13:24,935 - INFO - Starting searchlight analysis...
+2024-12-14 20:21:37,522 - INFO - Searchlight analysis completed.
+2024-12-14 20:21:37,523 - INFO - Memory usage after after searchlight: 37094.88 MB
+2024-12-14 20:21:39,181 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1011/ses-01//derivatives/gca/searchlight_result_tool_runs21_pIPS_left.nii.gz
+2024-12-14 20:21:40,131 - INFO - Memory usage after after cleanup: 20749.14 MB
+2024-12-14 20:21:40,164 - INFO - Memory usage after start of ROI/hemi iteration: 20749.14 MB
+2024-12-14 20:21:40,194 - INFO - Memory usage after start of run combination: 20749.14 MB
+2024-12-14 20:21:40,194 - INFO - Processing pIPS right for run combination [1, 2] for subject sub-spaceloc1011
+2024-12-14 20:21:40,377 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.97695804e-01 -6.22371174e-02  2.69117914e-02 -9.92922287e+01]
+ [ 5.37742451e-02  9.68010366e-01  2.45080069e-01 -1.28576981e+02]
+ [-4.13038582e-02 -2.43068859e-01  9.69129264e-01 -1.15319489e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-14 20:23:08,221 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.97695804e-01 -6.22371174e-02  2.69117914e-02 -9.92922287e+01]
+ [ 5.37742451e-02  9.68010366e-01  2.45080069e-01 -1.28576981e+02]
+ [-4.13038582e-02 -2.43068859e-01  9.69129264e-01 -1.15319489e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-14 20:27:16,256 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-16.045686721801758, max=16.065948486328125, mean=3.902734937320922e-13
+2024-12-14 20:27:16,598 - INFO - Memory usage after after loading and cleaning run: 53996.64 MB
+2024-12-14 20:27:16,598 - INFO - Memory usage after after loading analysis run: 53996.64 MB
+slurmstepd: error: *** JOB 2071098 ON mind-1-5 CANCELLED AT 2024-12-14T20:41:27 DUE TO NODE FAILURE, SEE SLURMCTLD LOG FOR DETAILS ***

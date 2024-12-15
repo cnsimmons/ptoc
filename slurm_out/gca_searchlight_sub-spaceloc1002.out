@@ -163,3 +163,9 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 2024-12-14 12:57:35,002 - INFO - Broadcasting LO time series and psychological covariate...
 2024-12-14 12:57:35,002 - INFO - Broadcasting completed.
 2024-12-14 12:57:35,002 - INFO - Starting searchlight analysis...
+2024-12-14 17:05:40,723 - INFO - Searchlight analysis completed.
+2024-12-14 17:05:40,723 - INFO - Memory usage after after searchlight: 37745.77 MB
+2024-12-14 17:05:42,716 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1002/ses-01//derivatives/gca/searchlight_result_tool_runs21_LO_right.nii.gz
+2024-12-14 17:05:42,762 - INFO - Memory usage after after cleanup: 36820.98 MB
+2024-12-14 17:05:42,762 - INFO - Completed searchlight analysis with GCA for all subjects
+Processing subject: sub-spaceloc1002

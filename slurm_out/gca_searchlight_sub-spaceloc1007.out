@@ -178,3 +178,8 @@ slurmstepd: error: *** JOB 2071080 ON mind-1-28 CANCELLED AT 2024-12-13T18:53:14
 2024-12-14 14:55:40,607 - INFO - Broadcasting LO time series and psychological covariate...
 2024-12-14 14:55:40,607 - INFO - Broadcasting completed.
 2024-12-14 14:55:40,607 - INFO - Starting searchlight analysis...
+2024-12-14 20:52:13,650 - INFO - Searchlight analysis completed.
+2024-12-14 20:52:13,651 - INFO - Memory usage after after searchlight: 70205.31 MB
+2024-12-14 20:52:15,980 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1007/ses-01//derivatives/gca/searchlight_result_tool_runs21_LO_right.nii.gz
+2024-12-14 20:52:19,411 - INFO - Completed searchlight analysis with GCA for all subjects
+Processing subject: sub-spaceloc1007

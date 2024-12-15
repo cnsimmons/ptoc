@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
+  _python_deprecation_warnings()
+2024-12-15 15:55:27,983 - INFO - Running searchlight analysis with GCA for Tool localizer...
+2024-12-15 15:55:28,026 - INFO - Memory usage after start of ROI/hemi iteration: 142.45 MB
+2024-12-15 15:55:28,056 - INFO - Memory usage after start of run combination: 142.45 MB
+2024-12-15 15:55:28,056 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc2018
+2024-12-15 15:55:28,322 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.96162593e-01 -4.11208943e-02  7.72009715e-02 -1.09005913e+02]
+ [ 3.07742953e-02  9.90941226e-01  1.30722523e-01 -1.23333588e+02]
+ [-8.18766803e-02 -1.27845675e-01  9.88408625e-01 -1.15869598e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-15 15:57:10,309 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.96162593e-01 -4.11208943e-02  7.72009715e-02 -1.09005913e+02]
+ [ 3.07742953e-02  9.90941226e-01  1.30722523e-01 -1.23333588e+02]
+ [-8.18766803e-02 -1.27845675e-01  9.88408625e-01 -1.15869598e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
