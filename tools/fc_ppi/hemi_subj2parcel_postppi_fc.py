@@ -19,15 +19,20 @@ for sub in subs:
     sub_dir = f"{study_dir}/{sub}/ses-01"
     out_dir = f"{sub_dir}/derivatives"
     anat_brain = f"{raw_dir}/{sub}/ses-01/anat/{sub}_ses-01_T1w_brain.nii.gz"
+    anat2mni_mat = f"{out_dir}/fc/anat2mni.mat"
+
+    # Delete old transformation matrix if it exists
+    if os.path.isfile(anat2mni_mat):
+        print(f"Deleting old transformation matrix for {sub}")
+        os.remove(anat2mni_mat)
 
     # Check if anatomical image exists
     if not os.path.isfile(anat_brain):
         print(f"Anatomical image not found for {sub}. Skipping...")
         continue
-    
-    # Always generate a new transformation matrix
-    anat2mni_mat = f"{out_dir}/fc/anat2mni.mat"
-    print(f"Generating transformation matrix for {sub}")
+
+    # Generate new transformation matrix
+    print(f"Generating new transformation matrix for {sub}")
     subprocess.run([
         'flirt',
         '-in', anat_brain,

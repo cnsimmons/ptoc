@@ -1,3 +1,6 @@
+# # In terminal run with:
+# for i in {1001..1010}; do python tools/gca/combine_and_transform_searchlight.py sub-spaceloc$i; done
+
 import os
 import sys
 import logging
@@ -54,7 +57,8 @@ def combine_and_transform(subject):
     os.makedirs(gca_dir, exist_ok=True)
 
     # Check for existing transformation matrix
-    anat2mni_mat = f"{sub_dir}/derivatives/anat2mni.mat"
+    anat2mni_mat = f"/user_data/csimmon2/temp_derivatives/{subject}/ses-01/derivatives/fc/anat2mni.mat"
+    
     if not os.path.isfile(anat2mni_mat):
         logging.error(f"Transformation matrix not found for {subject}. Exiting...")
         return

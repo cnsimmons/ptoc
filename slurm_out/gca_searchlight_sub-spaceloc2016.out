@@ -49,3 +49,22 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 2024-12-16 10:26:56,461 - INFO - Broadcasting LO time series and psychological covariate...
 2024-12-16 10:26:56,461 - INFO - Broadcasting completed.
 2024-12-16 10:26:56,461 - INFO - Starting searchlight analysis...
+2024-12-16 14:40:24,224 - INFO - Searchlight analysis completed.
+2024-12-16 14:40:24,225 - INFO - Memory usage after after searchlight: 36681.12 MB
+2024-12-16 14:40:25,883 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2016/ses-01//derivatives/gca/searchlight_result_tool_runs12_LO_right.nii.gz
+2024-12-16 14:40:26,843 - INFO - Memory usage after after cleanup: 20527.49 MB
+2024-12-16 14:40:26,876 - INFO - Memory usage after start of run combination: 20527.49 MB
+2024-12-16 14:40:26,876 - INFO - Processing LO right for run combination [2, 1] for subject sub-spaceloc2016
+2024-12-16 14:40:27,174 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.98650074e-01 -2.94012893e-02 -4.27858122e-02 -9.27682495e+01]
+ [ 3.10604684e-02  9.98770118e-01  3.86460349e-02 -1.11588562e+02]
+ [ 4.15968858e-02 -3.99228707e-02  9.98336554e-01 -1.49376587e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-16 14:41:53,248 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.98650074e-01 -2.94012893e-02 -4.27858122e-02 -9.27682495e+01]
+ [ 3.10604684e-02  9.98770118e-01  3.86460349e-02 -1.11588562e+02]
+ [ 4.15968858e-02 -3.99228707e-02  9.98336554e-01 -1.49376587e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-16 14:46:02,104 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-15.284860610961914, max=14.035731315612793, mean=-5.569874709502433e-13
+2024-12-16 14:46:02,445 - INFO - Memory usage after after loading and cleaning run: 53774.99 MB
+2024-12-16 14:46:02,445 - INFO - Memory usage after after loading analysis run: 53774.99 MB
