@@ -1,0 +1,36 @@
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
+  _python_deprecation_warnings()
+2024-12-16 10:26:33,934 - INFO - Running searchlight analysis with GCA for Tool localizer...
+2024-12-16 10:26:34,355 - INFO - Memory usage after start of ROI/hemi iteration: 140.63 MB
+2024-12-16 10:26:34,389 - INFO - Memory usage after start of run combination: 140.63 MB
+2024-12-16 10:26:34,389 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc2013
+2024-12-16 10:26:34,409 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2013/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_left.nii.gz already exists. Skipping this run.
+2024-12-16 10:26:34,440 - INFO - Memory usage after start of run combination: 140.63 MB
+2024-12-16 10:26:34,440 - INFO - Processing pIPS left for run combination [2, 1] for subject sub-spaceloc2013
+2024-12-16 10:26:34,441 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2013/ses-01//derivatives/gca/searchlight_result_tool_runs21_pIPS_left.nii.gz already exists. Skipping this run.
+2024-12-16 10:26:34,469 - INFO - Memory usage after start of ROI/hemi iteration: 140.63 MB
+2024-12-16 10:26:34,494 - INFO - Memory usage after start of run combination: 140.63 MB
+2024-12-16 10:26:34,494 - INFO - Processing pIPS right for run combination [1, 2] for subject sub-spaceloc2013
+2024-12-16 10:26:34,495 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2013/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_right.nii.gz already exists. Skipping this run.
+2024-12-16 10:26:34,519 - INFO - Memory usage after start of run combination: 140.63 MB
+2024-12-16 10:26:34,519 - INFO - Processing pIPS right for run combination [2, 1] for subject sub-spaceloc2013
+2024-12-16 10:26:34,519 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2013/ses-01//derivatives/gca/searchlight_result_tool_runs21_pIPS_right.nii.gz already exists. Skipping this run.
+2024-12-16 10:26:34,543 - INFO - Memory usage after start of ROI/hemi iteration: 140.63 MB
+2024-12-16 10:26:34,567 - INFO - Memory usage after start of run combination: 140.63 MB
+2024-12-16 10:26:34,567 - INFO - Processing LO left for run combination [1, 2] for subject sub-spaceloc2013
+2024-12-16 10:26:35,613 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.99755800e-01  2.12743282e-02  6.17846474e-03 -1.06594749e+02]
+ [-2.02990565e-02  9.91421103e-01 -1.29120693e-01 -7.44665527e+01]
+ [-8.87242611e-03  1.28963575e-01  9.91609633e-01 -1.54609146e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-16 10:27:59,028 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.99755800e-01  2.12743282e-02  6.17846474e-03 -1.06594749e+02]
+ [-2.02990565e-02  9.91421103e-01 -1.29120693e-01 -7.44665527e+01]
+ [-8.87242611e-03  1.28963575e-01  9.91609633e-01 -1.54609146e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-16 10:30:59,613 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-12.668149948120117, max=14.110260963439941, mean=2.9963538793536875e-12
+2024-12-16 10:31:01,202 - INFO - Memory usage after after loading and cleaning run: 33456.36 MB
+2024-12-16 10:31:01,202 - INFO - Memory usage after after loading analysis run: 33456.36 MB
