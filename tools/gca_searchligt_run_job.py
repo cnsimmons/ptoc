@@ -8,7 +8,7 @@ job_name = 'gca_searchlight'
 mem = 120  # GB
 run_time = "72:00:00"  # 72 hours
 
-pause_crit = 3  # number of jobs to request before pausing
+pause_crit = 4  # number of jobs to request before pausing
 pause_time = 10  # how long to wait between job batches in minutes
 
 exp = 'ptoc'
@@ -31,7 +31,7 @@ sub_info = pd.read_csv(f'{project_dir}/sub_info_tool.csv')
     #(sub_info['sub'] != 'sub-spaceloc1001')
 #]['sub'].tolist()
 
-sub_list = ['sub-spaceloc2013', 'sub-spaceloc2014', 'sub-spaceloc2017', 'sub-spaceloc2018']  # Test
+sub_list = ['sub-spaceloc2013', 'sub-spaceloc2014', 'sub-spaceloc2017', 'sub-spaceloc2016']  # 
 
 print(f"Processing subjects: {sub_list}")
 
