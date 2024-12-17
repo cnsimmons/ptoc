@@ -31,12 +31,12 @@ sub_info = pd.read_csv(f'{project_dir}/sub_info_tool.csv')
     #(sub_info['sub'] != 'sub-spaceloc1001')
 #]['sub'].tolist()
 
-sub_list = ['sub-spaceloc2013', 'sub-spaceloc2014', 'sub-spaceloc2017', 'sub-spaceloc2016']  # 
+sub_list = ['sub-spaceloc2017']  # 
 
 print(f"Processing subjects: {sub_list}")
 
 # Path to your GCA analysis script
-gca_script = os.path.join(project_dir, 'tools', 'gca_searchlight_tools.py')
+gca_script = os.path.join(project_dir, 'tools', 'gca', 'gca_searchlight_tools.py')
 
 def setup_sbatch(job_name, script_name, sub):
     sbatch_setup = f"""#!/bin/bash -l
