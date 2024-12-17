@@ -14,7 +14,7 @@ raw_dir = params.raw_dir
 sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'
 sub_info = pd.read_csv(sub_info_path)
 target_subjects = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
-zstats = [6] # if I want 8 and 11 they are saved elsewhere due to disk space issues, I ran for 3 and 4, had to delete 4 so I could save 8
+zstats = [3, 8] 
 
 for sub in target_subjects:
     sub_dir = f'{raw_dir}/{sub}/ses-01'
