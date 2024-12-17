@@ -1,7 +1,7 @@
 '''
 Create 2D heatmap of activation for each subject and group average
 '''
-#use this create_func_map.py script to create individual and group-level functional maps for toolloc task
+#use this create_func_maps.py script to create individual and group-level functional maps for toolloc task
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 
 import sys
@@ -72,6 +72,29 @@ def create_sub_map():
                     np.save(f'{sub_dir}/derivatives/neural_map/{roi_type}_{cond}_binary_3d.npy', binary_3dfunc)
                 else:
                     print(f'{cond} zstat does not exist for subject {sub}')
+
+def create_sub_map_whole_brain():
+    print('Creating individual subject whole brain maps...')
+    for task, cond, cope in zip(task_info['task'], task_info['cond'], task_info['cope']):
+        if task != 'toolloc' or cond != 'tool':
+            continue
+            
+        for sub in sub_info['sub']:
+            sub_dir = f'{raw_dir}/{sub}/ses-01'
+            zstat_path = f'{sub_dir}/derivatives/fsl/{task}/HighLevel{suf}.gfeat/cope{cope}.feat/stats/zstat1_reg.nii.gz'
+            
+            if os.path.exists(zstat_path):
+                print(f'Processing {sub} {cond} whole brain')
+                zstat = image.load_img(zstat_path)
+                zstat = image.threshold_img(zstat, threshold=thresh, two_sided=False)
+                
+                func_np = zstat.get_fdata()
+                
+                # Save the whole brain data
+                os.makedirs(f'{sub_dir}/derivatives/neural_map', exist_ok=True)
+                np.save(f'{sub_dir}/derivatives/neural_map/{cond}_whole_brain.npy', func_np)
+            else:
+                print(f'{cond} zstat does not exist for subject {sub}')
 
 def create_group_map():
     print('Creating group maps...')
@@ -171,7 +194,8 @@ def create_3d_group_map2():
            binary_group = nib.Nifti1Image(binary_group, affine, header)
            nib.save(binary_group, f'{results_dir}/neural_map/{cond}_whole_brain_group.nii.gz')
                 
-#create_sub_map()
+create_sub_map()
 #create_group_map()
 #create_3d_group_map()
+create_sub_map_whole_brain()
 create_3d_group_map2()
