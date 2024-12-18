@@ -170,8 +170,8 @@ def conduct_analyses():
                     logger.info(f"Processing {roi} {hemi}")
                     
                     # Add this check
-                    fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_fc.nii.gz'
-                    ppi_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_ppi.nii.gz'
+                    fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_fc1218.nii.gz'
+                    ppi_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_ppi1218.nii.gz'
                     
                     if os.path.exists(fc_file) and os.path.exists(ppi_file):
                         logger.info(f"Skipping {ss} {roi} {hemi} - already processed")

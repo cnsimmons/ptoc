@@ -83,3 +83,31 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 2024-12-18 05:45:24,179 - INFO - Broadcasting pIPS time series and psychological covariate...
 2024-12-18 05:45:24,179 - INFO - Broadcasting completed.
 2024-12-18 05:45:24,180 - INFO - Starting searchlight analysis...
+2024-12-18 11:11:45,227 - INFO - Searchlight analysis completed.
+2024-12-18 11:11:45,228 - INFO - Memory usage after after searchlight: 37057.15 MB
+2024-12-18 11:11:47,524 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1004/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_right_1217.nii.gz
+2024-12-18 11:11:47,597 - INFO - Memory usage after after cleanup: 36061.36 MB
+2024-12-18 11:11:47,629 - INFO - Memory usage after start of run combination: 36061.36 MB
+2024-12-18 11:11:47,629 - INFO - Processing pIPS right for run combination [2, 1] for subject sub-spaceloc1004
+2024-12-18 11:11:47,898 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.99816656e-01 -1.42442789e-02 -1.27897514e-02 -1.00044151e+02]
+ [ 1.52876880e-02  9.96214092e-01  8.55791494e-02 -1.04554688e+02]
+ [ 1.15223164e-02 -8.57589915e-02  9.96249259e-01 -1.37633972e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-18 11:13:59,928 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.99816656e-01 -1.42442789e-02 -1.27897514e-02 -1.00044151e+02]
+ [ 1.52876880e-02  9.96214092e-01  8.55791494e-02 -1.04554688e+02]
+ [ 1.15223164e-02 -8.57589915e-02  9.96249259e-01 -1.37633972e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-18 11:18:22,987 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-11.062562942504883, max=13.917350769042969, mean=2.3787038834882655e-13
+2024-12-18 11:18:25,010 - INFO - Memory usage after after loading and cleaning run: 69309.60 MB
+2024-12-18 11:18:25,010 - INFO - Memory usage after after loading analysis run: 69309.60 MB
+2024-12-18 11:25:24,236 - INFO - Memory usage after after ROI extraction: 67668.77 MB
+2024-12-18 11:25:24,237 - INFO - Creating Searchlight object for pIPS right...
+2024-12-18 11:25:24,251 - INFO - Searchlight object created.
+2024-12-18 11:25:24,251 - INFO - Distributing data...
+2024-12-18 11:27:07,334 - INFO - Memory usage after after data distribution: 36061.71 MB
+2024-12-18 11:27:07,334 - INFO - Broadcasting pIPS time series and psychological covariate...
+2024-12-18 11:27:07,335 - INFO - Broadcasting completed.
+2024-12-18 11:27:07,335 - INFO - Starting searchlight analysis...
+slurmstepd: error: *** JOB 2071187 ON mind-1-11 CANCELLED AT 2024-12-18T12:10:20 ***
