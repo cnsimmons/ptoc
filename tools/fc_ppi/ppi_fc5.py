@@ -23,7 +23,8 @@ sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'
 
 # Load subject info
 sub_info = pd.read_csv(sub_info_path)
-subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
+#subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
+subs = ['sub-spaceloc2017', 'sub-spaceloc2018']
 #rois = ['pIPS', 'LO', 'PFS', 'aIPS']
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
