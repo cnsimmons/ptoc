@@ -16,8 +16,6 @@ import time
 from nilearn.input_data import NiftiMasker
 import logging
 
-
-
 # Settings
 raw_dir = params.raw_dir
 results_dir = params.results_dir
@@ -26,7 +24,8 @@ sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'
 # Load subject info
 sub_info = pd.read_csv(sub_info_path)
 subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
-rois = ['pIPS', 'LO', 'PFS', 'aIPS']
+#rois = ['pIPS', 'LO', 'PFS', 'aIPS']
+rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 
 # Run parameters
@@ -50,73 +49,73 @@ parcel_dir = os.path.join(raw_dir, '{sub}/ses-01/derivatives/rois/parcels')
 output_dir = '/user_data/csimmon2/git_repos/ptoc/tools'
 
 # Define parameters
-parcels = ['pIPS', 'LO', 'PFS', 'aIPS']
+#parcels = ['pIPS', 'LO', 'PFS', 'aIPS']
+parcels = ['pIPS', 'LO']
 zstats = {'tools': 3, 'scramble': 8}  # Dictionary to map condition names to zstat numbers
 
 def extract_roi_coords():
-    # Initialize DataFrame to store all results
+    raw_dir = params.raw_dir
+    parcels = ['pIPS', 'LO', 'PFS', 'aIPS']
+    run_combos = [[1, 2], [2, 1]]
+    zstats = {'tools': 3, 'scramble': 8}
+    
+    sub_info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv')
+    subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
     roi_coords = pd.DataFrame(columns=['subject', 'run_combo', 'task', 'condition', 'roi', 'hemisphere', 'x', 'y', 'z'])
     
     for ss in subs:
-        os.makedirs(f"{sub_dir.format(sub=ss)}/spheres", exist_ok=True)
-
         for rcn, rc in enumerate(run_combos):
-            for run_num in rc:
-                # Process each condition (tools and scramble)
-                for condition, zstat_num in zstats.items():
-                    all_runs = [image.load_img(f"{sub_dir.format(sub=ss)}/derivatives/stats/zstat{zstat_num}_reg_run{run_num}.nii.gz")]
-                    mean_zstat = image.mean_img(all_runs)
-                    affine = mean_zstat.affine
-
+            for condition, zstat_num in zstats.items():
+                run_num = rc[0]
+                zstat_path = f"/user_data/csimmon2/temp_derivatives/{ss}/ses-01/derivatives/stats/zstat{zstat_num}_reg_run{run_num}.nii.gz"
+                
+                if not os.path.exists(zstat_path):
+                    continue
+                    
+                try:
+                    mean_zstat = image.load_img(zstat_path)
+                    
                     for pr in parcels:
-                        roi = image.load_img(f"{parcel_dir.format(sub=ss)}/{pr}.nii.gz")
+                        roi_path = f"{raw_dir}/{ss}/ses-01/derivatives/rois/parcels/{pr}.nii.gz"
+                        if not os.path.exists(roi_path):
+                            continue
+                            
+                        roi = image.load_img(roi_path)
                         roi_data = roi.get_fdata()
                         
-                        # Create hemisphere masks
                         center_x = roi_data.shape[0] // 2
-                        left_mask = np.zeros_like(roi_data)
-                        right_mask = np.zeros_like(roi_data)
-                        left_mask[:center_x, :, :] = 1
-                        right_mask[center_x:, :, :] = 1
-                        
-                        for lr, hemi_mask in [('l', left_mask), ('r', right_mask)]:
-                            hemi_roi_data = roi_data * hemi_mask
-                            hemi_roi = image.new_img_like(roi, hemi_roi_data)
+                        for lr, slice_idx in [('l', slice(None, center_x)), ('r', slice(center_x, None))]:
+                            hemi_data = np.zeros_like(roi_data)
+                            hemi_data[slice_idx] = roi_data[slice_idx]
+                            
+                            if np.sum(hemi_data) == 0:
+                                continue
+                                
+                            hemi_roi = image.new_img_like(roi, hemi_data)
                             hemi_roi = image.math_img('img > 0', img=hemi_roi)
                             
-                            if np.sum(hemi_roi.get_fdata()) == 0:
-                                continue
+                            coords = plotting.find_xyz_cut_coords(mean_zstat, mask_img=hemi_roi, activation_threshold=0.99)
                             
-                            try:
-                                # Create masked statistical map
-                                masked_stat = image.math_img('img1 * img2', img1=hemi_roi, img2=mean_zstat)
-                                masked_data = masked_stat.get_fdata()
-                                
-                                # Find peak coordinates using argmax
-                                peak_idx = np.unravel_index(np.argmax(masked_data), masked_data.shape)
-                                coords = image.coord_transform(peak_idx[0], peak_idx[1], peak_idx[2], mean_zstat.affine)
-                                
-                                # Add results to DataFrame
-                                new_row = pd.DataFrame({
-                                    'subject': [ss],
-                                    'run_combo': [rcn],
-                                    'task': ['ToolLoc'],
-                                    'condition': [condition],
-                                    'roi': [f"{lr}{pr}"],
-                                    'hemisphere': [lr],
-                                    'x': [coords[0]],
-                                    'y': [coords[1]],
-                                    'z': [coords[2]]
-                                })
-                                roi_coords = pd.concat([roi_coords, new_row], ignore_index=True)
-                                
-                            except ValueError:
-                                continue
+                            new_row = pd.DataFrame({
+                                'subject': [ss],
+                                'run_combo': [rcn],
+                                'task': ['ToolLoc'],
+                                'condition': [condition],
+                                'roi': [f"{lr}{pr}"],
+                                'hemisphere': [lr],
+                                'x': [coords[0]],
+                                'y': [coords[1]],
+                                'z': [coords[2]]
+                            })
+                            roi_coords = pd.concat([roi_coords, new_row], ignore_index=True)
+                            
+                except Exception as e:
+                    print(f"Error processing {ss} run {run_num} {condition}: {e}")
+                    continue
 
-    # Save all results to CSV
+    output_dir = '/user_data/csimmon2/git_repos/ptoc/tools'
     os.makedirs(output_dir, exist_ok=True)
-    output_file = os.path.join(output_dir, 'roi_coordinates.csv')
-    roi_coords.to_csv(output_file, index=False)
+    roi_coords.to_csv(os.path.join(output_dir, 'roi_coordinates.csv'), index=False)
 
 def extract_roi_sphere(img, coords):
     roi_masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)

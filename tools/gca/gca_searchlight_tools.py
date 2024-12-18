@@ -197,7 +197,7 @@ def conduct_searchlight():
                         
                         logging.info(f"Processing {roi} {hemi} for run combination {rc} for subject {ss}")
                         
-                        output_path = f'{sub_dir}/derivatives/gca/searchlight_result_tool_runs{rc[0]}{rc[1]}_{roi}_{hemi}.nii.gz'
+                        output_path = f'{sub_dir}/derivatives/gca/searchlight_result_tool_runs{rc[0]}{rc[1]}_{roi}_{hemi}_1217.nii.gz'
                         
                         if os.path.exists(output_path):
                             logging.info(f"Output file {output_path} already exists. Skipping this run.")
