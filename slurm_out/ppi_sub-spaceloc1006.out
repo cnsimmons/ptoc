@@ -1,5 +1,0 @@
-  File "/user_data/csimmon2/git_repos/ptoc/tools/ppi_fc.py", line 171
-    
-    ^
-SyntaxError: unexpected EOF while parsing
-/var/spool/slurmd/job2070695/slurm_script: line 14:  8635 Killed                  python tools/ppi_fc.py sub-spaceloc1006 --rois LO

@@ -1,8 +1,0 @@
-/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/input_data/__init__.py:23: FutureWarning: The import path 'nilearn.input_data' is deprecated in version 0.9. Importing from 'nilearn.input_data' will be possible at least until release 0.13.0. Please import from 'nilearn.maskers' instead.
-  warnings.warn(message, FutureWarning)
-Processing subject: sub-spaceloc1002
-Processing ROI: LO, Hemisphere: left
-/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:211: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
-  warnings.warn("The parameter 'fwhm' for smoothing is specified "
-/var/spool/slurmd/job2070044/slurm_script: line 15:  8250 Killed                  python /user_data/csimmon2/git_repos/ptoc/tools/ppi_fc.py sub-spaceloc1002
-slurmstepd: error: Detected 1 oom-kill event(s) in step 2070044.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
