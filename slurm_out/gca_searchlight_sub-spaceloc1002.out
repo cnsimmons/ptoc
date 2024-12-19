@@ -3,48 +3,31 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 /home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
   _python_deprecation_warnings()
-2024-12-17 18:13:30,496 - INFO - Running searchlight analysis with GCA for Tool localizer...
-2024-12-17 18:13:30,552 - INFO - Memory usage after start of ROI/hemi iteration: 142.75 MB
-2024-12-17 18:13:30,590 - INFO - Memory usage after start of run combination: 142.75 MB
-2024-12-17 18:13:30,590 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc1002
-2024-12-17 18:13:30,655 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+2024-12-18 22:02:16,911 - INFO - Running searchlight analysis with GCA for Tool localizer...
+2024-12-18 22:02:16,965 - INFO - Memory usage after start of ROI/hemi iteration: 142.73 MB
+2024-12-18 22:02:17,003 - INFO - Memory usage after start of run combination: 142.73 MB
+2024-12-18 22:02:17,003 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc1002
+2024-12-18 22:02:17,020 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1002/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_left_1217.nii.gz already exists. Skipping this run.
+2024-12-18 22:02:17,060 - INFO - Memory usage after start of run combination: 142.73 MB
+2024-12-18 22:02:17,060 - INFO - Processing pIPS left for run combination [2, 1] for subject sub-spaceloc1002
+2024-12-18 22:02:17,108 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
 [[ 9.98947263e-01 -4.36464436e-02  1.37972161e-02 -1.01358284e+02]
  [ 4.15618457e-02  9.91135180e-01  1.26189023e-01 -1.19575912e+02]
  [-1.91825200e-02 -1.25483304e-01  9.91910279e-01 -1.15953613e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-12-17 18:14:50,469 - INFO - Generated mask: shape=(208, 240, 256), affine=
+2024-12-18 22:03:35,758 - INFO - Generated mask: shape=(208, 240, 256), affine=
 [[ 9.98947263e-01 -4.36464436e-02  1.37972161e-02 -1.01358284e+02]
  [ 4.15618457e-02  9.91135180e-01  1.26189023e-01 -1.19575912e+02]
  [-1.91825200e-02 -1.25483304e-01  9.91910279e-01 -1.15953613e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-12-17 18:18:29,748 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-15.425924301147461, max=14.82165813446045, mean=-2.532017170143437e-13
-2024-12-17 18:18:30,798 - INFO - Memory usage after after loading and cleaning run: 33458.49 MB
-2024-12-17 18:18:30,798 - INFO - Memory usage after after loading analysis run: 33458.49 MB
-2024-12-17 18:23:57,930 - INFO - Memory usage after after ROI extraction: 33460.08 MB
-2024-12-17 18:23:57,931 - INFO - Creating Searchlight object for pIPS left...
-2024-12-17 18:23:57,933 - INFO - Searchlight object created.
-2024-12-17 18:23:57,933 - INFO - Distributing data...
-2024-12-17 18:26:02,925 - INFO - Memory usage after after data distribution: 36790.12 MB
-2024-12-17 18:26:02,926 - INFO - Broadcasting pIPS time series and psychological covariate...
-2024-12-17 18:26:02,926 - INFO - Broadcasting completed.
-2024-12-17 18:26:02,926 - INFO - Starting searchlight analysis...
-2024-12-17 22:46:11,368 - INFO - Searchlight analysis completed.
-2024-12-17 22:46:11,369 - INFO - Memory usage after after searchlight: 37722.92 MB
-2024-12-17 22:46:14,277 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1002/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_left_1217.nii.gz
-2024-12-17 22:46:15,239 - INFO - Memory usage after after cleanup: 21049.73 MB
-2024-12-17 22:46:15,272 - INFO - Memory usage after start of run combination: 21049.73 MB
-2024-12-17 22:46:15,272 - INFO - Processing pIPS left for run combination [2, 1] for subject sub-spaceloc1002
-2024-12-17 22:46:15,454 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
-[[ 9.98947263e-01 -4.36464436e-02  1.37972161e-02 -1.01358284e+02]
- [ 4.15618457e-02  9.91135180e-01  1.26189023e-01 -1.19575912e+02]
- [-1.91825200e-02 -1.25483304e-01  9.91910279e-01 -1.15953613e+02]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-12-17 22:47:50,881 - INFO - Generated mask: shape=(208, 240, 256), affine=
-[[ 9.98947263e-01 -4.36464436e-02  1.37972161e-02 -1.01358284e+02]
- [ 4.15618457e-02  9.91135180e-01  1.26189023e-01 -1.19575912e+02]
- [-1.91825200e-02 -1.25483304e-01  9.91910279e-01 -1.15953613e+02]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2024-12-17 22:52:18,042 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-17.613859176635742, max=16.04493522644043, mean=7.819558267975709e-13
-2024-12-17 22:52:18,356 - INFO - Memory usage after after loading and cleaning run: 54297.23 MB
-2024-12-17 22:52:18,356 - INFO - Memory usage after after loading analysis run: 54297.23 MB
-/var/spool/slurmd/job2071185/slurm_script: line 32: 22014 Killed                  python /user_data/csimmon2/git_repos/ptoc/tools/gca/gca_searchlight_tools.py sub-spaceloc1002
+2024-12-18 22:06:48,338 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-17.613859176635742, max=16.04493522644043, mean=7.819558267975709e-13
+2024-12-18 22:06:49,354 - INFO - Memory usage after after loading and cleaning run: 33458.29 MB
+2024-12-18 22:06:49,354 - INFO - Memory usage after after loading analysis run: 33458.29 MB
+2024-12-18 22:11:38,463 - INFO - Memory usage after after ROI extraction: 33459.88 MB
+2024-12-18 22:11:38,463 - INFO - Creating Searchlight object for pIPS left...
+2024-12-18 22:11:38,465 - INFO - Searchlight object created.
+2024-12-18 22:11:38,465 - INFO - Distributing data...
+2024-12-18 22:13:35,397 - INFO - Memory usage after after data distribution: 36618.75 MB
+2024-12-18 22:13:35,397 - INFO - Broadcasting pIPS time series and psychological covariate...
+2024-12-18 22:13:35,397 - INFO - Broadcasting completed.
+2024-12-18 22:13:35,397 - INFO - Starting searchlight analysis...
