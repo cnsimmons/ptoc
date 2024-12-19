@@ -35,3 +35,58 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 2024-12-18 22:19:36,046 - INFO - Broadcasting pIPS time series and psychological covariate...
 2024-12-18 22:19:36,046 - INFO - Broadcasting completed.
 2024-12-18 22:19:36,046 - INFO - Starting searchlight analysis...
+2024-12-19 02:44:52,377 - INFO - Searchlight analysis completed.
+2024-12-19 02:44:52,378 - INFO - Memory usage after after searchlight: 38095.41 MB
+2024-12-19 02:44:54,609 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_right_1217.nii.gz
+2024-12-19 02:44:55,927 - INFO - Memory usage after after cleanup: 21226.28 MB
+2024-12-19 02:44:55,953 - INFO - Memory usage after start of run combination: 21226.28 MB
+2024-12-19 02:44:55,953 - INFO - Processing pIPS right for run combination [2, 1] for subject sub-spaceloc1001
+2024-12-19 02:44:56,391 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.97444093e-01  7.13210031e-02  2.93188728e-03 -1.08846680e+02]
+ [-7.09685236e-02  9.86441553e-01  1.47974461e-01 -1.01250931e+02]
+ [ 7.66151305e-03 -1.47805065e-01  9.88986850e-01 -1.05525330e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-19 02:46:25,147 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.97444093e-01  7.13210031e-02  2.93188728e-03 -1.08846680e+02]
+ [-7.09685236e-02  9.86441553e-01  1.47974461e-01 -1.01250931e+02]
+ [ 7.66151305e-03 -1.47805065e-01  9.88986850e-01 -1.05525330e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-19 02:49:29,452 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-9.951773643493652, max=13.798138618469238, mean=1.625967173070703e-12
+2024-12-19 02:49:29,936 - INFO - Memory usage after after loading and cleaning run: 54473.79 MB
+2024-12-19 02:49:29,937 - INFO - Memory usage after after loading analysis run: 54473.79 MB
+2024-12-19 02:53:44,025 - INFO - Memory usage after after ROI extraction: 54474.05 MB
+2024-12-19 02:53:44,025 - INFO - Creating Searchlight object for pIPS right...
+2024-12-19 02:53:44,028 - INFO - Searchlight object created.
+2024-12-19 02:53:44,028 - INFO - Distributing data...
+2024-12-19 02:55:06,690 - INFO - Memory usage after after data distribution: 37272.30 MB
+2024-12-19 02:55:06,690 - INFO - Broadcasting pIPS time series and psychological covariate...
+2024-12-19 02:55:06,690 - INFO - Broadcasting completed.
+2024-12-19 02:55:06,690 - INFO - Starting searchlight analysis...
+2024-12-19 07:45:46,502 - INFO - Searchlight analysis completed.
+2024-12-19 07:45:46,503 - INFO - Memory usage after after searchlight: 38210.70 MB
+2024-12-19 07:45:48,562 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_tool_runs21_pIPS_right_1217.nii.gz
+2024-12-19 07:45:48,669 - INFO - Memory usage after after cleanup: 37272.31 MB
+2024-12-19 07:45:48,709 - INFO - Memory usage after start of ROI/hemi iteration: 37272.31 MB
+2024-12-19 07:45:48,735 - INFO - Memory usage after start of run combination: 37272.31 MB
+2024-12-19 07:45:48,735 - INFO - Processing LO left for run combination [1, 2] for subject sub-spaceloc1001
+2024-12-19 07:45:49,302 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.97444093e-01  7.13210031e-02  2.93188728e-03 -1.08846680e+02]
+ [-7.09685236e-02  9.86441553e-01  1.47974461e-01 -1.01250931e+02]
+ [ 7.66151305e-03 -1.47805065e-01  9.88986850e-01 -1.05525330e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-19 07:47:13,071 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.97444093e-01  7.13210031e-02  2.93188728e-03 -1.08846680e+02]
+ [-7.09685236e-02  9.86441553e-01  1.47974461e-01 -1.01250931e+02]
+ [ 7.66151305e-03 -1.47805065e-01  9.88986850e-01 -1.05525330e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-19 07:50:20,590 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-10.078959465026855, max=12.247176170349121, mean=1.3054792460541205e-12
+2024-12-19 07:50:21,139 - INFO - Memory usage after after loading and cleaning run: 70519.81 MB
+2024-12-19 07:50:21,140 - INFO - Memory usage after after loading analysis run: 70519.81 MB
+2024-12-19 07:54:40,426 - INFO - Memory usage after after ROI extraction: 54443.20 MB
+2024-12-19 07:54:40,426 - INFO - Creating Searchlight object for LO left...
+2024-12-19 07:54:40,428 - INFO - Searchlight object created.
+2024-12-19 07:54:40,428 - INFO - Distributing data...
+2024-12-19 07:55:58,262 - INFO - Memory usage after after data distribution: 37172.37 MB
+2024-12-19 07:55:58,262 - INFO - Broadcasting LO time series and psychological covariate...
+2024-12-19 07:55:58,262 - INFO - Broadcasting completed.
+2024-12-19 07:55:58,262 - INFO - Starting searchlight analysis...

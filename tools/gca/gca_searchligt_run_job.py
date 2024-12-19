@@ -24,14 +24,14 @@ os.makedirs(slurm_out_dir, exist_ok=True)
 
 # Load and filter subjects
 sub_info = pd.read_csv(f'{project_dir}/sub_info_tool.csv')
-sub_list = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
+#sub_list = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
 
 #sub_list = sub_info[
     #(sub_info['exp'] == 'spaceloc') & 
     #(sub_info['sub'] != 'sub-spaceloc1001')
 #]['sub'].tolist()
 
-#sub_list = ['sub-spaceloc2017']  # 
+sub_list = ['sub-spaceloc1003', 'sub-spaceloc1004']  # 
 
 print(f"Processing subjects: {sub_list}")
 
