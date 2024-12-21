@@ -42,3 +42,23 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 2024-12-19 09:30:59,316 - INFO - Broadcasting LO time series and psychological covariate...
 2024-12-19 09:30:59,316 - INFO - Broadcasting completed.
 2024-12-19 09:30:59,316 - INFO - Starting searchlight analysis...
+2024-12-19 13:46:06,193 - INFO - Searchlight analysis completed.
+2024-12-19 13:46:06,194 - INFO - Memory usage after after searchlight: 37087.60 MB
+2024-12-19 13:46:07,930 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1004/ses-01//derivatives/gca/searchlight_result_tool_runs12_LO_left_1217.nii.gz
+2024-12-19 13:46:08,888 - INFO - Memory usage after after cleanup: 20742.32 MB
+2024-12-19 13:46:08,921 - INFO - Memory usage after start of run combination: 20742.32 MB
+2024-12-19 13:46:08,921 - INFO - Processing LO left for run combination [2, 1] for subject sub-spaceloc1004
+2024-12-19 13:46:08,980 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.99816656e-01 -1.42442789e-02 -1.27897514e-02 -1.00044151e+02]
+ [ 1.52876880e-02  9.96214092e-01  8.55791494e-02 -1.04554688e+02]
+ [ 1.15223164e-02 -8.57589915e-02  9.96249259e-01 -1.37633972e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-19 13:47:42,709 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.99816656e-01 -1.42442789e-02 -1.27897514e-02 -1.00044151e+02]
+ [ 1.52876880e-02  9.96214092e-01  8.55791494e-02 -1.04554688e+02]
+ [ 1.15223164e-02 -8.57589915e-02  9.96249259e-01 -1.37633972e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-19 13:51:57,348 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-11.062562942504883, max=13.917350769042969, mean=2.3787038834882655e-13
+2024-12-19 13:51:57,740 - INFO - Memory usage after after loading and cleaning run: 53989.82 MB
+2024-12-19 13:51:57,740 - INFO - Memory usage after after loading analysis run: 53989.82 MB
+/var/spool/slurmd/job2071280/slurm_script: line 32: 20395 Killed                  python /user_data/csimmon2/git_repos/ptoc/tools/gca/gca_searchlight_tools.py sub-spaceloc1004

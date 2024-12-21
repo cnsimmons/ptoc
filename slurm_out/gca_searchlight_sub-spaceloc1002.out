@@ -103,3 +103,42 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
  [ 4.15618457e-02  9.91135180e-01  1.26189023e-01 -1.19575912e+02]
  [-1.91825200e-02 -1.25483304e-01  9.91910279e-01 -1.15953613e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-19 11:23:15,988 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-15.425924301147461, max=14.82165813446045, mean=-2.532017170143437e-13
+2024-12-19 11:23:16,408 - INFO - Memory usage after after loading and cleaning run: 70035.95 MB
+2024-12-19 11:23:16,408 - INFO - Memory usage after after loading analysis run: 70035.95 MB
+2024-12-19 11:28:48,320 - INFO - Memory usage after after ROI extraction: 70036.20 MB
+2024-12-19 11:28:48,320 - INFO - Creating Searchlight object for LO left...
+2024-12-19 11:28:48,322 - INFO - Searchlight object created.
+2024-12-19 11:28:48,322 - INFO - Distributing data...
+2024-12-19 11:30:23,770 - INFO - Memory usage after after data distribution: 36813.98 MB
+2024-12-19 11:30:23,770 - INFO - Broadcasting LO time series and psychological covariate...
+2024-12-19 11:30:23,770 - INFO - Broadcasting completed.
+2024-12-19 11:30:23,770 - INFO - Starting searchlight analysis...
+2024-12-19 15:45:22,563 - INFO - Searchlight analysis completed.
+2024-12-19 15:45:22,565 - INFO - Memory usage after after searchlight: 37746.09 MB
+2024-12-19 15:45:24,348 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1002/ses-01//derivatives/gca/searchlight_result_tool_runs12_LO_left_1217.nii.gz
+2024-12-19 15:45:24,399 - INFO - Memory usage after after cleanup: 36814.26 MB
+2024-12-19 15:45:24,432 - INFO - Memory usage after start of run combination: 36814.26 MB
+2024-12-19 15:45:24,432 - INFO - Processing LO left for run combination [2, 1] for subject sub-spaceloc1002
+2024-12-19 15:45:24,474 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+[[ 9.98947263e-01 -4.36464436e-02  1.37972161e-02 -1.01358284e+02]
+ [ 4.15618457e-02  9.91135180e-01  1.26189023e-01 -1.19575912e+02]
+ [-1.91825200e-02 -1.25483304e-01  9.91910279e-01 -1.15953613e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-19 15:46:48,692 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.98947263e-01 -4.36464436e-02  1.37972161e-02 -1.01358284e+02]
+ [ 4.15618457e-02  9.91135180e-01  1.26189023e-01 -1.19575912e+02]
+ [-1.91825200e-02 -1.25483304e-01  9.91910279e-01 -1.15953613e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2024-12-19 15:50:06,230 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-17.613859176635742, max=16.04493522644043, mean=7.819558267975709e-13
+2024-12-19 15:50:06,634 - INFO - Memory usage after after loading and cleaning run: 70061.52 MB
+2024-12-19 15:50:06,635 - INFO - Memory usage after after loading analysis run: 70061.52 MB
+2024-12-19 15:55:34,875 - INFO - Memory usage after after ROI extraction: 70061.77 MB
+2024-12-19 15:55:34,875 - INFO - Creating Searchlight object for LO left...
+2024-12-19 15:55:34,877 - INFO - Searchlight object created.
+2024-12-19 15:55:34,877 - INFO - Distributing data...
+2024-12-19 15:57:11,610 - INFO - Memory usage after after data distribution: 36813.96 MB
+2024-12-19 15:57:11,610 - INFO - Broadcasting LO time series and psychological covariate...
+2024-12-19 15:57:11,610 - INFO - Broadcasting completed.
+2024-12-19 15:57:11,610 - INFO - Starting searchlight analysis...
+slurmstepd: error: *** JOB 2071251 ON mind-1-1 CANCELLED AT 2024-12-19T18:14:21 ***
