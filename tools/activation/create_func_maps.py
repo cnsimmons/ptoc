@@ -42,7 +42,11 @@ def create_sub_map():
             
             # Load and threshold zstat
             zstat = image.load_img(zstat_path)
+            
+            # After loading zstat
+            print(f"Before threshold: max={np.max(zstat.get_fdata())}")
             zstat = image.threshold_img(zstat, threshold=thresh, two_sided=False)
+            print(f"After threshold: max={np.max(zstat.get_fdata())}")
             
             # Get whole brain data
             whole_brain = zstat.get_fdata()
@@ -155,10 +159,9 @@ def create_3d_group_map():
                 header = zstat_reg.header
                 n += 1
             
-            # Load original zstat data instead of binary map
-            zstat_data = image.load_img(f'{sub_dir}/derivatives/fsl/{task}/HighLevel{suf}.gfeat/cope{cope}.feat/stats/zstat1_reg.nii.gz').get_fdata()
-            zstat_data = zstat_data / np.max(zstat_data)  # Normalize by max
-            binary_list.append(zstat_data)
+            # Load binary map
+            binary_map = np.load(binary_map_path)
+            binary_list.append(binary_map)
         else:
             print(f'No binary map found for subject {sub}')
     
@@ -169,8 +172,8 @@ def create_3d_group_map():
         # Ensure output directory exists
         os.makedirs(f'{results_dir}/neural_map', exist_ok=True)
         
-        # Sum binary maps and normalize by number of subjects
-        binary_group = np.sum(binary_list, axis=0) / len(binary_list)
+        # Sum binary maps
+        binary_group = np.sum(binary_list, axis=0)
         
         # Save numpy array
         np.save(f'{results_dir}/neural_map/{cond}_group_map.npy', binary_group)
