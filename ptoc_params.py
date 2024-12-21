@@ -24,6 +24,7 @@ sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 sub_info_tool = pd.read_csv(f'{curr_dir}/sub_info_tool.csv')
 sub_info_OTC = pd.read_csv(f'{curr_dir}/sub_info_OTC.csv')
 task_info = pd.read_csv(f'/user_data/csimmon2/git_repos/ptoc/task_info.csv')
+roi_dir = f'{curr_dir}/roiParcels'
 
 hemis = ['left','right']
 #rois = ['ventral_visual_cortex', 'dorsal_visual_cortex', 'LO', 'PFS', 'pIPS','aIPS', 'V1'] #adding V1 for early vision scramble and full hemispace || I need to add 'hemi' but at the moment I can't find the roi file so I'm leaving as is with just the added V1
