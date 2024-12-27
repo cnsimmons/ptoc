@@ -32,7 +32,7 @@ def create_sub_map():
     
     task = 'toolloc'
     cond = 'tool'
-    cope = 1
+    cope = 3
 
     # Determine ROI type
     if cond == 'word' or task == 'face':
@@ -162,7 +162,7 @@ def create_3d_group_map():
         
         task = 'toolloc'
         cond = 'tool'
-        cope = 1
+        cope = 3
         n = 0
         func_list = []
         binary_list = []
@@ -201,8 +201,6 @@ def create_3d_group_map():
 
     #save func group
     #np.save(f'{results_dir}/neural_map/{cond}_func.npy', func_group)
-
-    #save binary group
         
 
 
