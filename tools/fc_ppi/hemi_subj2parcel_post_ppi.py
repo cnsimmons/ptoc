@@ -51,8 +51,8 @@ for sub in subs:
             
             '''''
             # FC to MNI - force rerun
-            fc_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_fc1218.nii.gz"
-            fc_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_fc_mni1218.nii.gz"
+            fc_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_fc.nii.gz"
+            fc_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_fc_mni.nii.gz"
             
             if os.path.isfile(fc_native):
                 print(f"Registering FC for {sub}, ROI {roi}, Hemisphere {hemi} to MNI space")
@@ -70,8 +70,8 @@ for sub in subs:
             '''''
 
             # PPI to MNI - force rerun
-            ppi_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_ppi1218.nii.gz"
-            ppi_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_ppi_mni1218.nii.gz"
+            ppi_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_ppi.nii.gz"
+            ppi_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_ppi_mni.nii.gz"
             
             if os.path.isfile(ppi_native):
                 print(f"Registering PPI for {sub}, ROI {roi}, Hemisphere {hemi} to MNI space")

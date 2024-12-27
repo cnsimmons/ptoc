@@ -23,10 +23,8 @@ sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'
 
 # Load subject info
 sub_info = pd.read_csv(sub_info_path)
-#subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
-subs = ['sub-spaceloc1001', 'sub-spaceloc1002', 'sub-spaceloc1003', 'sub-spaceloc1004']
-#rois = ['pIPS', 'LO', 'PFS', 'aIPS']
-rois = ['pIPS', 'LO']
+subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
+rois = ['pIPS', 'LO', 'PFS', 'aIPS']
 hemispheres = ['left', 'right']
 
 # Run parameters
@@ -50,8 +48,7 @@ parcel_dir = os.path.join(raw_dir, '{sub}/ses-01/derivatives/rois/parcels')
 output_dir = '/user_data/csimmon2/git_repos/ptoc/tools'
 
 # Define parameters
-#parcels = ['pIPS', 'LO', 'PFS', 'aIPS']
-parcels = ['pIPS', 'LO']
+parcels = ['pIPS', 'LO', 'PFS', 'aIPS']
 zstats = {'tools': 3, 'scramble': 8}  # Dictionary to map condition names to zstat numbers
 
 def extract_roi_coords():
@@ -170,8 +167,8 @@ def conduct_analyses():
                     logger.info(f"Processing {roi} {hemi}")
                     
                     # Add this check
-                    fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_fc1218.nii.gz'
-                    ppi_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_ppi1218.nii.gz'
+                    fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_fc.nii.gz'
+                    ppi_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_ppi.nii.gz'
                     
                     if os.path.exists(fc_file) and os.path.exists(ppi_file):
                         logger.info(f"Skipping {ss} {roi} {hemi} - already processed")
@@ -283,6 +280,6 @@ def create_summary():
 if __name__ == "__main__":
     warnings.filterwarnings('ignore')
     logger = setup_logging()
-    #extract_roi_coords() # completed and saved to roi_coordinates.csv
+    #extract_roi_coords() # completed and saved to roi_coordinates.csv previously
     create_summary()
     conduct_analyses()
