@@ -24,6 +24,7 @@ sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'
 # Load subject info
 sub_info = pd.read_csv(sub_info_path)
 subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
+#subs = ['sub-spaceloc1003', 'sub-spaceloc1004']
 rois = ['pIPS', 'LO', 'PFS', 'aIPS']
 hemispheres = ['left', 'right']
 
@@ -205,10 +206,19 @@ def conduct_analyses():
                             )
                             
                             phys = extract_roi_sphere(img, coords)
-                            brain_time_series = brain_masker.fit_transform(img)
-                            
+                            psy = make_psy_cov(rc, ss)
+                            ppi_regressor = phys * psy
+
+                            confounds = pd.DataFrame({
+                                'psy': psy[:,0],
+                                'phys': phys[:,0],
+                                'ppi': ppi_regressor[:,0]
+                            })
+
+                            brain_time_series = brain_masker.fit_transform(img, confounds=confounds)
+
                             # FC Analysis
-                            correlations = np.dot(brain_time_series.T, phys) / phys.shape[0]
+                            correlations = np.dot(brain_time_series.T, phys) / phys.shape[0]  
                             correlations = np.arctanh(correlations.ravel())
                             correlation_img = brain_masker.inverse_transform(correlations)
                             all_runs_fc.append(correlation_img)
