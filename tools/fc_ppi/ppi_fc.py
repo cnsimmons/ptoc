@@ -23,8 +23,11 @@ sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'
 
 # Load subject info
 sub_info = pd.read_csv(sub_info_path)
-subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
-#subs = ['sub-spaceloc1003', 'sub-spaceloc1004']
+#subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
+#subs = ['sub-spaceloc2018', 'sub-spaceloc2017', 'sub-spaceloc2016', 'sub-spaceloc2015']
+#subs = ['sub-spaceloc2014', 'sub-spaceloc2013', 'sub-spaceloc1012', 'sub-spaceloc1011']
+subs = ['sub-spaceloc1007', 'sub-spaceloc1008']
+
 rois = ['pIPS', 'LO', 'PFS', 'aIPS']
 hemispheres = ['left', 'right']
 
@@ -206,7 +209,14 @@ def conduct_analyses():
                             )
                             
                             phys = extract_roi_sphere(img, coords)
-                            psy = make_psy_cov(rc, ss)
+                            psy = make_psy_cov(analysis_run, ss)  #convolve to HRF
+                            
+                            #modify confounds to match VA
+                            confounds = pd.DataFrame(columns =['psy', 'phys'])
+                            confounds['psy'] = psy[:,0]
+                            confounds['phys'] =phys[:,0]
+                            
+                            brain_time_series = brain_masker.fit_transform(img, confounds=[confounds])
 
                             # FC Analysis
                             correlations = np.dot(brain_time_series.T, phys) / phys.shape[0]  
@@ -214,19 +224,10 @@ def conduct_analyses():
                             correlation_img = brain_masker.inverse_transform(correlations)
                             all_runs_fc.append(correlation_img)
                             
-                            # PPI Analysis
-                            psy = make_psy_cov(analysis_run, ss)
-                            
-                            #modify confounds to match VA
-                            confounds = pd.DataFrame(columns =['psy', 'phys'])
-                            confounds['psy'] = psy[:,0]
-                            confounds['phys'] =phys[:,0]
-                            
+                            # PPI Analysis                            
                             # create the ppi regressor
                             ppi = psy * phys
                             ppi = ppi.reshape((ppi.shape[0], 1))
-
-                            brain_time_series = brain_masker.fit_transform(img, confounds=[confounds])
                     
                             # Correlate interaction term with brain time series
                             ppi_correlations = np.dot(brain_time_series.T, ppi) / ppi.shape[0]
