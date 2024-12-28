@@ -43,7 +43,8 @@ for sub in subs:
 
     # Loop through ROIs and hemispheres
     #rois = ['pIPS', 'LO', 'PFS', 'aIPS']
-    rois = ['pIPS', 'LO']
+    #rois = ['pIPS', 'LO']
+    rois = ['PFS', 'aIPS']
     hemispheres = ['left', 'right']
     
     for roi in rois:
