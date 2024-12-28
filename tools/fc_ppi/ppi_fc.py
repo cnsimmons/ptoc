@@ -207,15 +207,6 @@ def conduct_analyses():
                             
                             phys = extract_roi_sphere(img, coords)
                             psy = make_psy_cov(rc, ss)
-                            ppi_regressor = phys * psy
-
-                            confounds = pd.DataFrame({
-                                'psy': psy[:,0],
-                                'phys': phys[:,0],
-                                'ppi': ppi_regressor[:,0]
-                            })
-
-                            brain_time_series = brain_masker.fit_transform(img, confounds=confounds)
 
                             # FC Analysis
                             correlations = np.dot(brain_time_series.T, phys) / phys.shape[0]  
@@ -226,16 +217,22 @@ def conduct_analyses():
                             # PPI Analysis
                             psy = make_psy_cov(analysis_run, ss)
                             
-                            confounds = pd.DataFrame({
-                                'psy': psy[:,0],
-                                'phys': phys[:,0]
-                            })
+                            #modify confounds to match VA
+                            confounds = pd.DataFrame(columns =['psy', 'phys'])
+                            confounds['psy'] = psy[:,0]
+                            confounds['phys'] =phys[:,0]
                             
+                            # create the ppi regressor
+                            ppi = psy * phys
+                            ppi = ppi.reshape((ppi.shape[0], 1))
+
                             brain_time_series = brain_masker.fit_transform(img, confounds=[confounds])
-                            
-                            ppi_regressor = phys * psy
-                            ppi_correlations = np.dot(brain_time_series.T, ppi_regressor) / ppi_regressor.shape[0]
+                    
+                            # Correlate interaction term with brain time series
+                            ppi_correlations = np.dot(brain_time_series.T, ppi) / ppi.shape[0]
                             ppi_correlations = np.arctanh(ppi_correlations.ravel())
+                            
+                            #transform correlation map back to the brain
                             ppi_img = brain_masker.inverse_transform(ppi_correlations)
                             all_runs_ppi.append(ppi_img)
                         
