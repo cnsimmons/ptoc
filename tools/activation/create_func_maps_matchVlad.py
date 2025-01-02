@@ -31,13 +31,13 @@ def create_sub_map():
     print('Creating individual subject maps...')
     
     task = 'toolloc'
-    cond = 'tool'
-    cope = 3
+    cond = 'toolnontool'
+    cope = 1
 
     # Determine ROI type
     if cond == 'word' or task == 'face':
         roi_type = 'ventral_visual_cortex'
-    elif cond == 'tool' or cond == 'space':
+    elif cond == 'tool' or cond == 'toolnontool':
         roi_type = 'dorsal_visual_cortex'
     
     # Load and binarize ROI
@@ -108,7 +108,8 @@ def create_sub_map():
 
 def create_group_map():
     print('Creating 2D group maps...')
-    cond = 'tool'
+    cond = 'toolnontool'
+    cope = 1
     n = 0
     func_list = []
     binary_list = []
@@ -152,7 +153,7 @@ def create_group_map():
     #save binary group
     np.save(f'{results_dir}/neural_map/{cond}_binary.npy', binary_group)
 
-def create_3d_group_map():
+def create_3d_group_map_og():
     '''
     Create non-parametic group map
     '''
@@ -161,8 +162,8 @@ def create_3d_group_map():
     for sub in sub_info['sub']:
         
         task = 'toolloc'
-        cond = 'tool'
-        cope = 3
+        cond = 'toolnontool'
+        cope = 1
         n = 0
         func_list = []
         binary_list = []
@@ -202,7 +203,42 @@ def create_3d_group_map():
     #save func group
     #np.save(f'{results_dir}/neural_map/{cond}_func.npy', func_group)
         
+def create_3d_group_map():
+    '''
+    Create non-parametric group map for subjects
+    '''
+    print('Creating 3d group maps...')
+    task = 'toolloc'
+    cond = 'toolnontool'
+    cope = 1
+    n = 0
+    binary_list = []     
+    
+    for sub in sub_info['sub']:
+        sub_dir = f'{raw_dir}/{sub}/ses-01'
+        neural_map_path = f'{sub_dir}/derivatives/neural_map/{cond}_binary_3d.npy'
 
+        if os.path.exists(neural_map_path):
+            print(f'path exists for {sub}')
+            if n == 0:
+                #load zstat reg
+                zstat_reg = image.load_img(f'{sub_dir}/derivatives/fsl/{task}/HighLevel{suf}.gfeat/cope{cope}.feat/stats/zstat1_reg.nii.gz')
+                affine = zstat_reg.affine
+                header = zstat_reg.header
+                n += 1
+
+            #load binary map
+            binary_map = np.load(neural_map_path)
+            binary_list.append(binary_map)
+
+    #sum binary map 
+    binary_group = np.nansum(binary_list, axis=0)
+    np.save(f'{results_dir}/neural_map/{cond}_group_map.npy', binary_group)
+
+    #convert to nifti
+    binary_group = nib.Nifti1Image(binary_group, affine, header)
+    #save binary group
+    nib.save(binary_group,f'{results_dir}/neural_map/{cond}_group.nii.gz')
 
 create_sub_map()
 create_group_map()
