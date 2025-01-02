@@ -53,6 +53,7 @@ subs = [sub]
 print(f"Processing subject: {sub}")
 
 rois = ['pIPS', 'LO'] # run PFS and aIPS separately
+#rois = ['PFS', 'aIPS']
 hemispheres = ['left', 'right']
 
 # Two runs instead of three

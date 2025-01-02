@@ -25,14 +25,15 @@ mni_brain = os.path.join(os.environ['FSLDIR'], "data/standard/MNI152_T1_2mm_brai
 # Load subject information
 sub_info = pd.read_csv(f'{curr_dir}/sub_info_tool.csv')
 
-sub_info = sub_info[
-    (sub_info['exp'] == 'spaceloc') & 
-    (sub_info['sub'].isin(['sub-spaceloc1001', 'sub-spaceloc1002', 'sub-spaceloc1003', 
-                              'sub-spaceloc1004', 'sub-spaceloc1005', 'sub-spaceloc1006',
-                              'sub-spaceloc1007', 'sub-spaceloc1008']))
-]
+#sub_info = sub_info[
+    #(sub_info['exp'] == 'spaceloc') & 
+    #(sub_info['sub'].isin(['sub-spaceloc1001', 'sub-spaceloc1002', 'sub-spaceloc1003', 
+                             # 'sub-spaceloc1004', 'sub-spaceloc1005', 'sub-spaceloc1006',
+                             # 'sub-spaceloc1007', 'sub-spaceloc1008', 'sub-spaceloc1009',
+                             # 'sub-spaceloc1010', 'sub-spaceloc1011', 'sub-spaceloc1012', 'sub-spaceloc2013']))
+#]
 
-rois = ['pIPS']
+rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 localizer = 'Tool'
 run_combos = ['12', '21']
