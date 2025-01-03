@@ -17,3 +17,14 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
  [-1.25829084e-02  9.37968910e-01  3.46490949e-01 -1.38970154e+02]
  [-7.61265075e-03 -3.46598208e-01  9.37982798e-01 -8.45175552e+01]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2025-01-02 19:38:38,216 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-14.57678508758545, max=16.735490798950195, mean=-1.1522005939181782e-12
+2025-01-02 19:38:39,525 - INFO - Memory usage after after loading and cleaning run: 33457.64 MB
+2025-01-02 19:38:39,525 - INFO - Memory usage after after loading analysis run: 33457.64 MB
+2025-01-02 19:42:23,834 - INFO - Memory usage after after ROI extraction: 33459.16 MB
+2025-01-02 19:42:23,834 - INFO - Creating Searchlight object for pIPS left...
+2025-01-02 19:42:23,836 - INFO - Searchlight object created.
+2025-01-02 19:42:23,836 - INFO - Distributing data...
+2025-01-02 19:43:53,604 - INFO - Memory usage after after data distribution: 37145.45 MB
+2025-01-02 19:43:53,604 - INFO - Broadcasting pIPS time series and psychological covariate...
+2025-01-02 19:43:53,605 - INFO - Broadcasting completed.
+2025-01-02 19:43:53,605 - INFO - Starting searchlight analysis...
