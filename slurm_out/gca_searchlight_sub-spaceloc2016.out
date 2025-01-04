@@ -3,28 +3,34 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 /home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
   _python_deprecation_warnings()
-2025-01-02 19:23:40,376 - INFO - Running searchlight analysis with GCA for Tool localizer...
-2025-01-02 19:23:40,423 - INFO - Memory usage after start of ROI/hemi iteration: 142.66 MB
-2025-01-02 19:23:40,456 - INFO - Memory usage after start of run combination: 142.66 MB
-2025-01-02 19:23:40,456 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc2016
-2025-01-02 19:23:40,736 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
-[[ 9.98650074e-01 -2.94012893e-02 -4.27858122e-02 -9.27682495e+01]
- [ 3.10604684e-02  9.98770118e-01  3.86460349e-02 -1.11588562e+02]
- [ 4.15968858e-02 -3.99228707e-02  9.98336554e-01 -1.49376587e+02]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2025-01-02 19:24:54,770 - INFO - Generated mask: shape=(208, 240, 256), affine=
-[[ 9.98650074e-01 -2.94012893e-02 -4.27858122e-02 -9.27682495e+01]
- [ 3.10604684e-02  9.98770118e-01  3.86460349e-02 -1.11588562e+02]
- [ 4.15968858e-02 -3.99228707e-02  9.98336554e-01 -1.49376587e+02]
- [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2025-01-02 19:26:57,700 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-14.304092407226562, max=12.801179885864258, mean=-1.568213138363605e-13
-2025-01-02 19:26:57,844 - INFO - Memory usage after after loading and cleaning run: 33458.25 MB
-2025-01-02 19:26:57,844 - INFO - Memory usage after after loading analysis run: 33458.25 MB
-2025-01-02 19:30:53,000 - INFO - Memory usage after after ROI extraction: 33460.57 MB
-2025-01-02 19:30:53,001 - INFO - Creating Searchlight object for pIPS left...
-2025-01-02 19:30:53,002 - INFO - Searchlight object created.
-2025-01-02 19:30:53,002 - INFO - Distributing data...
-2025-01-02 19:32:13,067 - INFO - Memory usage after after data distribution: 35748.17 MB
-2025-01-02 19:32:13,067 - INFO - Broadcasting pIPS time series and psychological covariate...
-2025-01-02 19:32:13,068 - INFO - Broadcasting completed.
-2025-01-02 19:32:13,068 - INFO - Starting searchlight analysis...
+2025-01-04 13:14:44,278 - INFO - Running searchlight analysis with GCA for Tool localizer...
+2025-01-04 13:14:44,327 - INFO - Memory usage after start of ROI/hemi iteration: 142.65 MB
+2025-01-04 13:14:44,364 - INFO - Memory usage after start of run combination: 142.65 MB
+2025-01-04 13:14:44,364 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc2016
+2025-01-04 13:14:44,463 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2016/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_left_1217.nii.gz already exists. Skipping this run.
+2025-01-04 13:14:44,515 - INFO - Memory usage after start of run combination: 142.65 MB
+2025-01-04 13:14:44,515 - INFO - Processing pIPS left for run combination [2, 1] for subject sub-spaceloc2016
+2025-01-04 13:14:44,516 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2016/ses-01//derivatives/gca/searchlight_result_tool_runs21_pIPS_left_1217.nii.gz already exists. Skipping this run.
+2025-01-04 13:14:44,558 - INFO - Memory usage after start of ROI/hemi iteration: 142.65 MB
+2025-01-04 13:14:44,596 - INFO - Memory usage after start of run combination: 142.65 MB
+2025-01-04 13:14:44,596 - INFO - Processing pIPS right for run combination [1, 2] for subject sub-spaceloc2016
+2025-01-04 13:14:44,596 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2016/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_right_1217.nii.gz already exists. Skipping this run.
+2025-01-04 13:14:44,633 - INFO - Memory usage after start of run combination: 142.65 MB
+2025-01-04 13:14:44,633 - INFO - Processing pIPS right for run combination [2, 1] for subject sub-spaceloc2016
+2025-01-04 13:14:44,633 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2016/ses-01//derivatives/gca/searchlight_result_tool_runs21_pIPS_right_1217.nii.gz already exists. Skipping this run.
+2025-01-04 13:14:44,668 - INFO - Memory usage after start of ROI/hemi iteration: 142.65 MB
+2025-01-04 13:14:44,702 - INFO - Memory usage after start of run combination: 142.65 MB
+2025-01-04 13:14:44,702 - INFO - Processing LO left for run combination [1, 2] for subject sub-spaceloc2016
+2025-01-04 13:14:44,703 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2016/ses-01//derivatives/gca/searchlight_result_tool_runs12_LO_left_1217.nii.gz already exists. Skipping this run.
+2025-01-04 13:14:44,737 - INFO - Memory usage after start of run combination: 142.65 MB
+2025-01-04 13:14:44,737 - INFO - Processing LO left for run combination [2, 1] for subject sub-spaceloc2016
+2025-01-04 13:14:44,737 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2016/ses-01//derivatives/gca/searchlight_result_tool_runs21_LO_left_1217.nii.gz already exists. Skipping this run.
+2025-01-04 13:14:44,772 - INFO - Memory usage after start of ROI/hemi iteration: 142.65 MB
+2025-01-04 13:14:44,806 - INFO - Memory usage after start of run combination: 142.65 MB
+2025-01-04 13:14:44,806 - INFO - Processing LO right for run combination [1, 2] for subject sub-spaceloc2016
+2025-01-04 13:14:44,806 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2016/ses-01//derivatives/gca/searchlight_result_tool_runs12_LO_right_1217.nii.gz already exists. Skipping this run.
+2025-01-04 13:14:44,841 - INFO - Memory usage after start of run combination: 142.65 MB
+2025-01-04 13:14:44,841 - INFO - Processing LO right for run combination [2, 1] for subject sub-spaceloc2016
+2025-01-04 13:14:44,848 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc2016/ses-01//derivatives/gca/searchlight_result_tool_runs21_LO_right_1217.nii.gz already exists. Skipping this run.
+2025-01-04 13:14:44,848 - INFO - Completed searchlight analysis with GCA for all subjects
+Processing subject: sub-spaceloc2016
