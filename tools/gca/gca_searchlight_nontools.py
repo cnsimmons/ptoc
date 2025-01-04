@@ -30,7 +30,7 @@ def log_memory_usage(step):
 # Set up directories and parameters
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
-localizer = 'Tool'  # Changed from 'Object'
+localizer = 'nontool'  # Changed from 'Object' and 'Tool'
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 curr_dir = f'/user_data/csimmon2/git_repos/ptoc'
 sys.path.insert(0, curr_dir)
@@ -109,7 +109,7 @@ def make_psy_cov(runs, ss):
 
     for i, rn in enumerate(runs):
         ss_num = str(ss).replace("sub-spaceloc","")
-        obj_cov_file = f'{cov_dir}/ToolLoc_spaceloc{ss_num}_run{rn}_tool.txt' # tools in this case
+        obj_cov_file = f'{cov_dir}/ToolLoc_spaceloc{ss_num}_run{rn}_non_tool.txt' # nontools in this case
 
         if not os.path.exists(obj_cov_file):
             logging.warning(f'Covariate file not found for run {rn}')
@@ -172,7 +172,7 @@ def compute_gca(data, mask, myrad, bcast_var):
 
 
 def conduct_searchlight():
-    logging.info(f'Running searchlight analysis with GCA for Tool localizer...')
+    logging.info(f'Running searchlight analysis with GCA for nontool localizer...')
 
     for ss in subs:
         try:
@@ -198,7 +198,7 @@ def conduct_searchlight():
                         
                         logging.info(f"Processing {roi} {hemi} for run combination {rc} for subject {ss}")
                         
-                        output_path = f'{sub_dir}/derivatives/gca/searchlight_result_tool_runs{rc[0]}{rc[1]}_{roi}_{hemi}_1217.nii.gz'
+                        output_path = f'{sub_dir}/derivatives/gca/searchlight_result_nontool_runs{rc[0]}{rc[1]}_{roi}_{hemi}_1217.nii.gz'
                         
                         if os.path.exists(output_path):
                             logging.info(f"Output file {output_path} already exists. Skipping this run.")
@@ -227,7 +227,7 @@ def conduct_searchlight():
                             (roi_coords['subject'] == ss) & 
                             (roi_coords['run_combo'] == combo_idx) & 
                             (roi_coords['roi'] == f"{hemi[0]}{roi}") &
-                            (roi_coords['condition'] == 'tools')
+                            (roi_coords['condition'] == 'nontools')
                         ]
                         
                         if coords.empty:
