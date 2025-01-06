@@ -51,7 +51,7 @@ parcel_dir = os.path.join(raw_dir, '{sub}/ses-01/derivatives/rois/parcels')
 output_dir = '/user_data/csimmon2/git_repos/ptoc/tools'
 
 # Define parameters
-zstats = {'tools': 3, 'scramble': 8, 'nontools': 4}  # Dictionary to map condition names to zstat numbers
+zstats = {'tools': 3, 'scramble': 8, 'nontools': 4, 'toolovernontool': 1, 'nontoolovertool': 2}  # Dictionary to map condition names to zstat numbers
 
 def extract_roi_coords():
     raw_dir = params.raw_dir
