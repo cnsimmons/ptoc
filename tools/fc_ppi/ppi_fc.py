@@ -23,10 +23,10 @@ sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'
 
 # Load subject info
 sub_info = pd.read_csv(sub_info_path)
-#subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
+subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
 #subs = ['sub-spaceloc2018', 'sub-spaceloc2017', 'sub-spaceloc2016', 'sub-spaceloc2015']
 #subs = ['sub-spaceloc2014', 'sub-spaceloc2013', 'sub-spaceloc1012', 'sub-spaceloc1011']
-subs = ['sub-spaceloc1007', 'sub-spaceloc1008']
+#subs = ['sub-spaceloc1007', 'sub-spaceloc1008']
 
 rois = ['pIPS', 'LO', 'PFS', 'aIPS']
 hemispheres = ['left', 'right']
@@ -46,32 +46,34 @@ def setup_logging():
     return logging.getLogger(__name__)
 
 # Set directories
-sub_dir = '/user_data/csimmon2/temp_derivatives/{sub}/ses-01'
-roi_dir = os.path.join(raw_dir, '{sub}/ses-01/derivatives/rois')
+sub_dir = '/user_data/csimmon2/temp_derivatives/'
 parcel_dir = os.path.join(raw_dir, '{sub}/ses-01/derivatives/rois/parcels')
 output_dir = '/user_data/csimmon2/git_repos/ptoc/tools'
 
 # Define parameters
-parcels = ['pIPS', 'LO', 'PFS', 'aIPS']
-zstats = {'tools': 3, 'scramble': 8}  # Dictionary to map condition names to zstat numbers
+zstats = {'tools': 3, 'scramble': 8, 'nontools': 4}  # Dictionary to map condition names to zstat numbers
 
 def extract_roi_coords():
     raw_dir = params.raw_dir
     parcels = ['pIPS', 'LO', 'PFS', 'aIPS']
     run_combos = [[1, 2], [2, 1]]
-    zstats = {'tools': 3, 'scramble': 8}
+    #zstats = {'tools': 3, 'scramble': 8, 'nontools': 4}
     
     sub_info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv')
     subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
     roi_coords = pd.DataFrame(columns=['subject', 'run_combo', 'task', 'condition', 'roi', 'hemisphere', 'x', 'y', 'z'])
+    print(f"Initial DataFrame size: {len(roi_coords)}")
     
     for ss in subs:
         for rcn, rc in enumerate(run_combos):
             for condition, zstat_num in zstats.items():
                 run_num = rc[0]
-                zstat_path = f"/user_data/csimmon2/temp_derivatives/{ss}/ses-01/derivatives/stats/zstat{zstat_num}_reg_run{run_num}.nii.gz"
+                #zstat_path = f"{raw_dir}/{ss}/ses-01/derivatives/fsl/toolloc/run-0{run_num}/1stLevel.feat/stats/zstat{zstat_num}_reg.nii.gz"
+                zstat_path = f"{sub_dir}/{ss}/ses-01/derivatives/stats/zstat{zstat_num}_reg_run{run_num}.nii.gz"
+                print(f"Processing {ss} - {condition} - Run {run_num}")
                 
                 if not os.path.exists(zstat_path):
+                    print(f"Missing zstat file: {zstat_path}")
                     continue
                     
                 try:
@@ -79,7 +81,9 @@ def extract_roi_coords():
                     
                     for pr in parcels:
                         roi_path = f"{raw_dir}/{ss}/ses-01/derivatives/rois/parcels/{pr}.nii.gz"
+                        print(f"Trying to access: {roi_path}")
                         if not os.path.exists(roi_path):
+                            print(f"File not found: {roi_path}")
                             continue
                             
                         roi = image.load_img(roi_path)
@@ -288,6 +292,6 @@ def create_summary():
 if __name__ == "__main__":
     warnings.filterwarnings('ignore')
     logger = setup_logging()
-    #extract_roi_coords() # completed and saved to roi_coordinates.csv previously
-    create_summary()
-    conduct_analyses()
+    extract_roi_coords() # completed and saved to roi_coordinates.csv previously
+    #create_summary()
+    #conduct_analyses()
