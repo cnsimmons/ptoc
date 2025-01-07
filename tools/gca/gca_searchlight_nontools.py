@@ -67,6 +67,7 @@ sl_rad = 2
 max_blk_edge = 10
 pool_size = 1
 shape = Ball
+
 def load_and_clean_run(run_path):
     try:
         curr_run = nib.load(run_path)

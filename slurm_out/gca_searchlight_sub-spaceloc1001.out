@@ -3,58 +3,38 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 /home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
   _python_deprecation_warnings()
-2025-01-01 15:37:27,335 - INFO - Running searchlight analysis with GCA for Tool localizer...
-2025-01-01 15:37:28,121 - INFO - Memory usage after start of ROI/hemi iteration: 144.12 MB
-2025-01-01 15:37:28,155 - INFO - Memory usage after start of run combination: 144.12 MB
-2025-01-01 15:37:28,155 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc1001
-2025-01-01 15:37:28,217 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_left_1217.nii.gz already exists. Skipping this run.
-2025-01-01 15:37:28,257 - INFO - Memory usage after start of run combination: 144.12 MB
-2025-01-01 15:37:28,257 - INFO - Processing pIPS left for run combination [2, 1] for subject sub-spaceloc1001
-2025-01-01 15:37:28,258 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_tool_runs21_pIPS_left_1217.nii.gz already exists. Skipping this run.
-2025-01-01 15:37:28,293 - INFO - Memory usage after start of ROI/hemi iteration: 144.12 MB
-2025-01-01 15:37:28,325 - INFO - Memory usage after start of run combination: 144.12 MB
-2025-01-01 15:37:28,325 - INFO - Processing pIPS right for run combination [1, 2] for subject sub-spaceloc1001
-2025-01-01 15:37:28,325 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_tool_runs12_pIPS_right_1217.nii.gz already exists. Skipping this run.
-2025-01-01 15:37:28,353 - INFO - Memory usage after start of run combination: 144.12 MB
-2025-01-01 15:37:28,354 - INFO - Processing pIPS right for run combination [2, 1] for subject sub-spaceloc1001
-2025-01-01 15:37:28,354 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_tool_runs21_pIPS_right_1217.nii.gz already exists. Skipping this run.
-2025-01-01 15:37:28,380 - INFO - Memory usage after start of ROI/hemi iteration: 144.12 MB
-2025-01-01 15:37:28,404 - INFO - Memory usage after start of run combination: 144.12 MB
-2025-01-01 15:37:28,404 - INFO - Processing LO left for run combination [1, 2] for subject sub-spaceloc1001
-2025-01-01 15:37:28,404 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_tool_runs12_LO_left_1217.nii.gz already exists. Skipping this run.
-2025-01-01 15:37:28,427 - INFO - Memory usage after start of run combination: 144.12 MB
-2025-01-01 15:37:28,427 - INFO - Processing LO left for run combination [2, 1] for subject sub-spaceloc1001
-2025-01-01 15:37:28,427 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_tool_runs21_LO_left_1217.nii.gz already exists. Skipping this run.
-2025-01-01 15:37:28,450 - INFO - Memory usage after start of ROI/hemi iteration: 144.12 MB
-2025-01-01 15:37:28,472 - INFO - Memory usage after start of run combination: 144.12 MB
-2025-01-01 15:37:28,472 - INFO - Processing LO right for run combination [1, 2] for subject sub-spaceloc1001
-2025-01-01 15:37:28,473 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_tool_runs12_LO_right_1217.nii.gz already exists. Skipping this run.
-2025-01-01 15:37:28,495 - INFO - Memory usage after start of run combination: 144.12 MB
-2025-01-01 15:37:28,495 - INFO - Processing LO right for run combination [2, 1] for subject sub-spaceloc1001
-2025-01-01 15:37:29,055 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
+2025-01-07 11:05:42,728 - INFO - Running searchlight analysis with GCA for nontool localizer...
+2025-01-07 11:05:42,997 - INFO - Memory usage after start of ROI/hemi iteration: 142.31 MB
+2025-01-07 11:05:43,027 - INFO - Memory usage after start of run combination: 142.31 MB
+2025-01-07 11:05:43,027 - INFO - Processing pIPS left for run combination [1, 2] for subject sub-spaceloc1001
+2025-01-07 11:05:43,066 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_nontool_runs12_pIPS_left_1217.nii.gz already exists. Skipping this run.
+2025-01-07 11:05:43,098 - INFO - Memory usage after start of run combination: 142.31 MB
+2025-01-07 11:05:43,098 - INFO - Processing pIPS left for run combination [2, 1] for subject sub-spaceloc1001
+2025-01-07 11:05:43,098 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_nontool_runs21_pIPS_left_1217.nii.gz already exists. Skipping this run.
+2025-01-07 11:05:43,130 - INFO - Memory usage after start of ROI/hemi iteration: 142.31 MB
+2025-01-07 11:05:43,160 - INFO - Memory usage after start of run combination: 142.31 MB
+2025-01-07 11:05:43,160 - INFO - Processing pIPS right for run combination [1, 2] for subject sub-spaceloc1001
+2025-01-07 11:05:43,160 - INFO - Output file /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_nontool_runs12_pIPS_right_1217.nii.gz already exists. Skipping this run.
+2025-01-07 11:05:43,189 - INFO - Memory usage after start of run combination: 142.31 MB
+2025-01-07 11:05:43,189 - INFO - Processing pIPS right for run combination [2, 1] for subject sub-spaceloc1001
+2025-01-07 11:05:43,452 - INFO - Functional image: shape=(208, 240, 256, 341), affine=
 [[ 9.97444093e-01  7.13210031e-02  2.93188728e-03 -1.08846680e+02]
  [-7.09685236e-02  9.86441553e-01  1.47974461e-01 -1.01250931e+02]
  [ 7.66151305e-03 -1.47805065e-01  9.88986850e-01 -1.05525330e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2025-01-01 15:38:53,282 - INFO - Generated mask: shape=(208, 240, 256), affine=
+2025-01-07 11:07:22,185 - INFO - Generated mask: shape=(208, 240, 256), affine=
 [[ 9.97444093e-01  7.13210031e-02  2.93188728e-03 -1.08846680e+02]
  [-7.09685236e-02  9.86441553e-01  1.47974461e-01 -1.01250931e+02]
  [ 7.66151305e-03 -1.47805065e-01  9.88986850e-01 -1.05525330e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
-2025-01-01 15:42:02,709 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-9.951773643493652, max=13.798138618469238, mean=1.625967173070703e-12
-2025-01-01 15:42:04,076 - INFO - Memory usage after after loading and cleaning run: 33460.36 MB
-2025-01-01 15:42:04,076 - INFO - Memory usage after after loading analysis run: 33460.36 MB
-2025-01-01 15:46:23,867 - INFO - Memory usage after after ROI extraction: 33461.91 MB
-2025-01-01 15:46:23,867 - INFO - Creating Searchlight object for LO right...
-2025-01-01 15:46:23,869 - INFO - Searchlight object created.
-2025-01-01 15:46:23,869 - INFO - Distributing data...
-2025-01-01 15:47:53,528 - INFO - Memory usage after after data distribution: 37277.38 MB
-2025-01-01 15:47:53,528 - INFO - Broadcasting LO time series and psychological covariate...
-2025-01-01 15:47:53,528 - INFO - Broadcasting completed.
-2025-01-01 15:47:53,528 - INFO - Starting searchlight analysis...
-2025-01-01 20:00:31,877 - INFO - Searchlight analysis completed.
-2025-01-01 20:00:31,878 - INFO - Memory usage after after searchlight: 38216.21 MB
-2025-01-01 20:00:33,929 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1001/ses-01//derivatives/gca/searchlight_result_tool_runs21_LO_right_1217.nii.gz
-2025-01-01 20:00:35,152 - INFO - Memory usage after after cleanup: 21279.72 MB
-2025-01-01 20:00:35,152 - INFO - Completed searchlight analysis with GCA for all subjects
-Processing subject: sub-spaceloc1001
+2025-01-07 11:09:15,329 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-9.951773643493652, max=13.798138618469238, mean=1.625967173070703e-12
+2025-01-07 11:09:15,454 - INFO - Memory usage after after loading and cleaning run: 33463.44 MB
+2025-01-07 11:09:15,454 - INFO - Memory usage after after loading analysis run: 33463.44 MB
+2025-01-07 11:12:30,685 - INFO - Memory usage after after ROI extraction: 33466.79 MB
+2025-01-07 11:12:30,685 - INFO - Creating Searchlight object for pIPS right...
+2025-01-07 11:12:30,688 - INFO - Searchlight object created.
+2025-01-07 11:12:30,688 - INFO - Distributing data...
+2025-01-07 11:13:33,984 - INFO - Memory usage after after data distribution: 37282.27 MB
+2025-01-07 11:13:33,984 - INFO - Broadcasting pIPS time series and psychological covariate...
+2025-01-07 11:13:33,984 - INFO - Broadcasting completed.
+2025-01-07 11:13:33,984 - INFO - Starting searchlight analysis...
