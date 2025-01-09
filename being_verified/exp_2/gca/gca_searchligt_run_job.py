@@ -25,7 +25,7 @@ os.makedirs(slurm_out_dir, exist_ok=True)
 # Load and filter subjects
 sub_info = pd.read_csv(f'{project_dir}/sub_info_tool.csv')
 #sub_list = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
-sub_list = ['sub-spaceloc1009','sub-spaceloc1010','sub-spaceloc1011']  # 
+sub_list = ['sub-spaceloc1012','sub-spaceloc2013','sub-spaceloc2014']  # remaining subjects: 2015, 2016, 2017, 2018
 #sub_list = sub_info[
     #(sub_info['exp'] == 'spaceloc') & 
     #(sub_info['sub'] != 'sub-spaceloc1001')
