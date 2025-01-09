@@ -62,6 +62,7 @@ def combine_and_transform(subject):
 
             all_run_results = []
             for run_combo in run_combos:
+                #img_path = f'{gca_dir}/searchlight_result_nontool_runs{run_combo}_{roi}_{hemi}_1217.nii.gz'
                 img_path = f'{gca_dir}/searchlight_result_tool_runs{run_combo}_{roi}_{hemi}_1217.nii.gz'
                 if not os.path.exists(img_path):
                     logging.warning(f"File not found: {img_path}")
@@ -75,10 +76,12 @@ def combine_and_transform(subject):
 
             mean_img = image.mean_img(all_run_results)
 
+            #native_output_path = f'{gca_dir}/combined_nontool_{roi}_{hemi}_native_1217.nii.gz'
             native_output_path = f'{gca_dir}/combined_tool_{roi}_{hemi}_native_1217.nii.gz'
             nib.save(mean_img, native_output_path)
             logging.info(f"Saved combined native image: {native_output_path}")
 
+            #mni_output_path = f'{gca_dir}/combined_nontool_{roi}_{hemi}_mni_1217.nii.gz'
             mni_output_path = f'{gca_dir}/combined_tool_{roi}_{hemi}_mni_1217.nii.gz'
             logging.info(f"Registering GCA for {subject}, ROI {roi}, Hemisphere {hemi} to MNI space")
             subprocess.run([

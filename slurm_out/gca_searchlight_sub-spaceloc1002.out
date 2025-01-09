@@ -156,3 +156,19 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
  [ 4.15618457e-02  9.91135180e-01  1.26189023e-01 -1.19575912e+02]
  [-1.91825200e-02 -1.25483304e-01  9.91910279e-01 -1.15953613e+02]
  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2025-01-08 15:49:46,624 - INFO - Generated mask: shape=(208, 240, 256), affine=
+[[ 9.98947263e-01 -4.36464436e-02  1.37972161e-02 -1.01358284e+02]
+ [ 4.15618457e-02  9.91135180e-01  1.26189023e-01 -1.19575912e+02]
+ [-1.91825200e-02 -1.25483304e-01  9.91910279e-01 -1.15953613e+02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+2025-01-08 15:52:27,985 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-17.613859176635742, max=16.04493522644043, mean=7.819558267975709e-13
+2025-01-08 15:52:28,611 - INFO - Memory usage after after loading and cleaning run: 69869.81 MB
+2025-01-08 15:52:28,611 - INFO - Memory usage after after loading analysis run: 69869.81 MB
+2025-01-08 15:58:52,828 - INFO - Memory usage after after ROI extraction: 69870.06 MB
+2025-01-08 15:58:52,828 - INFO - Creating Searchlight object for LO right...
+2025-01-08 15:58:52,831 - INFO - Searchlight object created.
+2025-01-08 15:58:52,831 - INFO - Distributing data...
+2025-01-08 16:00:23,702 - INFO - Memory usage after after data distribution: 36650.48 MB
+2025-01-08 16:00:23,702 - INFO - Broadcasting LO time series and psychological covariate...
+2025-01-08 16:00:23,702 - INFO - Broadcasting completed.
+2025-01-08 16:00:23,702 - INFO - Starting searchlight analysis...
