@@ -302,10 +302,30 @@ def create_summary():
     # Save results
     fc_df.to_csv(f'{results_dir}/roi_fc_summary.csv', index=False)
     ppi_df.to_csv(f'{results_dir}/roi_ppi_summary.csv', index=False)
+
+# to run all subs   
+#if __name__ == "__main__":
+    #warnings.filterwarnings('ignore')
+    #logger = setup_logging()
+    #extract_roi_coords() # completed and saved to roi_coordinates.csv
+    #conduct_analyses()
+    #create_summary()
     
 if __name__ == "__main__":
+    import argparse
+    
+    # Set up argument parser
+    parser = argparse.ArgumentParser(description='Run FC and PPI analysis for a specific subject')
+    parser.add_argument('subject', type=str, help='Subject ID (e.g., sub-spaceloc1001)')
+    
+    # Parse arguments
+    args = parser.parse_args()
+    
+    # Override the subs list with just the input subject
+    subs = [args.subject]
+    
     warnings.filterwarnings('ignore')
     logger = setup_logging()
-    #extract_roi_coords() # completed and saved to roi_coordinates.csv
+    #extract_roi_coords()
     conduct_analyses()
     create_summary()
