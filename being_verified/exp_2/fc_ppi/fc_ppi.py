@@ -24,11 +24,8 @@ sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'
 # Load subject info
 sub_info = pd.read_csv(sub_info_path)
 subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
-#subs = ['sub-spaceloc2018', 'sub-spaceloc2017', 'sub-spaceloc2016', 'sub-spaceloc2015']
-#subs = ['sub-spaceloc2014', 'sub-spaceloc2013', 'sub-spaceloc1012', 'sub-spaceloc1011']
-#subs = ['sub-spaceloc1007', 'sub-spaceloc1008']
 
-rois = ['pIPS', 'LO', 'PFS', 'aIPS']
+rois = ['pIPS','aIPS', 'LO']
 hemispheres = ['left', 'right']
 
 # Run parameters
@@ -55,7 +52,7 @@ zstats = {'tools': 3, 'scramble': 8, 'nontools': 4, 'toolovernontool': 1, 'nonto
 
 def extract_roi_coords():
     raw_dir = params.raw_dir
-    parcels = ['pIPS', 'LO', 'PFS', 'aIPS']
+    parcels = ['pIPS', 'aIPS', 'LO']
     run_combos = [[1, 2], [2, 1]]
     #zstats = {'tools': 3, 'scramble': 8, 'nontools': 4}
     
@@ -152,7 +149,7 @@ def make_psy_cov(run, ss):
     return psy
 
 def conduct_analyses():
-    """Conduct PPI analyses for all subjects and ROIs"""
+    """Conduct FC and PPI analyses for all subjects and ROIs"""
     logger = setup_logging()
     
     for ss in subs:
@@ -160,8 +157,9 @@ def conduct_analyses():
         
         temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/toolloc'
         mask_path = f'{raw_dir}/{ss}/ses-01/anat/{ss}_ses-01_T1w_brain_mask.nii.gz'
-        out_dir = f'/user_data/csimmon2/temp_derivatives/{ss}/ses-01/derivatives'
+        out_dir = f'/lab_data/behrmannlab/vlad/ptoc/{ss}/ses-01/derivatives'
         os.makedirs(f'{out_dir}/fc', exist_ok=True)
+        os.makedirs(f'{out_dir}/ppi', exist_ok=True)
         
         roi_coords = pd.read_csv(f'{output_dir}/roi_coordinates.csv')
         
@@ -174,9 +172,9 @@ def conduct_analyses():
                     hemi_prefix = hemi[0]
                     logger.info(f"Processing {roi} {hemi}")
                     
-                    # Add this check
-                    fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_fc1218.nii.gz'
-                    ppi_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_ppi1218.nii.gz'
+                    # File paths
+                    fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_fc.nii.gz'
+                    ppi_file = f'{out_dir}/ppi/{ss}_{roi}_{hemi}_ToolLoc_ppi.nii.gz'
                     
                     if os.path.exists(fc_file) and os.path.exists(ppi_file):
                         logger.info(f"Skipping {ss} {roi} {hemi} - already processed")
@@ -212,10 +210,11 @@ def conduct_analyses():
                                 standardize=True
                             )
                             
+                            # Extract ROI timeseries
                             phys = extract_roi_sphere(img, coords)
-                            brain_time_series = brain_masker.fit_transform(img)
                             
                             # FC Analysis
+                            brain_time_series = brain_masker.fit_transform(img)
                             correlations = np.dot(brain_time_series.T, phys) / phys.shape[0]
                             correlations = np.arctanh(correlations.ravel())
                             correlation_img = brain_masker.inverse_transform(correlations)
@@ -254,40 +253,59 @@ def conduct_analyses():
             continue
 
 def create_summary():
-    """Extract average PPI values for each ROI pair"""
+    """Extract average FC and PPI values for each ROI pair"""
     
-    summary_df = pd.DataFrame(columns=['sub'] + [f"{h}{r}" for h in hemispheres for r in rois])
+    # Create separate dataframes for FC and PPI
+    fc_df = pd.DataFrame(columns=['sub'] + [f"{h}{r}" for h in hemispheres for r in rois])
+    ppi_df = pd.DataFrame(columns=['sub'] + [f"{h}{r}" for h in hemispheres for r in rois])
     
     for ss in subs:
-        roi_means = [ss]
+        fc_means = [ss]
+        ppi_means = [ss]
+        
+        out_dir = f'/lab_data/behrmannlab/vlad/ptoc/{ss}/ses-01/derivatives'
         
         # For each target ROI
-        for target_hemi in hemispheres:
-            for target_roi in rois:
-                roi = f"{target_hemi[0]}{target_roi}"
+        for hemi in hemispheres:  
+            for roi in rois:     
+                hemi_prefix = hemi[0]  # Match how we create roi name in conduct_analyses
                 
                 try:
                     # Load ROI mask
-                    roi_mask = image.load_img(f'{raw_dir}/{ss}/ses-01/derivatives/rois/{roi}.nii.gz')
+                    roi_mask = image.load_img(f'{raw_dir}/{ss}/ses-01/derivatives/rois/parcels/{roi}.nii.gz')
                     roi_masker = input_data.NiftiMasker(roi_mask)
                     
+                    # Load FC map
+                    fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_fc.nii.gz'
+                    if os.path.exists(fc_file):
+                        fc_img = image.load_img(fc_file)
+                        fc_means.append(roi_masker.fit_transform(fc_img).mean())
+                    else:
+                        fc_means.append(np.nan)
+                        
                     # Load PPI map
-                    ppi_img = image.load_img(f'{out_dir}/sub-{ss}_{roi}_fc.nii.gz')
-                    
-                    # Extract mean value
-                    acts = roi_masker.fit_transform(ppi_img)
-                    roi_means.append(acts.mean())
+                    ppi_file = f'{out_dir}/ppi/{ss}_{roi}_{hemi}_ToolLoc_ppi.nii.gz'
+                    if os.path.exists(ppi_file):
+                        ppi_img = image.load_img(ppi_file)
+                        ppi_means.append(roi_masker.fit_transform(ppi_img).mean())
+                    else:
+                        ppi_means.append(np.nan)
                     
                 except Exception as e:
-                    roi_means.append(np.nan)
+                    fc_means.append(np.nan)
+                    ppi_means.append(np.nan)
+                    logger.error(f"Error processing {ss} {roi}: {str(e)}")
                     
-        summary_df = summary_df.append(pd.Series(roi_means, index=summary_df.columns), ignore_index=True)
+        fc_df = fc_df.append(pd.Series(fc_means, index=fc_df.columns), ignore_index=True)
+        ppi_df = ppi_df.append(pd.Series(ppi_means, index=ppi_df.columns), ignore_index=True)
     
-    summary_df.to_csv(f'{results_dir}/roi_ppi_summary.csv', index=False)
+    # Save results
+    fc_df.to_csv(f'{results_dir}/roi_fc_summary.csv', index=False)
+    ppi_df.to_csv(f'{results_dir}/roi_ppi_summary.csv', index=False)
     
 if __name__ == "__main__":
     warnings.filterwarnings('ignore')
     logger = setup_logging()
-    extract_roi_coords() # completed and saved to roi_coordinates.csv previously
-    #create_summary()
-    #conduct_analyses()
+    #extract_roi_coords() # completed and saved to roi_coordinates.csv
+    conduct_analyses()
+    create_summary()
