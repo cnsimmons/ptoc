@@ -25,8 +25,8 @@ mni_brain = os.path.join(os.environ['FSLDIR'], "data/standard/MNI152_T1_2mm_brai
 # Load subject information
 sub_info = pd.read_csv(f'{curr_dir}/sub_info_tool.csv')
 
-#sub_info = sub_info[
-    #(sub_info['exp'] == 'spaceloc') & 
+sub_info = sub_info[(sub_info['exp'] == 'spaceloc')]
+    # & 
     #(sub_info['sub'].isin(['sub-spaceloc1001', 'sub-spaceloc1002', 'sub-spaceloc1003', 
                              # 'sub-spaceloc1004', 'sub-spaceloc1005', 'sub-spaceloc1006',
                              # 'sub-spaceloc1007', 'sub-spaceloc1008', 'sub-spaceloc1009',
@@ -62,8 +62,8 @@ def combine_and_transform(subject):
 
             all_run_results = []
             for run_combo in run_combos:
-                #img_path = f'{gca_dir}/searchlight_result_nontool_runs{run_combo}_{roi}_{hemi}_1217.nii.gz'
-                img_path = f'{gca_dir}/searchlight_result_tool_runs{run_combo}_{roi}_{hemi}_1217.nii.gz'
+                img_path = f'{gca_dir}/searchlight_result_nontool_runs{run_combo}_{roi}_{hemi}_1217.nii.gz'
+                #img_path = f'{gca_dir}/searchlight_result_tool_runs{run_combo}_{roi}_{hemi}_1217.nii.gz'
                 if not os.path.exists(img_path):
                     logging.warning(f"File not found: {img_path}")
                     continue
@@ -76,13 +76,13 @@ def combine_and_transform(subject):
 
             mean_img = image.mean_img(all_run_results)
 
-            #native_output_path = f'{gca_dir}/combined_nontool_{roi}_{hemi}_native_1217.nii.gz'
-            native_output_path = f'{gca_dir}/combined_tool_{roi}_{hemi}_native_1217.nii.gz'
+            native_output_path = f'{gca_dir}/combined_nontool_{roi}_{hemi}_native_1217.nii.gz'
+            #native_output_path = f'{gca_dir}/combined_tool_{roi}_{hemi}_native_1217.nii.gz'
             nib.save(mean_img, native_output_path)
             logging.info(f"Saved combined native image: {native_output_path}")
 
-            #mni_output_path = f'{gca_dir}/combined_nontool_{roi}_{hemi}_mni_1217.nii.gz'
-            mni_output_path = f'{gca_dir}/combined_tool_{roi}_{hemi}_mni_1217.nii.gz'
+            mni_output_path = f'{gca_dir}/combined_nontool_{roi}_{hemi}_mni_1217.nii.gz'
+            #mni_output_path = f'{gca_dir}/combined_tool_{roi}_{hemi}_mni_1217.nii.gz'
             logging.info(f"Registering GCA for {subject}, ROI {roi}, Hemisphere {hemi} to MNI space")
             subprocess.run([
                 'flirt',
@@ -96,10 +96,24 @@ def combine_and_transform(subject):
 
     logging.info(f"Combination and transformation to MNI space completed for {subject}.")
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python combine_and_transform_searchlight.py <subject>")
-        sys.exit(1)
+# to run one at a time
+#if __name__ == "__main__":
+    #if len(sys.argv) != 2:
+        #print("Usage: python combine_and_transform_searchlight.py <subject>")
+        #sys.exit(1)
 
-    subject = sys.argv[1]
-    combine_and_transform(subject)
+   # subject = sys.argv[1]
+   # combine_and_transform(subject)
+
+# to run all    
+if __name__ == "__main__":
+    # Replace the command line argument check with direct processing of all subjects
+    subjects = sub_info['sub'].unique()
+    
+    for subject in subjects:
+        logging.info(f"Starting processing for subject: {subject}")
+        try:
+            combine_and_transform(subject)
+        except Exception as e:
+            logging.error(f"Error processing {subject}: {e}")
+            continue

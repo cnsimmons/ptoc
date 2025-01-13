@@ -212,3 +212,17 @@ ModuleNotFoundError: No module named 'brainiak.utils.fmriroi'
 2025-01-10 10:06:59,835 - INFO - Cleaned data: shape=(208, 240, 256, 341), min=-15.408204078674316, max=14.087169647216797, mean=-1.0302772239125523e-12
 2025-01-10 10:07:00,552 - INFO - Memory usage after after loading and cleaning run: 69447.96 MB
 2025-01-10 10:07:00,552 - INFO - Memory usage after after loading analysis run: 69447.96 MB
+2025-01-10 10:14:09,729 - INFO - Memory usage after after ROI extraction: 69448.21 MB
+2025-01-10 10:14:09,729 - INFO - Creating Searchlight object for LO right...
+2025-01-10 10:14:09,732 - INFO - Searchlight object created.
+2025-01-10 10:14:09,732 - INFO - Distributing data...
+2025-01-10 10:15:57,544 - INFO - Memory usage after after data distribution: 36207.35 MB
+2025-01-10 10:15:57,544 - INFO - Broadcasting LO time series and psychological covariate...
+2025-01-10 10:15:57,544 - INFO - Broadcasting completed.
+2025-01-10 10:15:57,545 - INFO - Starting searchlight analysis...
+2025-01-10 15:16:21,575 - INFO - Searchlight analysis completed.
+2025-01-10 15:16:21,576 - INFO - Memory usage after after searchlight: 37134.76 MB
+2025-01-10 15:16:23,608 - INFO - Saved searchlight result to /lab_data/behrmannlab/vlad/ptoc/sub-spaceloc1011/ses-01//derivatives/gca/searchlight_result_nontool_runs21_LO_right_1217.nii.gz
+2025-01-10 15:16:23,665 - INFO - Memory usage after after cleanup: 36209.37 MB
+2025-01-10 15:16:23,665 - INFO - Completed searchlight analysis with GCA for all subjects
+Processing subject: sub-spaceloc1011

@@ -42,15 +42,15 @@ for sub in subs:
     ], check=True)
 
     # Loop through ROIs and hemispheres
-    #rois = ['pIPS', 'LO', 'PFS', 'aIPS']
+    rois = ['pIPS', 'LO', 'PFS', 'aIPS']
     #rois = ['pIPS', 'LO']
-    rois = ['PFS', 'aIPS']
+    #rois = ['PFS', 'aIPS']
     hemispheres = ['left', 'right']
     
     for roi in rois:
         for hemi in hemispheres:
             
-            '''''
+            
             # FC to MNI - force rerun
             fc_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_fc.nii.gz"
             fc_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_fc_mni.nii.gz"
@@ -68,8 +68,8 @@ for sub in subs:
                 ], check=True)
             else:
                 print(f"FC file not found for {sub}, ROI {roi}, Hemisphere {hemi}")
-            '''''
-
+            
+            ''''
             # PPI to MNI - force rerun
             ppi_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_ppi.nii.gz"
             ppi_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_ppi_mni.nii.gz"
@@ -87,5 +87,6 @@ for sub in subs:
                 ], check=True)
             else:
                 print(f"PPI file not found for {sub}, ROI {roi}, Hemisphere {hemi}")
+            '''
 
     print(f"Conversion to MNI space completed for {sub}.")
