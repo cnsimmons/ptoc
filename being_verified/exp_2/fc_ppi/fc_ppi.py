@@ -328,4 +328,4 @@ if __name__ == "__main__":
     logger = setup_logging()
     #extract_roi_coords()
     conduct_analyses()
-    create_summary()
+    #create_summary()

@@ -5,7 +5,7 @@ import pandas as pd
 
 # Set up directories and parameters
 curr_dir = '/user_data/csimmon2/git_repos/ptoc'
-study_dir = "/user_data/csimmon2/temp_derivatives"
+study_dir = "/lab_data/behrmannlab/vlad/ptoc"
 raw_dir = "/lab_data/behrmannlab/vlad/hemispace"
 results_dir = "/user_data/csimmon2/git_repos/ptoc/results/tools"
 mni_brain = os.path.join(os.environ['FSLDIR'], "data/standard/MNI152_T1_2mm_brain.nii.gz")
@@ -25,6 +25,12 @@ for sub in subs:
         print(f"Anatomical image not found for {sub}. Skipping...")
         continue
     
+    # Create MNI output directories if they don't exist
+    mni_fc_dir = os.path.join(out_dir, 'fc', 'mni')
+    mni_ppi_dir = os.path.join(out_dir, 'ppi', 'mni')
+    os.makedirs(mni_fc_dir, exist_ok=True)
+    os.makedirs(mni_ppi_dir, exist_ok=True)
+
     # Always generate a new transformation matrix
     anat2mni_mat = f"{out_dir}/fc/anat2mni.mat"
     print(f"Generating transformation matrix for {sub}")
@@ -42,18 +48,14 @@ for sub in subs:
     ], check=True)
 
     # Loop through ROIs and hemispheres
-    rois = ['pIPS', 'LO', 'PFS', 'aIPS']
-    #rois = ['pIPS', 'LO']
-    #rois = ['PFS', 'aIPS']
+    rois = ['pIPS', 'aIPS', 'LO']
     hemispheres = ['left', 'right']
     
     for roi in rois:
         for hemi in hemispheres:
-            
-            
-            # FC to MNI - force rerun
+            # FC to MNI
             fc_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_fc.nii.gz"
-            fc_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_fc_mni.nii.gz"
+            fc_mni = f"{mni_fc_dir}/{sub}_{roi}_{hemi}_ToolLoc_fc_mni.nii.gz"
             
             if os.path.isfile(fc_native):
                 print(f"Registering FC for {sub}, ROI {roi}, Hemisphere {hemi} to MNI space")
@@ -68,11 +70,10 @@ for sub in subs:
                 ], check=True)
             else:
                 print(f"FC file not found for {sub}, ROI {roi}, Hemisphere {hemi}")
-            
-            ''''
-            # PPI to MNI - force rerun
-            ppi_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_ppi.nii.gz"
-            ppi_mni = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_ppi_mni.nii.gz"
+        
+            # PPI to MNI - updated to use correct PPI directory
+            ppi_native = f"{out_dir}/ppi/{sub}_{roi}_{hemi}_ToolLoc_ppi.nii.gz"
+            ppi_mni = f"{mni_ppi_dir}/{sub}_{roi}_{hemi}_ToolLoc_ppi_mni.nii.gz"
             
             if os.path.isfile(ppi_native):
                 print(f"Registering PPI for {sub}, ROI {roi}, Hemisphere {hemi} to MNI space")
@@ -87,6 +88,5 @@ for sub in subs:
                 ], check=True)
             else:
                 print(f"PPI file not found for {sub}, ROI {roi}, Hemisphere {hemi}")
-            '''
 
     print(f"Conversion to MNI space completed for {sub}.")
