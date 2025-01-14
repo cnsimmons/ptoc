@@ -148,7 +148,7 @@ def make_psy_cov(run, ss):
     psy, _ = compute_regressor(cov.T, 'spm', times)
     return psy
 
-def conduct_analyses():
+def conduct_analyses(run_fc=False, run_ppi=True):
     """Conduct FC and PPI analyses for all subjects and ROIs"""
     logger = setup_logging()
     
@@ -158,8 +158,11 @@ def conduct_analyses():
         temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/toolloc'
         mask_path = f'{raw_dir}/{ss}/ses-01/anat/{ss}_ses-01_T1w_brain_mask.nii.gz'
         out_dir = f'/lab_data/behrmannlab/vlad/ptoc/{ss}/ses-01/derivatives'
-        os.makedirs(f'{out_dir}/fc', exist_ok=True)
-        os.makedirs(f'{out_dir}/ppi', exist_ok=True)
+        
+        if run_fc:
+            os.makedirs(f'{out_dir}/fc', exist_ok=True)
+        if run_ppi:
+            os.makedirs(f'{out_dir}/ppi', exist_ok=True)
         
         roi_coords = pd.read_csv(f'{output_dir}/roi_coordinates.csv')
         
@@ -216,40 +219,37 @@ def conduct_analyses():
                             
                             # Extract ROI timeseries
                             phys = extract_roi_sphere(img, coords)
+                            
+                            # Get brain timeseries with standardization (like exp 1)
                             brain_time_series = brain_masker.fit_transform(img)
                             
                             # FC Analysis
-                            correlations = np.dot(brain_time_series.T, phys) / phys.shape[0]
-                            correlations = np.arctanh(correlations.ravel())
-                            correlation_img = brain_masker.inverse_transform(correlations)
-                            all_runs_fc.append(correlation_img)
+                            if run_fc:
+                                correlations = np.dot(brain_time_series.T, phys) / phys.shape[0]
+                                correlations = np.arctanh(correlations.ravel())
+                                correlation_img = brain_masker.inverse_transform(correlations)
+                                all_runs_fc.append(correlation_img)
                   
                             # PPI Analysis
-                            psy = make_psy_cov(analysis_run, ss)
+                            if run_ppi:
+                                psy = make_psy_cov(analysis_run, ss)
+                                # Create PPI regressor first (interaction term)
+                                ppi = psy * phys
 
-                            # Create PPI regressor first (interaction term)
-                            ppi = psy * phys
-                            ppi = ppi.reshape((ppi.shape[0], 1))
-
-                            # Create confounds DataFrame with main effects
-                            confounds = pd.DataFrame(columns=['psy', 'phys'])
-                            confounds['psy'] = psy[:,0]
-                            confounds['phys'] = phys[:,0]
-
-                            # Get brain timeseries with main effects removed
-                            brain_time_series_ppi = brain_masker.fit_transform(img, confounds=[confounds])
-
-                            # Correlate cleaned brain timeseries with interaction term
-                            seed_to_voxel_correlations = (np.dot(brain_time_series_ppi.T, ppi) /
-                                                        ppi.shape[0])
-                            print(ss, seed_to_voxel_correlations.max())
-
-                            # Fisher z-transform
-                            seed_to_voxel_correlations = np.arctanh(seed_to_voxel_correlations)
-
-                            # Transform back to brain space
-                            seed_to_voxel_correlations_img = brain_masker.inverse_transform(seed_to_voxel_correlations.T)
-                            all_runs_ppi.append(seed_to_voxel_correlations_img)
+                                # # Create confounds DataFrame with main effects || this section is now unnecessary because we're using a different method via standardized brain timeseries using brain_masker
+                                #confounds = pd.DataFrame(columns=['psy', 'phys'])
+                                #confounds['psy'] = psy[:,0]
+                                #confounds['phys'] = phys[:,0]
+                            
+                                # Compute correlations
+                                seed_to_voxel_correlations = np.dot(brain_time_series.T, ppi) / ppi.shape[0]
+                                
+                                # Fisher z-transform
+                                seed_to_voxel_correlations = np.arctanh(seed_to_voxel_correlations)
+                                
+                                # Transform back to brain space
+                                seed_to_voxel_correlations_img = brain_masker.inverse_transform(seed_to_voxel_correlations)
+                                all_runs_ppi.append(seed_to_voxel_correlations_img)
                             
                         except Exception as e:
                             logger.error(f"Error in run combo {rc}: {str(e)}")
@@ -323,8 +323,8 @@ if __name__ == "__main__":
     warnings.filterwarnings('ignore')
     logger = setup_logging()
     #extract_roi_coords() # completed and saved to roi_coordinates.csv
-    #conduct_analyses()
-    create_summary()
+    conduct_analyses(run_fc=False, run_ppi=True)
+    #create_summary()
 
 '''    
 if __name__ == "__main__":
