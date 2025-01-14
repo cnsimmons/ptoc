@@ -176,9 +176,13 @@ def conduct_analyses():
                     fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_fc.nii.gz'
                     ppi_file = f'{out_dir}/ppi/{ss}_{roi}_{hemi}_ToolLoc_ppi.nii.gz'
                     
-                    if os.path.exists(fc_file) and os.path.exists(ppi_file):
-                        logger.info(f"Skipping {ss} {roi} {hemi} - already processed")
-                        continue
+                    # Split the checks
+                    run_fc = not os.path.exists(fc_file)
+                    
+                    # Remove ppi check so it always runs
+                    #if os.path.exists(fc_file) and os.path.exists(ppi_file):
+                        #logger.info(f"Skipping {ss} {roi} {hemi} - already processed")
+                        #continue
                     
                     all_runs_fc = []
                     all_runs_ppi = []
