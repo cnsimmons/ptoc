@@ -245,7 +245,7 @@ def conduct_analyses(run_fc=False, run_ppi=True):
                                 seed_to_voxel_correlations = np.dot(brain_time_series.T, ppi) / ppi.shape[0]
                                 
                                 # Fisher z-transform
-                                seed_to_voxel_correlations = np.arctanh(seed_to_voxel_correlations)
+                                seed_to_voxel_correlations = np.arctanh(seed_to_voxel_correlations.ravel())
                                 
                                 # Transform back to brain space
                                 seed_to_voxel_correlations_img = brain_masker.inverse_transform(seed_to_voxel_correlations)
