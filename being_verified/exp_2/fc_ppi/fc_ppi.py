@@ -427,8 +427,8 @@ def create_summary():
     fc_df.to_csv(f'{results_dir}/roi_fc_summary.csv', index=False)
     ppi_df.to_csv(f'{results_dir}/roi_ppi_summary.csv', index=False)
     
-# to run all subs   
-#if __name__ == "__main__":
+# # to run all subs   
+# if __name__ == "__main__":
     #warnings.filterwarnings('ignore')
     #logger = setup_logging()
     #extract_roi_coords() # completed and saved to roi_coordinates.csv
