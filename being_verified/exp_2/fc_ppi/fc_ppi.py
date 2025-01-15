@@ -381,83 +381,142 @@ def conduct_analyses_retro(run_fc=False, run_ppi=True):
             logger.error(f"Error processing subject {ss}: {str(e)}")
             continue
 
-# do not use for now
-def create_summary(): # do not use until the parcels are split to hemispheres
-    """Extract average FC and PPI values for each ROI pair"""
+def create_summary():
+    """Extract average FC and PPI values using sphere-to-sphere connections"""
+    logger = setup_logging()
     
-    # Create separate dataframes for FC and PPI
-    fc_df = pd.DataFrame(columns=['sub'] + [f"{h}{r}" for h in hemispheres for r in rois])
-    ppi_df = pd.DataFrame(columns=['sub'] + [f"{h}{r}" for h in hemispheres for r in rois])
+    # Read the coordinates file that contains sphere centers
+    roi_coords = pd.read_csv(f'{output_dir}/roi_coordinates.csv')
+    
+    # Initialize DataFrames for FC and PPI
+    columns = ['subject', 'seed_roi', 'seed_hemi', 'target_roi', 'target_hemi', 'run_combo', 'value']
+    ppi_df = pd.DataFrame(columns=columns)
+    fc_df = pd.DataFrame(columns=columns)
     
     for ss in subs:
-        fc_means = [ss]
-        ppi_means = [ss]
+        logger.info(f"Processing subject: {ss}")
         
         out_dir = f'/lab_data/behrmannlab/vlad/ptoc/{ss}/ses-01/derivatives'
         
-        # For each target ROI
-        for hemi in hemispheres:  
-            for roi in rois:     
-                hemi_prefix = hemi[0]  # Match how we create roi name in conduct_analyses
+        # For each seed ROI
+        for seed_roi in rois:
+            for seed_hemi in hemispheres:
+                seed_prefix = seed_hemi[0]
                 
-                try:
-                    # Load ROI mask
-                    roi_mask = image.load_img(f'{raw_dir}/{ss}/ses-01/derivatives/rois/parcels/{roi}.nii.gz')
-                    roi_masker = input_data.NiftiMasker(roi_mask)
-                    
-                    # Load FC map
-                    fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_fc.nii.gz'
-                    if os.path.exists(fc_file):
-                        fc_img = image.load_img(fc_file)
-                        fc_means.append(roi_masker.fit_transform(fc_img).mean())
-                    else:
-                        fc_means.append(np.nan)
+                # For each target ROI
+                for target_roi in rois:
+                    for target_hemi in hemispheres:
+                        target_prefix = target_hemi[0]
                         
-                    # Load PPI map
-                    ppi_file = f'{out_dir}/ppi/{ss}_{roi}_{hemi}_ToolLoc_ppi.nii.gz'
-                    if os.path.exists(ppi_file):
-                        ppi_img = image.load_img(ppi_file)
-                        ppi_means.append(roi_masker.fit_transform(ppi_img).mean())
-                    else:
-                        ppi_means.append(np.nan)
-                    
-                except Exception as e:
-                    fc_means.append(np.nan)
-                    ppi_means.append(np.nan)
-                    logger.error(f"Error processing {ss} {roi}: {str(e)}")
-                    
-        fc_df = fc_df.append(pd.Series(fc_means, index=fc_df.columns), ignore_index=True)
-        ppi_df = ppi_df.append(pd.Series(ppi_means, index=ppi_df.columns), ignore_index=True)
+                        # Skip self-connections
+                        if seed_roi == target_roi and seed_hemi == target_hemi:
+                            continue
+                            
+                        # Process each run combination
+                        for rcn, rc in enumerate(run_combos):
+                            try:
+                                # Get seed coordinates for this run combo
+                                seed_coords = roi_coords[
+                                    (roi_coords['subject'] == ss) &
+                                    (roi_coords['run_combo'] == rcn) &
+                                    (roi_coords['roi'] == f"{seed_prefix}{seed_roi}") &
+                                    (roi_coords['hemisphere'] == seed_prefix)
+                                ]
+                                
+                                # Get target coordinates for this run combo
+                                target_coords = roi_coords[
+                                    (roi_coords['subject'] == ss) &
+                                    (roi_coords['run_combo'] == rcn) &
+                                    (roi_coords['roi'] == f"{target_prefix}{target_roi}") &
+                                    (roi_coords['hemisphere'] == target_prefix)
+                                ]
+                                
+                                if seed_coords.empty or target_coords.empty:
+                                    logger.warning(f"Missing coordinates for {ss} {seed_roi}-{target_roi} run_combo {rcn}")
+                                    continue
+                                
+                                # Create target sphere masker
+                                target_coords_xyz = [
+                                    target_coords['x'].values[0],
+                                    target_coords['y'].values[0],
+                                    target_coords['z'].values[0]
+                                ]
+                                target_masker = input_data.NiftiSpheresMasker(
+                                    [tuple(target_coords_xyz)], 
+                                    radius=6,
+                                    standardize=True
+                                )
+                                
+                                # Extract PPI values
+                                ppi_file = f'{out_dir}/ppi/{ss}_{seed_roi}_{seed_hemi}_ToolLoc_ppi_run{rc[0]}to{rc[1]}.nii.gz'
+                                if os.path.exists(ppi_file):
+                                    ppi_img = image.load_img(ppi_file)
+                                    ppi_value = target_masker.fit_transform(ppi_img).mean()
+                                    
+                                    new_row = pd.DataFrame({
+                                        'subject': [ss],
+                                        'seed_roi': [seed_roi],
+                                        'seed_hemi': [seed_hemi],
+                                        'target_roi': [target_roi],
+                                        'target_hemi': [target_hemi],
+                                        'run_combo': [f"{rc[0]}to{rc[1]}"],
+                                        'value': [ppi_value]
+                                    })
+                                    ppi_df = pd.concat([ppi_df, new_row], ignore_index=True)
+                                
+                                # Extract FC values if needed
+                                fc_file = f'{out_dir}/fc/{ss}_{seed_roi}_{seed_hemi}_ToolLoc_fc.nii.gz'
+                                if os.path.exists(fc_file):
+                                    fc_img = image.load_img(fc_file)
+                                    fc_value = target_masker.fit_transform(fc_img).mean()
+                                    
+                                    new_row = pd.DataFrame({
+                                        'subject': [ss],
+                                        'seed_roi': [seed_roi],
+                                        'seed_hemi': [seed_hemi],
+                                        'target_roi': [target_roi],
+                                        'target_hemi': [target_hemi],
+                                        'run_combo': [f"{rc[0]}to{rc[1]}"],
+                                        'value': [fc_value]
+                                    })
+                                    fc_df = pd.concat([fc_df, new_row], ignore_index=True)
+                                    
+                            except Exception as e:
+                                logger.error(f"Error processing {ss} {seed_roi}-{target_roi} run {rc}: {str(e)}")
+                                continue
     
     # Save results
-    fc_df.to_csv(f'{results_dir}/roi_fc_summary.csv', index=False)
-    ppi_df.to_csv(f'{results_dir}/roi_ppi_summary.csv', index=False)
+    ppi_df.to_csv(f'{results_dir}/roi_ppi_sphere_summary.csv', index=False)
+    if not fc_df.empty:
+        fc_df.to_csv(f'{results_dir}/roi_fc_sphere_summary.csv', index=False)
+    
+    return ppi_df, fc_df
     
 # # to run all subs   
-# if __name__ == "__main__":
-    #warnings.filterwarnings('ignore')
-    #logger = setup_logging()
-    #extract_roi_coords() # completed and saved to roi_coordinates.csv
-    #conduct_analyses(run_fc=False, run_ppi=True)
-    #create_summary()
-
-    
 if __name__ == "__main__":
-    import argparse
-    
-    # Set up argument parser
-    parser = argparse.ArgumentParser(description='Run FC and PPI analysis for specific subjects')
-    parser.add_argument('subjects', nargs='+', type=str, help='Subject IDs (e.g., sub-spaceloc1001 sub-spaceloc1002)')
-
-    # Parse arguments
-    args = parser.parse_args()
-    
-    # Override the subs list with just the input subject
-    subs = args.subjects
-    
     warnings.filterwarnings('ignore')
     logger = setup_logging()
+    #extract_roi_coords() # completed and saved to roi_coordinates.csv
+    #conduct_analyses(run_fc=False, run_ppi=True)
+    create_summary()
+
+    
+#if __name__ == "__main__":
+    #import argparse
+    
+    ## Set up argument parser
+    #parser = argparse.ArgumentParser(description='Run FC and PPI analysis for specific subjects')
+    #parser.add_argument('subjects', nargs='+', type=str, help='Subject IDs (e.g., sub-spaceloc1001 sub-spaceloc1002)')
+
+    ## Parse arguments
+    #args = parser.parse_args()
+    
+    ## Override the subs list with just the input subject
+    #subs = args.subjects
+    
+    #warnings.filterwarnings('ignore')
+    #logger = setup_logging()
     #extract_roi_coords()
-    conduct_analyses()
+    #conduct_analyses()
     #conduct_analyses_retro() # retro is from 12/17
     #create_summary() # do not use for now
