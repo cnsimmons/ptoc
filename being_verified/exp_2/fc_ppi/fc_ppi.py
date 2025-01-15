@@ -368,7 +368,12 @@ def conduct_analyses_retro(run_fc=False, run_ppi=True):
                         mean_fc = image.mean_img(all_runs_fc)
                         nib.save(mean_fc, fc_file)
                     
-                    if run_ppi and all_runs_ppi:
+                    if all_runs_ppi:
+                        # First save the individual run results || split by run so that we can plot sphere to sphere connectivity
+                        for rcn, rc in enumerate(run_combos):
+                            nib.save(all_runs_ppi[rcn], f'{out_dir}/ppi/{ss}_{roi}_{hemi}_ToolLoc_ppi_run{rc[0]}to{rc[1]}.nii.gz')
+                        
+                        # Then save the mean
                         mean_ppi = image.mean_img(all_runs_ppi)
                         nib.save(mean_ppi, ppi_file)
         
@@ -376,7 +381,8 @@ def conduct_analyses_retro(run_fc=False, run_ppi=True):
             logger.error(f"Error processing subject {ss}: {str(e)}")
             continue
 
-def create_summary():
+# do not use for now
+def create_summary(): # do not use until the parcels are split to hemispheres
     """Extract average FC and PPI values for each ROI pair"""
     
     # Create separate dataframes for FC and PPI
@@ -454,4 +460,4 @@ if __name__ == "__main__":
     #extract_roi_coords()
     conduct_analyses()
     #conduct_analyses_retro() # retro is from 12/17
-    #create_summary()
+    #create_summary() # do not use for now
