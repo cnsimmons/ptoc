@@ -27,6 +27,7 @@ subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
 
 rois = ['pIPS','aIPS', 'LO']
 hemispheres = ['left', 'right']
+condition = 'tools' # ['scramble', 'nontools']
 
 # Run parameters
 tr = 1
@@ -176,8 +177,8 @@ def conduct_analyses(run_fc=False, run_ppi=True): # exp 1 version
                     logger.info(f"Processing {roi} {hemi}")
                     
                     # File paths
-                    fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_ToolLoc_fc.nii.gz'
-                    ppi_file = f'{out_dir}/ppi/{ss}_{roi}_{hemi}_ToolLoc_ppi.nii.gz'
+                    fc_file = f'{out_dir}/fc/{ss}_{roi}_{hemi}_{condition}_ToolLoc_fc.nii.gz'
+                    ppi_file = f'{out_dir}/ppi/{ss}_{roi}_{hemi}_{condition}_ToolLoc_ppi.nii.gz'
                     
                     # Split the checks
                     run_fc = not os.path.exists(fc_file)
@@ -195,12 +196,14 @@ def conduct_analyses(run_fc=False, run_ppi=True): # exp 1 version
                         analysis_run = rc[1]
                         
                         try:
+                            
                             curr_coords = roi_coords[
                                 (roi_coords['subject'] == ss) &
                                 (roi_coords['run_combo'] == rcn) & 
                                 (roi_coords['roi'] == f"{hemi_prefix}{roi}") &
-                                (roi_coords['hemisphere'] == hemi_prefix)
-                            ]
+                                (roi_coords['hemisphere'] == hemi_prefix) &
+                                (roi_coords['condition'] == condition)  # Make the selection explicit
+]
                             
                             if curr_coords.empty:
                                 logger.warning(f"No coordinates found for {ss} {roi} {hemi} run_combo {rcn}")
@@ -251,9 +254,9 @@ def conduct_analyses(run_fc=False, run_ppi=True): # exp 1 version
                                 seed_to_voxel_correlations_img = brain_masker.inverse_transform(seed_to_voxel_correlations)
                                 
                                 # Save individual run PPI files
-                                run_ppi_file = f'{out_dir}/ppi/{ss}_{roi}_{hemi}_ToolLoc_ppi_run{rc[0]}to{rc[1]}.nii.gz'
+                                run_ppi_file = f'{out_dir}/ppi/{ss}_{roi}_{hemi}_{condition}_ToolLoc_ppi_run{rc[0]}to{rc[1]}.nii.gz'
                                 nib.save(seed_to_voxel_correlations_img, run_ppi_file)
-                                
+
                                 all_runs_ppi.append(seed_to_voxel_correlations_img)
                             
                         except Exception as e:
@@ -272,7 +275,7 @@ def conduct_analyses(run_fc=False, run_ppi=True): # exp 1 version
             logger.error(f"Error processing subject {ss}: {str(e)}")
             continue
 
-def create_summary(run_fc=False, run_ppi=True):
+def create_summary(run_fc=False, run_ppi=True): #### will need to update after running tools ppi_fc create_summary to account for {condition} in the name
     """Extract average FC and/or PPI values using sphere-to-sphere connections"""
     logger = setup_logging()
     
@@ -397,7 +400,6 @@ def create_summary(run_fc=False, run_ppi=True):
     
     return ppi_df if run_ppi else None, fc_df if run_fc else None
 
-
 # # to run all subs   
 #if __name__ == "__main__":
     #warnings.filterwarnings('ignore')
@@ -406,23 +408,26 @@ def create_summary(run_fc=False, run_ppi=True):
     #conduct_analyses(run_fc=False, run_ppi=True)
     #create_summary()
 
-    
 if __name__ == "__main__":
     import argparse
     
     ## Set up argument parser
     parser = argparse.ArgumentParser(description='Run FC and PPI analysis for specific subjects')
     parser.add_argument('subjects', nargs='+', type=str, help='Subject IDs (e.g., sub-spaceloc1001 sub-spaceloc1002)')
+    parser.add_argument('--condition', type=str, default='tools', 
+                       choices=['tools', 'nontools', 'scramble', 'toolovernontool', 'nontoolovertool'],
+                       help='Condition to use for coordinate selection')
 
     ## Parse arguments
     args = parser.parse_args()
     
-    ## Override the subs list with just the input subject
+    ## Override the subs list and condition with input arguments
     subs = args.subjects
+    condition = args.condition
     
     warnings.filterwarnings('ignore')
     logger = setup_logging()
-    #extract_roi_coords()
+    # extract_roi_coords()
     conduct_analyses()
     #conduct_analyses_retro() # retro is from 12/17
     #create_summary() # do not use for now
