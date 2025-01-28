@@ -1,0 +1,16 @@
+PPI Hemispheric Connectivity Analysis Results:
+
+Ipsilateral vs Contralateral Connections:
+W = 357.0, p = 0.852 (FDR-corrected p = 0.852), d = -0.040
+Ipsilateral: 0.029 ± 0.004
+Contralateral: 0.029 ± 0.004
+
+Left vs Right pIPS Seeds:
+W = 183.0, p = 0.006 (FDR-corrected p = 0.017), d = 0.301
+Left pIPS: 0.033 ± 0.004
+Right pIPS: 0.025 ± 0.004
+
+Left vs Right LO Targets:
+W = 208.0, p = 0.018 (FDR-corrected p = 0.026), d = 0.177
+Left LO: 0.031 ± 0.004
+Right LO: 0.027 ± 0.004

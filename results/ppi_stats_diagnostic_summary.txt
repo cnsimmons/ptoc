@@ -1,0 +1,104 @@
+Experiment 1 (Object vs Scramble) PPI Results:
+
+pIPS_left -> LO_left
+n = 19
+W = 187, p = 0.0000 (FDR p = 0.0000), d = 1.3403
+Mean ± SEM: 0.0351 ± 0.0062
+
+pIPS_left -> LO_right
+n = 19
+W = 178, p = 0.0001 (FDR p = 0.0002), d = 1.1558
+Mean ± SEM: 0.0310 ± 0.0063
+
+pIPS_right -> LO_left
+n = 19
+W = 177, p = 0.0002 (FDR p = 0.0002), d = 1.1374
+Mean ± SEM: 0.0279 ± 0.0058
+
+pIPS_right -> LO_right
+n = 19
+W = 170, p = 0.0007 (FDR p = 0.0007), d = 1.0043
+Mean ± SEM: 0.0229 ± 0.0054
+
+
+Experiment 2 (Tools vs Nontools) PPI Results:
+
+pIPS_left -> LO_left (Tools)
+n = 36
+W = 512, p = 0.0021 (FDR p = 0.0110), d = 0.5570
+Mean ± SEM: 0.0194 ± 0.0059
+
+pIPS_left -> LO_left (Nontools)
+n = 36
+W = 413, p = 0.1072 (FDR p = 0.1430), d = 0.1975
+Mean ± SEM: 0.0064 ± 0.0054
+
+pIPS_left -> LO_right (Tools)
+n = 36
+W = 500, p = 0.0039 (FDR p = 0.0124), d = 0.5257
+Mean ± SEM: 0.0184 ± 0.0059
+
+pIPS_left -> LO_right (Nontools)
+n = 36
+W = 418, p = 0.0933 (FDR p = 0.1430), d = 0.2185
+Mean ± SEM: 0.0070 ± 0.0054
+
+pIPS_right -> LO_left (Tools)
+n = 36
+W = 514, p = 0.0018 (FDR p = 0.0110), d = 0.5300
+Mean ± SEM: 0.0173 ± 0.0055
+
+pIPS_right -> LO_left (Nontools)
+n = 36
+W = 433, p = 0.0594 (FDR p = 0.1057), d = 0.2558
+Mean ± SEM: 0.0097 ± 0.0064
+
+pIPS_right -> LO_right (Tools)
+n = 36
+W = 454, p = 0.0289 (FDR p = 0.0577), d = 0.3762
+Mean ± SEM: 0.0149 ± 0.0067
+
+pIPS_right -> LO_right (Nontools)
+n = 36
+W = 374, p = 0.2645 (FDR p = 0.2822), d = 0.0793
+Mean ± SEM: 0.0029 ± 0.0063
+
+aIPS_left -> LO_left (Tools)
+n = 36
+W = 520, p = 0.0013 (FDR p = 0.0110), d = 0.4830
+Mean ± SEM: 0.0198 ± 0.0069
+
+aIPS_left -> LO_left (Nontools)
+n = 36
+W = 407, p = 0.1258 (FDR p = 0.1548), d = 0.2084
+Mean ± SEM: 0.0079 ± 0.0064
+
+aIPS_left -> LO_right (Tools)
+n = 36
+W = 505, p = 0.0030 (FDR p = 0.0120), d = 0.4491
+Mean ± SEM: 0.0220 ± 0.0083
+
+aIPS_left -> LO_right (Nontools)
+n = 36
+W = 385, p = 0.2115 (FDR p = 0.2417), d = 0.1458
+Mean ± SEM: 0.0054 ± 0.0062
+
+aIPS_right -> LO_left (Tools)
+n = 36
+W = 459, p = 0.0239 (FDR p = 0.0577), d = 0.3675
+Mean ± SEM: 0.0134 ± 0.0061
+
+aIPS_right -> LO_left (Nontools)
+n = 36
+W = 415, p = 0.1015 (FDR p = 0.1430), d = 0.1952
+Mean ± SEM: 0.0063 ± 0.0055
+
+aIPS_right -> LO_right (Tools)
+n = 36
+W = 454, p = 0.0289 (FDR p = 0.0577), d = 0.3457
+Mean ± SEM: 0.0145 ± 0.0071
+
+aIPS_right -> LO_right (Nontools)
+n = 36
+W = 321, p = 0.5769 (FDR p = 0.5769), d = -0.0393
+Mean ± SEM: -0.0014 ± 0.0061
