@@ -1,0 +1,5 @@
+ROI,Mean Difference ± SE,t(17),p_FDR,Cohen's d
+Left LO,2.53 ± 0.30,8.14,<.001,2.47
+Right LO,2.31 ± 0.27,8.3,<.001,2.69
+Left pIPS,0.85 ± 0.22,3.82,.003,1.23
+Right pIPS,0.55 ± 0.19,2.76,.013,0.95
