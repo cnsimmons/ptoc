@@ -1,6 +1,13 @@
-FDR-corrected p-values for paired t-tests:
+GCA ROI Pair Combined Comparison Results (Wilcoxon tests):
 
-lpIPS-lLO vs rpIPS-lLO (Object): p_fdr = 0.0194
-lpIPS-rLO vs rpIPS-rLO (Object): p_fdr = 0.0194
-lpIPS-lLO vs rpIPS-lLO (Scramble): p_fdr = 0.8423
-lpIPS-rLO vs rpIPS-rLO (Scramble): p_fdr = 0.9787
+Object Condition:
+lpIPS-lLO vs rpIPS-lLO:
+p_fdr = 0.0068
+lpIPS-rLO vs rpIPS-rLO:
+p_fdr = 0.0013
+
+Scramble Condition:
+lpIPS-lLO vs rpIPS-lLO:
+p_fdr = 0.4699
+lpIPS-rLO vs rpIPS-rLO:
+p_fdr = 0.4127
