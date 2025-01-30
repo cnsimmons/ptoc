@@ -20,51 +20,51 @@ Mean ± SEM: 0.023 ± 0.005
 Experiment 2 (Tools vs Nontools) PPI Results:
 
 pIPS_left -> LO_left (Tools)
-W = 154, p = 0.004 (FDR p = 0.022), d = 0.56
+W = 154, p = 0.005 (FDR p = 0.026), d = 0.56
 Mean ± SEM: 0.019 ± 0.006
 
 pIPS_left -> LO_left (Nontools)
-W = 253, p = 0.214 (FDR p = 0.286), d = 0.20
+W = 253, p = 0.209 (FDR p = 0.278), d = 0.20
 Mean ± SEM: 0.006 ± 0.005
 
 pIPS_left -> LO_right (Tools)
-W = 166, p = 0.008 (FDR p = 0.025), d = 0.53
+W = 166, p = 0.009 (FDR p = 0.028), d = 0.53
 Mean ± SEM: 0.018 ± 0.006
 
 pIPS_left -> LO_right (Nontools)
-W = 248, p = 0.187 (FDR p = 0.286), d = 0.22
+W = 248, p = 0.182 (FDR p = 0.278), d = 0.22
 Mean ± SEM: 0.007 ± 0.005
 
 pIPS_right -> LO_left (Tools)
-W = 152, p = 0.004 (FDR p = 0.022), d = 0.53
+W = 152, p = 0.004 (FDR p = 0.026), d = 0.53
 Mean ± SEM: 0.017 ± 0.006
 
 pIPS_right -> LO_left (Nontools)
-W = 233, p = 0.119 (FDR p = 0.211), d = 0.26
+W = 233, p = 0.116 (FDR p = 0.207), d = 0.26
 Mean ± SEM: 0.010 ± 0.006
 
 pIPS_right -> LO_right (Tools)
-W = 212, p = 0.058 (FDR p = 0.115), d = 0.38
+W = 212, p = 0.057 (FDR p = 0.115), d = 0.38
 Mean ± SEM: 0.015 ± 0.007
 
 pIPS_right -> LO_right (Nontools)
-W = 292, p = 0.529 (FDR p = 0.564), d = 0.08
+W = 292, p = 0.519 (FDR p = 0.554), d = 0.08
 Mean ± SEM: 0.003 ± 0.006
 
 aIPS_left -> LO_left (Tools)
-W = 146, p = 0.003 (FDR p = 0.022), d = 0.48
+W = 146, p = 0.003 (FDR p = 0.026), d = 0.48
 Mean ± SEM: 0.020 ± 0.007
 
 aIPS_left -> LO_left (Nontools)
-W = 259, p = 0.252 (FDR p = 0.310), d = 0.21
+W = 259, p = 0.245 (FDR p = 0.302), d = 0.21
 Mean ± SEM: 0.008 ± 0.006
 
 aIPS_left -> LO_right (Tools)
-W = 161, p = 0.006 (FDR p = 0.024), d = 0.45
+W = 161, p = 0.007 (FDR p = 0.028), d = 0.45
 Mean ± SEM: 0.022 ± 0.008
 
 aIPS_left -> LO_right (Nontools)
-W = 281, p = 0.423 (FDR p = 0.483), d = 0.15
+W = 281, p = 0.414 (FDR p = 0.473), d = 0.15
 Mean ± SEM: 0.005 ± 0.006
 
 aIPS_right -> LO_left (Tools)
@@ -72,13 +72,13 @@ W = 207, p = 0.048 (FDR p = 0.115), d = 0.37
 Mean ± SEM: 0.013 ± 0.006
 
 aIPS_right -> LO_left (Nontools)
-W = 251, p = 0.203 (FDR p = 0.286), d = 0.20
+W = 251, p = 0.198 (FDR p = 0.278), d = 0.20
 Mean ± SEM: 0.006 ± 0.005
 
 aIPS_right -> LO_right (Tools)
-W = 212, p = 0.058 (FDR p = 0.115), d = 0.35
+W = 212, p = 0.057 (FDR p = 0.115), d = 0.35
 Mean ± SEM: 0.015 ± 0.007
 
 aIPS_right -> LO_right (Nontools)
-W = 321, p = 0.858 (FDR p = 0.858), d = -0.04
+W = 321, p = 0.850 (FDR p = 0.850), d = -0.04
 Mean ± SEM: -0.001 ± 0.006

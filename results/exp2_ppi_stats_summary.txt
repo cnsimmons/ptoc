@@ -1,0 +1,52 @@
+
+Tools Condition Results:
+
+Friedman Test Results:
+pIPS: χ²(3) = 2.867, p = 0.413
+aIPS: χ²(3) = 0.467, p = 0.926
+
+Wilcoxon Tests Against Zero:
+              connection       W      p      d   mean    sem  p_fdr
+0    left pIPS - left LO   827.0  0.006  0.371  0.013  0.004  0.016
+1   left pIPS - right LO  2011.0  0.004  0.330  0.011  0.003  0.016
+2   right pIPS - left LO  2246.0  0.033  0.226  0.008  0.003  0.044
+3  right pIPS - right LO  1027.0  0.107  0.205  0.008  0.004  0.123
+4    left aIPS - left LO   801.0  0.004  0.348  0.013  0.005  0.016
+5   left aIPS - right LO  2135.0  0.013  0.214  0.009  0.004  0.021
+6   right aIPS - left LO  2080.0  0.008  0.233  0.009  0.004  0.016
+7  right aIPS - right LO  1050.0  0.138  0.180  0.007  0.005  0.138
+
+Post-hoc Tests:
+                    comparison        W  p_uncorrected      d  left_mean  left_sem  right_mean  right_sem  p_fdr
+0           Left vs Right pIPS   6838.0          0.062  0.116      0.012     0.002       0.008      0.003  0.309
+1           Left vs Right aIPS   7308.0          0.232  0.076      0.011     0.003       0.008      0.003  0.580
+2  Left vs Right LO (for pIPS)   8091.0          0.939  0.011      0.010     0.003       0.009      0.003  0.986
+3  Left vs Right LO (for aIPS)   7591.0          0.429  0.054      0.010     0.003       0.008      0.003  0.715
+4                 pIPS vs aIPS  32455.0          0.986  0.004      0.010     0.002       0.009      0.002  0.986
+================================================================================
+
+Nontools Condition Results:
+
+Friedman Test Results:
+pIPS: χ²(3) = 5.467, p = 0.141
+aIPS: χ²(3) = 7.267, p = 0.064
+
+Wilcoxon Tests Against Zero:
+              connection       W      p      d   mean    sem  p_fdr
+0    left pIPS - left LO  1231.0  0.641  0.061  0.002  0.004  0.733
+1   left pIPS - right LO  2784.0  0.626  0.046  0.002  0.003  0.733
+2   right pIPS - left LO  2867.0  0.816  0.001  0.000  0.004  0.816
+3  right pIPS - right LO  1093.0  0.215 -0.223 -0.010  0.005  0.573
+4    left aIPS - left LO  1214.0  0.575  0.083  0.003  0.004  0.733
+5   left aIPS - right LO  2515.0  0.190 -0.152 -0.006  0.004  0.573
+6   right aIPS - left LO  2757.0  0.569 -0.096 -0.003  0.003  0.733
+7  right aIPS - right LO   978.0  0.059 -0.275 -0.012  0.005  0.475
+
+Post-hoc Tests:
+                    comparison        W  p_uncorrected      d  left_mean  left_sem  right_mean  right_sem  p_fdr
+0           Left vs Right pIPS   6694.0          0.038  0.155      0.002     0.002      -0.004      0.003  0.064
+1           Left vs Right aIPS   6943.0          0.086  0.114     -0.003     0.003      -0.007      0.003  0.089
+2  Left vs Right LO (for pIPS)   6955.0          0.089  0.108      0.001     0.003      -0.003      0.003  0.089
+3  Left vs Right LO (for aIPS)   6011.0          0.002  0.198     -0.001     0.003      -0.009      0.003  0.012
+4                 pIPS vs aIPS  28110.0          0.027  0.092     -0.001     0.002      -0.005      0.002  0.064
+================================================================================
