@@ -1,0 +1,18 @@
+GCA ROI Pair Tool Searchlight Results (Wilcoxon tests):
+
+pIPS_left-LO_left:
+p_fdr = 0.8940
+significant = False
+
+pIPS_left-LO_right:
+p_fdr = 0.8986
+significant = False
+
+pIPS_right-LO_left:
+p_fdr = 0.8940
+significant = False
+
+pIPS_right-LO_right:
+p_fdr = 0.8940
+significant = False
+
