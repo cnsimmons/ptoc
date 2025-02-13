@@ -1,3 +1,7 @@
+'''
+module load freesurfer
+source $FREESURFER_HOME/SetUpFreeSurfer.sh
+'''
 import os
 import numpy as np
 import nibabel as nib
