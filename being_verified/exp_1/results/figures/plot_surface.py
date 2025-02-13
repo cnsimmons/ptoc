@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 def visualize_mgz(mgz_file, output_file):
     """
-    Simple function to visualize an MGZ file on inflated surface
+    Visualize an MGZ file on inflated surface with specific color scheme
     """
     print(f"Loading data from: {mgz_file}")
     data = nib.load(mgz_file).get_fdata()
@@ -19,20 +19,20 @@ def visualize_mgz(mgz_file, output_file):
     vol = cortex.Volume(data, 'fsaverage', 'identity')
     
     print(f"Generating visualization to: {output_file}")
-    
-    # Create figure and plot
     fig = plt.figure(figsize=(12, 8))
-    _ = cortex.quickshow(vol, 
+    
+    # Modified visualization parameters
+    _ = cortex.quickshow(vol,
                         with_rois=True,
                         with_labels=True,
-                        colormap='RdBu_r',
-                        vmin=-0.5,
-                        vmax=0.5)
+                        colormap='YlOrRd',  # or create custom red-to-yellow colormap
+                        vmin=3,
+                        vmax=6,
+                        depth=0.5,  # This helps show the sulci/gyri pattern
+                        inflated=True)  # Explicitly request inflated surface
     
-    # Save figure
     plt.savefig(output_file, format='svg', bbox_inches='tight', dpi=300)
     plt.close()
-    
     print(f"File saved: {output_file}")
 
 # Set up directories
