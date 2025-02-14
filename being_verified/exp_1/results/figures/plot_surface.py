@@ -2,6 +2,8 @@ import os
 import subprocess
 from pathlib import Path
 
+# note to plot surface you need to have freesurfer loaded || I want to make new maps but see why the results seem so different.
+
 def create_surface_visualization(mgz_file, output_file, hemisphere='lh', view='superior'):
     """
     Create 3D inflated surface visualization using tksurfer
