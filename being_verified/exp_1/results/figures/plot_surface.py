@@ -24,7 +24,14 @@ def create_flatmap_visualization(roi, hemi, analysis_type='fc', subject='fsavera
     print(f"Data shape: {data.shape}")
     
     # Create the volume object with the data
-    vol = cortex.Volume(data, subject, 'atlas_2mm', cmap='RdYlBu_r') ### COLOR MAP MUST BE DEFINED HERE TO CHANGE IT
+    vol = cortex.Volume( ### COLOR MAP MUST BE DEFINED HERE TO CHANGE IT
+        data, 
+        subject, 
+        'atlas_2mm',
+        cmap='J5R',
+        vmin=-np.abs(data).max(),  
+        vmax=np.abs(data).max()
+    )
     
     try:
         # Create figure directory if it doesn't exist
@@ -38,11 +45,7 @@ def create_flatmap_visualization(roi, hemi, analysis_type='fc', subject='fsavera
             with_rois=True,
             with_labels=True,
             with_colorbar=True,
-            threshold=0.12,
-            vmin=-np.abs(data).max(),
-            vmax=np.abs(data).max(),
-            cmap='RdYlBu_r',  # Ensure this is a valid colormap
-            size=(1600, 1200)
+            size=(160, 120)
         )
 
         # Debug: Check if the colormap is applied
