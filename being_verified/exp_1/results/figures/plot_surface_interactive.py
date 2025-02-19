@@ -1,3 +1,4 @@
+# must run in local
 import os
 import nibabel as nib
 import cortex
@@ -22,7 +23,7 @@ def show_interactive_brain(roi, hemi, analysis_type='fc', subject='fsaverage'):
     )
     
     # Open interactive viewer
-    cortex.webgl.show(data=vol, port=8051)
+    cortex.webgl.show(data=vol)
 
 if __name__ == "__main__":
     # Example usage - you can modify these parameters

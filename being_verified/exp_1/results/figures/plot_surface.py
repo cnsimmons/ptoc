@@ -117,7 +117,7 @@ def get_global_stats(rois, hemispheres, analysis_type='fc'):
     
     # Use std-based threshold
     #threshold = global_std * 0.5
-    threshold = .05
+    threshold = .12
     
     print(f"\nGlobal statistics:")
     print(f"Global min: {global_min}")
@@ -127,6 +127,7 @@ def get_global_stats(rois, hemispheres, analysis_type='fc'):
     
     return global_min, global_max, threshold
 
+        
 def main():
     # Print diagnostic information
     print(f"Pycortex database: {cortex.database.default_filestore}")
@@ -139,10 +140,11 @@ def main():
     # Get global statistics
     global_min, global_max, threshold = get_global_stats(rois, hemispheres)
     
-    # Modify create_flatmap_visualization to use global values
+    # Create both flatmap and inflated visualizations
     for roi in rois:
         for hemi in hemispheres:
             print(f"\nProcessing {roi} {hemi}")
+            # Create flatmap
             create_flatmap_visualization(roi, hemi, global_min=global_min, 
                                       global_max=global_max, threshold=threshold)
 
