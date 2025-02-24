@@ -1,12 +1,11 @@
-# files are zscored in analyses script - here they are thresholded by 2SD and clustered
-
+# files are zscored in analyses script - here they are thresholded using FDR || use parameter
 import os
 import numpy as np
 import pandas as pd
 import nibabel as nib
 from nilearn import image, plotting
+from nilearn.glm import threshold_stats_img
 import matplotlib.pyplot as plt
-from scipy.ndimage import label
 
 # Define study directories
 study = 'ptoc'
@@ -14,17 +13,8 @@ study_dir = f"/lab_data/behrmannlab/vlad/{study}"
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info.csv'
 
-def apply_cluster_threshold(img, min_cluster_size=5):
-    data = img.get_fdata()
-    binary_map = (data != 0).astype(int)
-    labeled_array, num_features = label(binary_map)
-    
-    for label_id in range(1, num_features + 1):
-        cluster_size = np.sum(labeled_array == label_id)
-        if cluster_size < min_cluster_size:
-            data[labeled_array == label_id] = 0
-    
-    return nib.Nifti1Image(data, img.affine, img.header)
+# FDR alpha level
+alpha = 0.05
 
 def main():
     # Define subjects and ROIs
@@ -59,19 +49,31 @@ def main():
                 if all_sub_imgs:
                     # Create average image
                     avg_img = image.mean_img(all_sub_imgs)
-                    data = avg_img.get_fdata()
                     
-                    # Calculate threshold (mean + 2SD of non-zero values)
-                    nonzero_data = data[data != 0]
-                    threshold = np.mean(nonzero_data) + 2 * np.std(nonzero_data)
-                    print(f"{roi} {hemi} {analysis_type} threshold (mean + 2SD): {threshold:.3f}")
+                    # Z-score the image before thresholding (like your PI does)
+                    zstat_img = image.math_img("(img-img.mean())/img.std()", img=avg_img)
                     
-                    # Apply threshold
-                    data[data < threshold] = 0
-                    thresholded_img = nib.Nifti1Image(data, avg_img.affine)
+                    # Apply FDR threshold
+                    thresh_val = threshold_stats_img(
+                        zstat_img, 
+                        alpha=alpha, 
+                        height_control='fdr', 
+                        cluster_threshold=5, 
+                        two_sided=False
+                    )
+                    print(f"{roi} {hemi} {analysis_type} FDR threshold: {thresh_val[1]:.3f}")
                     
-                    # Apply cluster threshold
-                    final_img = apply_cluster_threshold(thresholded_img, min_cluster_size=5)
+                    # Apply threshold and get image
+                    thresh_img = image.threshold_img(zstat_img, thresh_val[1])
+                    
+                    # Zero out negative values
+                    data = thresh_img.get_fdata()
+                    data[data <= 0] = 0
+                    
+                    # Convert to double precision (like your PI does)
+                    data = data.astype('double')
+                    
+                    final_img = nib.Nifti1Image(data, avg_img.affine)
                     
                     # Update global max for visualization
                     data = final_img.get_fdata()
@@ -94,7 +96,7 @@ def main():
             
             # Save combined hemisphere plot
             plt.tight_layout()
-            fig.text(0.5, 0.01, f'{roi} {analysis_type.upper()} Group Average (threshold: mean + 2SD, cluster>5)',
+            fig.text(0.5, 0.01, f'{roi} {analysis_type.upper()} Group Average (FDR α={alpha}, cluster>5)',
                     ha='center', va='bottom', fontsize=12, fontweight='bold')
             plt.subplots_adjust(bottom=0.15)
             
