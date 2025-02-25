@@ -1,4 +1,4 @@
-# note to plot surface you need to have freesurfer loaded
+# note to plot surface you need to have freesurfer loaded || use local computer's plot surface interactive to create figures.
 import os
 import numpy as np
 import nibabel as nib
