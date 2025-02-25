@@ -1,0 +1,13 @@
+GCA ROI Pair Combined Comparison Results (Wilcoxon tests):
+
+Object Condition:
+lpIPS-lLO vs rpIPS-lLO:
+p_holm = 0.0118
+lpIPS-rLO vs rpIPS-rLO:
+p_holm = 0.0013
+
+Scramble Condition:
+lpIPS-lLO vs rpIPS-lLO:
+p_holm = 1.0000
+lpIPS-rLO vs rpIPS-rLO:
+p_holm = 1.0000

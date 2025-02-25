@@ -1,0 +1,9 @@
+origin,target,condition,Mean f_diff,Std f_diff,W_statistic,p_value,Effect size,significant,p_value_corrected,significant_corrected,cohens_d
+lpIPS,lLO,Object,7.71,11.7,21.0,0.00169,0.93,True,0.01183,True,0.6311303719754424
+lpIPS,rLO,Object,7.49,9.01,10.0,0.00016,1.18,True,0.00128,True,0.7961732660111615
+rpIPS,lLO,Object,1.82,8.12,61.0,0.18187,0.32,False,1.0,False,0.21466731423020888
+rpIPS,rLO,Object,1.58,9.33,66.0,0.25793,0.24,False,1.0,False,0.16219072203855503
+lpIPS,lLO,Scramble,1.05,3.73,71.0,0.35246,0.4,False,1.0,False,0.26960691764528194
+lpIPS,rLO,Scramble,0.82,6.17,65.0,0.24125,0.19,False,1.0,False,0.12728559362658937
+rpIPS,lLO,Scramble,0.63,5.05,89.0,0.82878,0.18,False,1.0,False,0.1194812438990378
+rpIPS,rLO,Scramble,0.79,4.1,79.0,0.54122,0.27,False,1.0,False,0.18454139470972178
