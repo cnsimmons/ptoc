@@ -14,7 +14,7 @@ import re
 # Define study directories
 study = 'ptoc'
 study_dir = f"/lab_data/behrmannlab/vlad/{study}"
-results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
+results_dir = '/user_data/csimmon2/git_repos/ptoc/results/group_averages'
 sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info.csv'
 
 # FDR alpha level
