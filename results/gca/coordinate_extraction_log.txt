@@ -1,0 +1,9 @@
+GCA Extraction Coordinates Log
+==============================
+
+
+CONDITION: tool
+==============================
+
+Subject: sub-spaceloc1001
+  pIPS_left → LO_left, run_combo 0: -1.1601
