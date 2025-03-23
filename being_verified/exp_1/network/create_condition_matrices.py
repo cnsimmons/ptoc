@@ -1,3 +1,5 @@
+# Schaefer Atlas 200 ROIs
+# Create condition-specific connectivity matrices for each subject
 import os
 import sys
 import pandas as pd
