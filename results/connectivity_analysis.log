@@ -1,0 +1,1115 @@
+2025-03-24 18:51:21,394 - INFO - Creating merged atlas...
+2025-03-24 18:51:21,399 - INFO - Loaded pIPS ROI
+2025-03-24 18:51:21,402 - INFO - Loaded LO ROI
+2025-03-24 18:51:21,412 - INFO - Loaded Schaefer atlas with 200 parcels
+2025-03-24 18:51:21,540 - INFO - pIPS overlaps with 28 atlas parcels
+2025-03-24 18:51:21,540 - INFO -   Label 9 (7Networks_LH_Vis_9): 7 voxels
+2025-03-24 18:51:21,540 - INFO -   Label 11 (7Networks_LH_Vis_11): 159 voxels
+2025-03-24 18:51:21,540 - INFO -   Label 12 (7Networks_LH_Vis_12): 2 voxels
+2025-03-24 18:51:21,540 - INFO -   Label 13 (7Networks_LH_Vis_13): 381 voxels
+2025-03-24 18:51:21,540 - INFO -   Label 14 (7Networks_LH_Vis_14): 528 voxels
+2025-03-24 18:51:21,540 - INFO -   Label 33 (7Networks_LH_DorsAttn_Post_3): 554 voxels
+2025-03-24 18:51:21,540 - INFO -   Label 36 (7Networks_LH_DorsAttn_Post_6): 4 voxels
+2025-03-24 18:51:21,540 - INFO -   Label 37 (7Networks_LH_DorsAttn_Post_7): 567 voxels
+2025-03-24 18:51:21,540 - INFO -   Label 38 (7Networks_LH_DorsAttn_Post_8): 64 voxels
+2025-03-24 18:51:21,540 - INFO -   Label 39 (7Networks_LH_DorsAttn_Post_9): 99 voxels
+2025-03-24 18:51:21,540 - INFO -   Label 40 (7Networks_LH_DorsAttn_Post_10): 15 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 62 (7Networks_LH_Cont_Par_2): 269 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 71 (7Networks_LH_Cont_pCun_1): 247 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 80 (7Networks_LH_Default_Par_2): 436 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 82 (7Networks_LH_Default_Par_4): 85 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 99 (7Networks_LH_Default_pCunPCC_4): 5 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 111 (7Networks_RH_Vis_11): 119 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 112 (7Networks_RH_Vis_12): 297 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 113 (7Networks_RH_Vis_13): 66 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 114 (7Networks_RH_Vis_14): 373 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 115 (7Networks_RH_Vis_15): 773 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 140 (7Networks_RH_DorsAttn_Post_6): 268 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 141 (7Networks_RH_DorsAttn_Post_7): 26 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 142 (7Networks_RH_DorsAttn_Post_8): 402 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 167 (7Networks_RH_Cont_Par_3): 330 voxels
+2025-03-24 18:51:21,541 - INFO -   Label 177 (7Networks_RH_Cont_pCun_1): 157 voxels
+2025-03-24 18:51:21,542 - INFO -   Label 182 (7Networks_RH_Default_Par_1): 204 voxels
+2025-03-24 18:51:21,542 - INFO -   Label 184 (7Networks_RH_Default_Par_3): 7 voxels
+2025-03-24 18:51:21,662 - INFO - LO overlaps with 18 atlas parcels
+2025-03-24 18:51:21,662 - INFO -   Label 2 (7Networks_LH_Vis_2): 125 voxels
+2025-03-24 18:51:21,662 - INFO -   Label 3 (7Networks_LH_Vis_3): 655 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 5 (7Networks_LH_Vis_5): 90 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 8 (7Networks_LH_Vis_8): 235 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 9 (7Networks_LH_Vis_9): 69 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 11 (7Networks_LH_Vis_11): 189 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 31 (7Networks_LH_DorsAttn_Post_1): 77 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 32 (7Networks_LH_DorsAttn_Post_2): 217 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 101 (7Networks_RH_Vis_1): 4 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 103 (7Networks_RH_Vis_3): 116 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 105 (7Networks_RH_Vis_5): 613 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 108 (7Networks_RH_Vis_8): 127 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 111 (7Networks_RH_Vis_11): 135 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 135 (7Networks_RH_DorsAttn_Post_1): 307 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 136 (7Networks_RH_DorsAttn_Post_2): 290 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 148 (7Networks_RH_SalVentAttn_TempOccPar_1): 52 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 168 (7Networks_RH_Cont_Temp_1): 2 voxels
+2025-03-24 18:51:21,663 - INFO -   Label 189 (7Networks_RH_Default_Temp_5): 1 voxels
+2025-03-24 18:51:21,739 - INFO - Saved merged atlas to: /user_data/csimmon2/git_repos/ptoc/results/schaefer_wang_merged.nii.gz
+2025-03-24 18:51:21,741 - INFO - Saved merged labels to: /user_data/csimmon2/git_repos/ptoc/results/merged_atlas_labels.npy
+2025-03-24 18:51:21,743 - INFO - Processing subject sub-025 for condition Object
+2025-03-24 18:51:21,861 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,861 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,862 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,862 - WARNING - No valid data found for subject sub-025 condition Object
+2025-03-24 18:51:21,862 - INFO - Processing subject sub-038 for condition Object
+2025-03-24 18:51:21,862 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,862 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,862 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,862 - WARNING - No valid data found for subject sub-038 condition Object
+2025-03-24 18:51:21,862 - INFO - Processing subject sub-057 for condition Object
+2025-03-24 18:51:21,862 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,862 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,862 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,862 - WARNING - No valid data found for subject sub-057 condition Object
+2025-03-24 18:51:21,862 - INFO - Processing subject sub-059 for condition Object
+2025-03-24 18:51:21,862 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,862 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,862 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,862 - WARNING - No valid data found for subject sub-059 condition Object
+2025-03-24 18:51:21,863 - INFO - Processing subject sub-064 for condition Object
+2025-03-24 18:51:21,863 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,863 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,863 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,863 - WARNING - No valid data found for subject sub-064 condition Object
+2025-03-24 18:51:21,863 - INFO - Processing subject sub-067 for condition Object
+2025-03-24 18:51:21,863 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,863 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,863 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,863 - WARNING - No valid data found for subject sub-067 condition Object
+2025-03-24 18:51:21,863 - INFO - Processing subject sub-068 for condition Object
+2025-03-24 18:51:21,863 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,863 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,863 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,863 - WARNING - No valid data found for subject sub-068 condition Object
+2025-03-24 18:51:21,863 - INFO - Processing subject sub-071 for condition Object
+2025-03-24 18:51:21,863 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,864 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,864 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,864 - WARNING - No valid data found for subject sub-071 condition Object
+2025-03-24 18:51:21,864 - INFO - Processing subject sub-083 for condition Object
+2025-03-24 18:51:21,864 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,864 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,864 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,864 - WARNING - No valid data found for subject sub-083 condition Object
+2025-03-24 18:51:21,864 - INFO - Processing subject sub-085 for condition Object
+2025-03-24 18:51:21,864 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,864 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,864 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,864 - WARNING - No valid data found for subject sub-085 condition Object
+2025-03-24 18:51:21,864 - INFO - Processing subject sub-087 for condition Object
+2025-03-24 18:51:21,864 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,864 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,865 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,865 - WARNING - No valid data found for subject sub-087 condition Object
+2025-03-24 18:51:21,865 - INFO - Processing subject sub-088 for condition Object
+2025-03-24 18:51:21,865 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,865 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,865 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,865 - WARNING - No valid data found for subject sub-088 condition Object
+2025-03-24 18:51:21,865 - INFO - Processing subject sub-093 for condition Object
+2025-03-24 18:51:21,865 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,865 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,865 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,865 - WARNING - No valid data found for subject sub-093 condition Object
+2025-03-24 18:51:21,865 - INFO - Processing subject sub-094 for condition Object
+2025-03-24 18:51:21,865 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,865 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,865 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,865 - WARNING - No valid data found for subject sub-094 condition Object
+2025-03-24 18:51:21,865 - INFO - Processing subject sub-095 for condition Object
+2025-03-24 18:51:21,866 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,866 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,866 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,866 - WARNING - No valid data found for subject sub-095 condition Object
+2025-03-24 18:51:21,866 - INFO - Processing subject sub-096 for condition Object
+2025-03-24 18:51:21,866 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,866 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,866 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,866 - WARNING - No valid data found for subject sub-096 condition Object
+2025-03-24 18:51:21,866 - INFO - Processing subject sub-097 for condition Object
+2025-03-24 18:51:21,866 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,866 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,866 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,866 - WARNING - No valid data found for subject sub-097 condition Object
+2025-03-24 18:51:21,866 - INFO - Processing subject sub-107 for condition Object
+2025-03-24 18:51:21,866 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,867 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,867 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,867 - WARNING - No valid data found for subject sub-107 condition Object
+2025-03-24 18:51:21,867 - INFO - Processing subject sub-025 for condition Scramble
+2025-03-24 18:51:21,867 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,867 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,867 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,867 - WARNING - No valid data found for subject sub-025 condition Scramble
+2025-03-24 18:51:21,867 - INFO - Processing subject sub-038 for condition Scramble
+2025-03-24 18:51:21,868 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,868 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,868 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,868 - WARNING - No valid data found for subject sub-038 condition Scramble
+2025-03-24 18:51:21,868 - INFO - Processing subject sub-057 for condition Scramble
+2025-03-24 18:51:21,868 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,868 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,868 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,868 - WARNING - No valid data found for subject sub-057 condition Scramble
+2025-03-24 18:51:21,868 - INFO - Processing subject sub-059 for condition Scramble
+2025-03-24 18:51:21,868 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,868 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,868 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,868 - WARNING - No valid data found for subject sub-059 condition Scramble
+2025-03-24 18:51:21,868 - INFO - Processing subject sub-064 for condition Scramble
+2025-03-24 18:51:21,868 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,868 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,869 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,869 - WARNING - No valid data found for subject sub-064 condition Scramble
+2025-03-24 18:51:21,869 - INFO - Processing subject sub-067 for condition Scramble
+2025-03-24 18:51:21,869 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,869 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,869 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,869 - WARNING - No valid data found for subject sub-067 condition Scramble
+2025-03-24 18:51:21,869 - INFO - Processing subject sub-068 for condition Scramble
+2025-03-24 18:51:21,869 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,869 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,869 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,869 - WARNING - No valid data found for subject sub-068 condition Scramble
+2025-03-24 18:51:21,869 - INFO - Processing subject sub-071 for condition Scramble
+2025-03-24 18:51:21,869 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,869 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,869 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,869 - WARNING - No valid data found for subject sub-071 condition Scramble
+2025-03-24 18:51:21,870 - INFO - Processing subject sub-083 for condition Scramble
+2025-03-24 18:51:21,870 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,870 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,870 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,870 - WARNING - No valid data found for subject sub-083 condition Scramble
+2025-03-24 18:51:21,870 - INFO - Processing subject sub-085 for condition Scramble
+2025-03-24 18:51:21,870 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,870 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,870 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,870 - WARNING - No valid data found for subject sub-085 condition Scramble
+2025-03-24 18:51:21,870 - INFO - Processing subject sub-087 for condition Scramble
+2025-03-24 18:51:21,870 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,870 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,870 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,870 - WARNING - No valid data found for subject sub-087 condition Scramble
+2025-03-24 18:51:21,870 - INFO - Processing subject sub-088 for condition Scramble
+2025-03-24 18:51:21,870 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,871 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,871 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,871 - WARNING - No valid data found for subject sub-088 condition Scramble
+2025-03-24 18:51:21,871 - INFO - Processing subject sub-093 for condition Scramble
+2025-03-24 18:51:21,871 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,871 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,871 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,871 - WARNING - No valid data found for subject sub-093 condition Scramble
+2025-03-24 18:51:21,871 - INFO - Processing subject sub-094 for condition Scramble
+2025-03-24 18:51:21,871 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,871 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,871 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,871 - WARNING - No valid data found for subject sub-094 condition Scramble
+2025-03-24 18:51:21,871 - INFO - Processing subject sub-095 for condition Scramble
+2025-03-24 18:51:21,871 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,871 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,872 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,872 - WARNING - No valid data found for subject sub-095 condition Scramble
+2025-03-24 18:51:21,872 - INFO - Processing subject sub-096 for condition Scramble
+2025-03-24 18:51:21,872 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,872 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,872 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,872 - WARNING - No valid data found for subject sub-096 condition Scramble
+2025-03-24 18:51:21,872 - INFO - Processing subject sub-097 for condition Scramble
+2025-03-24 18:51:21,872 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,872 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,872 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,872 - WARNING - No valid data found for subject sub-097 condition Scramble
+2025-03-24 18:51:21,872 - INFO - Processing subject sub-107 for condition Scramble
+2025-03-24 18:51:21,872 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:51:21,872 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:51:21,872 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:51:21,872 - WARNING - No valid data found for subject sub-107 condition Scramble
+2025-03-24 18:53:04,579 - INFO - Creating merged atlas...
+2025-03-24 18:53:04,583 - INFO - Loaded pIPS ROI
+2025-03-24 18:53:04,586 - INFO - Loaded LO ROI
+2025-03-24 18:53:04,598 - INFO - Loaded Schaefer atlas with 200 parcels
+2025-03-24 18:53:04,712 - INFO - pIPS overlaps with 28 atlas parcels
+2025-03-24 18:53:04,712 - INFO -   Label 9 (7Networks_LH_Vis_9): 7 voxels
+2025-03-24 18:53:04,712 - INFO -   Label 11 (7Networks_LH_Vis_11): 159 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 12 (7Networks_LH_Vis_12): 2 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 13 (7Networks_LH_Vis_13): 381 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 14 (7Networks_LH_Vis_14): 528 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 33 (7Networks_LH_DorsAttn_Post_3): 554 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 36 (7Networks_LH_DorsAttn_Post_6): 4 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 37 (7Networks_LH_DorsAttn_Post_7): 567 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 38 (7Networks_LH_DorsAttn_Post_8): 64 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 39 (7Networks_LH_DorsAttn_Post_9): 99 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 40 (7Networks_LH_DorsAttn_Post_10): 15 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 62 (7Networks_LH_Cont_Par_2): 269 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 71 (7Networks_LH_Cont_pCun_1): 247 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 80 (7Networks_LH_Default_Par_2): 436 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 82 (7Networks_LH_Default_Par_4): 85 voxels
+2025-03-24 18:53:04,713 - INFO -   Label 99 (7Networks_LH_Default_pCunPCC_4): 5 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 111 (7Networks_RH_Vis_11): 119 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 112 (7Networks_RH_Vis_12): 297 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 113 (7Networks_RH_Vis_13): 66 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 114 (7Networks_RH_Vis_14): 373 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 115 (7Networks_RH_Vis_15): 773 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 140 (7Networks_RH_DorsAttn_Post_6): 268 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 141 (7Networks_RH_DorsAttn_Post_7): 26 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 142 (7Networks_RH_DorsAttn_Post_8): 402 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 167 (7Networks_RH_Cont_Par_3): 330 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 177 (7Networks_RH_Cont_pCun_1): 157 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 182 (7Networks_RH_Default_Par_1): 204 voxels
+2025-03-24 18:53:04,714 - INFO -   Label 184 (7Networks_RH_Default_Par_3): 7 voxels
+2025-03-24 18:53:04,834 - INFO - LO overlaps with 18 atlas parcels
+2025-03-24 18:53:04,835 - INFO -   Label 2 (7Networks_LH_Vis_2): 125 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 3 (7Networks_LH_Vis_3): 655 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 5 (7Networks_LH_Vis_5): 90 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 8 (7Networks_LH_Vis_8): 235 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 9 (7Networks_LH_Vis_9): 69 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 11 (7Networks_LH_Vis_11): 189 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 31 (7Networks_LH_DorsAttn_Post_1): 77 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 32 (7Networks_LH_DorsAttn_Post_2): 217 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 101 (7Networks_RH_Vis_1): 4 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 103 (7Networks_RH_Vis_3): 116 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 105 (7Networks_RH_Vis_5): 613 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 108 (7Networks_RH_Vis_8): 127 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 111 (7Networks_RH_Vis_11): 135 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 135 (7Networks_RH_DorsAttn_Post_1): 307 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 136 (7Networks_RH_DorsAttn_Post_2): 290 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 148 (7Networks_RH_SalVentAttn_TempOccPar_1): 52 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 168 (7Networks_RH_Cont_Temp_1): 2 voxels
+2025-03-24 18:53:04,835 - INFO -   Label 189 (7Networks_RH_Default_Temp_5): 1 voxels
+2025-03-24 18:53:04,910 - INFO - Saved merged atlas to: /user_data/csimmon2/git_repos/ptoc/results/schaefer_wang_merged.nii.gz
+2025-03-24 18:53:04,913 - INFO - Saved merged labels to: /user_data/csimmon2/git_repos/ptoc/results/merged_atlas_labels.npy
+2025-03-24 18:53:04,915 - INFO - Processing subject sub-025 for condition Object
+2025-03-24 18:53:04,916 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,916 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,916 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,916 - WARNING - No valid data found for subject sub-025 condition Object
+2025-03-24 18:53:04,916 - INFO - Processing subject sub-038 for condition Object
+2025-03-24 18:53:04,916 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,917 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,917 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,917 - WARNING - No valid data found for subject sub-038 condition Object
+2025-03-24 18:53:04,917 - INFO - Processing subject sub-057 for condition Object
+2025-03-24 18:53:04,917 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,917 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,917 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,917 - WARNING - No valid data found for subject sub-057 condition Object
+2025-03-24 18:53:04,917 - INFO - Processing subject sub-059 for condition Object
+2025-03-24 18:53:04,917 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,917 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,917 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,917 - WARNING - No valid data found for subject sub-059 condition Object
+2025-03-24 18:53:04,917 - INFO - Processing subject sub-064 for condition Object
+2025-03-24 18:53:04,917 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,917 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,917 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,918 - WARNING - No valid data found for subject sub-064 condition Object
+2025-03-24 18:53:04,918 - INFO - Processing subject sub-067 for condition Object
+2025-03-24 18:53:04,918 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,918 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,918 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,918 - WARNING - No valid data found for subject sub-067 condition Object
+2025-03-24 18:53:04,918 - INFO - Processing subject sub-068 for condition Object
+2025-03-24 18:53:04,918 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,918 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,918 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,918 - WARNING - No valid data found for subject sub-068 condition Object
+2025-03-24 18:53:04,918 - INFO - Processing subject sub-071 for condition Object
+2025-03-24 18:53:04,918 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,918 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,918 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,918 - WARNING - No valid data found for subject sub-071 condition Object
+2025-03-24 18:53:04,918 - INFO - Processing subject sub-083 for condition Object
+2025-03-24 18:53:04,919 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,919 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,919 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,919 - WARNING - No valid data found for subject sub-083 condition Object
+2025-03-24 18:53:04,919 - INFO - Processing subject sub-085 for condition Object
+2025-03-24 18:53:04,919 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,919 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,919 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,919 - WARNING - No valid data found for subject sub-085 condition Object
+2025-03-24 18:53:04,919 - INFO - Processing subject sub-087 for condition Object
+2025-03-24 18:53:04,919 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,919 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,919 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,919 - WARNING - No valid data found for subject sub-087 condition Object
+2025-03-24 18:53:04,919 - INFO - Processing subject sub-088 for condition Object
+2025-03-24 18:53:04,919 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,919 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,920 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,920 - WARNING - No valid data found for subject sub-088 condition Object
+2025-03-24 18:53:04,920 - INFO - Processing subject sub-093 for condition Object
+2025-03-24 18:53:04,920 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,920 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,920 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,920 - WARNING - No valid data found for subject sub-093 condition Object
+2025-03-24 18:53:04,920 - INFO - Processing subject sub-094 for condition Object
+2025-03-24 18:53:04,920 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,920 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,920 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,920 - WARNING - No valid data found for subject sub-094 condition Object
+2025-03-24 18:53:04,920 - INFO - Processing subject sub-095 for condition Object
+2025-03-24 18:53:04,920 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,920 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,920 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,920 - WARNING - No valid data found for subject sub-095 condition Object
+2025-03-24 18:53:04,921 - INFO - Processing subject sub-096 for condition Object
+2025-03-24 18:53:04,921 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,921 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,921 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,921 - WARNING - No valid data found for subject sub-096 condition Object
+2025-03-24 18:53:04,921 - INFO - Processing subject sub-097 for condition Object
+2025-03-24 18:53:04,921 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,921 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,921 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,921 - WARNING - No valid data found for subject sub-097 condition Object
+2025-03-24 18:53:04,921 - INFO - Processing subject sub-107 for condition Object
+2025-03-24 18:53:04,921 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,921 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,921 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,921 - WARNING - No valid data found for subject sub-107 condition Object
+2025-03-24 18:53:04,922 - INFO - Processing subject sub-025 for condition Scramble
+2025-03-24 18:53:04,922 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,922 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,922 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,922 - WARNING - No valid data found for subject sub-025 condition Scramble
+2025-03-24 18:53:04,922 - INFO - Processing subject sub-038 for condition Scramble
+2025-03-24 18:53:04,922 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,922 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,922 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,922 - WARNING - No valid data found for subject sub-038 condition Scramble
+2025-03-24 18:53:04,922 - INFO - Processing subject sub-057 for condition Scramble
+2025-03-24 18:53:04,922 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,922 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,922 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,923 - WARNING - No valid data found for subject sub-057 condition Scramble
+2025-03-24 18:53:04,923 - INFO - Processing subject sub-059 for condition Scramble
+2025-03-24 18:53:04,923 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,923 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,923 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,923 - WARNING - No valid data found for subject sub-059 condition Scramble
+2025-03-24 18:53:04,923 - INFO - Processing subject sub-064 for condition Scramble
+2025-03-24 18:53:04,923 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,923 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,923 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,923 - WARNING - No valid data found for subject sub-064 condition Scramble
+2025-03-24 18:53:04,923 - INFO - Processing subject sub-067 for condition Scramble
+2025-03-24 18:53:04,923 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,923 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,923 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,923 - WARNING - No valid data found for subject sub-067 condition Scramble
+2025-03-24 18:53:04,923 - INFO - Processing subject sub-068 for condition Scramble
+2025-03-24 18:53:04,924 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,924 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,924 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,924 - WARNING - No valid data found for subject sub-068 condition Scramble
+2025-03-24 18:53:04,924 - INFO - Processing subject sub-071 for condition Scramble
+2025-03-24 18:53:04,924 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,924 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,924 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,924 - WARNING - No valid data found for subject sub-071 condition Scramble
+2025-03-24 18:53:04,924 - INFO - Processing subject sub-083 for condition Scramble
+2025-03-24 18:53:04,924 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,924 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,924 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,924 - WARNING - No valid data found for subject sub-083 condition Scramble
+2025-03-24 18:53:04,924 - INFO - Processing subject sub-085 for condition Scramble
+2025-03-24 18:53:04,924 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,924 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,925 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,925 - WARNING - No valid data found for subject sub-085 condition Scramble
+2025-03-24 18:53:04,925 - INFO - Processing subject sub-087 for condition Scramble
+2025-03-24 18:53:04,925 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,925 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,925 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,925 - WARNING - No valid data found for subject sub-087 condition Scramble
+2025-03-24 18:53:04,925 - INFO - Processing subject sub-088 for condition Scramble
+2025-03-24 18:53:04,925 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,925 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,925 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,925 - WARNING - No valid data found for subject sub-088 condition Scramble
+2025-03-24 18:53:04,925 - INFO - Processing subject sub-093 for condition Scramble
+2025-03-24 18:53:04,925 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,925 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,925 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,925 - WARNING - No valid data found for subject sub-093 condition Scramble
+2025-03-24 18:53:04,925 - INFO - Processing subject sub-094 for condition Scramble
+2025-03-24 18:53:04,926 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,926 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,926 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,926 - WARNING - No valid data found for subject sub-094 condition Scramble
+2025-03-24 18:53:04,926 - INFO - Processing subject sub-095 for condition Scramble
+2025-03-24 18:53:04,926 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,926 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,926 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,926 - WARNING - No valid data found for subject sub-095 condition Scramble
+2025-03-24 18:53:04,926 - INFO - Processing subject sub-096 for condition Scramble
+2025-03-24 18:53:04,926 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,926 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,926 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,926 - WARNING - No valid data found for subject sub-096 condition Scramble
+2025-03-24 18:53:04,926 - INFO - Processing subject sub-097 for condition Scramble
+2025-03-24 18:53:04,926 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,926 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,927 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,927 - WARNING - No valid data found for subject sub-097 condition Scramble
+2025-03-24 18:53:04,927 - INFO - Processing subject sub-107 for condition Scramble
+2025-03-24 18:53:04,927 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:53:04,927 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:53:04,927 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:53:04,927 - WARNING - No valid data found for subject sub-107 condition Scramble
+2025-03-24 18:54:50,310 - INFO - Creating merged atlas...
+2025-03-24 18:54:50,314 - INFO - Loaded pIPS ROI
+2025-03-24 18:54:50,316 - INFO - Loaded LO ROI
+2025-03-24 18:54:50,330 - INFO - Loaded Schaefer atlas with 200 parcels
+2025-03-24 18:54:50,448 - INFO - pIPS overlaps with 28 atlas parcels
+2025-03-24 18:54:50,448 - INFO -   Label 9 (7Networks_LH_Vis_9): 7 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 11 (7Networks_LH_Vis_11): 159 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 12 (7Networks_LH_Vis_12): 2 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 13 (7Networks_LH_Vis_13): 381 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 14 (7Networks_LH_Vis_14): 528 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 33 (7Networks_LH_DorsAttn_Post_3): 554 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 36 (7Networks_LH_DorsAttn_Post_6): 4 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 37 (7Networks_LH_DorsAttn_Post_7): 567 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 38 (7Networks_LH_DorsAttn_Post_8): 64 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 39 (7Networks_LH_DorsAttn_Post_9): 99 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 40 (7Networks_LH_DorsAttn_Post_10): 15 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 62 (7Networks_LH_Cont_Par_2): 269 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 71 (7Networks_LH_Cont_pCun_1): 247 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 80 (7Networks_LH_Default_Par_2): 436 voxels
+2025-03-24 18:54:50,449 - INFO -   Label 82 (7Networks_LH_Default_Par_4): 85 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 99 (7Networks_LH_Default_pCunPCC_4): 5 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 111 (7Networks_RH_Vis_11): 119 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 112 (7Networks_RH_Vis_12): 297 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 113 (7Networks_RH_Vis_13): 66 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 114 (7Networks_RH_Vis_14): 373 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 115 (7Networks_RH_Vis_15): 773 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 140 (7Networks_RH_DorsAttn_Post_6): 268 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 141 (7Networks_RH_DorsAttn_Post_7): 26 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 142 (7Networks_RH_DorsAttn_Post_8): 402 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 167 (7Networks_RH_Cont_Par_3): 330 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 177 (7Networks_RH_Cont_pCun_1): 157 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 182 (7Networks_RH_Default_Par_1): 204 voxels
+2025-03-24 18:54:50,450 - INFO -   Label 184 (7Networks_RH_Default_Par_3): 7 voxels
+2025-03-24 18:54:50,571 - INFO - LO overlaps with 18 atlas parcels
+2025-03-24 18:54:50,572 - INFO -   Label 2 (7Networks_LH_Vis_2): 125 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 3 (7Networks_LH_Vis_3): 655 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 5 (7Networks_LH_Vis_5): 90 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 8 (7Networks_LH_Vis_8): 235 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 9 (7Networks_LH_Vis_9): 69 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 11 (7Networks_LH_Vis_11): 189 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 31 (7Networks_LH_DorsAttn_Post_1): 77 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 32 (7Networks_LH_DorsAttn_Post_2): 217 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 101 (7Networks_RH_Vis_1): 4 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 103 (7Networks_RH_Vis_3): 116 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 105 (7Networks_RH_Vis_5): 613 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 108 (7Networks_RH_Vis_8): 127 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 111 (7Networks_RH_Vis_11): 135 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 135 (7Networks_RH_DorsAttn_Post_1): 307 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 136 (7Networks_RH_DorsAttn_Post_2): 290 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 148 (7Networks_RH_SalVentAttn_TempOccPar_1): 52 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 168 (7Networks_RH_Cont_Temp_1): 2 voxels
+2025-03-24 18:54:50,572 - INFO -   Label 189 (7Networks_RH_Default_Temp_5): 1 voxels
+2025-03-24 18:54:50,648 - INFO - Saved merged atlas to: /user_data/csimmon2/git_repos/ptoc/results/schaefer_wang_merged.nii.gz
+2025-03-24 18:54:50,651 - INFO - Saved merged labels to: /user_data/csimmon2/git_repos/ptoc/results/merged_atlas_labels.npy
+2025-03-24 18:54:50,652 - INFO - Processing subject sub-025 for condition Object
+2025-03-24 18:54:50,655 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,655 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,655 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,655 - WARNING - No valid data found for subject sub-025 condition Object
+2025-03-24 18:54:50,655 - INFO - Processing subject sub-038 for condition Object
+2025-03-24 18:54:50,655 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,655 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,655 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,655 - WARNING - No valid data found for subject sub-038 condition Object
+2025-03-24 18:54:50,655 - INFO - Processing subject sub-057 for condition Object
+2025-03-24 18:54:50,655 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,655 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,655 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,655 - WARNING - No valid data found for subject sub-057 condition Object
+2025-03-24 18:54:50,656 - INFO - Processing subject sub-059 for condition Object
+2025-03-24 18:54:50,656 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,656 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,656 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,656 - WARNING - No valid data found for subject sub-059 condition Object
+2025-03-24 18:54:50,656 - INFO - Processing subject sub-064 for condition Object
+2025-03-24 18:54:50,656 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,656 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,656 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,656 - WARNING - No valid data found for subject sub-064 condition Object
+2025-03-24 18:54:50,656 - INFO - Processing subject sub-067 for condition Object
+2025-03-24 18:54:50,656 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,656 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,656 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,656 - WARNING - No valid data found for subject sub-067 condition Object
+2025-03-24 18:54:50,656 - INFO - Processing subject sub-068 for condition Object
+2025-03-24 18:54:50,656 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,657 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,657 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,657 - WARNING - No valid data found for subject sub-068 condition Object
+2025-03-24 18:54:50,657 - INFO - Processing subject sub-071 for condition Object
+2025-03-24 18:54:50,657 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,657 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,657 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,657 - WARNING - No valid data found for subject sub-071 condition Object
+2025-03-24 18:54:50,657 - INFO - Processing subject sub-083 for condition Object
+2025-03-24 18:54:50,657 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,657 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,657 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,657 - WARNING - No valid data found for subject sub-083 condition Object
+2025-03-24 18:54:50,657 - INFO - Processing subject sub-085 for condition Object
+2025-03-24 18:54:50,657 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,657 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,657 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,658 - WARNING - No valid data found for subject sub-085 condition Object
+2025-03-24 18:54:50,658 - INFO - Processing subject sub-087 for condition Object
+2025-03-24 18:54:50,658 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,658 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,658 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,658 - WARNING - No valid data found for subject sub-087 condition Object
+2025-03-24 18:54:50,658 - INFO - Processing subject sub-088 for condition Object
+2025-03-24 18:54:50,658 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,658 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,658 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,658 - WARNING - No valid data found for subject sub-088 condition Object
+2025-03-24 18:54:50,658 - INFO - Processing subject sub-093 for condition Object
+2025-03-24 18:54:50,658 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,658 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,658 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,658 - WARNING - No valid data found for subject sub-093 condition Object
+2025-03-24 18:54:50,658 - INFO - Processing subject sub-094 for condition Object
+2025-03-24 18:54:50,659 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,659 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,659 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,659 - WARNING - No valid data found for subject sub-094 condition Object
+2025-03-24 18:54:50,659 - INFO - Processing subject sub-095 for condition Object
+2025-03-24 18:54:50,659 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,659 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,659 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,659 - WARNING - No valid data found for subject sub-095 condition Object
+2025-03-24 18:54:50,659 - INFO - Processing subject sub-096 for condition Object
+2025-03-24 18:54:50,659 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,659 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,659 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,659 - WARNING - No valid data found for subject sub-096 condition Object
+2025-03-24 18:54:50,659 - INFO - Processing subject sub-097 for condition Object
+2025-03-24 18:54:50,659 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,659 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,660 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,660 - WARNING - No valid data found for subject sub-097 condition Object
+2025-03-24 18:54:50,660 - INFO - Processing subject sub-107 for condition Object
+2025-03-24 18:54:50,660 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,660 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,660 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,660 - WARNING - No valid data found for subject sub-107 condition Object
+2025-03-24 18:54:50,660 - INFO - Processing subject sub-025 for condition Scramble
+2025-03-24 18:54:50,660 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,660 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,660 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,660 - WARNING - No valid data found for subject sub-025 condition Scramble
+2025-03-24 18:54:50,661 - INFO - Processing subject sub-038 for condition Scramble
+2025-03-24 18:54:50,661 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,661 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,661 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,661 - WARNING - No valid data found for subject sub-038 condition Scramble
+2025-03-24 18:54:50,661 - INFO - Processing subject sub-057 for condition Scramble
+2025-03-24 18:54:50,661 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,661 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,661 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,661 - WARNING - No valid data found for subject sub-057 condition Scramble
+2025-03-24 18:54:50,661 - INFO - Processing subject sub-059 for condition Scramble
+2025-03-24 18:54:50,661 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,661 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,661 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,661 - WARNING - No valid data found for subject sub-059 condition Scramble
+2025-03-24 18:54:50,661 - INFO - Processing subject sub-064 for condition Scramble
+2025-03-24 18:54:50,661 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,662 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,662 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,662 - WARNING - No valid data found for subject sub-064 condition Scramble
+2025-03-24 18:54:50,662 - INFO - Processing subject sub-067 for condition Scramble
+2025-03-24 18:54:50,662 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,662 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,662 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,662 - WARNING - No valid data found for subject sub-067 condition Scramble
+2025-03-24 18:54:50,662 - INFO - Processing subject sub-068 for condition Scramble
+2025-03-24 18:54:50,662 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,662 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,662 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,662 - WARNING - No valid data found for subject sub-068 condition Scramble
+2025-03-24 18:54:50,662 - INFO - Processing subject sub-071 for condition Scramble
+2025-03-24 18:54:50,662 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,662 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,662 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,663 - WARNING - No valid data found for subject sub-071 condition Scramble
+2025-03-24 18:54:50,663 - INFO - Processing subject sub-083 for condition Scramble
+2025-03-24 18:54:50,663 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,663 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,663 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,663 - WARNING - No valid data found for subject sub-083 condition Scramble
+2025-03-24 18:54:50,663 - INFO - Processing subject sub-085 for condition Scramble
+2025-03-24 18:54:50,663 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,663 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,663 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,663 - WARNING - No valid data found for subject sub-085 condition Scramble
+2025-03-24 18:54:50,663 - INFO - Processing subject sub-087 for condition Scramble
+2025-03-24 18:54:50,663 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,663 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,663 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,663 - WARNING - No valid data found for subject sub-087 condition Scramble
+2025-03-24 18:54:50,663 - INFO - Processing subject sub-088 for condition Scramble
+2025-03-24 18:54:50,664 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,664 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,664 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,664 - WARNING - No valid data found for subject sub-088 condition Scramble
+2025-03-24 18:54:50,664 - INFO - Processing subject sub-093 for condition Scramble
+2025-03-24 18:54:50,664 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,664 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,664 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,664 - WARNING - No valid data found for subject sub-093 condition Scramble
+2025-03-24 18:54:50,664 - INFO - Processing subject sub-094 for condition Scramble
+2025-03-24 18:54:50,664 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,664 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,664 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,664 - WARNING - No valid data found for subject sub-094 condition Scramble
+2025-03-24 18:54:50,664 - INFO - Processing subject sub-095 for condition Scramble
+2025-03-24 18:54:50,664 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,664 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,665 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,665 - WARNING - No valid data found for subject sub-095 condition Scramble
+2025-03-24 18:54:50,665 - INFO - Processing subject sub-096 for condition Scramble
+2025-03-24 18:54:50,665 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,665 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,665 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,665 - WARNING - No valid data found for subject sub-096 condition Scramble
+2025-03-24 18:54:50,665 - INFO - Processing subject sub-097 for condition Scramble
+2025-03-24 18:54:50,665 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,665 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,665 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,665 - WARNING - No valid data found for subject sub-097 condition Scramble
+2025-03-24 18:54:50,665 - INFO - Processing subject sub-107 for condition Scramble
+2025-03-24 18:54:50,665 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,665 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,665 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,665 - WARNING - No valid data found for subject sub-107 condition Scramble
+2025-03-24 18:54:50,667 - INFO - Creating merged atlas...
+2025-03-24 18:54:50,669 - INFO - Loaded pIPS ROI
+2025-03-24 18:54:50,670 - INFO - Loaded LO ROI
+2025-03-24 18:54:50,672 - INFO - Loaded Schaefer atlas with 200 parcels
+2025-03-24 18:54:50,744 - INFO - pIPS overlaps with 28 atlas parcels
+2025-03-24 18:54:50,744 - INFO -   Label 9 (7Networks_LH_Vis_9): 7 voxels
+2025-03-24 18:54:50,744 - INFO -   Label 11 (7Networks_LH_Vis_11): 159 voxels
+2025-03-24 18:54:50,744 - INFO -   Label 12 (7Networks_LH_Vis_12): 2 voxels
+2025-03-24 18:54:50,744 - INFO -   Label 13 (7Networks_LH_Vis_13): 381 voxels
+2025-03-24 18:54:50,744 - INFO -   Label 14 (7Networks_LH_Vis_14): 528 voxels
+2025-03-24 18:54:50,744 - INFO -   Label 33 (7Networks_LH_DorsAttn_Post_3): 554 voxels
+2025-03-24 18:54:50,744 - INFO -   Label 36 (7Networks_LH_DorsAttn_Post_6): 4 voxels
+2025-03-24 18:54:50,744 - INFO -   Label 37 (7Networks_LH_DorsAttn_Post_7): 567 voxels
+2025-03-24 18:54:50,744 - INFO -   Label 38 (7Networks_LH_DorsAttn_Post_8): 64 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 39 (7Networks_LH_DorsAttn_Post_9): 99 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 40 (7Networks_LH_DorsAttn_Post_10): 15 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 62 (7Networks_LH_Cont_Par_2): 269 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 71 (7Networks_LH_Cont_pCun_1): 247 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 80 (7Networks_LH_Default_Par_2): 436 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 82 (7Networks_LH_Default_Par_4): 85 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 99 (7Networks_LH_Default_pCunPCC_4): 5 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 111 (7Networks_RH_Vis_11): 119 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 112 (7Networks_RH_Vis_12): 297 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 113 (7Networks_RH_Vis_13): 66 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 114 (7Networks_RH_Vis_14): 373 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 115 (7Networks_RH_Vis_15): 773 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 140 (7Networks_RH_DorsAttn_Post_6): 268 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 141 (7Networks_RH_DorsAttn_Post_7): 26 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 142 (7Networks_RH_DorsAttn_Post_8): 402 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 167 (7Networks_RH_Cont_Par_3): 330 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 177 (7Networks_RH_Cont_pCun_1): 157 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 182 (7Networks_RH_Default_Par_1): 204 voxels
+2025-03-24 18:54:50,745 - INFO -   Label 184 (7Networks_RH_Default_Par_3): 7 voxels
+2025-03-24 18:54:50,853 - INFO - LO overlaps with 18 atlas parcels
+2025-03-24 18:54:50,853 - INFO -   Label 2 (7Networks_LH_Vis_2): 125 voxels
+2025-03-24 18:54:50,853 - INFO -   Label 3 (7Networks_LH_Vis_3): 655 voxels
+2025-03-24 18:54:50,853 - INFO -   Label 5 (7Networks_LH_Vis_5): 90 voxels
+2025-03-24 18:54:50,853 - INFO -   Label 8 (7Networks_LH_Vis_8): 235 voxels
+2025-03-24 18:54:50,853 - INFO -   Label 9 (7Networks_LH_Vis_9): 69 voxels
+2025-03-24 18:54:50,853 - INFO -   Label 11 (7Networks_LH_Vis_11): 189 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 31 (7Networks_LH_DorsAttn_Post_1): 77 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 32 (7Networks_LH_DorsAttn_Post_2): 217 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 101 (7Networks_RH_Vis_1): 4 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 103 (7Networks_RH_Vis_3): 116 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 105 (7Networks_RH_Vis_5): 613 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 108 (7Networks_RH_Vis_8): 127 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 111 (7Networks_RH_Vis_11): 135 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 135 (7Networks_RH_DorsAttn_Post_1): 307 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 136 (7Networks_RH_DorsAttn_Post_2): 290 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 148 (7Networks_RH_SalVentAttn_TempOccPar_1): 52 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 168 (7Networks_RH_Cont_Temp_1): 2 voxels
+2025-03-24 18:54:50,854 - INFO -   Label 189 (7Networks_RH_Default_Temp_5): 1 voxels
+2025-03-24 18:54:50,929 - INFO - Saved merged atlas to: /user_data/csimmon2/git_repos/ptoc/results/schaefer_wang_merged.nii.gz
+2025-03-24 18:54:50,932 - INFO - Saved merged labels to: /user_data/csimmon2/git_repos/ptoc/results/merged_atlas_labels.npy
+2025-03-24 18:54:50,933 - INFO - Processing subject sub-025 for condition Object
+2025-03-24 18:54:50,934 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,934 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,934 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,934 - WARNING - No valid data found for subject sub-025 condition Object
+2025-03-24 18:54:50,934 - INFO - Processing subject sub-038 for condition Object
+2025-03-24 18:54:50,934 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,934 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,934 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,934 - WARNING - No valid data found for subject sub-038 condition Object
+2025-03-24 18:54:50,934 - INFO - Processing subject sub-057 for condition Object
+2025-03-24 18:54:50,934 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,934 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,934 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,934 - WARNING - No valid data found for subject sub-057 condition Object
+2025-03-24 18:54:50,934 - INFO - Processing subject sub-059 for condition Object
+2025-03-24 18:54:50,934 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,934 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,935 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,935 - WARNING - No valid data found for subject sub-059 condition Object
+2025-03-24 18:54:50,935 - INFO - Processing subject sub-064 for condition Object
+2025-03-24 18:54:50,935 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,935 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,935 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,935 - WARNING - No valid data found for subject sub-064 condition Object
+2025-03-24 18:54:50,935 - INFO - Processing subject sub-067 for condition Object
+2025-03-24 18:54:50,935 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,935 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,935 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,935 - WARNING - No valid data found for subject sub-067 condition Object
+2025-03-24 18:54:50,935 - INFO - Processing subject sub-068 for condition Object
+2025-03-24 18:54:50,935 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,935 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,935 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,935 - WARNING - No valid data found for subject sub-068 condition Object
+2025-03-24 18:54:50,936 - INFO - Processing subject sub-071 for condition Object
+2025-03-24 18:54:50,936 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,936 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,936 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,936 - WARNING - No valid data found for subject sub-071 condition Object
+2025-03-24 18:54:50,936 - INFO - Processing subject sub-083 for condition Object
+2025-03-24 18:54:50,936 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,936 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,936 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,936 - WARNING - No valid data found for subject sub-083 condition Object
+2025-03-24 18:54:50,936 - INFO - Processing subject sub-085 for condition Object
+2025-03-24 18:54:50,936 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,936 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,936 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,936 - WARNING - No valid data found for subject sub-085 condition Object
+2025-03-24 18:54:50,936 - INFO - Processing subject sub-087 for condition Object
+2025-03-24 18:54:50,936 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,937 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,937 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,937 - WARNING - No valid data found for subject sub-087 condition Object
+2025-03-24 18:54:50,937 - INFO - Processing subject sub-088 for condition Object
+2025-03-24 18:54:50,937 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,937 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,937 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,937 - WARNING - No valid data found for subject sub-088 condition Object
+2025-03-24 18:54:50,937 - INFO - Processing subject sub-093 for condition Object
+2025-03-24 18:54:50,937 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,937 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,937 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,937 - WARNING - No valid data found for subject sub-093 condition Object
+2025-03-24 18:54:50,937 - INFO - Processing subject sub-094 for condition Object
+2025-03-24 18:54:50,937 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,937 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,937 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,938 - WARNING - No valid data found for subject sub-094 condition Object
+2025-03-24 18:54:50,938 - INFO - Processing subject sub-095 for condition Object
+2025-03-24 18:54:50,938 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,938 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,938 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,938 - WARNING - No valid data found for subject sub-095 condition Object
+2025-03-24 18:54:50,938 - INFO - Processing subject sub-096 for condition Object
+2025-03-24 18:54:50,938 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,938 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,938 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,938 - WARNING - No valid data found for subject sub-096 condition Object
+2025-03-24 18:54:50,938 - INFO - Processing subject sub-097 for condition Object
+2025-03-24 18:54:50,938 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,938 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,938 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,938 - WARNING - No valid data found for subject sub-097 condition Object
+2025-03-24 18:54:50,938 - INFO - Processing subject sub-107 for condition Object
+2025-03-24 18:54:50,939 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,939 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,939 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,939 - WARNING - No valid data found for subject sub-107 condition Object
+2025-03-24 18:54:50,939 - INFO - Processing subject sub-025 for condition Scramble
+2025-03-24 18:54:50,939 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,939 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,939 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,939 - WARNING - No valid data found for subject sub-025 condition Scramble
+2025-03-24 18:54:50,939 - INFO - Processing subject sub-038 for condition Scramble
+2025-03-24 18:54:50,939 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,939 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,939 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-038/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,939 - WARNING - No valid data found for subject sub-038 condition Scramble
+2025-03-24 18:54:50,940 - INFO - Processing subject sub-057 for condition Scramble
+2025-03-24 18:54:50,940 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,940 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,940 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-057/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,940 - WARNING - No valid data found for subject sub-057 condition Scramble
+2025-03-24 18:54:50,940 - INFO - Processing subject sub-059 for condition Scramble
+2025-03-24 18:54:50,940 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,940 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,940 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-059/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,940 - WARNING - No valid data found for subject sub-059 condition Scramble
+2025-03-24 18:54:50,940 - INFO - Processing subject sub-064 for condition Scramble
+2025-03-24 18:54:50,940 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,940 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,940 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-064/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,940 - WARNING - No valid data found for subject sub-064 condition Scramble
+2025-03-24 18:54:50,940 - INFO - Processing subject sub-067 for condition Scramble
+2025-03-24 18:54:50,940 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,941 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,941 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-067/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,941 - WARNING - No valid data found for subject sub-067 condition Scramble
+2025-03-24 18:54:50,941 - INFO - Processing subject sub-068 for condition Scramble
+2025-03-24 18:54:50,941 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,941 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,941 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-068/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,941 - WARNING - No valid data found for subject sub-068 condition Scramble
+2025-03-24 18:54:50,941 - INFO - Processing subject sub-071 for condition Scramble
+2025-03-24 18:54:50,941 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,941 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,941 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-071/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,941 - WARNING - No valid data found for subject sub-071 condition Scramble
+2025-03-24 18:54:50,941 - INFO - Processing subject sub-083 for condition Scramble
+2025-03-24 18:54:50,941 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,941 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,941 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-083/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,942 - WARNING - No valid data found for subject sub-083 condition Scramble
+2025-03-24 18:54:50,942 - INFO - Processing subject sub-085 for condition Scramble
+2025-03-24 18:54:50,942 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,942 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,942 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-085/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,942 - WARNING - No valid data found for subject sub-085 condition Scramble
+2025-03-24 18:54:50,942 - INFO - Processing subject sub-087 for condition Scramble
+2025-03-24 18:54:50,942 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,942 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,942 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-087/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,942 - WARNING - No valid data found for subject sub-087 condition Scramble
+2025-03-24 18:54:50,942 - INFO - Processing subject sub-088 for condition Scramble
+2025-03-24 18:54:50,942 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,942 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,942 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-088/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,942 - WARNING - No valid data found for subject sub-088 condition Scramble
+2025-03-24 18:54:50,942 - INFO - Processing subject sub-093 for condition Scramble
+2025-03-24 18:54:50,943 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,943 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,943 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-093/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,943 - WARNING - No valid data found for subject sub-093 condition Scramble
+2025-03-24 18:54:50,943 - INFO - Processing subject sub-094 for condition Scramble
+2025-03-24 18:54:50,943 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,943 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,943 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-094/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,943 - WARNING - No valid data found for subject sub-094 condition Scramble
+2025-03-24 18:54:50,943 - INFO - Processing subject sub-095 for condition Scramble
+2025-03-24 18:54:50,943 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,943 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,943 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-095/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,943 - WARNING - No valid data found for subject sub-095 condition Scramble
+2025-03-24 18:54:50,943 - INFO - Processing subject sub-096 for condition Scramble
+2025-03-24 18:54:50,943 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,943 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,944 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-096/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,944 - WARNING - No valid data found for subject sub-096 condition Scramble
+2025-03-24 18:54:50,944 - INFO - Processing subject sub-097 for condition Scramble
+2025-03-24 18:54:50,944 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,944 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,944 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-097/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,944 - WARNING - No valid data found for subject sub-097 condition Scramble
+2025-03-24 18:54:50,944 - INFO - Processing subject sub-107 for condition Scramble
+2025-03-24 18:54:50,944 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:54:50,944 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:54:50,944 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-107/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:54:50,944 - WARNING - No valid data found for subject sub-107 condition Scramble
+2025-03-24 18:56:38,343 - INFO - Creating merged atlas...
+2025-03-24 18:56:38,346 - INFO - Loaded pIPS ROI
+2025-03-24 18:56:38,348 - INFO - Loaded LO ROI
+2025-03-24 18:56:38,359 - INFO - Loaded Schaefer atlas with 200 parcels
+2025-03-24 18:56:38,475 - INFO - pIPS overlaps with 28 atlas parcels
+2025-03-24 18:56:38,476 - INFO -   Label 9 (7Networks_LH_Vis_9): 7 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 11 (7Networks_LH_Vis_11): 159 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 12 (7Networks_LH_Vis_12): 2 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 13 (7Networks_LH_Vis_13): 381 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 14 (7Networks_LH_Vis_14): 528 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 33 (7Networks_LH_DorsAttn_Post_3): 554 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 36 (7Networks_LH_DorsAttn_Post_6): 4 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 37 (7Networks_LH_DorsAttn_Post_7): 567 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 38 (7Networks_LH_DorsAttn_Post_8): 64 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 39 (7Networks_LH_DorsAttn_Post_9): 99 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 40 (7Networks_LH_DorsAttn_Post_10): 15 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 62 (7Networks_LH_Cont_Par_2): 269 voxels
+2025-03-24 18:56:38,476 - INFO -   Label 71 (7Networks_LH_Cont_pCun_1): 247 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 80 (7Networks_LH_Default_Par_2): 436 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 82 (7Networks_LH_Default_Par_4): 85 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 99 (7Networks_LH_Default_pCunPCC_4): 5 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 111 (7Networks_RH_Vis_11): 119 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 112 (7Networks_RH_Vis_12): 297 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 113 (7Networks_RH_Vis_13): 66 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 114 (7Networks_RH_Vis_14): 373 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 115 (7Networks_RH_Vis_15): 773 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 140 (7Networks_RH_DorsAttn_Post_6): 268 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 141 (7Networks_RH_DorsAttn_Post_7): 26 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 142 (7Networks_RH_DorsAttn_Post_8): 402 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 167 (7Networks_RH_Cont_Par_3): 330 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 177 (7Networks_RH_Cont_pCun_1): 157 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 182 (7Networks_RH_Default_Par_1): 204 voxels
+2025-03-24 18:56:38,477 - INFO -   Label 184 (7Networks_RH_Default_Par_3): 7 voxels
+2025-03-24 18:56:38,598 - INFO - LO overlaps with 18 atlas parcels
+2025-03-24 18:56:38,598 - INFO -   Label 2 (7Networks_LH_Vis_2): 125 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 3 (7Networks_LH_Vis_3): 655 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 5 (7Networks_LH_Vis_5): 90 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 8 (7Networks_LH_Vis_8): 235 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 9 (7Networks_LH_Vis_9): 69 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 11 (7Networks_LH_Vis_11): 189 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 31 (7Networks_LH_DorsAttn_Post_1): 77 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 32 (7Networks_LH_DorsAttn_Post_2): 217 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 101 (7Networks_RH_Vis_1): 4 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 103 (7Networks_RH_Vis_3): 116 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 105 (7Networks_RH_Vis_5): 613 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 108 (7Networks_RH_Vis_8): 127 voxels
+2025-03-24 18:56:38,598 - INFO -   Label 111 (7Networks_RH_Vis_11): 135 voxels
+2025-03-24 18:56:38,599 - INFO -   Label 135 (7Networks_RH_DorsAttn_Post_1): 307 voxels
+2025-03-24 18:56:38,599 - INFO -   Label 136 (7Networks_RH_DorsAttn_Post_2): 290 voxels
+2025-03-24 18:56:38,599 - INFO -   Label 148 (7Networks_RH_SalVentAttn_TempOccPar_1): 52 voxels
+2025-03-24 18:56:38,599 - INFO -   Label 168 (7Networks_RH_Cont_Temp_1): 2 voxels
+2025-03-24 18:56:38,599 - INFO -   Label 189 (7Networks_RH_Default_Temp_5): 1 voxels
+2025-03-24 18:56:38,674 - INFO - Saved merged atlas to: /user_data/csimmon2/git_repos/ptoc/results/schaefer_wang_merged.nii.gz
+2025-03-24 18:56:38,676 - INFO - Saved merged labels to: /user_data/csimmon2/git_repos/ptoc/results/merged_atlas_labels.npy
+2025-03-24 18:56:38,677 - INFO - Processing subject sub-025 for condition Object
+2025-03-24 18:56:38,679 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 18:56:38,679 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 18:56:38,679 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc/raw/sub-025/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 18:56:38,679 - WARNING - No valid data found for subject sub-025 condition Object
+2025-03-24 19:00:50,600 - INFO - Creating merged atlas...
+2025-03-24 19:00:50,603 - INFO - Loaded pIPS ROI
+2025-03-24 19:00:50,606 - INFO - Loaded LO ROI
+2025-03-24 19:00:50,619 - INFO - Loaded Schaefer atlas with 200 parcels
+2025-03-24 19:00:50,732 - INFO - pIPS overlaps with 28 atlas parcels
+2025-03-24 19:00:50,732 - INFO -   Label 9 (7Networks_LH_Vis_9): 7 voxels
+2025-03-24 19:00:50,732 - INFO -   Label 11 (7Networks_LH_Vis_11): 159 voxels
+2025-03-24 19:00:50,732 - INFO -   Label 12 (7Networks_LH_Vis_12): 2 voxels
+2025-03-24 19:00:50,732 - INFO -   Label 13 (7Networks_LH_Vis_13): 381 voxels
+2025-03-24 19:00:50,732 - INFO -   Label 14 (7Networks_LH_Vis_14): 528 voxels
+2025-03-24 19:00:50,732 - INFO -   Label 33 (7Networks_LH_DorsAttn_Post_3): 554 voxels
+2025-03-24 19:00:50,732 - INFO -   Label 36 (7Networks_LH_DorsAttn_Post_6): 4 voxels
+2025-03-24 19:00:50,732 - INFO -   Label 37 (7Networks_LH_DorsAttn_Post_7): 567 voxels
+2025-03-24 19:00:50,732 - INFO -   Label 38 (7Networks_LH_DorsAttn_Post_8): 64 voxels
+2025-03-24 19:00:50,732 - INFO -   Label 39 (7Networks_LH_DorsAttn_Post_9): 99 voxels
+2025-03-24 19:00:50,732 - INFO -   Label 40 (7Networks_LH_DorsAttn_Post_10): 15 voxels
+2025-03-24 19:00:50,732 - INFO -   Label 62 (7Networks_LH_Cont_Par_2): 269 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 71 (7Networks_LH_Cont_pCun_1): 247 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 80 (7Networks_LH_Default_Par_2): 436 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 82 (7Networks_LH_Default_Par_4): 85 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 99 (7Networks_LH_Default_pCunPCC_4): 5 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 111 (7Networks_RH_Vis_11): 119 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 112 (7Networks_RH_Vis_12): 297 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 113 (7Networks_RH_Vis_13): 66 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 114 (7Networks_RH_Vis_14): 373 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 115 (7Networks_RH_Vis_15): 773 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 140 (7Networks_RH_DorsAttn_Post_6): 268 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 141 (7Networks_RH_DorsAttn_Post_7): 26 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 142 (7Networks_RH_DorsAttn_Post_8): 402 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 167 (7Networks_RH_Cont_Par_3): 330 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 177 (7Networks_RH_Cont_pCun_1): 157 voxels
+2025-03-24 19:00:50,733 - INFO -   Label 182 (7Networks_RH_Default_Par_1): 204 voxels
+2025-03-24 19:00:50,734 - INFO -   Label 184 (7Networks_RH_Default_Par_3): 7 voxels
+2025-03-24 19:00:50,854 - INFO - LO overlaps with 18 atlas parcels
+2025-03-24 19:00:50,854 - INFO -   Label 2 (7Networks_LH_Vis_2): 125 voxels
+2025-03-24 19:00:50,854 - INFO -   Label 3 (7Networks_LH_Vis_3): 655 voxels
+2025-03-24 19:00:50,854 - INFO -   Label 5 (7Networks_LH_Vis_5): 90 voxels
+2025-03-24 19:00:50,854 - INFO -   Label 8 (7Networks_LH_Vis_8): 235 voxels
+2025-03-24 19:00:50,854 - INFO -   Label 9 (7Networks_LH_Vis_9): 69 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 11 (7Networks_LH_Vis_11): 189 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 31 (7Networks_LH_DorsAttn_Post_1): 77 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 32 (7Networks_LH_DorsAttn_Post_2): 217 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 101 (7Networks_RH_Vis_1): 4 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 103 (7Networks_RH_Vis_3): 116 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 105 (7Networks_RH_Vis_5): 613 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 108 (7Networks_RH_Vis_8): 127 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 111 (7Networks_RH_Vis_11): 135 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 135 (7Networks_RH_DorsAttn_Post_1): 307 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 136 (7Networks_RH_DorsAttn_Post_2): 290 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 148 (7Networks_RH_SalVentAttn_TempOccPar_1): 52 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 168 (7Networks_RH_Cont_Temp_1): 2 voxels
+2025-03-24 19:00:50,855 - INFO -   Label 189 (7Networks_RH_Default_Temp_5): 1 voxels
+2025-03-24 19:00:50,933 - INFO - Saved merged atlas to: /user_data/csimmon2/git_repos/ptoc/results/schaefer_wang_merged.nii.gz
+2025-03-24 19:00:50,936 - INFO - Saved merged labels to: /user_data/csimmon2/git_repos/ptoc/results/merged_atlas_labels.npy
+2025-03-24 19:00:50,937 - INFO - Processing subject sub-025 for condition Object
+2025-03-24 19:00:51,003 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc//sub-025/ses-01/derivatives/reg_standard/filtered_func_run-01_standard.nii.gz
+2025-03-24 19:00:51,003 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc//sub-025/ses-01/derivatives/reg_standard/filtered_func_run-02_standard.nii.gz
+2025-03-24 19:00:51,003 - WARNING - Standard space data not found: /lab_data/behrmannlab/vlad/ptoc//sub-025/ses-01/derivatives/reg_standard/filtered_func_run-03_standard.nii.gz
+2025-03-24 19:00:51,003 - WARNING - No valid data found for subject sub-025 condition Object
+2025-03-24 19:02:05,561 - INFO - Creating merged atlas...
+2025-03-24 19:02:05,564 - INFO - Loaded pIPS ROI
+2025-03-24 19:02:05,566 - INFO - Loaded LO ROI
+2025-03-24 19:02:05,578 - INFO - Loaded Schaefer atlas with 200 parcels
+2025-03-24 19:02:05,687 - INFO - pIPS overlaps with 28 atlas parcels
+2025-03-24 19:02:05,688 - INFO -   Label 9 (7Networks_LH_Vis_9): 7 voxels
+2025-03-24 19:02:05,688 - INFO -   Label 11 (7Networks_LH_Vis_11): 159 voxels
+2025-03-24 19:02:05,688 - INFO -   Label 12 (7Networks_LH_Vis_12): 2 voxels
+2025-03-24 19:02:05,688 - INFO -   Label 13 (7Networks_LH_Vis_13): 381 voxels
+2025-03-24 19:02:05,688 - INFO -   Label 14 (7Networks_LH_Vis_14): 528 voxels
+2025-03-24 19:02:05,688 - INFO -   Label 33 (7Networks_LH_DorsAttn_Post_3): 554 voxels
+2025-03-24 19:02:05,688 - INFO -   Label 36 (7Networks_LH_DorsAttn_Post_6): 4 voxels
+2025-03-24 19:02:05,688 - INFO -   Label 37 (7Networks_LH_DorsAttn_Post_7): 567 voxels
+2025-03-24 19:02:05,688 - INFO -   Label 38 (7Networks_LH_DorsAttn_Post_8): 64 voxels
+2025-03-24 19:02:05,688 - INFO -   Label 39 (7Networks_LH_DorsAttn_Post_9): 99 voxels
+2025-03-24 19:02:05,688 - INFO -   Label 40 (7Networks_LH_DorsAttn_Post_10): 15 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 62 (7Networks_LH_Cont_Par_2): 269 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 71 (7Networks_LH_Cont_pCun_1): 247 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 80 (7Networks_LH_Default_Par_2): 436 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 82 (7Networks_LH_Default_Par_4): 85 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 99 (7Networks_LH_Default_pCunPCC_4): 5 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 111 (7Networks_RH_Vis_11): 119 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 112 (7Networks_RH_Vis_12): 297 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 113 (7Networks_RH_Vis_13): 66 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 114 (7Networks_RH_Vis_14): 373 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 115 (7Networks_RH_Vis_15): 773 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 140 (7Networks_RH_DorsAttn_Post_6): 268 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 141 (7Networks_RH_DorsAttn_Post_7): 26 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 142 (7Networks_RH_DorsAttn_Post_8): 402 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 167 (7Networks_RH_Cont_Par_3): 330 voxels
+2025-03-24 19:02:05,689 - INFO -   Label 177 (7Networks_RH_Cont_pCun_1): 157 voxels
+2025-03-24 19:02:05,690 - INFO -   Label 182 (7Networks_RH_Default_Par_1): 204 voxels
+2025-03-24 19:02:05,690 - INFO -   Label 184 (7Networks_RH_Default_Par_3): 7 voxels
+2025-03-24 19:02:05,810 - INFO - LO overlaps with 18 atlas parcels
+2025-03-24 19:02:05,810 - INFO -   Label 2 (7Networks_LH_Vis_2): 125 voxels
+2025-03-24 19:02:05,810 - INFO -   Label 3 (7Networks_LH_Vis_3): 655 voxels
+2025-03-24 19:02:05,810 - INFO -   Label 5 (7Networks_LH_Vis_5): 90 voxels
+2025-03-24 19:02:05,810 - INFO -   Label 8 (7Networks_LH_Vis_8): 235 voxels
+2025-03-24 19:02:05,810 - INFO -   Label 9 (7Networks_LH_Vis_9): 69 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 11 (7Networks_LH_Vis_11): 189 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 31 (7Networks_LH_DorsAttn_Post_1): 77 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 32 (7Networks_LH_DorsAttn_Post_2): 217 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 101 (7Networks_RH_Vis_1): 4 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 103 (7Networks_RH_Vis_3): 116 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 105 (7Networks_RH_Vis_5): 613 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 108 (7Networks_RH_Vis_8): 127 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 111 (7Networks_RH_Vis_11): 135 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 135 (7Networks_RH_DorsAttn_Post_1): 307 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 136 (7Networks_RH_DorsAttn_Post_2): 290 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 148 (7Networks_RH_SalVentAttn_TempOccPar_1): 52 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 168 (7Networks_RH_Cont_Temp_1): 2 voxels
+2025-03-24 19:02:05,811 - INFO -   Label 189 (7Networks_RH_Default_Temp_5): 1 voxels
+2025-03-24 19:02:05,910 - INFO - Saved merged atlas to: /user_data/csimmon2/git_repos/ptoc/results/schaefer_wang_merged.nii.gz
+2025-03-24 19:02:05,913 - INFO - Saved merged labels to: /user_data/csimmon2/git_repos/ptoc/results/merged_atlas_labels.npy
+2025-03-24 19:02:05,915 - INFO - Processing subject sub-025 for condition Object
+2025-03-24 19:02:21,948 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:02:22,001 - INFO - Condition mask shape: (184,)
+2025-03-24 19:02:22,001 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:02:37,686 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:02:37,713 - INFO - Condition mask shape: (184,)
+2025-03-24 19:02:37,713 - INFO - Time series shape after masking: (36, 202)
