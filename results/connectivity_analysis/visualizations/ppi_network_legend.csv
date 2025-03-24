@@ -1,0 +1,20 @@
+ROI_ID,Hemisphere,Difference,Direction,ROI_Name
+3,Left,-0.0183684234588439,LO > pIPS,7Networks_LH_Vis_3
+5,Left,-0.006837556312134,LO > pIPS,7Networks_LH_Vis_5
+7,Left,0.0069971897768488,pIPS > LO,7Networks_LH_Vis_7
+8,Left,-0.0110743645671775,LO > pIPS,7Networks_LH_Vis_8
+11,Left,-0.0084090130223343,LO > pIPS,7Networks_LH_Vis_11
+23,Left,-0.0062591740198958,LO > pIPS,7Networks_LH_SomMot_9
+25,Left,-0.0058109524885094,LO > pIPS,7Networks_LH_SomMot_11
+26,Left,-0.0059916292517391,LO > pIPS,7Networks_LH_SomMot_12
+30,Left,-0.0058853143865313,LO > pIPS,7Networks_LH_SomMot_16
+31,Left,-0.0096777567968685,LO > pIPS,7Networks_LH_DorsAttn_Post_1
+32,Left,-0.0089838298208609,LO > pIPS,7Networks_LH_DorsAttn_Post_2
+33,Left,-0.0088264145136579,LO > pIPS,7Networks_LH_DorsAttn_Post_3
+36,Left,-0.0062362979559109,LO > pIPS,7Networks_LH_DorsAttn_Post_6
+38,Left,-0.0056284476000234,LO > pIPS,7Networks_LH_DorsAttn_Post_8
+105,Right,-0.0144071090987203,LO > pIPS,7Networks_RH_Vis_5
+111,Right,-0.007253856636598,LO > pIPS,7Networks_RH_Vis_11
+135,Right,-0.0108797639543036,LO > pIPS,7Networks_RH_DorsAttn_Post_1
+136,Right,-0.0063607512806204,LO > pIPS,7Networks_RH_DorsAttn_Post_2
+141,Right,-0.0074727861119585,LO > pIPS,7Networks_RH_DorsAttn_Post_7
