@@ -1113,3 +1113,765 @@
 2025-03-24 19:02:37,686 - INFO - Time series shape before masking: (184, 202)
 2025-03-24 19:02:37,713 - INFO - Condition mask shape: (184,)
 2025-03-24 19:02:37,713 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:02:52,790 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:02:52,800 - INFO - Condition mask shape: (184,)
+2025-03-24 19:02:52,800 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:02:52,800 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:02:52,812 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:03:46,932 - INFO - Creating merged atlas...
+2025-03-24 19:03:46,936 - INFO - Loaded pIPS ROI
+2025-03-24 19:03:46,937 - INFO - Loaded LO ROI
+2025-03-24 19:03:46,947 - INFO - Loaded Schaefer atlas with 200 parcels
+2025-03-24 19:03:47,057 - INFO - pIPS overlaps with 28 atlas parcels
+2025-03-24 19:03:47,057 - INFO -   Label 9 (7Networks_LH_Vis_9): 7 voxels
+2025-03-24 19:03:47,057 - INFO -   Label 11 (7Networks_LH_Vis_11): 159 voxels
+2025-03-24 19:03:47,057 - INFO -   Label 12 (7Networks_LH_Vis_12): 2 voxels
+2025-03-24 19:03:47,057 - INFO -   Label 13 (7Networks_LH_Vis_13): 381 voxels
+2025-03-24 19:03:47,057 - INFO -   Label 14 (7Networks_LH_Vis_14): 528 voxels
+2025-03-24 19:03:47,057 - INFO -   Label 33 (7Networks_LH_DorsAttn_Post_3): 554 voxels
+2025-03-24 19:03:47,057 - INFO -   Label 36 (7Networks_LH_DorsAttn_Post_6): 4 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 37 (7Networks_LH_DorsAttn_Post_7): 567 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 38 (7Networks_LH_DorsAttn_Post_8): 64 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 39 (7Networks_LH_DorsAttn_Post_9): 99 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 40 (7Networks_LH_DorsAttn_Post_10): 15 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 62 (7Networks_LH_Cont_Par_2): 269 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 71 (7Networks_LH_Cont_pCun_1): 247 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 80 (7Networks_LH_Default_Par_2): 436 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 82 (7Networks_LH_Default_Par_4): 85 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 99 (7Networks_LH_Default_pCunPCC_4): 5 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 111 (7Networks_RH_Vis_11): 119 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 112 (7Networks_RH_Vis_12): 297 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 113 (7Networks_RH_Vis_13): 66 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 114 (7Networks_RH_Vis_14): 373 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 115 (7Networks_RH_Vis_15): 773 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 140 (7Networks_RH_DorsAttn_Post_6): 268 voxels
+2025-03-24 19:03:47,058 - INFO -   Label 141 (7Networks_RH_DorsAttn_Post_7): 26 voxels
+2025-03-24 19:03:47,059 - INFO -   Label 142 (7Networks_RH_DorsAttn_Post_8): 402 voxels
+2025-03-24 19:03:47,059 - INFO -   Label 167 (7Networks_RH_Cont_Par_3): 330 voxels
+2025-03-24 19:03:47,059 - INFO -   Label 177 (7Networks_RH_Cont_pCun_1): 157 voxels
+2025-03-24 19:03:47,059 - INFO -   Label 182 (7Networks_RH_Default_Par_1): 204 voxels
+2025-03-24 19:03:47,059 - INFO -   Label 184 (7Networks_RH_Default_Par_3): 7 voxels
+2025-03-24 19:03:47,177 - INFO - LO overlaps with 18 atlas parcels
+2025-03-24 19:03:47,177 - INFO -   Label 2 (7Networks_LH_Vis_2): 125 voxels
+2025-03-24 19:03:47,177 - INFO -   Label 3 (7Networks_LH_Vis_3): 655 voxels
+2025-03-24 19:03:47,177 - INFO -   Label 5 (7Networks_LH_Vis_5): 90 voxels
+2025-03-24 19:03:47,177 - INFO -   Label 8 (7Networks_LH_Vis_8): 235 voxels
+2025-03-24 19:03:47,177 - INFO -   Label 9 (7Networks_LH_Vis_9): 69 voxels
+2025-03-24 19:03:47,177 - INFO -   Label 11 (7Networks_LH_Vis_11): 189 voxels
+2025-03-24 19:03:47,177 - INFO -   Label 31 (7Networks_LH_DorsAttn_Post_1): 77 voxels
+2025-03-24 19:03:47,177 - INFO -   Label 32 (7Networks_LH_DorsAttn_Post_2): 217 voxels
+2025-03-24 19:03:47,177 - INFO -   Label 101 (7Networks_RH_Vis_1): 4 voxels
+2025-03-24 19:03:47,177 - INFO -   Label 103 (7Networks_RH_Vis_3): 116 voxels
+2025-03-24 19:03:47,178 - INFO -   Label 105 (7Networks_RH_Vis_5): 613 voxels
+2025-03-24 19:03:47,178 - INFO -   Label 108 (7Networks_RH_Vis_8): 127 voxels
+2025-03-24 19:03:47,178 - INFO -   Label 111 (7Networks_RH_Vis_11): 135 voxels
+2025-03-24 19:03:47,178 - INFO -   Label 135 (7Networks_RH_DorsAttn_Post_1): 307 voxels
+2025-03-24 19:03:47,178 - INFO -   Label 136 (7Networks_RH_DorsAttn_Post_2): 290 voxels
+2025-03-24 19:03:47,178 - INFO -   Label 148 (7Networks_RH_SalVentAttn_TempOccPar_1): 52 voxels
+2025-03-24 19:03:47,178 - INFO -   Label 168 (7Networks_RH_Cont_Temp_1): 2 voxels
+2025-03-24 19:03:47,178 - INFO -   Label 189 (7Networks_RH_Default_Temp_5): 1 voxels
+2025-03-24 19:03:47,252 - INFO - Saved merged atlas to: /user_data/csimmon2/git_repos/ptoc/results/schaefer_wang_merged.nii.gz
+2025-03-24 19:03:47,254 - INFO - Saved merged labels to: /user_data/csimmon2/git_repos/ptoc/results/merged_atlas_labels.npy
+2025-03-24 19:03:47,257 - INFO - Processing subject sub-025 for condition Object
+2025-03-24 19:04:15,492 - INFO - Creating merged atlas...
+2025-03-24 19:04:15,496 - INFO - Loaded pIPS ROI
+2025-03-24 19:04:15,498 - INFO - Loaded LO ROI
+2025-03-24 19:04:15,505 - INFO - Loaded Schaefer atlas with 200 parcels
+2025-03-24 19:04:15,620 - INFO - pIPS overlaps with 28 atlas parcels
+2025-03-24 19:04:15,620 - INFO -   Label 9 (7Networks_LH_Vis_9): 7 voxels
+2025-03-24 19:04:15,620 - INFO -   Label 11 (7Networks_LH_Vis_11): 159 voxels
+2025-03-24 19:04:15,620 - INFO -   Label 12 (7Networks_LH_Vis_12): 2 voxels
+2025-03-24 19:04:15,620 - INFO -   Label 13 (7Networks_LH_Vis_13): 381 voxels
+2025-03-24 19:04:15,620 - INFO -   Label 14 (7Networks_LH_Vis_14): 528 voxels
+2025-03-24 19:04:15,620 - INFO -   Label 33 (7Networks_LH_DorsAttn_Post_3): 554 voxels
+2025-03-24 19:04:15,620 - INFO -   Label 36 (7Networks_LH_DorsAttn_Post_6): 4 voxels
+2025-03-24 19:04:15,620 - INFO -   Label 37 (7Networks_LH_DorsAttn_Post_7): 567 voxels
+2025-03-24 19:04:15,620 - INFO -   Label 38 (7Networks_LH_DorsAttn_Post_8): 64 voxels
+2025-03-24 19:04:15,620 - INFO -   Label 39 (7Networks_LH_DorsAttn_Post_9): 99 voxels
+2025-03-24 19:04:15,620 - INFO -   Label 40 (7Networks_LH_DorsAttn_Post_10): 15 voxels
+2025-03-24 19:04:15,620 - INFO -   Label 62 (7Networks_LH_Cont_Par_2): 269 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 71 (7Networks_LH_Cont_pCun_1): 247 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 80 (7Networks_LH_Default_Par_2): 436 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 82 (7Networks_LH_Default_Par_4): 85 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 99 (7Networks_LH_Default_pCunPCC_4): 5 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 111 (7Networks_RH_Vis_11): 119 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 112 (7Networks_RH_Vis_12): 297 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 113 (7Networks_RH_Vis_13): 66 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 114 (7Networks_RH_Vis_14): 373 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 115 (7Networks_RH_Vis_15): 773 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 140 (7Networks_RH_DorsAttn_Post_6): 268 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 141 (7Networks_RH_DorsAttn_Post_7): 26 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 142 (7Networks_RH_DorsAttn_Post_8): 402 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 167 (7Networks_RH_Cont_Par_3): 330 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 177 (7Networks_RH_Cont_pCun_1): 157 voxels
+2025-03-24 19:04:15,621 - INFO -   Label 182 (7Networks_RH_Default_Par_1): 204 voxels
+2025-03-24 19:04:15,622 - INFO -   Label 184 (7Networks_RH_Default_Par_3): 7 voxels
+2025-03-24 19:04:15,743 - INFO - LO overlaps with 18 atlas parcels
+2025-03-24 19:04:15,743 - INFO -   Label 2 (7Networks_LH_Vis_2): 125 voxels
+2025-03-24 19:04:15,743 - INFO -   Label 3 (7Networks_LH_Vis_3): 655 voxels
+2025-03-24 19:04:15,743 - INFO -   Label 5 (7Networks_LH_Vis_5): 90 voxels
+2025-03-24 19:04:15,743 - INFO -   Label 8 (7Networks_LH_Vis_8): 235 voxels
+2025-03-24 19:04:15,743 - INFO -   Label 9 (7Networks_LH_Vis_9): 69 voxels
+2025-03-24 19:04:15,743 - INFO -   Label 11 (7Networks_LH_Vis_11): 189 voxels
+2025-03-24 19:04:15,743 - INFO -   Label 31 (7Networks_LH_DorsAttn_Post_1): 77 voxels
+2025-03-24 19:04:15,743 - INFO -   Label 32 (7Networks_LH_DorsAttn_Post_2): 217 voxels
+2025-03-24 19:04:15,743 - INFO -   Label 101 (7Networks_RH_Vis_1): 4 voxels
+2025-03-24 19:04:15,743 - INFO -   Label 103 (7Networks_RH_Vis_3): 116 voxels
+2025-03-24 19:04:15,744 - INFO -   Label 105 (7Networks_RH_Vis_5): 613 voxels
+2025-03-24 19:04:15,744 - INFO -   Label 108 (7Networks_RH_Vis_8): 127 voxels
+2025-03-24 19:04:15,744 - INFO -   Label 111 (7Networks_RH_Vis_11): 135 voxels
+2025-03-24 19:04:15,744 - INFO -   Label 135 (7Networks_RH_DorsAttn_Post_1): 307 voxels
+2025-03-24 19:04:15,744 - INFO -   Label 136 (7Networks_RH_DorsAttn_Post_2): 290 voxels
+2025-03-24 19:04:15,744 - INFO -   Label 148 (7Networks_RH_SalVentAttn_TempOccPar_1): 52 voxels
+2025-03-24 19:04:15,744 - INFO -   Label 168 (7Networks_RH_Cont_Temp_1): 2 voxels
+2025-03-24 19:04:15,744 - INFO -   Label 189 (7Networks_RH_Default_Temp_5): 1 voxels
+2025-03-24 19:04:15,820 - INFO - Saved merged atlas to: /user_data/csimmon2/git_repos/ptoc/results/schaefer_wang_merged.nii.gz
+2025-03-24 19:04:15,822 - INFO - Saved merged labels to: /user_data/csimmon2/git_repos/ptoc/results/merged_atlas_labels.npy
+2025-03-24 19:04:15,824 - INFO - Processing subject sub-025 for condition Object
+2025-03-24 19:04:30,627 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:04:30,642 - INFO - Condition mask shape: (184,)
+2025-03-24 19:04:30,642 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:04:45,248 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:04:45,256 - INFO - Condition mask shape: (184,)
+2025-03-24 19:04:45,256 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:04:59,792 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:04:59,800 - INFO - Condition mask shape: (184,)
+2025-03-24 19:04:59,800 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:04:59,800 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:04:59,819 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:04:59,886 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-025
+2025-03-24 19:04:59,888 - INFO - Processing subject sub-038 for condition Object
+2025-03-24 19:05:15,574 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:05:15,618 - INFO - Condition mask shape: (184,)
+2025-03-24 19:05:15,618 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:05:30,718 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:05:30,749 - INFO - Condition mask shape: (184,)
+2025-03-24 19:05:30,750 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:05:45,816 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:05:45,827 - INFO - Condition mask shape: (184,)
+2025-03-24 19:05:45,827 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:05:45,827 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:05:45,838 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:05:45,876 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-038
+2025-03-24 19:05:45,877 - INFO - Processing subject sub-057 for condition Object
+2025-03-24 19:06:00,727 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:06:00,784 - INFO - Condition mask shape: (184,)
+2025-03-24 19:06:00,784 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:06:15,683 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:06:15,691 - INFO - Condition mask shape: (184,)
+2025-03-24 19:06:15,691 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:06:30,546 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:06:30,575 - INFO - Condition mask shape: (184,)
+2025-03-24 19:06:30,575 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:06:30,575 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:06:30,586 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:06:30,628 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-057
+2025-03-24 19:06:30,630 - INFO - Processing subject sub-059 for condition Object
+2025-03-24 19:06:45,571 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:06:45,624 - INFO - Condition mask shape: (184,)
+2025-03-24 19:06:45,624 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:07:00,530 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:07:00,538 - INFO - Condition mask shape: (184,)
+2025-03-24 19:07:00,539 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:07:15,488 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:07:15,503 - INFO - Condition mask shape: (184,)
+2025-03-24 19:07:15,503 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:07:15,503 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:07:15,525 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:07:15,590 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-059
+2025-03-24 19:07:15,592 - INFO - Processing subject sub-064 for condition Object
+2025-03-24 19:07:30,478 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:07:30,575 - INFO - Condition mask shape: (184,)
+2025-03-24 19:07:30,575 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:07:45,479 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:07:45,487 - INFO - Condition mask shape: (184,)
+2025-03-24 19:07:45,487 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:08:00,377 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:08:00,393 - INFO - Condition mask shape: (184,)
+2025-03-24 19:08:00,393 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:08:00,394 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:08:00,406 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:08:00,447 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-064
+2025-03-24 19:08:00,449 - INFO - Processing subject sub-067 for condition Object
+2025-03-24 19:08:15,206 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:08:15,251 - INFO - Condition mask shape: (184,)
+2025-03-24 19:08:15,251 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:08:30,766 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:08:30,794 - INFO - Condition mask shape: (184,)
+2025-03-24 19:08:30,794 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:08:45,797 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:08:45,806 - INFO - Condition mask shape: (184,)
+2025-03-24 19:08:45,806 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:08:45,806 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:08:45,818 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:08:45,860 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-067
+2025-03-24 19:08:45,862 - INFO - Processing subject sub-068 for condition Object
+2025-03-24 19:09:00,886 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:09:00,942 - INFO - Condition mask shape: (184,)
+2025-03-24 19:09:00,942 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:09:16,137 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:09:16,146 - INFO - Condition mask shape: (184,)
+2025-03-24 19:09:16,146 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:09:31,306 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:09:31,338 - INFO - Condition mask shape: (184,)
+2025-03-24 19:09:31,338 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:09:31,338 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:09:31,356 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:09:31,427 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-068
+2025-03-24 19:09:31,429 - INFO - Processing subject sub-071 for condition Object
+2025-03-24 19:09:46,499 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:09:46,542 - INFO - Condition mask shape: (184,)
+2025-03-24 19:09:46,542 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:10:01,682 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:10:01,730 - INFO - Condition mask shape: (184,)
+2025-03-24 19:10:01,730 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:10:16,885 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:10:16,894 - INFO - Condition mask shape: (184,)
+2025-03-24 19:10:16,894 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:10:16,894 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:10:16,905 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:10:16,950 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-071
+2025-03-24 19:10:16,952 - INFO - Processing subject sub-083 for condition Object
+2025-03-24 19:10:32,147 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:10:32,201 - INFO - Condition mask shape: (184,)
+2025-03-24 19:10:32,201 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:10:47,137 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:10:47,145 - INFO - Condition mask shape: (184,)
+2025-03-24 19:10:47,146 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:11:02,581 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:11:02,607 - INFO - Condition mask shape: (184,)
+2025-03-24 19:11:02,607 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:11:02,608 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:11:02,622 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:11:02,667 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-083
+2025-03-24 19:11:02,669 - INFO - Processing subject sub-085 for condition Object
+2025-03-24 19:11:18,482 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:11:18,539 - INFO - Condition mask shape: (184,)
+2025-03-24 19:11:18,540 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:11:33,619 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:11:33,647 - INFO - Condition mask shape: (184,)
+2025-03-24 19:11:33,647 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:11:48,643 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:11:48,652 - INFO - Condition mask shape: (184,)
+2025-03-24 19:11:48,652 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:11:48,653 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:11:48,665 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:11:48,711 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-085
+2025-03-24 19:11:48,713 - INFO - Processing subject sub-087 for condition Object
+2025-03-24 19:12:04,384 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:12:04,441 - INFO - Condition mask shape: (184,)
+2025-03-24 19:12:04,441 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:12:20,092 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:12:20,107 - INFO - Condition mask shape: (184,)
+2025-03-24 19:12:20,107 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:12:35,038 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:12:35,048 - INFO - Condition mask shape: (184,)
+2025-03-24 19:12:35,048 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:12:35,049 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:12:35,060 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:12:35,100 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-087
+2025-03-24 19:12:35,102 - INFO - Processing subject sub-088 for condition Object
+2025-03-24 19:12:50,076 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:12:50,129 - INFO - Condition mask shape: (184,)
+2025-03-24 19:12:50,129 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:13:05,224 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:13:05,281 - INFO - Condition mask shape: (184,)
+2025-03-24 19:13:05,281 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:13:20,198 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:13:20,208 - INFO - Condition mask shape: (184,)
+2025-03-24 19:13:20,208 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:13:20,208 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:13:20,220 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:13:20,262 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-088
+2025-03-24 19:13:20,263 - INFO - Processing subject sub-093 for condition Object
+2025-03-24 19:13:36,307 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:13:36,362 - INFO - Condition mask shape: (184,)
+2025-03-24 19:13:36,363 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:13:51,422 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:13:51,430 - INFO - Condition mask shape: (184,)
+2025-03-24 19:13:51,430 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:14:06,270 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:14:06,305 - INFO - Condition mask shape: (184,)
+2025-03-24 19:14:06,305 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:14:06,306 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:14:06,328 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:14:06,370 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-093
+2025-03-24 19:14:06,372 - INFO - Processing subject sub-094 for condition Object
+2025-03-24 19:14:21,148 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:14:21,227 - INFO - Condition mask shape: (184,)
+2025-03-24 19:14:21,227 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:14:36,235 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:14:36,273 - INFO - Condition mask shape: (184,)
+2025-03-24 19:14:36,273 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:14:51,144 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:14:51,153 - INFO - Condition mask shape: (184,)
+2025-03-24 19:14:51,154 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:14:51,154 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:14:51,165 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:14:51,208 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-094
+2025-03-24 19:14:51,210 - INFO - Processing subject sub-095 for condition Object
+2025-03-24 19:15:06,626 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:15:06,668 - INFO - Condition mask shape: (184,)
+2025-03-24 19:15:06,668 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:15:21,763 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:15:21,771 - INFO - Condition mask shape: (184,)
+2025-03-24 19:15:21,771 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:15:36,882 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:15:36,892 - INFO - Condition mask shape: (184,)
+2025-03-24 19:15:36,892 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:15:36,892 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:15:36,919 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:15:36,964 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-095
+2025-03-24 19:15:36,965 - INFO - Processing subject sub-096 for condition Object
+2025-03-24 19:15:52,359 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:15:52,406 - INFO - Condition mask shape: (184,)
+2025-03-24 19:15:52,406 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:16:07,391 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:16:07,400 - INFO - Condition mask shape: (184,)
+2025-03-24 19:16:07,400 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:16:22,308 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:16:22,317 - INFO - Condition mask shape: (184,)
+2025-03-24 19:16:22,317 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:16:22,317 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:16:22,328 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:16:22,374 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-096
+2025-03-24 19:16:22,376 - INFO - Processing subject sub-097 for condition Object
+2025-03-24 19:16:37,336 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:16:37,397 - INFO - Condition mask shape: (184,)
+2025-03-24 19:16:37,398 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:16:52,275 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:16:52,289 - INFO - Condition mask shape: (184,)
+2025-03-24 19:16:52,289 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:17:07,172 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:17:07,201 - INFO - Condition mask shape: (184,)
+2025-03-24 19:17:07,201 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:17:07,201 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:17:07,214 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:17:07,261 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-097
+2025-03-24 19:17:07,263 - INFO - Processing subject sub-107 for condition Object
+2025-03-24 19:17:22,259 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:17:22,314 - INFO - Condition mask shape: (184,)
+2025-03-24 19:17:22,314 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:17:37,222 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:17:37,232 - INFO - Condition mask shape: (184,)
+2025-03-24 19:17:37,232 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:17:52,055 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:17:52,063 - INFO - Condition mask shape: (184,)
+2025-03-24 19:17:52,063 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:17:52,063 - INFO - Full time series shape: (108, 202)
+2025-03-24 19:17:52,074 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:17:52,121 - INFO - Saved FDR-thresholded Object connectivity matrix for sub-107
+2025-03-24 19:17:52,122 - INFO - Processing subject sub-025 for condition Scramble
+2025-03-24 19:18:06,790 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:18:06,800 - INFO - Condition mask shape: (184,)
+2025-03-24 19:18:06,800 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:18:21,459 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:18:21,468 - INFO - Condition mask shape: (184,)
+2025-03-24 19:18:21,468 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:18:36,106 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:18:36,115 - INFO - Condition mask shape: (184,)
+2025-03-24 19:18:36,115 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:18:36,115 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:18:36,127 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:18:36,174 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-025
+2025-03-24 19:18:36,176 - INFO - Processing subject sub-038 for condition Scramble
+2025-03-24 19:18:50,938 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:18:50,948 - INFO - Condition mask shape: (184,)
+2025-03-24 19:18:50,948 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:19:05,626 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:19:05,636 - INFO - Condition mask shape: (184,)
+2025-03-24 19:19:05,636 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:19:20,367 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:19:20,376 - INFO - Condition mask shape: (184,)
+2025-03-24 19:19:20,376 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:19:20,376 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:19:20,387 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:19:20,434 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-038
+2025-03-24 19:19:20,436 - INFO - Processing subject sub-057 for condition Scramble
+2025-03-24 19:19:35,084 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:19:35,093 - INFO - Condition mask shape: (184,)
+2025-03-24 19:19:35,093 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:19:49,801 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:19:49,811 - INFO - Condition mask shape: (184,)
+2025-03-24 19:19:49,811 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:20:04,407 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:20:04,415 - INFO - Condition mask shape: (184,)
+2025-03-24 19:20:04,415 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:20:04,415 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:20:04,425 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:20:04,471 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-057
+2025-03-24 19:20:04,473 - INFO - Processing subject sub-059 for condition Scramble
+2025-03-24 19:20:19,119 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:20:19,129 - INFO - Condition mask shape: (184,)
+2025-03-24 19:20:19,129 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:20:33,823 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:20:33,832 - INFO - Condition mask shape: (184,)
+2025-03-24 19:20:33,833 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:20:48,457 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:20:48,466 - INFO - Condition mask shape: (184,)
+2025-03-24 19:20:48,466 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:20:48,466 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:20:48,477 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:20:48,523 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-059
+2025-03-24 19:20:48,525 - INFO - Processing subject sub-064 for condition Scramble
+2025-03-24 19:21:03,352 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:21:03,361 - INFO - Condition mask shape: (184,)
+2025-03-24 19:21:03,361 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:21:17,975 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:21:17,985 - INFO - Condition mask shape: (184,)
+2025-03-24 19:21:17,985 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:21:32,676 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:21:32,684 - INFO - Condition mask shape: (184,)
+2025-03-24 19:21:32,684 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:21:32,684 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:21:32,695 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:21:32,741 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-064
+2025-03-24 19:21:32,742 - INFO - Processing subject sub-067 for condition Scramble
+2025-03-24 19:21:47,416 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:21:47,431 - INFO - Condition mask shape: (184,)
+2025-03-24 19:21:47,432 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:22:02,152 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:22:02,162 - INFO - Condition mask shape: (184,)
+2025-03-24 19:22:02,162 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:22:16,788 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:22:16,798 - INFO - Condition mask shape: (184,)
+2025-03-24 19:22:16,798 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:22:16,798 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:22:16,811 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:22:16,865 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-067
+2025-03-24 19:22:16,867 - INFO - Processing subject sub-068 for condition Scramble
+2025-03-24 19:22:31,681 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:22:31,690 - INFO - Condition mask shape: (184,)
+2025-03-24 19:22:31,690 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:22:46,328 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:22:46,337 - INFO - Condition mask shape: (184,)
+2025-03-24 19:22:46,337 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:23:01,029 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:23:01,044 - INFO - Condition mask shape: (184,)
+2025-03-24 19:23:01,044 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:23:01,044 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:23:01,063 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:23:01,131 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-068
+2025-03-24 19:23:01,134 - INFO - Processing subject sub-071 for condition Scramble
+2025-03-24 19:23:15,905 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:23:15,914 - INFO - Condition mask shape: (184,)
+2025-03-24 19:23:15,914 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:23:30,757 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:23:30,767 - INFO - Condition mask shape: (184,)
+2025-03-24 19:23:30,767 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:23:45,767 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:23:45,776 - INFO - Condition mask shape: (184,)
+2025-03-24 19:23:45,776 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:23:45,776 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:23:45,794 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:23:45,867 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-071
+2025-03-24 19:23:45,870 - INFO - Processing subject sub-083 for condition Scramble
+2025-03-24 19:24:00,804 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:24:00,814 - INFO - Condition mask shape: (184,)
+2025-03-24 19:24:00,814 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:24:15,484 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:24:15,493 - INFO - Condition mask shape: (184,)
+2025-03-24 19:24:15,493 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:24:30,162 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:24:30,171 - INFO - Condition mask shape: (184,)
+2025-03-24 19:24:30,171 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:24:30,171 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:24:30,183 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:24:30,230 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-083
+2025-03-24 19:24:30,231 - INFO - Processing subject sub-085 for condition Scramble
+2025-03-24 19:24:45,160 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:24:45,170 - INFO - Condition mask shape: (184,)
+2025-03-24 19:24:45,170 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:24:59,791 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:24:59,806 - INFO - Condition mask shape: (184,)
+2025-03-24 19:24:59,806 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:25:14,756 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:25:14,765 - INFO - Condition mask shape: (184,)
+2025-03-24 19:25:14,765 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:25:14,765 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:25:14,777 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:25:14,824 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-085
+2025-03-24 19:25:14,826 - INFO - Processing subject sub-087 for condition Scramble
+2025-03-24 19:25:29,672 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:25:29,686 - INFO - Condition mask shape: (184,)
+2025-03-24 19:25:29,686 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:25:44,512 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:25:44,522 - INFO - Condition mask shape: (184,)
+2025-03-24 19:25:44,522 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:25:59,449 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:25:59,459 - INFO - Condition mask shape: (184,)
+2025-03-24 19:25:59,459 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:25:59,459 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:25:59,471 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:25:59,519 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-087
+2025-03-24 19:25:59,521 - INFO - Processing subject sub-088 for condition Scramble
+2025-03-24 19:26:14,308 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:26:14,317 - INFO - Condition mask shape: (184,)
+2025-03-24 19:26:14,317 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:26:29,098 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:26:29,108 - INFO - Condition mask shape: (184,)
+2025-03-24 19:26:29,108 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:26:43,953 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:26:43,967 - INFO - Condition mask shape: (184,)
+2025-03-24 19:26:43,968 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:26:43,968 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:26:43,986 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:26:44,058 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-088
+2025-03-24 19:26:44,060 - INFO - Processing subject sub-093 for condition Scramble
+2025-03-24 19:26:58,838 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:26:58,847 - INFO - Condition mask shape: (184,)
+2025-03-24 19:26:58,847 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:27:13,648 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:27:13,657 - INFO - Condition mask shape: (184,)
+2025-03-24 19:27:13,657 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:27:28,542 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:27:28,551 - INFO - Condition mask shape: (184,)
+2025-03-24 19:27:28,551 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:27:28,551 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:27:28,562 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:27:28,610 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-093
+2025-03-24 19:27:28,612 - INFO - Processing subject sub-094 for condition Scramble
+2025-03-24 19:27:43,512 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:27:43,524 - INFO - Condition mask shape: (184,)
+2025-03-24 19:27:43,524 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:27:58,281 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:27:58,291 - INFO - Condition mask shape: (184,)
+2025-03-24 19:27:58,291 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:28:13,149 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:28:13,159 - INFO - Condition mask shape: (184,)
+2025-03-24 19:28:13,159 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:28:13,159 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:28:13,171 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:28:13,219 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-094
+2025-03-24 19:28:13,221 - INFO - Processing subject sub-095 for condition Scramble
+2025-03-24 19:28:27,962 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:28:28,001 - INFO - Condition mask shape: (184,)
+2025-03-24 19:28:28,001 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:28:42,953 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:28:42,961 - INFO - Condition mask shape: (184,)
+2025-03-24 19:28:42,961 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:28:57,872 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:28:57,900 - INFO - Condition mask shape: (184,)
+2025-03-24 19:28:57,900 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:28:57,900 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:28:57,912 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:28:57,960 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-095
+2025-03-24 19:28:57,962 - INFO - Processing subject sub-096 for condition Scramble
+2025-03-24 19:29:13,046 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:29:13,057 - INFO - Condition mask shape: (184,)
+2025-03-24 19:29:13,058 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:29:27,813 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:29:27,822 - INFO - Condition mask shape: (184,)
+2025-03-24 19:29:27,822 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:29:42,631 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:29:42,640 - INFO - Condition mask shape: (184,)
+2025-03-24 19:29:42,640 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:29:42,640 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:29:42,651 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:29:42,699 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-096
+2025-03-24 19:29:42,700 - INFO - Processing subject sub-097 for condition Scramble
+2025-03-24 19:29:57,472 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:29:57,488 - INFO - Condition mask shape: (184,)
+2025-03-24 19:29:57,489 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:30:12,297 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:30:12,307 - INFO - Condition mask shape: (184,)
+2025-03-24 19:30:12,307 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:30:27,074 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:30:27,102 - INFO - Condition mask shape: (184,)
+2025-03-24 19:30:27,102 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:30:27,102 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:30:27,113 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:30:27,162 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-097
+2025-03-24 19:30:27,163 - INFO - Processing subject sub-107 for condition Scramble
+2025-03-24 19:30:42,053 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:30:42,064 - INFO - Condition mask shape: (184,)
+2025-03-24 19:30:42,064 - INFO - Time series shape after masking: (35, 202)
+2025-03-24 19:30:56,828 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:30:56,842 - INFO - Condition mask shape: (184,)
+2025-03-24 19:30:56,843 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:31:11,675 - INFO - Time series shape before masking: (184, 202)
+2025-03-24 19:31:11,689 - INFO - Condition mask shape: (184,)
+2025-03-24 19:31:11,689 - INFO - Time series shape after masking: (36, 202)
+2025-03-24 19:31:11,689 - INFO - Full time series shape: (107, 202)
+2025-03-24 19:31:11,701 - INFO - FDR thresholding: 0 of 20301 connections significant at α=0.05
+2025-03-24 19:31:11,748 - INFO - Saved FDR-thresholded Scramble connectivity matrix for sub-107
+2025-03-24 19:58:33,218 - INFO - Creating merged atlas...
+2025-03-24 19:58:33,229 - INFO - Loaded pIPS ROI
+2025-03-24 19:58:33,233 - INFO - Loaded LO ROI
+2025-03-24 19:58:33,263 - INFO - Loaded Schaefer atlas with 200 parcels
+2025-03-24 19:58:33,381 - INFO - pIPS overlaps with 28 atlas parcels
+2025-03-24 19:58:33,381 - INFO -   Label 9 (7Networks_LH_Vis_9): 7 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 11 (7Networks_LH_Vis_11): 159 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 12 (7Networks_LH_Vis_12): 2 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 13 (7Networks_LH_Vis_13): 381 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 14 (7Networks_LH_Vis_14): 528 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 33 (7Networks_LH_DorsAttn_Post_3): 554 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 36 (7Networks_LH_DorsAttn_Post_6): 4 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 37 (7Networks_LH_DorsAttn_Post_7): 567 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 38 (7Networks_LH_DorsAttn_Post_8): 64 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 39 (7Networks_LH_DorsAttn_Post_9): 99 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 40 (7Networks_LH_DorsAttn_Post_10): 15 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 62 (7Networks_LH_Cont_Par_2): 269 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 71 (7Networks_LH_Cont_pCun_1): 247 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 80 (7Networks_LH_Default_Par_2): 436 voxels
+2025-03-24 19:58:33,382 - INFO -   Label 82 (7Networks_LH_Default_Par_4): 85 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 99 (7Networks_LH_Default_pCunPCC_4): 5 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 111 (7Networks_RH_Vis_11): 119 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 112 (7Networks_RH_Vis_12): 297 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 113 (7Networks_RH_Vis_13): 66 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 114 (7Networks_RH_Vis_14): 373 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 115 (7Networks_RH_Vis_15): 773 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 140 (7Networks_RH_DorsAttn_Post_6): 268 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 141 (7Networks_RH_DorsAttn_Post_7): 26 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 142 (7Networks_RH_DorsAttn_Post_8): 402 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 167 (7Networks_RH_Cont_Par_3): 330 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 177 (7Networks_RH_Cont_pCun_1): 157 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 182 (7Networks_RH_Default_Par_1): 204 voxels
+2025-03-24 19:58:33,383 - INFO -   Label 184 (7Networks_RH_Default_Par_3): 7 voxels
+2025-03-24 19:58:33,509 - INFO - LO overlaps with 18 atlas parcels
+2025-03-24 19:58:33,509 - INFO -   Label 2 (7Networks_LH_Vis_2): 125 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 3 (7Networks_LH_Vis_3): 655 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 5 (7Networks_LH_Vis_5): 90 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 8 (7Networks_LH_Vis_8): 235 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 9 (7Networks_LH_Vis_9): 69 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 11 (7Networks_LH_Vis_11): 189 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 31 (7Networks_LH_DorsAttn_Post_1): 77 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 32 (7Networks_LH_DorsAttn_Post_2): 217 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 101 (7Networks_RH_Vis_1): 4 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 103 (7Networks_RH_Vis_3): 116 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 105 (7Networks_RH_Vis_5): 613 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 108 (7Networks_RH_Vis_8): 127 voxels
+2025-03-24 19:58:33,509 - INFO -   Label 111 (7Networks_RH_Vis_11): 135 voxels
+2025-03-24 19:58:33,510 - INFO -   Label 135 (7Networks_RH_DorsAttn_Post_1): 307 voxels
+2025-03-24 19:58:33,510 - INFO -   Label 136 (7Networks_RH_DorsAttn_Post_2): 290 voxels
+2025-03-24 19:58:33,510 - INFO -   Label 148 (7Networks_RH_SalVentAttn_TempOccPar_1): 52 voxels
+2025-03-24 19:58:33,510 - INFO -   Label 168 (7Networks_RH_Cont_Temp_1): 2 voxels
+2025-03-24 19:58:33,510 - INFO -   Label 189 (7Networks_RH_Default_Temp_5): 1 voxels
+2025-03-24 19:58:33,590 - INFO - Saved merged atlas to: /user_data/csimmon2/git_repos/ptoc/results/schaefer_wang_merged.nii.gz
+2025-03-24 19:58:33,593 - INFO - Saved merged labels to: /user_data/csimmon2/git_repos/ptoc/results/merged_atlas_labels.npy
+2025-03-24 19:59:35,262 - INFO - Saved parcel-FDR matrix for sub-025, condition Object
+2025-03-24 20:00:36,482 - INFO - Saved parcel-FDR matrix for sub-038, condition Object
+2025-03-24 20:01:37,565 - INFO - Saved parcel-FDR matrix for sub-057, condition Object
+2025-03-24 20:02:38,451 - INFO - Saved parcel-FDR matrix for sub-059, condition Object
+2025-03-24 20:03:37,672 - INFO - Saved parcel-FDR matrix for sub-064, condition Object
+2025-03-24 20:04:35,908 - INFO - Saved parcel-FDR matrix for sub-067, condition Object
+2025-03-24 20:05:36,675 - INFO - Saved parcel-FDR matrix for sub-068, condition Object
+2025-03-24 20:06:35,198 - INFO - Saved parcel-FDR matrix for sub-071, condition Object
+2025-03-24 20:07:35,070 - INFO - Saved parcel-FDR matrix for sub-083, condition Object
+2025-03-24 20:08:33,135 - INFO - Saved parcel-FDR matrix for sub-085, condition Object
+2025-03-24 20:09:31,006 - INFO - Saved parcel-FDR matrix for sub-087, condition Object
+2025-03-24 20:10:29,583 - INFO - Saved parcel-FDR matrix for sub-088, condition Object
+2025-03-24 20:11:27,585 - INFO - Saved parcel-FDR matrix for sub-093, condition Object
+2025-03-24 20:12:25,358 - INFO - Saved parcel-FDR matrix for sub-094, condition Object
+2025-03-24 20:13:23,246 - INFO - Saved parcel-FDR matrix for sub-095, condition Object
+2025-03-24 20:14:21,544 - INFO - Saved parcel-FDR matrix for sub-096, condition Object
+2025-03-24 20:15:19,567 - INFO - Saved parcel-FDR matrix for sub-097, condition Object
+2025-03-24 20:16:18,505 - INFO - Saved parcel-FDR matrix for sub-107, condition Object
+2025-03-24 20:17:16,214 - INFO - Saved parcel-FDR matrix for sub-025, condition Scramble
+2025-03-24 20:18:14,594 - INFO - Saved parcel-FDR matrix for sub-038, condition Scramble
+2025-03-24 20:19:12,185 - INFO - Saved parcel-FDR matrix for sub-057, condition Scramble
+2025-03-24 20:20:10,186 - INFO - Saved parcel-FDR matrix for sub-059, condition Scramble
+2025-03-24 20:21:08,357 - INFO - Saved parcel-FDR matrix for sub-064, condition Scramble
+2025-03-24 20:22:06,583 - INFO - Saved parcel-FDR matrix for sub-067, condition Scramble
+2025-03-24 20:23:04,774 - INFO - Saved parcel-FDR matrix for sub-068, condition Scramble
+2025-03-24 20:24:02,673 - INFO - Saved parcel-FDR matrix for sub-071, condition Scramble
+2025-03-24 20:25:00,582 - INFO - Saved parcel-FDR matrix for sub-083, condition Scramble
+2025-03-24 20:25:57,862 - INFO - Saved parcel-FDR matrix for sub-085, condition Scramble
+2025-03-24 20:26:55,794 - INFO - Saved parcel-FDR matrix for sub-087, condition Scramble
+2025-03-24 20:27:53,897 - INFO - Saved parcel-FDR matrix for sub-088, condition Scramble
+2025-03-24 20:28:51,837 - INFO - Saved parcel-FDR matrix for sub-093, condition Scramble
+2025-03-24 20:29:50,042 - INFO - Saved parcel-FDR matrix for sub-094, condition Scramble
+2025-03-24 20:30:48,162 - INFO - Saved parcel-FDR matrix for sub-095, condition Scramble
+2025-03-24 20:31:46,260 - INFO - Saved parcel-FDR matrix for sub-096, condition Scramble
+2025-03-24 20:32:43,997 - INFO - Saved parcel-FDR matrix for sub-097, condition Scramble
+2025-03-24 20:33:42,281 - INFO - Saved parcel-FDR matrix for sub-107, condition Scramble
+2025-03-24 21:41:52,849 - INFO - Creating merged atlas...
+2025-03-24 21:41:52,854 - INFO - Loaded pIPS ROI
+2025-03-24 21:41:52,857 - INFO - Loaded LO ROI
+2025-03-24 21:41:52,872 - INFO - Loaded Schaefer atlas with 200 parcels
+2025-03-24 21:41:52,995 - INFO - pIPS overlaps with 28 atlas parcels
+2025-03-24 21:41:52,995 - INFO -   Label 9 (7Networks_LH_Vis_9): 7 voxels
+2025-03-24 21:41:52,995 - INFO -   Label 11 (7Networks_LH_Vis_11): 159 voxels
+2025-03-24 21:41:52,995 - INFO -   Label 12 (7Networks_LH_Vis_12): 2 voxels
+2025-03-24 21:41:52,995 - INFO -   Label 13 (7Networks_LH_Vis_13): 381 voxels
+2025-03-24 21:41:52,995 - INFO -   Label 14 (7Networks_LH_Vis_14): 528 voxels
+2025-03-24 21:41:52,995 - INFO -   Label 33 (7Networks_LH_DorsAttn_Post_3): 554 voxels
+2025-03-24 21:41:52,995 - INFO -   Label 36 (7Networks_LH_DorsAttn_Post_6): 4 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 37 (7Networks_LH_DorsAttn_Post_7): 567 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 38 (7Networks_LH_DorsAttn_Post_8): 64 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 39 (7Networks_LH_DorsAttn_Post_9): 99 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 40 (7Networks_LH_DorsAttn_Post_10): 15 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 62 (7Networks_LH_Cont_Par_2): 269 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 71 (7Networks_LH_Cont_pCun_1): 247 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 80 (7Networks_LH_Default_Par_2): 436 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 82 (7Networks_LH_Default_Par_4): 85 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 99 (7Networks_LH_Default_pCunPCC_4): 5 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 111 (7Networks_RH_Vis_11): 119 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 112 (7Networks_RH_Vis_12): 297 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 113 (7Networks_RH_Vis_13): 66 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 114 (7Networks_RH_Vis_14): 373 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 115 (7Networks_RH_Vis_15): 773 voxels
+2025-03-24 21:41:52,996 - INFO -   Label 140 (7Networks_RH_DorsAttn_Post_6): 268 voxels
+2025-03-24 21:41:52,997 - INFO -   Label 141 (7Networks_RH_DorsAttn_Post_7): 26 voxels
+2025-03-24 21:41:52,997 - INFO -   Label 142 (7Networks_RH_DorsAttn_Post_8): 402 voxels
+2025-03-24 21:41:52,997 - INFO -   Label 167 (7Networks_RH_Cont_Par_3): 330 voxels
+2025-03-24 21:41:52,997 - INFO -   Label 177 (7Networks_RH_Cont_pCun_1): 157 voxels
+2025-03-24 21:41:52,997 - INFO -   Label 182 (7Networks_RH_Default_Par_1): 204 voxels
+2025-03-24 21:41:52,997 - INFO -   Label 184 (7Networks_RH_Default_Par_3): 7 voxels
+2025-03-24 21:41:53,118 - INFO - LO overlaps with 18 atlas parcels
+2025-03-24 21:41:53,119 - INFO -   Label 2 (7Networks_LH_Vis_2): 125 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 3 (7Networks_LH_Vis_3): 655 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 5 (7Networks_LH_Vis_5): 90 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 8 (7Networks_LH_Vis_8): 235 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 9 (7Networks_LH_Vis_9): 69 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 11 (7Networks_LH_Vis_11): 189 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 31 (7Networks_LH_DorsAttn_Post_1): 77 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 32 (7Networks_LH_DorsAttn_Post_2): 217 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 101 (7Networks_RH_Vis_1): 4 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 103 (7Networks_RH_Vis_3): 116 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 105 (7Networks_RH_Vis_5): 613 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 108 (7Networks_RH_Vis_8): 127 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 111 (7Networks_RH_Vis_11): 135 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 135 (7Networks_RH_DorsAttn_Post_1): 307 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 136 (7Networks_RH_DorsAttn_Post_2): 290 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 148 (7Networks_RH_SalVentAttn_TempOccPar_1): 52 voxels
+2025-03-24 21:41:53,119 - INFO -   Label 168 (7Networks_RH_Cont_Temp_1): 2 voxels
+2025-03-24 21:41:53,120 - INFO -   Label 189 (7Networks_RH_Default_Temp_5): 1 voxels
+2025-03-24 21:41:53,197 - INFO - Saved merged atlas to: /user_data/csimmon2/git_repos/ptoc/results/schaefer_wang_merged.nii.gz
+2025-03-24 21:41:53,199 - INFO - Saved merged labels to: /user_data/csimmon2/git_repos/ptoc/results/merged_atlas_labels.npy
+2025-03-24 21:42:51,481 - INFO - Saved parcel-FDR matrix for sub-025, condition Object
+2025-03-24 21:43:50,136 - INFO - Saved parcel-FDR matrix for sub-038, condition Object
+2025-03-24 21:44:48,367 - INFO - Saved parcel-FDR matrix for sub-057, condition Object
+2025-03-24 21:45:46,652 - INFO - Saved parcel-FDR matrix for sub-059, condition Object
+2025-03-24 21:46:45,050 - INFO - Saved parcel-FDR matrix for sub-064, condition Object
+2025-03-24 21:47:42,817 - INFO - Saved parcel-FDR matrix for sub-067, condition Object
+2025-03-24 21:48:41,123 - INFO - Saved parcel-FDR matrix for sub-068, condition Object
+2025-03-24 21:49:42,268 - INFO - Saved parcel-FDR matrix for sub-071, condition Object
+2025-03-24 21:50:44,190 - INFO - Saved parcel-FDR matrix for sub-083, condition Object
+2025-03-24 21:51:42,125 - INFO - Saved parcel-FDR matrix for sub-085, condition Object
+2025-03-24 21:52:42,346 - INFO - Saved parcel-FDR matrix for sub-087, condition Object
+2025-03-24 21:53:41,164 - INFO - Saved parcel-FDR matrix for sub-088, condition Object
+2025-03-24 21:54:40,584 - INFO - Saved parcel-FDR matrix for sub-093, condition Object
+2025-03-24 21:55:39,105 - INFO - Saved parcel-FDR matrix for sub-094, condition Object
+2025-03-24 21:56:37,089 - INFO - Saved parcel-FDR matrix for sub-095, condition Object
+2025-03-24 21:57:35,293 - INFO - Saved parcel-FDR matrix for sub-096, condition Object
+2025-03-24 21:58:33,267 - INFO - Saved parcel-FDR matrix for sub-097, condition Object
+2025-03-24 21:59:34,385 - INFO - Saved parcel-FDR matrix for sub-107, condition Object
+2025-03-24 22:00:35,163 - INFO - Saved parcel-FDR matrix for sub-025, condition Scramble
+2025-03-24 22:01:34,726 - INFO - Saved parcel-FDR matrix for sub-038, condition Scramble
+2025-03-24 22:02:32,432 - INFO - Saved parcel-FDR matrix for sub-057, condition Scramble
+2025-03-24 22:03:29,958 - INFO - Saved parcel-FDR matrix for sub-059, condition Scramble
+2025-03-24 22:04:28,393 - ERROR - Error processing sub-064, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-064_connectivity_scramble.npy'
+2025-03-24 22:05:26,818 - ERROR - Error processing sub-067, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-067_connectivity_scramble.npy'
+2025-03-24 22:06:26,366 - ERROR - Error processing sub-068, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-068_connectivity_scramble.npy'
+2025-03-24 22:07:24,873 - ERROR - Error processing sub-071, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-071_connectivity_scramble.npy'
+2025-03-24 22:08:22,999 - ERROR - Error processing sub-083, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-083_connectivity_scramble.npy'
+2025-03-24 22:09:21,050 - ERROR - Error processing sub-085, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-085_connectivity_scramble.npy'
+2025-03-24 22:10:19,391 - ERROR - Error processing sub-087, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-087_connectivity_scramble.npy'
+2025-03-24 22:11:18,343 - ERROR - Error processing sub-088, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-088_connectivity_scramble.npy'
+2025-03-24 22:12:16,082 - ERROR - Error processing sub-093, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-093_connectivity_scramble.npy'
+2025-03-24 22:13:14,093 - ERROR - Error processing sub-094, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-094_connectivity_scramble.npy'
+2025-03-24 22:14:12,059 - ERROR - Error processing sub-095, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-095_connectivity_scramble.npy'
+2025-03-24 22:15:10,202 - ERROR - Error processing sub-096, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-096_connectivity_scramble.npy'
+2025-03-24 22:16:08,696 - ERROR - Error processing sub-097, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-097_connectivity_scramble.npy'
+2025-03-24 22:17:06,934 - ERROR - Error processing sub-107, condition Scramble: [Errno 2] No such file or directory: '/user_data/csimmon2/git_repos/ptoc/results/connectivity_merged_scramble_parcel_fdr/sub-107_connectivity_scramble.npy'
