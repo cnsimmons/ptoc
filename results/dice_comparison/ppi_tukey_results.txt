@@ -1,0 +1,8 @@
+                     Multiple Comparison of Means - Tukey HSD, FWER=0.05                     
+=============================================================================================
+           group1                      group2           meandiff p-adj   lower  upper  reject
+---------------------------------------------------------------------------------------------
+  Between-subject_within-LO Between-subject_within-pIPS  -0.0095 0.9175 -0.0672 0.0483  False
+  Between-subject_within-LO  Within-subject_between-ROI   0.2777    0.0    0.22 0.3355   True
+Between-subject_within-pIPS  Within-subject_between-ROI   0.2872    0.0  0.2294  0.345   True
+---------------------------------------------------------------------------------------------
