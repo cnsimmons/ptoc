@@ -1,0 +1,3 @@
+Analysis,Test,Statistic,p-value,Significant,Interpretation
+Number of Connections,Chi-square,12.64516129032258,0.0003765389820864817,True,pIPS has more connections than LO
+Connection Strength,One-sample t-test,4.123325372493335,0.0001147265629693644,True,pIPS connections are stronger than LO connections
