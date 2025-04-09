@@ -1,0 +1,5 @@
+Holm-Bonferroni corrected pairwise comparisons for fc - nontools:
+
+Within-subject_between-ROI vs Between-subject_within-pIPS: p-corrected = 0.0000, significant: True
+Within-subject_between-ROI vs Between-subject_within-LO: p-corrected = 0.0000, significant: True
+Between-subject_within-pIPS vs Between-subject_within-LO: p-corrected = 0.0000, significant: True
