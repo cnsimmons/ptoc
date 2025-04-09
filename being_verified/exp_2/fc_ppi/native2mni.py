@@ -14,6 +14,9 @@ mni_brain = os.path.join(os.environ['FSLDIR'], "data/standard/MNI152_T1_2mm_brai
 sub_info = pd.read_csv(f'{curr_dir}/sub_info_tool.csv')
 subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
 
+# Define conditions
+conditions = ['tools','nontools']
+
 for sub in subs:
     print(f"Processing subject: {sub}")
     sub_dir = f"{study_dir}/{sub}/ses-01"
@@ -48,12 +51,13 @@ for sub in subs:
     ], check=True)
 
     # Loop through ROIs and hemispheres
-    rois = ['pIPS', 'aIPS', 'LO']
+    rois = ['pIPS','LO']
     hemispheres = ['left', 'right']
     
+    # Process tools condition (original files without condition in name)
     for roi in rois:
         for hemi in hemispheres:
-            # FC to MNI
+            # FC to MNI - tools condition (original files)
             fc_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_ToolLoc_fc.nii.gz"
             fc_mni = f"{mni_fc_dir}/{sub}_{roi}_{hemi}_ToolLoc_fc_mni.nii.gz"
             
@@ -71,7 +75,7 @@ for sub in subs:
             else:
                 print(f"FC file not found for {sub}, ROI {roi}, Hemisphere {hemi}")
         
-            # PPI to MNI - updated to use correct PPI directory
+            # PPI to MNI - tools condition (original files)
             ppi_native = f"{out_dir}/ppi/{sub}_{roi}_{hemi}_ToolLoc_ppi.nii.gz"
             ppi_mni = f"{mni_ppi_dir}/{sub}_{roi}_{hemi}_ToolLoc_ppi_mni.nii.gz"
             
@@ -88,5 +92,44 @@ for sub in subs:
                 ], check=True)
             else:
                 print(f"PPI file not found for {sub}, ROI {roi}, Hemisphere {hemi}")
+    
+    # Process nontools condition
+    for roi in rois:
+        for hemi in hemispheres:
+            # FC to MNI - nontools condition
+            nontools_fc_native = f"{out_dir}/fc/{sub}_{roi}_{hemi}_nontools_ToolLoc_fc.nii.gz"
+            nontools_fc_mni = f"{mni_fc_dir}/{sub}_{roi}_{hemi}_nontools_ToolLoc_fc_mni.nii.gz"
+            
+            if os.path.isfile(nontools_fc_native):
+                print(f"Registering nontools FC for {sub}, ROI {roi}, Hemisphere {hemi} to MNI space")
+                subprocess.run([
+                    'flirt',
+                    '-in', nontools_fc_native,
+                    '-ref', mni_brain,
+                    '-out', nontools_fc_mni,
+                    '-applyxfm',
+                    '-init', anat2mni_mat,
+                    '-interp', 'trilinear'
+                ], check=True)
+            else:
+                print(f"Nontools FC file not found for {sub}, ROI {roi}, Hemisphere {hemi}")
+        
+            # PPI to MNI - nontools condition
+            nontools_ppi_native = f"{out_dir}/ppi/{sub}_{roi}_{hemi}_nontools_ToolLoc_ppi.nii.gz"
+            nontools_ppi_mni = f"{mni_ppi_dir}/{sub}_{roi}_{hemi}_nontools_ToolLoc_ppi_mni.nii.gz"
+            
+            if os.path.isfile(nontools_ppi_native):
+                print(f"Registering nontools PPI for {sub}, ROI {roi}, Hemisphere {hemi} to MNI space")
+                subprocess.run([
+                    'flirt',
+                    '-in', nontools_ppi_native,
+                    '-ref', mni_brain,
+                    '-out', nontools_ppi_mni,
+                    '-applyxfm',
+                    '-init', anat2mni_mat,
+                    '-interp', 'trilinear'
+                ], check=True)
+            else:
+                print(f"Nontools PPI file not found for {sub}, ROI {roi}, Hemisphere {hemi}")
 
     print(f"Conversion to MNI space completed for {sub}.")

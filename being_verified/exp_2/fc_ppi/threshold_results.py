@@ -7,7 +7,7 @@ from nilearn import image, plotting
 from nilearn.glm import threshold_stats_img
 import matplotlib.pyplot as plt
 
-# Define study directories - CONSISTENT PATHS
+# Define study directories
 study_dir = "/lab_data/behrmannlab/vlad/ptoc"
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'
@@ -16,31 +16,11 @@ output_dir = '/user_data/csimmon2/git_repos/ptoc/tools'
 # FDR alpha level
 alpha = 0.05
 
-# ADDED: Debug function to find files
-def find_files(sub, roi, hemi, condition, analysis_type):
-    """Try different file patterns to find the correct one"""
-    patterns = [
-        # Pattern with condition and MNI suffix
-        f'{study_dir}/{sub}/ses-01/derivatives/{analysis_type}/mni/{sub}_{roi}_{hemi}_{condition}_ToolLoc_{analysis_type}_mni.nii.gz',
-        # Pattern with condition without MNI suffix
-        f'{study_dir}/{sub}/ses-01/derivatives/{analysis_type}/{sub}_{roi}_{hemi}_{condition}_ToolLoc_{analysis_type}.nii.gz',
-        # Pattern without condition with MNI suffix
-        f'{study_dir}/{sub}/ses-01/derivatives/{analysis_type}/mni/{sub}_{roi}_{hemi}_ToolLoc_{analysis_type}_mni.nii.gz',
-        # Pattern without condition without MNI suffix
-        f'{study_dir}/{sub}/ses-01/derivatives/{analysis_type}/{sub}_{roi}_{hemi}_ToolLoc_{analysis_type}.nii.gz'
-    ]
-    
-    for pattern in patterns:
-        if os.path.exists(pattern):
-            return pattern
-    
-    return None
-
 def main():
     # Define subjects and ROIs
     sub_info = pd.read_csv(sub_info_path)
     subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
-    rois = ['pIPS', 'LO']  # Focus only on these ROIs as in exp 1
+    rois = ['pIPS', 'LO']
     hemispheres = ['left', 'right']
     conditions = ['tools', 'nontools']
     analysis_types = ['fc', 'ppi']
@@ -48,26 +28,8 @@ def main():
     # Create output directory
     group_out_dir = f'{results_dir}/group_averages_exp2'
     os.makedirs(group_out_dir, exist_ok=True)
-
-    # First, run a detection phase to identify what files we have
-    print("Detecting available files...")
-    file_patterns = {}
-    for condition in conditions:
-        file_patterns[condition] = {}
-        for analysis_type in analysis_types:
-            file_patterns[condition][analysis_type] = {}
-            
-            # Check the first subject to determine pattern
-            for sub in subs[:1]:
-                for roi in rois:
-                    for hemi in hemispheres:
-                        file_path = find_files(sub, roi, hemi, condition, analysis_type)
-                        if file_path:
-                            pattern = file_path.replace(sub, '{sub}').replace(roi, '{roi}').replace(hemi, '{hemi}')
-                            file_patterns[condition][analysis_type][(roi, hemi)] = pattern
-                            print(f"Found pattern for {condition} {analysis_type} {roi} {hemi}: {pattern}")
-
-    # Process using detected patterns
+    
+    # Process each condition, analysis type, roi, and hemisphere
     for condition in conditions:
         for analysis_type in analysis_types:
             # Find global max for consistent visualization
@@ -80,25 +42,17 @@ def main():
                     print(f"Processing {roi} {hemi} {condition} {analysis_type}")
                     all_sub_imgs = []
                     
-                    # Get the pattern for this condition/analysis/roi/hemi
-                    pattern = file_patterns.get(condition, {}).get(analysis_type, {}).get((roi, hemi))
-                    
-                    # If no pattern found, try using a different pattern
-                    if not pattern:
-                        # For tools, try using the pattern without condition
-                        if condition == 'tools' and 'nontools' in file_patterns:
-                            alt_pattern = file_patterns.get('nontools', {}).get(analysis_type, {}).get((roi, hemi))
-                            if alt_pattern:
-                                pattern = alt_pattern.replace('_nontools', '')
-                                print(f"Using alternative pattern for tools: {pattern}")
-                    
-                    if not pattern:
-                        print(f"No file pattern found for {condition} {analysis_type} {roi} {hemi}")
-                        continue
+                    # Define pattern based on condition
+                    if condition == 'tools':
+                        # For tools, use the standard pattern (no condition in name)
+                        file_pattern = f'{study_dir}/{{sub}}/ses-01/derivatives/{analysis_type}/mni/{{sub}}_{roi}_{hemi}_ToolLoc_{analysis_type}_mni.nii.gz'
+                    else:  # nontools
+                        # For nontools, include condition in file name
+                        file_pattern = f'{study_dir}/{{sub}}/ses-01/derivatives/{analysis_type}/mni/{{sub}}_{roi}_{hemi}_{condition}_ToolLoc_{analysis_type}_mni.nii.gz'
                     
                     # Collect all subject images
                     for sub in subs:
-                        img_file = pattern.format(sub=sub, roi=roi, hemi=hemi)
+                        img_file = file_pattern.format(sub=sub)
                         
                         if os.path.exists(img_file):
                             try:
@@ -117,6 +71,7 @@ def main():
                     
                     if all_sub_imgs:
                         # Create average image
+                        print(f"Found {len(all_sub_imgs)} valid images for {roi} {hemi} {condition} {analysis_type}")
                         print(f"Creating average from {len(all_sub_imgs)} subjects")
                         avg_img = image.mean_img(all_sub_imgs)
                         
