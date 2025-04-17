@@ -1,5 +1,0 @@
-Condition,Seed_ROI,Dorsal_to_Ventral,Ventral_to_Dorsal,D2V_Ratio,Total_Significant_Voxels
-tool,pIPS,1156,699,1.65379113018598,1855
-tool,LO,4449,4563,0.9750164365548981,9012
-nontool,pIPS,2452,1311,1.870327993897788,3763
-nontool,LO,5531,4951,1.1171480508988083,10482
