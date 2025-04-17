@@ -111,7 +111,7 @@ def main():
                         nib.save(final_img, out_file)
                         print(f"Saved thresholded image: {out_file}")
 
-                        # Add to plot
+                        # Add to p
                         display = plotting.plot_glass_brain(
                             final_img,
                             colorbar=True,
