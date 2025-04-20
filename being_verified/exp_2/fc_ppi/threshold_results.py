@@ -6,6 +6,7 @@ import nibabel as nib
 from nilearn import image, plotting
 from nilearn.glm import threshold_stats_img
 import matplotlib.pyplot as plt
+import glob  # Added for more flexible file searching
 
 # Define study directories
 study_dir = "/lab_data/behrmannlab/vlad/ptoc"
@@ -39,7 +40,7 @@ def main():
                 fig, axes = plt.subplots(1, 2, figsize=(20, 5))
                 
                 for i, hemi in enumerate(hemispheres):
-                    print(f"Processing {roi} {hemi} {condition} {analysis_type}")
+                    print(f"\n\n===== Processing {roi} {hemi} {condition} {analysis_type} =====")
                     all_sub_imgs = []
                     
                     # Define pattern based on condition
@@ -50,11 +51,41 @@ def main():
                         # For nontools, include condition in file name
                         file_pattern = f'{study_dir}/{{sub}}/ses-01/derivatives/{analysis_type}/mni/{{sub}}_{roi}_{hemi}_{condition}_ToolLoc_{analysis_type}_mni.nii.gz'
                     
+                    # Flexible path alternative (checks for file in multiple locations)
+                    def find_file(sub, pattern):
+                        # Primary pattern
+                        file_path = pattern.format(sub=sub)
+                        if os.path.exists(file_path):
+                            return file_path
+                            
+                        # Alternative locations to check
+                        alternatives = [
+                            f'{study_dir}/{sub}/ses-01/derivatives/{analysis_type}/mni/{sub}_{roi}_{hemi}{"_"+condition if condition=="nontools" else ""}_ToolLoc_{analysis_type}_mni.nii.gz',
+                            f'{study_dir}/{sub}/derivatives/{analysis_type}/mni/{sub}_{roi}_{hemi}{"_"+condition if condition=="nontools" else ""}_ToolLoc_{analysis_type}_mni.nii.gz',
+                            f'{study_dir}/{sub}/ses-01/derivatives/{analysis_type}/{sub}_{roi}_{hemi}{"_"+condition if condition=="nontools" else ""}_ToolLoc_{analysis_type}_mni.nii.gz'
+                        ]
+                        
+                        for alt in alternatives:
+                            if os.path.exists(alt):
+                                print(f"Found file at alternative location: {alt}")
+                                return alt
+                                
+                        # If nothing found, return the original path (which doesn't exist)
+                        return file_path
+                    
+                    print(f"Looking for files with pattern: {file_pattern.format(sub='sub-XXX')}")
+                    
+                    found_files = 0
+                    missing_files = 0
+                    invalid_files = 0
+                    
                     # Collect all subject images
                     for sub in subs:
-                        img_file = file_pattern.format(sub=sub)
+                        img_file = find_file(sub, file_pattern)
                         
                         if os.path.exists(img_file):
+                            found_files += 1
+                            print(f"Found file: {img_file}")
                             try:
                                 # Load and check image dimensions
                                 img = image.load_img(img_file)
@@ -63,15 +94,23 @@ def main():
                                 if img.shape == (91, 109, 91):  # Standard MNI shape
                                     all_sub_imgs.append(img)
                                 else:
+                                    invalid_files += 1
                                     print(f"Warning: {img_file} doesn't appear to be in MNI space (shape: {img.shape})")
                             except Exception as e:
+                                invalid_files += 1
                                 print(f"Error loading {img_file}: {e}")
                         else:
-                            print(f"Missing file: {img_file}")
+                            missing_files += 1
+                            # Only print first few missing files to avoid console clutter
+                            if missing_files <= 5:
+                                print(f"Missing file: {img_file}")
+                            elif missing_files == 6:
+                                print("Additional missing files not shown...")
+                    
+                    print(f"Summary: Found: {found_files}, Missing: {missing_files}, Invalid: {invalid_files} files")
                     
                     if all_sub_imgs:
                         # Create average image
-                        print(f"Found {len(all_sub_imgs)} valid images for {roi} {hemi} {condition} {analysis_type}")
                         print(f"Creating average from {len(all_sub_imgs)} subjects")
                         avg_img = image.mean_img(all_sub_imgs)
                         
@@ -111,7 +150,7 @@ def main():
                         nib.save(final_img, out_file)
                         print(f"Saved thresholded image: {out_file}")
 
-                        # Add to p
+                        # Add to plot
                         display = plotting.plot_glass_brain(
                             final_img,
                             colorbar=True,

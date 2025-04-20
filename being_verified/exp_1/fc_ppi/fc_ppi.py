@@ -78,7 +78,7 @@ def conduct_analyses():
         temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
         
         #roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere.csv') #object
-        roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere_scramble.csv') #uncomment to run fc scrambled
+        #roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere_scramble.csv') #uncomment to run fc scrambled
         
         out_dir = f'{study_dir}/{ss}/ses-01/derivatives'
         os.makedirs(f'{out_dir}/fc', exist_ok=True)
@@ -99,7 +99,7 @@ def conduct_analyses():
                     print(f"Processing ROI: {rr}, Hemisphere: {hemi}")
                     
                     #fc_file = f'{out_dir}/fc/{ss}_{rr}_{hemi}_{tsk}_fc.nii.gz' # object
-                    fc_file = f'{out_dir}/fc/{ss}_{rr}_{hemi}_{tsk}_fc_scramble.nii.gz' #scramble
+                    #fc_file = f'{out_dir}/fc/{ss}_{rr}_{hemi}_{tsk}_fc_scramble.nii.gz' #scramble
                     ppi_file = f'{out_dir}/fc/{ss}_{rr}_{hemi}_{tsk}_ppi.nii.gz'
                     
                     do_fc = not os.path.exists(fc_file)

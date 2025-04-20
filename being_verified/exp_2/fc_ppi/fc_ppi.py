@@ -133,7 +133,7 @@ def make_psy_cov(run, ss):
     
     # Load condition ## be sure to change.
     tool_cov = pd.read_csv(f'{cov_dir}/ToolLoc_spaceloc{str(ss).replace("sub-spaceloc","")}_run{run}_non_tool.txt', 
-                          sep='\t', header=None, names=['onset', 'duration', 'value'])
+                          sep='\t', header=None, names=['onset', 'duration', 'value']) # change between tool and non_tool for relevant condition
     
     # Load and negate scramble condition
     scramble_cov = pd.read_csv(f'{cov_dir}/ToolLoc_spaceloc{str(ss).replace("sub-spaceloc","")}_run{run}_scramble.txt', 
@@ -149,7 +149,7 @@ def make_psy_cov(run, ss):
     psy, _ = compute_regressor(cov.T, 'spm', times)
     return psy
 
-def conduct_analyses(run_fc=True, run_ppi=True): # exp 1 version
+def conduct_analyses(run_fc=True, run_ppi=False): # exp 1 version
     """Conduct FC and PPI analyses for all subjects and ROIs"""
     logger = setup_logging()
     
