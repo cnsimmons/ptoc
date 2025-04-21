@@ -9,7 +9,9 @@ contrast options.
 """
 
 import sys
+sys.path.insert(0, '/user_data/csimmon2/git_repos/ptoc')
 import os
+import ptoc_params as params
 import pandas as pd
 from nilearn import image, input_data, plotting
 import numpy as np
@@ -21,8 +23,8 @@ from nilearn.glm.first_level import compute_regressor
 import time
 
 # Settings
-raw_dir = '/user_data/csimmon2/git_repos/ptoc/raw_data'
-results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
+raw_dir = params.raw_dir
+results_dir = params.results_dir
 roi_coords_path = '/user_data/csimmon2/git_repos/ptoc/tools/roi_coordinates.csv'
 sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'
 
