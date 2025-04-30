@@ -1,21 +1,35 @@
-# tools_vs_nontools_threshold.py - simplified version using basic operations
+# tools_vs_nontools_threshold.py
 import os
+import sys
 import numpy as np
 import pandas as pd
 import nibabel as nib
 from nilearn import image, plotting
 from nilearn.glm import threshold_stats_img
 import matplotlib.pyplot as plt
+import logging
 
-# Define study directories
+# Define study directories to match your other scripts
+curr_dir = '/user_data/csimmon2/git_repos/ptoc'
 study_dir = "/lab_data/behrmannlab/vlad/ptoc"
-results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
-sub_info_path = '/user_data/csimmon2/git_repos/ptoc/sub_info_tool.csv'
+results_dir = "/user_data/csimmon2/git_repos/ptoc/results/tools"
+sub_info_path = f'{curr_dir}/sub_info_tool.csv'
 
 # FDR alpha level
 alpha = 0.05
 
+def setup_logging():
+    """Configure logging for the script"""
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s'
+    )
+    return logging.getLogger(__name__)
+
 def main():
+    logger = setup_logging()
+    logger.info("Starting tools vs nontools PPI thresholding")
+    
     # Define subjects and ROIs
     sub_info = pd.read_csv(sub_info_path)
     subs = sub_info[sub_info['exp'] == 'spaceloc']['sub'].tolist()
@@ -31,34 +45,13 @@ def main():
         fig, axes = plt.subplots(1, 2, figsize=(20, 5))
         
         for i, hemi in enumerate(hemispheres):
-            print(f"\n\n===== Processing {roi} {hemi} tools vs nontools PPI =====")
+            logger.info(f"===== Processing {roi} {hemi} tools vs nontools PPI =====")
             all_sub_imgs = []
             
-            # Check multiple possible file locations
-            file_pattern = f'{study_dir}/{{sub}}/ses-01/derivatives/ppi/mni/{{sub}}_{roi}_{hemi}_tools_vs_nontools_ToolLoc_ppi_mni.nii.gz'
+            # File pattern matching the output of your MNI conversion script
+            file_pattern = f"{study_dir}/{{sub}}/ses-01/derivatives/ppi/mni/{{sub}}_{roi}_{hemi}_tools_vs_nontools_ToolLoc_ppi_mni.nii.gz"
             
-            def find_file(sub):
-                # Primary pattern
-                file_path = file_pattern.format(sub=sub)
-                if os.path.exists(file_path):
-                    return file_path
-                    
-                # Alternative locations to check
-                alternatives = [
-                    f'{study_dir}/{sub}/ses-01/derivatives/ppi/mni/{sub}_{roi}_{hemi}_tools_vs_nontools_ToolLoc_ppi_mni.nii.gz',
-                    f'{study_dir}/{sub}/derivatives/ppi/mni/{sub}_{roi}_{hemi}_tools_vs_nontools_ToolLoc_ppi_mni.nii.gz',
-                    f'{study_dir}/{sub}/ses-01/derivatives/ppi/{sub}_{roi}_{hemi}_tools_vs_nontools_ToolLoc_ppi_mni.nii.gz'
-                ]
-                
-                for alt in alternatives:
-                    if os.path.exists(alt):
-                        print(f"Found file at alternative location: {alt}")
-                        return alt
-                        
-                # If nothing found, return the original path (which doesn't exist)
-                return file_path
-            
-            print(f"Looking for files with pattern: {file_pattern.format(sub='sub-XXX')}")
+            logger.info(f"Looking for files with pattern: {file_pattern.format(sub='sub-XXX')}")
             
             found_files = 0
             missing_files = 0
@@ -66,11 +59,11 @@ def main():
             
             # Collect all subject images
             for sub in subs:
-                img_file = find_file(sub)
+                img_file = file_pattern.format(sub=sub)
                 
                 if os.path.exists(img_file):
                     found_files += 1
-                    print(f"Found file: {img_file}")
+                    logger.info(f"Found file: {img_file}")
                     try:
                         # Load and check image dimensions
                         img = image.load_img(img_file)
@@ -80,23 +73,23 @@ def main():
                             all_sub_imgs.append(img)
                         else:
                             invalid_files += 1
-                            print(f"Warning: {img_file} doesn't appear to be in MNI space (shape: {img.shape})")
+                            logger.warning(f"Warning: {img_file} doesn't appear to be in MNI space (shape: {img.shape})")
                     except Exception as e:
                         invalid_files += 1
-                        print(f"Error loading {img_file}: {e}")
+                        logger.error(f"Error loading {img_file}: {e}")
                 else:
                     missing_files += 1
                     # Only print first few missing files to avoid console clutter
                     if missing_files <= 5:
-                        print(f"Missing file: {img_file}")
+                        logger.warning(f"Missing file: {img_file}")
                     elif missing_files == 6:
-                        print("Additional missing files not shown...")
+                        logger.warning("Additional missing files not shown...")
             
-            print(f"Summary: Found: {found_files}, Missing: {missing_files}, Invalid: {invalid_files} files")
+            logger.info(f"Summary: Found: {found_files}, Missing: {missing_files}, Invalid: {invalid_files} files")
             
             if all_sub_imgs:
                 # Create average image
-                print(f"Creating average from {len(all_sub_imgs)} subjects")
+                logger.info(f"Creating average from {len(all_sub_imgs)} subjects")
                 avg_img = image.mean_img(all_sub_imgs)
                 
                 # Z-score the image before thresholding
@@ -110,12 +103,12 @@ def main():
                     cluster_threshold=5, 
                     two_sided=True  # Two-sided for both positive and negative
                 )
-                print(f"{roi} {hemi} tools vs nontools PPI FDR threshold: {thresh_val[1]:.3f}")
+                logger.info(f"{roi} {hemi} tools vs nontools PPI FDR threshold: {thresh_val[1]:.3f}")
                 
                 # Save the raw z-statistic image (before thresholding)
                 raw_out_file = f'{group_out_dir}/{roi}_{hemi}_tools_vs_nontools_ppi_zstat.nii.gz'
                 nib.save(zstat_img, raw_out_file)
-                print(f"Saved raw z-statistic image: {raw_out_file}")
+                logger.info(f"Saved raw z-statistic image: {raw_out_file}")
                 
                 # Manual thresholding for both positive and negative values
                 data = zstat_img.get_fdata()
@@ -132,7 +125,7 @@ def main():
                 thresholded_img = nib.Nifti1Image(thresholded_data.astype('double'), zstat_img.affine)
                 combined_out_file = f'{group_out_dir}/{roi}_{hemi}_tools_vs_nontools_ppi_thresh.nii.gz'
                 nib.save(thresholded_img, combined_out_file)
-                print(f"Saved thresholded image: {combined_out_file}")
+                logger.info(f"Saved thresholded image: {combined_out_file}")
                 
                 # Use glass brain for visualization
                 # We'll manually create a positive and negative version just for display
@@ -159,7 +152,7 @@ def main():
                 display_pos.add_overlay(neg_img, cmap='winter')  # Blue for negative values
                 
             else:
-                print(f"No valid images found for {roi} {hemi} tools vs nontools PPI")
+                logger.warning(f"No valid images found for {roi} {hemi} tools vs nontools PPI")
         
         # Save the combined figure
         plt.tight_layout()
@@ -169,7 +162,7 @@ def main():
         fig.savefig(f'{group_out_dir}/{roi}_tools_vs_nontools_ppi_thresh.png', 
                     dpi=300, bbox_inches='tight')
         plt.close(fig)
-        print(f"Saved combined plot for {roi} tools vs nontools PPI")
+        logger.info(f"Saved combined plot for {roi} tools vs nontools PPI")
 
 if __name__ == "__main__":
     main()
