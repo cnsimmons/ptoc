@@ -1,0 +1,4 @@
+Contrast,A,B,Paired,Parametric,T,dof,alternative,p-unc,p-corr,p-adjust,BF10,hedges
+condition,Between-Dorsal,Between-Ventral,True,True,7.843237865667022,17.0,two-sided,4.773607107770275e-07,4.773607107770275e-07,holm,3.503e+04,0.9382335423139893
+condition,Between-Dorsal,Within-Subject,True,True,-10.774488550426845,17.0,two-sided,5.132239378539715e-09,1.026447875707943e-08,holm,2.271e+06,-1.8312322640275505
+condition,Between-Ventral,Within-Subject,True,True,-20.607610117115957,17.0,two-sided,1.8339966022846618e-13,5.501989806853986e-13,holm,3.174e+10,-2.355587673657169
