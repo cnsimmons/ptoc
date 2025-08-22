@@ -1,0 +1,4 @@
+Comparison,t_statistic,p_uncorrected,p_corrected,significant
+Within-subject vs Between-dorsal,13.417724973107628,1.7905291358006427e-10,3.5810582716012854e-10,True
+Within-subject vs Between-ventral,25.186019234142808,6.713358990818344e-15,2.014007697245503e-14,True
+Between-dorsal vs Between-ventral,12.108542525140601,8.766333909642983e-10,8.766333909642983e-10,True
