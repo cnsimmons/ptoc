@@ -4,10 +4,10 @@ import time
 
 # --- Job Parameters ---
 job_name = 'partial_residual'
-mem = 32 # Memory in GB
+mem = 128 # Memory in GB
 run_time = "0-04:00:00" # 4 hours for a single subject
 pause_crit = 12 # Submit a batch of 12 jobs at a time
-pause_time = 30 # Wait 30 minutes between batches
+pause_time = 5 # Wait 30 minutes between batches
 
 # --- CORRECTED Subject List ---
 # Extracted from the CSV data you provided. (24 subjects total)
@@ -15,8 +15,7 @@ sub_list = [
     'sub-025', 'sub-038', 'sub-057', 'sub-059', 'sub-064',
     'sub-067', 'sub-068', 'sub-071', 'sub-083', 'sub-084',
     'sub-085', 'sub-087', 'sub-088', 'sub-093', 'sub-094',
-    'sub-095', 'sub-096', 'sub-097', 'sub-107', 'sub-074',
-    'sub-077', 'sub-091', 'sub-hemispace1004', 'sub-hemispace1007'
+    'sub-095', 'sub-096', 'sub-097', 'sub-107'
 ]
 
 # --- Path to your analysis script ---
@@ -72,7 +71,7 @@ n_jobs = 0
 print(f"Starting submission for {len(sub_list)} subjects.")
 for sub in sub_list:
     # Define a unique name for this subject's job
-    current_job_name = f'{sub}_fc_ppi'
+    current_job_name = f'{sub}_partial_residual'
     
     # The command that will be executed in the sbatch script
     # This passes the subject ID to your analysis script

@@ -1,4 +1,0 @@
-/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/input_data/__init__.py:23: FutureWarning: The import path 'nilearn.input_data' is deprecated in version 0.9. Importing from 'nilearn.input_data' will be possible at least until release 0.13.0. Please import from 'nilearn.maskers' instead.
-  warnings.warn(message, FutureWarning)
-/var/spool/slurmd/job103886/slurm_script: line 20: 1393872 Killed                  python /user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/partial_residual.py sub-025
-slurmstepd: error: Detected 1 oom-kill event(s) in StepId=103886.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
