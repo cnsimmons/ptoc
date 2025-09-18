@@ -1,6 +1,8 @@
 # The point of this script is to conduct a partial correlation analysis
-# between pIPS and the rest of the brain, while regressing out LO activity.
-# do not forget to run native2mni.py after this script to transform results to MNI space
+# between LO and the rest of the brain, while regressing out pIPS activity.
+# This is the INVERSE analysis to test ventral pathway independence.
+
+# do not forget to run native2mni.py AND threshold script after this to transform results to MNI space
 
 import os
 import sys
@@ -81,7 +83,9 @@ def conduct_analyses():
                 print(f"Processing Hemisphere: {hemi}")
                 
                 # Output file path now reflects the new out_dir
-                fc_file = f'{out_dir}/fc/{ss}_pIPS_clean_{hemi}_{tsk}_fc.nii.gz'
+                #fc_file = f'{out_dir}/fc/{ss}_pIPS_clean_{hemi}_{tsk}_fc.nii.gz'
+                fc_file = f'{out_dir}/fc/{ss}_LO_clean_{hemi}_{tsk}_fc.nii.gz'
+
                 
                 if os.path.exists(fc_file):
                     print(f'FC file for {hemi} already exists. Skipping...')
@@ -121,13 +125,18 @@ def conduct_analyses():
                     dorsal_phys = dorsal_phys[:min_length]
                     ventral_phys = ventral_phys[:min_length]
                     
-                    beta = np.dot(ventral_phys.T, dorsal_phys) / np.dot(ventral_phys.T, ventral_phys)
-                    dorsal_clean = dorsal_phys - beta * ventral_phys
+                    #beta = np.dot(ventral_phys.T, dorsal_phys) / np.dot(ventral_phys.T, ventral_phys)
+                    #dorsal_clean = dorsal_phys - beta * ventral_phys
+                    
+                    beta = np.dot(dorsal_phys.T, ventral_phys) / np.dot(dorsal_phys.T, dorsal_phys)
+                    ventral_clean = ventral_phys - beta * dorsal_phys
                     
                     brain_time_series = brain_masker.fit_transform(img4d)
                     brain_time_series = brain_time_series[:min_length]
                     
-                    correlations = np.dot(brain_time_series.T, dorsal_clean) / dorsal_clean.shape[0]
+                    #correlations = np.dot(brain_time_series.T, dorsal_clean) / dorsal_clean.shape[0]
+                    correlations = np.dot(brain_time_series.T, ventral_clean) / ventral_clean.shape[0]
+
                     correlations = np.arctanh(correlations.ravel())
                     correlation_img = brain_masker.inverse_transform(correlations)
                     all_runs_fc.append(correlation_img)

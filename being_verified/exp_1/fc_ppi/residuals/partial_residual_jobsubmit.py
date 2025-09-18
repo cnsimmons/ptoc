@@ -13,9 +13,9 @@ pause_time = 5 # Wait 30 minutes between batches
 # Extracted from the CSV data you provided. (24 subjects total)
 sub_list = [
     'sub-025', 'sub-038', 'sub-057', 'sub-059', 'sub-064',
-    'sub-067', 'sub-068', 'sub-071', 'sub-083', 'sub-084',
-    'sub-085', 'sub-087', 'sub-088', 'sub-093', 'sub-094',
-    'sub-095', 'sub-096', 'sub-097', 'sub-107'
+    'sub-067', 'sub-068', 'sub-071', 'sub-083', 'sub-085', 
+    'sub-087', 'sub-088', 'sub-093', 'sub-094', 'sub-095', 
+    'sub-096', 'sub-097', 'sub-107'
 ]
 
 # --- Path to your analysis script ---
