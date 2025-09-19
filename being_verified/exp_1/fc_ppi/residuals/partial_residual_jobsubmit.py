@@ -20,7 +20,7 @@ sub_list = [
 
 # --- Path to your analysis script ---
 # Make sure this path is correct
-script_to_run = '/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/batch_partial_residual.py'
+script_to_run = '/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/residuals/batch_partial_residual.py'
 
 def setup_sbatch(job_name, script_cmd):
     """Creates the content of the SLURM sbatch script."""

@@ -83,11 +83,15 @@ def process_subject(sub):
     success = True
     for hemi in ['left', 'right']:
         # FC to MNI
-        fc_native = f"{out_dir}/fc/{sub}_pIPS_clean_{hemi}_loc_fc.nii.gz"
-        fc_mni = f"{out_dir}/fc_mni/{sub}_pIPS_clean_{hemi}_loc_fc_mni.nii.gz"
+        #fc_native = f"{out_dir}/fc/{sub}_pIPS_clean_{hemi}_loc_fc.nii.gz"
+        #fc_mni = f"{out_dir}/fc_mni/{sub}_pIPS_clean_{hemi}_loc_fc_mni.nii.gz"
+        
+        fc_native = f"{out_dir}/fc/{sub}_LO_clean_{hemi}_loc_fc.nii.gz"
+        fc_mni = f"{out_dir}/fc_mni/{sub}_LO_clean_{hemi}_loc_fc_mni.nii.gz"
         
         if os.path.isfile(fc_native) and not os.path.isfile(fc_mni):
-            print(f"Registering FC for {sub}, pIPS_clean, Hemisphere {hemi} to MNI space")
+            #print(f"Registering FC for {sub}, pIPS_clean, Hemisphere {hemi} to MNI space")
+            print(f"Registering FC for {sub}, LO_clean, Hemisphere {hemi} to MNI space")
             try:
                 subprocess.run([
                     'flirt',

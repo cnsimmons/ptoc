@@ -2,19 +2,19 @@
 Processing subject: sub-096
 Processing Hemisphere: left
 Processing run combination [1, 2] for left
-Completed run combination [1, 2] for left in 535.48 seconds
+Completed run combination [1, 2] for left in 530.28 seconds
 Processing run combination [1, 3] for left
-Completed run combination [1, 3] for left in 526.82 seconds
+Completed run combination [1, 3] for left in 500.59 seconds
 Processing run combination [2, 3] for left
-Completed run combination [2, 3] for left in 507.17 seconds
+Completed run combination [2, 3] for left in 487.22 seconds
 Saved FC result for left
-Completed left in 1570.35 seconds
+Completed left in 1518.85 seconds
 Processing Hemisphere: right
 Processing run combination [1, 2] for right
-Completed run combination [1, 2] for right in 497.35 seconds
+Completed run combination [1, 2] for right in 485.88 seconds
 Processing run combination [1, 3] for right
-Completed run combination [1, 3] for right in 488.80 seconds
+Completed run combination [1, 3] for right in 485.02 seconds
 Processing run combination [2, 3] for right
-Completed run combination [2, 3] for right in 481.89 seconds
+Completed run combination [2, 3] for right in 480.67 seconds
 Saved FC result for right
-Completed right in 1468.82 seconds
+Completed right in 1452.31 seconds

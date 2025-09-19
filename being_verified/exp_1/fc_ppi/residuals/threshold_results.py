@@ -2,6 +2,7 @@
 """
 Partial Correlation Threshold Analysis - Consistent with FC/PPI Pipeline
 Applies the same FDR thresholding used in the main FC/PPI analyses
+INVERSE ANALYSIS: Testing LO (ventral) independence by removing pIPS (dorsal) influence
 """
 
 import os
@@ -31,7 +32,7 @@ def load_subject_maps(subjects, analysis_type, roi, hemisphere):
         if analysis_type == 'original':
             img_file = f'{study_dir}/{sub}/ses-01/derivatives/fc_mni/{sub}_{roi}_{hemisphere}_loc_fc_mni.nii.gz'
         elif analysis_type == 'cleaned':
-            img_file = f'{residual_dir}/{sub}/ses-01/derivatives/fc_mni/{sub}_pIPS_clean_{hemisphere}_loc_fc_mni.nii.gz'
+            img_file = f'{residual_dir}/{sub}/ses-01/derivatives/fc_mni/{sub}_LO_clean_{hemisphere}_loc_fc_mni.nii.gz'
         
         if os.path.exists(img_file):
             all_imgs.append(image.load_img(img_file))
@@ -72,6 +73,7 @@ def apply_consistent_threshold(mean_img, roi, hemisphere, analysis_type):
 
 def main():
     print("Partial Correlation Analysis with Consistent Thresholding")
+    print("INVERSE ANALYSIS: LO Independence (removing pIPS influence)")
     print("=" * 60)
     
     # Load subject info
@@ -80,7 +82,7 @@ def main():
     print(f"Processing {len(subjects)} control subjects")
     
     # Create output directory
-    output_dir = f'{results_dir}/partial_correlation_thresh'
+    output_dir = f'{results_dir}/partial_correlation_thresh_LO'
     os.makedirs(output_dir, exist_ok=True)
     
     # Analysis parameters
@@ -92,13 +94,13 @@ def main():
     for hemisphere in hemispheres:
         print(f"\nProcessing {hemisphere} hemisphere...")
         
-        # Load original pIPS maps
-        orig_imgs, orig_subs = load_subject_maps(subjects, 'original', 'pIPS', hemisphere)
-        print(f"Found {len(orig_imgs)} original pIPS {hemisphere} maps")
-        
-        # Load cleaned pIPS maps
-        clean_imgs, clean_subs = load_subject_maps(subjects, 'cleaned', 'pIPS', hemisphere)
-        print(f"Found {len(clean_imgs)} cleaned pIPS {hemisphere} maps")
+        # Load original LO maps  
+        orig_imgs, orig_subs = load_subject_maps(subjects, 'original', 'LO', hemisphere)
+        print(f"Found {len(orig_imgs)} original LO {hemisphere} maps")
+
+        # Load cleaned LO maps
+        clean_imgs, clean_subs = load_subject_maps(subjects, 'cleaned', 'LO', hemisphere)
+        print(f"Found {len(clean_imgs)} cleaned LO {hemisphere} maps")
         
         # Find common subjects
         common_subs = list(set(orig_subs) & set(clean_subs))
@@ -117,9 +119,9 @@ def main():
         clean_mean = image.mean_img(clean_imgs_common)
         
         # Apply consistent thresholding
-        orig_thresh, orig_thresh_val = apply_consistent_threshold(orig_mean, 'pIPS', hemisphere, 'original')
-        clean_thresh, clean_thresh_val = apply_consistent_threshold(clean_mean, 'pIPS_clean', hemisphere, 'cleaned')
-        
+        orig_thresh, orig_thresh_val = apply_consistent_threshold(orig_mean, 'LO', hemisphere, 'original')
+        clean_thresh, clean_thresh_val = apply_consistent_threshold(clean_mean, 'LO_clean', hemisphere, 'cleaned')
+
         # Count significant voxels
         orig_sig_voxels = np.sum(orig_thresh.get_fdata() > 0)
         clean_sig_voxels = np.sum(clean_thresh.get_fdata() > 0)
@@ -133,8 +135,8 @@ def main():
         print(f"  Connectivity retention: {percent_retained:.1f}%")
         
         # Save thresholded images
-        orig_out = f'{output_dir}/pIPS_{hemisphere}_original_thresh.nii.gz'
-        clean_out = f'{output_dir}/pIPS_{hemisphere}_cleaned_thresh.nii.gz'
+        orig_out = f'{output_dir}/LO_{hemisphere}_original_thresh.nii.gz'
+        clean_out = f'{output_dir}/LO_{hemisphere}_cleaned_thresh.nii.gz'
         
         nib.save(orig_thresh, orig_out)
         nib.save(clean_thresh, clean_out)
@@ -158,22 +160,23 @@ def main():
         
         # Original
         plotting.plot_glass_brain(orig_thresh, 
-                                 title=f'Original pIPS {hemisphere}\n({orig_sig_voxels} voxels, thresh={orig_thresh_val:.3f})',
+                                 title=f'Original LO {hemisphere}\n({orig_sig_voxels} voxels, thresh={orig_thresh_val:.3f})',
                                  axes=axes[0],
                                  colorbar=True)
         
         # Cleaned  
         plotting.plot_glass_brain(clean_thresh,
-                                 title=f'Cleaned pIPS {hemisphere}\n({clean_sig_voxels} voxels, {percent_retained:.1f}% retained)',
+                                 title=f'Cleaned LO {hemisphere}\n({clean_sig_voxels} voxels, {percent_retained:.1f}% retained)',
                                  axes=axes[1], 
                                  colorbar=True)
         
         plt.tight_layout()
         fig.suptitle(f'Partial Correlation Analysis - {hemisphere.title()} Hemisphere\n'
-                    f'FDR α={alpha}, cluster>{cluster_threshold}', 
+                    f'LO Independence Test: FDR α={alpha}, cluster>{cluster_threshold}', 
                     y=0.98, fontsize=14, fontweight='bold')
         
-        plot_out = f'{output_dir}/pIPS_{hemisphere}_comparison.png'
+        # Fixed output filename to match analysis
+        plot_out = f'{output_dir}/LO_{hemisphere}_comparison.png'
         plt.savefig(plot_out, dpi=300, bbox_inches='tight')
         plt.close()
         
@@ -181,7 +184,7 @@ def main():
     
     # Save results summary
     results_df = pd.DataFrame(results_list)
-    results_csv = f'{output_dir}/retention_analysis_results.csv'
+    results_csv = f'{output_dir}/LO_retention_analysis_results.csv'
     results_df.to_csv(results_csv, index=False)
     
     print(f"\n{'='*60}")
@@ -194,11 +197,11 @@ def main():
     print(f"\nMean connectivity retention: {mean_retention:.1f}%")
     
     if mean_retention > 70:
-        interpretation = "STRONG evidence for dorsal independence"
+        interpretation = "STRONG evidence for VENTRAL independence"
     elif mean_retention > 30:
-        interpretation = "MODERATE evidence for dorsal independence" 
+        interpretation = "MODERATE evidence for VENTRAL independence" 
     else:
-        interpretation = "LIMITED evidence for dorsal independence"
+        interpretation = "LIMITED evidence for VENTRAL independence"
     
     print(f"Interpretation: {interpretation}")
     print(f"\nResults saved to: {results_csv}")

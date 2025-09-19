@@ -2,19 +2,19 @@
 Processing subject: sub-038
 Processing Hemisphere: left
 Processing run combination [1, 2] for left
-Completed run combination [1, 2] for left in 553.52 seconds
+Completed run combination [1, 2] for left in 547.66 seconds
 Processing run combination [1, 3] for left
-Completed run combination [1, 3] for left in 540.87 seconds
+Completed run combination [1, 3] for left in 532.11 seconds
 Processing run combination [2, 3] for left
-Completed run combination [2, 3] for left in 540.88 seconds
+Completed run combination [2, 3] for left in 522.56 seconds
 Saved FC result for left
-Completed left in 1636.04 seconds
+Completed left in 1603.17 seconds
 Processing Hemisphere: right
 Processing run combination [1, 2] for right
-Completed run combination [1, 2] for right in 532.75 seconds
+Completed run combination [1, 2] for right in 520.01 seconds
 Processing run combination [1, 3] for right
-Completed run combination [1, 3] for right in 522.79 seconds
+Completed run combination [1, 3] for right in 511.80 seconds
 Processing run combination [2, 3] for right
-Completed run combination [2, 3] for right in 505.02 seconds
+Completed run combination [2, 3] for right in 494.84 seconds
 Saved FC result for right
-Completed right in 1561.35 seconds
+Completed right in 1527.42 seconds
