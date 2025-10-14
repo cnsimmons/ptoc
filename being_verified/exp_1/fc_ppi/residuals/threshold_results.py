@@ -3,6 +3,7 @@
 Partial Correlation Threshold Analysis - Consistent with FC/PPI Pipeline
 Applies the same FDR thresholding used in the main FC/PPI analyses
 INVERSE ANALYSIS: Testing LO (ventral) independence by removing pIPS (dorsal) influence
+currenly adapted only for LO - need to update for pIPS if rerunning
 """
 
 import os
