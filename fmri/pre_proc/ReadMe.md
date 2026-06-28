@@ -102,12 +102,8 @@ Required steps (per subject):
 5. **`register_1stlevel.py`** on the new FEAT output → aCompCor-cleaned
    `filtered_func_data_reg` for analysis.
 
-### Open issues to resolve before integration
-- **Motion-regressor discrepancy.** The manuscript Methods states 18 motion
-  regressors, but `sub-083`'s `design.fsf` has `motionevs 0` and an 8-column
-  spike confound file only. The true baseline confound set must be reconciled
-  before adding aCompCor columns, or the rerun will not match the original.
-- **Status of the sanity check.** Current plan is one subject (`sub-083`),
-  replicating Fig 3C/D with aCompCor to assess whether maps change, as the
-  basis for arguing against full reprocessing. Whether this satisfies R2.1, or
-  full-sample reprocessing is required, is a group decision.
+### Note
+- Current plan is one subject (`sub-083`), replicating Fig 3C/D with aCompCor
+  to assess whether maps change, as the basis for arguing against full
+  reprocessing. Whether this satisfies R2.1, or full-sample reprocessing is
+  required, is a group decision.
