@@ -6,6 +6,7 @@ writes filtered_func_data_reg / zstat_reg there, so the original (non-aCompCor)
 _reg files are never overwritten.
 
 Run:  python register_1stlevel_acompcor.py sub-083
+      python register_1stlevel_acompcor.py --all-controls [--force]
 """
 
 import os
@@ -24,7 +25,7 @@ suf = '_acompcor'          # targets 1stLevel_acompcor.feat
 task = 'loc'
 runs = [1, 2, 3]
 
-def main(ss):
+def main(ss, force=False):
     sub_data = f'{raw_dir}/{ss}/ses-01'
     anat = f'{raw_dir}/{ss}/ses-01/anat/{ss}_ses-01_T1w_brain.nii.gz'
 
@@ -37,6 +38,9 @@ def main(ss):
         zstat_func = f'{run_dir}/stats/zstat{cope}.nii.gz'
         zstat_out = f'{run_dir}/stats/zstat{cope}_reg.nii.gz'
 
+        if os.path.exists(out_func) and not force:
+            print(f'[run {rn}] reg output exists, skipping (use --force): {out_func}')
+            continue
         if not os.path.exists(filtered_func):
             print(f'[run {rn}] no filtered_func, skipping: {filtered_func}')
             continue
@@ -62,7 +66,23 @@ def main(ss):
     print('\nDone. aCompCor outputs registered to anat.')
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print('Usage: python register_1stlevel_acompcor.py <subject>')
+    import pandas as pd
+    args = sys.argv[1:]
+    force = '--force' in args
+    args = [a for a in args if a != '--force']
+    if len(args) != 1:
+        print('Usage: python register_1stlevel_acompcor.py <subject|--all-controls> [--force]')
         sys.exit(1)
-    main(sys.argv[1])
+    arg = args[0]
+    if arg == '--all-controls':
+        info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info.csv')
+        subs = info[info['group'] == 'control']['sub'].tolist()
+        subs = [s if str(s).startswith('sub-') else f'sub-{s}' for s in subs]
+        for ss in subs:
+            print(f'\n########## {ss} ##########')
+            try:
+                main(ss, force=force)
+            except Exception as e:
+                print(f'ERROR on {ss}: {e}')
+    else:
+        main(arg, force=force)

@@ -4,7 +4,7 @@ aCompCor (textbook, Behzadi et al. 2007) — ONE subject, all runs.
 Pipeline, per run:
   1. transform CSF (pve_0) and WM (pve_2) masks T1 -> native func space
      using FEAT's highres2example_func.mat (ref = example_func)
-  2. threshold each at 0.99 and erode 1 voxel (in native func space)
+  2. threshold each at 0.99; erode WM 2 voxels, CSF not eroded (native func space)
   3. extract voxel timeseries from the RAW BOLD (FEAT's input) per mask
   4. PCA -> top 5 CSF + 5 WM components
   5. concatenate with the existing spike confound file (column-wise)
@@ -13,6 +13,7 @@ Pipeline, per run:
 STOPS after writing the combined confound file. Does NOT run FEAT.
 
 Run:  python acompcor_subject.py sub-083
+      python acompcor_subject.py --all-controls [--force]
 """
 
 import os
@@ -59,7 +60,7 @@ def extract_components(func_img, mask_img, n_comp):
     comps = pca.fit_transform(ts)                # (nTR, n_comp)
     return comps, pca.explained_variance_ratio_
 
-def main(ss):
+def main(ss, force=False):
     anat_dir  = f'{raw_dir}/{ss}/ses-01/anat'
     func_base = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
     func_raw  = f'{raw_dir}/{ss}/ses-01/func'
@@ -75,6 +76,10 @@ def main(ss):
 
     for rn in runs:
         print(f'\n=== run {rn} ===')
+        out = f'{out_dir}/{ss}_run-0{rn}_confounds_combined.txt'
+        if os.path.exists(out) and not force:
+            print(f'  combined confound file exists, skipping (use --force): {out}')
+            continue
         feat = f'{func_base}/run-0{rn}/1stLevel.feat'
         reg  = f'{feat}/reg'
         xfm  = f'{reg}/highres2example_func.mat'
@@ -124,14 +129,29 @@ def main(ss):
                 print('  no spikes file found; writing aCompCor only (10 cols)')
 
             # 6. write combined confound file (tab-sep, no header — FEAT format)
-            out = f'{out_dir}/{ss}_run-0{rn}_confounds_combined.txt'
             np.savetxt(out, combined, fmt='%.6f', delimiter='\t')
             print(f'  wrote {combined.shape} -> {out}')
 
     print('\nDone. Combined confound files written. FEAT NOT run.')
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print('Usage: python acompcor_subject.py <subject>  (e.g. sub-083)')
+    import pandas as pd
+    args = sys.argv[1:]
+    force = '--force' in args
+    args = [a for a in args if a != '--force']
+    if len(args) != 1:
+        print('Usage: python acompcor_subject.py <subject|--all-controls> [--force]')
         sys.exit(1)
-    main(sys.argv[1])
+    arg = args[0]
+    if arg == '--all-controls':
+        info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info.csv')
+        subs = info[info['group'] == 'control']['sub'].tolist()
+        subs = [s if str(s).startswith('sub-') else f'sub-{s}' for s in subs]
+        for ss in subs:
+            print(f'\n########## {ss} ##########')
+            try:
+                main(ss, force=force)
+            except Exception as e:
+                print(f'ERROR on {ss}: {e}')
+    else:
+        main(arg, force=force)

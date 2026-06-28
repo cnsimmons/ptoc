@@ -10,6 +10,7 @@ Everything else in the design is left identical. Original .fsf and .feat
 are not touched. Does NOT run FEAT.
 
 Run:  python make_acompcor_fsf.py sub-083
+      python make_acompcor_fsf.py --all-controls [--force]
 """
 
 import os
@@ -20,7 +21,7 @@ raw_dir = '/lab_data/behrmannlab/vlad/hemispace'
 runs = [1, 2, 3]
 suf = '_acompcor'
 
-def main(ss):
+def main(ss, force=False):
     base = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
     acomp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/acompcor'
 
@@ -30,6 +31,9 @@ def main(ss):
         dst_fsf = f'{run_dir}/1stLevel{suf}.fsf'
         confound = f'{acomp_dir}/{ss}_run-0{rn}_confounds_combined.txt'
 
+        if os.path.exists(dst_fsf) and not force:
+            print(f'[run {rn}] {suf}.fsf exists, skipping (use --force): {dst_fsf}')
+            continue
         if not os.path.exists(src_fsf):
             print(f'[run {rn}] source .fsf not found, skipping: {src_fsf}')
             continue
@@ -67,7 +71,23 @@ def main(ss):
     print('\nDone. aCompCor .fsf files written. FEAT NOT run.')
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print('Usage: python make_acompcor_fsf.py <subject>')
+    import pandas as pd
+    args = sys.argv[1:]
+    force = '--force' in args
+    args = [a for a in args if a != '--force']
+    if len(args) != 1:
+        print('Usage: python make_acompcor_fsf.py <subject|--all-controls> [--force]')
         sys.exit(1)
-    main(sys.argv[1])
+    arg = args[0]
+    if arg == '--all-controls':
+        info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info.csv')
+        subs = info[info['group'] == 'control']['sub'].tolist()
+        subs = [s if str(s).startswith('sub-') else f'sub-{s}' for s in subs]
+        for ss in subs:
+            print(f'\n########## {ss} ##########')
+            try:
+                main(ss, force=force)
+            except Exception as e:
+                print(f'ERROR on {ss}: {e}')
+    else:
+        main(arg, force=force)
