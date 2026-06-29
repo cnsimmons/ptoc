@@ -31,7 +31,7 @@ study_dir = f'/lab_data/behrmannlab/vlad/{study}'
 raw_dir = params.raw_dir
 
 subs = ['sub-083']                 # comparison subject only
-rois = ['LO', 'pIPS']
+rois = ['LO', 'pIPS', 'PFS', 'V1']
 hemispheres = ['left', 'right']
 
 feat_suf = '_acompcor'             # <-- the only pipeline change
