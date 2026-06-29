@@ -2,12 +2,17 @@
 Create aCompCor FEAT design files — ONE subject, all runs.
 
 For each run, copies the source 1stLevel.fsf to 1stLevel_acompcor.fsf and
-changes ONLY two lines:
+changes ONLY three lines:
   - fmri(outputdir)      -> .../1stLevel_acompcor   (separate output dir)
   - confoundev_files(1)  -> the combined aCompCor+spikes confound file
+  - fmri(motionevs)      -> 2   (match Exp 2: standard + extended motion EVs)
 
 Everything else in the design is left identical. Original .fsf and .feat
 are not touched. Does NOT run FEAT.
+
+NOTE: motionevs 2 only adds regressors if FEAT does motion correction in
+prestats (fmri(mc) 1) so the motion parameters exist. Confirm mc is on in
+the source design.
 
 Run:  python make_acompcor_fsf.py sub-083
       python make_acompcor_fsf.py --all-controls [--force]
@@ -45,7 +50,7 @@ def main(ss, force=False):
             lines = f.readlines()
 
         new_outputdir = f'{run_dir}/1stLevel{suf}'
-        changed_out = changed_conf = False
+        changed_out = changed_conf = changed_motion = False
         out = []
         for ln in lines:
             if re.match(r'\s*set fmri\(outputdir\)', ln):
@@ -54,6 +59,9 @@ def main(ss, force=False):
             elif re.match(r'\s*set confoundev_files\(1\)', ln):
                 out.append(f'set confoundev_files(1) "{confound}"\n')
                 changed_conf = True
+            elif re.match(r'\s*set fmri\(motionevs\)', ln):
+                out.append('set fmri(motionevs) 2\n')
+                changed_motion = True
             else:
                 out.append(ln)
 
@@ -61,12 +69,15 @@ def main(ss, force=False):
             print(f'[run {rn}] WARNING: outputdir line not found')
         if not changed_conf:
             print(f'[run {rn}] WARNING: confoundev_files(1) line not found')
+        if not changed_motion:
+            print(f'[run {rn}] WARNING: motionevs line not found')
 
         with open(dst_fsf, 'w') as f:
             f.writelines(out)
         print(f'[run {rn}] wrote {dst_fsf}')
         print(f'           outputdir -> {new_outputdir}')
         print(f'           confounds -> {confound}')
+        print(f'           motionevs -> 2')
 
     print('\nDone. aCompCor .fsf files written. FEAT NOT run.')
 
