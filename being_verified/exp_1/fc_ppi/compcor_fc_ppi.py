@@ -30,7 +30,7 @@ study = 'ptoc'
 study_dir = f'/lab_data/behrmannlab/vlad/{study}'
 raw_dir = params.raw_dir
 
-subs = ['sub-083']                 # comparison subject only
+subs = pd.read_csv(f'{curr_dir}/sub_info.csv').query("group=='control'")['sub'].tolist()
 rois = ['LO', 'pIPS', 'PFS', 'V1']
 hemispheres = ['left', 'right']
 

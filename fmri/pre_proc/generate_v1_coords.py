@@ -64,7 +64,7 @@ def v1_coords_for_subject(ss):
         zstats = []
         for rn in rc:
             zpath = (f'{raw_dir}/{ss}/ses-01/derivatives/fsl/{TASK}/'
-                     f'run-0{rn}/1stLevel.feat/stats/zstat{COPE}_anat.nii.gz')
+                     f'run-0{rn}/1stLevel_acompcor.feat/stats/zstat{COPE}_anat.nii.gz')
             if not os.path.exists(zpath):
                 print(f'[{ss}] missing {zpath} — skipping index {idx}')
                 zstats = []
