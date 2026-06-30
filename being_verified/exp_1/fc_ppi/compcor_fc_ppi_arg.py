@@ -118,17 +118,28 @@ def conduct_analyses():
                         continue
                     coords = cc[['x', 'y', 'z']].values.tolist()[0]
 
+                    # -- per-run extraction to keep peak memory ~25 GB --
                     paths = [f'{temp_dir}/run-0{rn}/1stLevel{feat_suf}.feat/'
                              f'filtered_func_data_reg.nii.gz' for rn in rc]
                     missing = [p for p in paths if not os.path.exists(p)]
                     if missing:
                         print(f'    missing aCompCor func: {missing}')
                         continue
-                    filtered = [image.clean_img(image.load_img(p), standardize=True)
-                                for p in paths]
-                    img4d = image.concat_imgs(filtered)
 
-                    phys = extract_roi_sphere(img4d, coords)
+                    phys_parts = []
+                    brain_parts = []
+                    for p in paths:
+                        run_img = image.clean_img(image.load_img(p), standardize=True)
+                        phys_parts.append(
+                            extract_roi_sphere(run_img, coords).ravel())
+                        brain_parts.append(
+                            brain_masker.fit_transform(run_img))
+                        del run_img; gc.collect()
+
+                    phys = np.concatenate(phys_parts).reshape(-1, 1)
+                    brain_ts = np.vstack(brain_parts)
+                    del phys_parts, brain_parts; gc.collect()
+
                     if phys.shape[0] > 184 * len(rc):
                         phys = phys[:184 * len(rc)]
 
@@ -137,8 +148,6 @@ def conduct_analyses():
                         psy = psy[:phys.shape[0]]
                     elif psy.shape[0] < phys.shape[0]:
                         phys = phys[:psy.shape[0]]
-
-                    brain_ts = brain_masker.fit_transform(img4d)
                     brain_ts = brain_ts[:phys.shape[0]]
 
                     ppi_reg = phys * psy
@@ -146,8 +155,7 @@ def conduct_analyses():
                     corr = np.arctanh(corr.ravel())
                     all_runs_ppi.append(brain_masker.inverse_transform(corr))
 
-                    # free the large per-combo arrays before the next iteration
-                    del filtered, img4d, brain_ts, phys, psy, ppi_reg, corr
+                    del brain_ts, phys, psy, ppi_reg, corr
                     gc.collect()
 
                 if all_runs_ppi:
