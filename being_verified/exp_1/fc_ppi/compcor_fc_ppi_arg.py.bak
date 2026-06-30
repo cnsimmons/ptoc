@@ -1,21 +1,19 @@
 """
-Exp1 PPI on aCompCor-preprocessed data.
+Exp1 PPI on aCompCor-preprocessed data — sub-083 comparison.
 
-Same as exp1_fc_ppi.py PPI, with ONE pipeline change: timeseries are read from
-1stLevel_acompcor.feat instead of 1stLevel.feat. Outputs suffixed _acompcor.
+Same as exp1_fc_ppi.py PPI, with ONE change: timeseries are read from
+1stLevel_acompcor.feat instead of 1stLevel.feat. The ROI is unchanged —
+it uses the existing sphere_coords_hemisphere.csv (original definition),
+so this isolates exactly what aCompCor changes in the connectivity.
 
-Adds explicit memory cleanup (del + gc.collect) after each run-combo and after
-each save, to keep the working set from creeping up across the ROI/hemi loop —
-the 1mm anat-space arrays are large (~34 GB for two concatenated runs), so
-without freeing them between iterations a single subject can exceed 64 GB.
+Outputs are suffixed _acompcor so they sit beside the originals for
+side-by-side comparison; nothing original is overwritten.
 
-Run:  python compcor_fc_ppi_arg.py sub-083 sub-093 sub-107
-      python compcor_fc_ppi_arg.py            # all controls
+Run:  python exp1_ppi_acompcor.py
 """
 
 import os
 import sys
-import gc
 import time
 import numpy as np
 import pandas as pd
@@ -32,13 +30,12 @@ study = 'ptoc'
 study_dir = f'/lab_data/behrmannlab/vlad/{study}'
 raw_dir = params.raw_dir
 
-subs = sys.argv[1:] if len(sys.argv) > 1 else \
-    pd.read_csv(f'{curr_dir}/sub_info.csv').query("group=='control'")['sub'].tolist()
+import sys as _sys; subs = _sys.argv[1:] if len(_sys.argv) > 1 else pd.read_csv(f'{curr_dir}/sub_info.csv').query("group=='control'")['sub'].tolist()
 rois = ['LO', 'pIPS', 'PFS', 'V1']
 hemispheres = ['left', 'right']
 
-feat_suf = '_acompcor'
-out_suf = '_acompcor'
+feat_suf = '_acompcor'             # <-- the only pipeline change
+out_suf = '_acompcor'             # keeps outputs separate from originals
 
 run_num = 3
 run_combos = [[rn1, rn2] for rn1 in range(1, run_num + 1)
@@ -88,6 +85,7 @@ def conduct_analyses():
         roi_dir = f'{sub_dir}derivatives/rois'
         temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
 
+        # existing ROI coordinates (original definition, unchanged)
         roi_coords = pd.read_csv(f'{roi_dir}/spheres/sphere_coords_hemisphere.csv')
 
         out_dir = f'{study_dir}/{ss}/ses-01/derivatives'
@@ -118,6 +116,7 @@ def conduct_analyses():
                         continue
                     coords = cc[['x', 'y', 'z']].values.tolist()[0]
 
+                    # read from the aCompCor FEAT dir
                     paths = [f'{temp_dir}/run-0{rn}/1stLevel{feat_suf}.feat/'
                              f'filtered_func_data_reg.nii.gz' for rn in rc]
                     missing = [p for p in paths if not os.path.exists(p)]
@@ -146,17 +145,9 @@ def conduct_analyses():
                     corr = np.arctanh(corr.ravel())
                     all_runs_ppi.append(brain_masker.inverse_transform(corr))
 
-                    # free the large per-combo arrays before the next iteration
-                    del filtered, img4d, brain_ts, phys, psy, ppi_reg, corr
-                    gc.collect()
-
                 if all_runs_ppi:
                     nib.save(image.mean_img(all_runs_ppi), ppi_file)
                     print(f'    saved {ppi_file} ({time.time() - t0:.0f}s)')
-
-                # free the accumulator before the next ROI/hemi
-                del all_runs_ppi
-                gc.collect()
 
 
 if __name__ == '__main__':
