@@ -25,7 +25,8 @@ mni_brain = os.path.join(os.environ['FSLDIR'], "data/standard/MNI152_T1_2mm_brai
 #sub_info = pd.read_csv(f'{curr_dir}/sub_info.csv')
 #subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 # --- ACOMPCOR COMPARISON: 5 completed subjects only ---
-subs = ['sub-025', 'sub-038', 'sub-083', 'sub-093', 'sub-107']
+sub_info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info.csv')
+subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 
 for sub in subs:
     print(f"Processing subject: {sub}")

@@ -24,10 +24,10 @@ pipeline = 'acompcor'  # 'original' or 'acompcor'
 
 def main():
     # --- ACOMPCOR COMPARISON: 5 completed subjects only ---
-    subs = ['sub-025', 'sub-038', 'sub-083', 'sub-093', 'sub-107']
+    #subs = ['sub-025', 'sub-038', 'sub-083', 'sub-093', 'sub-107']
     # --- ORIGINAL: all controls ---
-    #sub_info = pd.read_csv(sub_info_path)
-    #subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+    sub_info = pd.read_csv(sub_info_path)
+    subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 
     rois = ['pIPS', 'LO']
     hemispheres = ['left', 'right']

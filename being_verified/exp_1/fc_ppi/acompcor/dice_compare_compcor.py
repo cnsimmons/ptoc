@@ -19,7 +19,8 @@ from scipy import stats
 study_dir = "/lab_data/behrmannlab/vlad/ptoc"
 results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 
-subs = ['sub-025', 'sub-038', 'sub-083', 'sub-093', 'sub-107']
+sub_info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info.csv')
+subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
 rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 
