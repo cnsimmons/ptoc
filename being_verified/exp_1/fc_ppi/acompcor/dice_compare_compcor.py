@@ -1,13 +1,12 @@
 """
-Dice comparison: original vs aCompCor PPI for 5 subjects.
-Mirrors the notebook's analyze_dice_coefficients() but runs both pipelines 
-side-by-side and prints a comparison table.
+Dice comparison: original vs aCompCor PPI.
+Runs both pipelines side-by-side and prints a comparison table.
 
-Requires: per-subject MNI maps from native2mni.py (both original and aCompCor).
+Requires: per-subject MNI maps from native2mni (both original and aCompCor).
   - Original:  {deriv}/fc_mni/{sub}_{roi}_{hemi}_loc_ppi_mni.nii.gz
   - aCompCor:  {deriv}/fc_mni/{sub}_{roi}_{hemi}_loc_ppi_acompcor_mni.nii.gz
 
-Run: python dice_compare_acompcor.py
+Run: python dice_compare_compcor.py
 """
 
 import os
@@ -21,7 +20,8 @@ results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 
 sub_info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info.csv')
 subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-rois = ['pIPS', 'LO', 'PFS', 'V1']
+subs = [s for s in subs if s != 'sub-084']  # documented paper exclusion (N=18)
+rois = ['pIPS', 'LO']
 hemispheres = ['left', 'right']
 
 
@@ -131,14 +131,14 @@ print(f"\nCommon valid subjects: {len(common_subs)}: {common_subs}")
 
 if len(common_subs) == 0:
     print("ERROR: No subjects have both original and aCompCor MNI maps.")
-    print("Run native2mni.py for both pipelines first.")
+    print("Run native2mni for both pipelines first.")
     exit(1)
 
 orig_dice = compute_dice_for_pipeline(orig_data, common_subs)
 acomp_dice = compute_dice_for_pipeline(acomp_data, common_subs)
 
-summarize(orig_dice, 'ORIGINAL (5 sub)')
-summarize(acomp_dice, 'ACOMPCOR (5 sub)')
+summarize(orig_dice, f'ORIGINAL (N={len(common_subs)})')
+summarize(acomp_dice, f'ACOMPCOR (N={len(common_subs)})')
 
 # ---- PAIRED COMPARISON TABLE ----
 print(f"\n{'='*70}")
@@ -182,6 +182,6 @@ for sub in common_subs:
         'between_ventral_acomp': acomp_dice['between_ventral'][sub],
     })
 df = pd.DataFrame(rows)
-csv_path = f'{out_dir}/dice_original_vs_acompcor_5sub.csv'
+csv_path = f'{out_dir}/dice_original_vs_acompcor.csv'
 df.to_csv(csv_path, index=False)
 print(f"\nSaved: {csv_path}")

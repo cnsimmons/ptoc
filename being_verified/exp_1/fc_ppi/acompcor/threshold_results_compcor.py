@@ -28,6 +28,7 @@ def main():
     # --- ORIGINAL: all controls ---
     sub_info = pd.read_csv(sub_info_path)
     subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
+    subs = [s for s in subs if s != 'sub-084']  # documented paper exclusion (N=18)
     rois = ['LO', 'pIPS', 'PFS', 'V1']
     hemispheres = ['left', 'right']
     analysis_types = ['ppi']  # PPI only for aCompCor comparison

@@ -128,7 +128,7 @@ legend_elements = [
 fig.legend(handles=legend_elements, loc='lower center', ncol=3,
            fontsize=12, frameon=True, bbox_to_anchor=(0.5, 0.01))
 
-fig.suptitle('PPI Overlap: Original vs aCompCor (z > 2.58)', fontsize=16, fontweight='bold')
+fig.suptitle('PPI Overlap: Original vs aCompCor (N=18, z > 2.58)', fontsize=16, fontweight='bold')
 plt.tight_layout(rect=[0.04, 0.05, 1, 0.95])
 plt.savefig(f'{out_dir}/surface_overlap_comparison.png', dpi=300, bbox_inches='tight')
 plt.close('all')

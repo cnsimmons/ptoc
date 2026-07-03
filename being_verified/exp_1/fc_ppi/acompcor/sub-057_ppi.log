@@ -49,3 +49,116 @@ nohup: ignoring input
   warnings.warn(
 /user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
   full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/nilearn/image/image.py:217: UserWarning: The parameter 'fwhm' for smoothing is specified as 0. Setting it to None (no smoothing will be performed)
+  warnings.warn(
+/user_data/csimmon2/git_repos/ptoc/being_verified/exp_1/fc_ppi/acompcor/compcor_fc_ppi_arg.py:72: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  full_cov = pd.concat([full_cov, obj_cov, scr_cov])
+Processing subject: sub-057
+  LO left
+    saved /lab_data/behrmannlab/vlad/ptoc/sub-057/ses-01/derivatives/ppi/sub-057_LO_left_loc_ppi_acompcor.nii.gz (705s)
+  LO right
+    saved /lab_data/behrmannlab/vlad/ptoc/sub-057/ses-01/derivatives/ppi/sub-057_LO_right_loc_ppi_acompcor.nii.gz (699s)
+  pIPS left
+    saved /lab_data/behrmannlab/vlad/ptoc/sub-057/ses-01/derivatives/ppi/sub-057_pIPS_left_loc_ppi_acompcor.nii.gz (699s)
+  pIPS right
+    saved /lab_data/behrmannlab/vlad/ptoc/sub-057/ses-01/derivatives/ppi/sub-057_pIPS_right_loc_ppi_acompcor.nii.gz (698s)
+  PFS left
+    saved /lab_data/behrmannlab/vlad/ptoc/sub-057/ses-01/derivatives/ppi/sub-057_PFS_left_loc_ppi_acompcor.nii.gz (698s)
+  PFS right
+    saved /lab_data/behrmannlab/vlad/ptoc/sub-057/ses-01/derivatives/ppi/sub-057_PFS_right_loc_ppi_acompcor.nii.gz (707s)
+  V1 left
+    saved /lab_data/behrmannlab/vlad/ptoc/sub-057/ses-01/derivatives/ppi/sub-057_V1_left_loc_ppi_acompcor.nii.gz (708s)
+  V1 right
+    saved /lab_data/behrmannlab/vlad/ptoc/sub-057/ses-01/derivatives/ppi/sub-057_V1_right_loc_ppi_acompcor.nii.gz (703s)
