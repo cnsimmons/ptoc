@@ -28,8 +28,7 @@ def main():
     # --- ORIGINAL: all controls ---
     sub_info = pd.read_csv(sub_info_path)
     subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-
-    rois = ['pIPS', 'LO']
+    rois = ['LO', 'pIPS', 'PFS', 'V1']
     hemispheres = ['left', 'right']
     analysis_types = ['ppi']  # PPI only for aCompCor comparison
     #analysis_types = ['fc', 'ppi']  # original runs both

@@ -60,7 +60,7 @@ for sub in subs:
         ], check=True)
 
     # Loop through ROIs and hemispheres
-    for roi in ['LO','pIPS']:
+    for roi in ['LO', 'pIPS', 'PFS', 'V1']:
         for hemi in ['left', 'right']:
             
             # --- ORIGINAL FC to MNI (skipping for aCompCor comparison) ---

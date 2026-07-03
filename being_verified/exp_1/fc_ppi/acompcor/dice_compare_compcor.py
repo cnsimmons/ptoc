@@ -21,7 +21,7 @@ results_dir = '/user_data/csimmon2/git_repos/ptoc/results'
 
 sub_info = pd.read_csv('/user_data/csimmon2/git_repos/ptoc/sub_info.csv')
 subs = sub_info[sub_info['group'] == 'control']['sub'].tolist()
-rois = ['pIPS', 'LO']
+rois = ['pIPS', 'LO', 'PFS', 'V1']
 hemispheres = ['left', 'right']
 
 
