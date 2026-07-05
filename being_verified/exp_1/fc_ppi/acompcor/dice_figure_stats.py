@@ -5,10 +5,13 @@ Left panel  — Fig 3D recomputed on aCompCor maps:
               between-subject dorsal (pIPS), between-subject ventral (LO),
               within-subject dorsal-ventral (pIPS-LO).
 Right panel — within-subject region-pair Dice:
-              object pairs (pIPS-LO, pFS-pIPS, pFS-LO) vs control (V1-pIPS, V1-LO).
+              object pairs (pFS-pIPS, pFS-LO) vs control pairs (V1-pIPS, V1-LO).
 
-Prints/saves 4 paired arcsine-sqrt t-tests. N=18 (sub-084 excluded).
-Run: python dice_figure_stats.py
+Stats: 2x2 repeated-measures ANOVA on arcsine-sqrt Dice,
+       Seed (pIPS/LO) x Partner (object[pFS]/control[V1]).
+       Main effect of Partner = the R2.2/R2.3 test.
+
+N=18 (sub-084 excluded). Run: python dice_figure_stats.py
 """
 
 import os
@@ -16,6 +19,7 @@ import numpy as np
 import pandas as pd
 import nibabel as nib
 from scipy import stats
+from statsmodels.stats.anova import AnovaRM
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -91,6 +95,7 @@ def bar_with_dots(ax, x, vals, color, width=0.6):
                alpha=0.45, zorder=2, linewidths=0)
 
 
+# ---- load ----
 data, valid = load_maps(subs)
 print(f"\nValid subjects (all 4 ROIs, both hemis): {len(valid)}\n")
 
@@ -102,8 +107,9 @@ w_pfs_lo   = within_pair(data, valid, "PFS", "LO")
 w_v1_pips  = within_pair(data, valid, "V1", "pIPS")
 w_v1_lo    = within_pair(data, valid, "V1", "LO")
 
+# ---- figure ----
 fig, (axL, axR) = plt.subplots(1, 2, figsize=(11, 4.5),
-                               gridspec_kw={"width_ratios": [3, 5]})
+                               gridspec_kw={"width_ratios": [3, 4]})
 
 L = [("between-subj\ndorsal", bt_dorsal, TEAL),
      ("between-subj\nventral", bt_ventral, PINK),
@@ -119,7 +125,6 @@ R = [("pFS-pIPS", w_pfs_pips, PURPLE),
      ("pFS-LO", w_pfs_lo, PURPLE),
      ("V1-pIPS", w_v1_pips, GRAY),
      ("V1-LO", w_v1_lo, GRAY)]
-
 for i, (lab, v, c) in enumerate(R):
     bar_with_dots(axR, i, v, c)
 axR.set_xticks(range(len(R)))
@@ -140,35 +145,42 @@ fig_path = f"{out_dir}/dice_overlap_figure.png"
 fig.savefig(fig_path, dpi=300, bbox_inches="tight")
 print(f"Saved figure: {fig_path}")
 
+# ---- stats: 2x2 RM-ANOVA ----
 asin = lambda v: np.arcsin(np.sqrt(v))
 
+cells = {
+    ("pIPS", "object"):  w_pfs_pips,
+    ("pIPS", "control"): w_v1_pips,
+    ("LO",   "object"):  w_pfs_lo,
+    ("LO",   "control"): w_v1_lo,
+}
 
-def paired(obj_v, ctrl_v, obj_name, ctrl_name):
-    o, c = asin(obj_v), asin(ctrl_v)
-    d = o - c
-    t, p = stats.ttest_rel(o, c)
-    return {"comparison": f"{obj_name} vs {ctrl_name}",
-            "obj_mean": obj_v.mean(), "ctrl_mean": ctrl_v.mean(),
-            "t": t, "df": len(obj_v) - 1, "p": p,
-            "dz": d.mean() / d.std(ddof=1)}
+long_rows = []
+for (seed, partner), vals in cells.items():
+    for sub, v in zip(valid, vals):
+        long_rows.append({"subject": sub, "seed": seed,
+                          "partner": partner, "dice_asin": asin(v)})
+long_df = pd.DataFrame(long_rows)
 
+aov = AnovaRM(long_df, depvar="dice_asin", subject="subject",
+              within=["seed", "partner"]).fit()
+print("\n2x2 RM-ANOVA (arcsine-sqrt Dice):")
+print(aov.anova_table)
 
-tests = [
-    paired(w_pips_lo,  w_v1_pips, "pIPS-LO", "V1-pIPS"),
-    paired(w_pips_lo,  w_v1_lo,   "pIPS-LO", "V1-LO"),
-    paired(w_pfs_pips, w_v1_pips, "pFS-pIPS", "V1-pIPS"),
-    paired(w_pfs_lo,   w_v1_lo,   "pFS-LO", "V1-LO"),
-]
+print("\nCell means (Dice):")
+for (seed, partner), vals in cells.items():
+    print(f"  {seed:4s} x {partner:7s}: {np.nanmean(vals):.3f}")
 
-print(f"\n{'comparison':22s}{'obj':>7s}{'ctrl':>7s}{'t':>8s}{'p':>11s}{'dz':>7s}")
-for r in tests:
-    print(f"{r['comparison']:22s}{r['obj_mean']:7.3f}{r['ctrl_mean']:7.3f}"
-          f"{r['t']:8.2f}{r['p']:11.2e}{r['dz']:7.2f}")
+obj_all  = np.concatenate([w_pfs_pips, w_pfs_lo])
+ctrl_all = np.concatenate([w_v1_pips, w_v1_lo])
+print(f"\nPartner marginal — object {obj_all.mean():.3f}  vs  control {ctrl_all.mean():.3f}")
+print(f"pIPS-LO (main-paper pair, left panel): {w_pips_lo.mean():.3f}")
 
-pd.DataFrame(tests).to_csv(f"{out_dir}/dice_stats.csv", index=False)
+# ---- save ----
+aov.anova_table.to_csv(f"{out_dir}/dice_anova.csv")
 pd.DataFrame({"subject": valid, "between_dorsal": bt_dorsal,
               "between_ventral": bt_ventral, "pIPS_LO": w_pips_lo,
               "PFS_pIPS": w_pfs_pips, "PFS_LO": w_pfs_lo,
               "V1_pIPS": w_v1_pips, "V1_LO": w_v1_lo}).to_csv(
               f"{out_dir}/dice_per_subject.csv", index=False)
-print(f"\nSaved: dice_stats.csv, dice_per_subject.csv  (in {out_dir})")
+print(f"\nSaved: dice_anova.csv, dice_per_subject.csv  (in {out_dir})")
