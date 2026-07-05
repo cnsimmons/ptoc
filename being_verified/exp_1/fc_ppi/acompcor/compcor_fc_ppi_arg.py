@@ -1,260 +1,207 @@
-#!/usr/bin/env python3
 """
-aCompCor FC and PPI analysis for Experiment 1.
+aCompCor PPI network-overlap: figure + stats (R2.2 V1 control, R2.3 pFS).
 
-Reads from 1stLevel_acompcor.feat directories (aCompCor-preprocessed FEAT outputs).
-Uses sequential run loading to keep peak memory ~35 GB.
+Left panel  — Fig 3D recomputed on aCompCor maps:
+              between-subject dorsal, between-subject ventral,
+              within-subject dorsal-ventral (pIPS-LO).
+Right panel — within-subject region-pair Dice:
+              object pairs (pFS-pIPS, pFS-LO) vs control pairs (V1-pIPS, V1-LO).
 
-FC branch:  seed is z-scored before correlation → output is true Pearson's r.
-PPI branch: seed is NOT z-scored → matches existing aCompCor PPI outputs.
+Stats: mirrors the manuscript's Dice analysis.
+       arcsine-sqrt transform -> one-way repeated-measures ANOVA (factor = pair)
+       -> Holm-Bonferroni post-hoc. Stream(object)-vs-control is the post-hoc set.
+       Balanced (every subject has all pairs); no averaging.
 
-Usage:
-    # FC only (default)
-    python compcor_fc_ppi_arg.py sub-025 sub-038 sub-083
-
-    # FC + PPI
-    python compcor_fc_ppi_arg.py sub-025 sub-038 --ppi
-
-    # PPI only
-    python compcor_fc_ppi_arg.py sub-025 sub-038 --ppi --no-fc
-
-    # Force overwrite existing files
-    python compcor_fc_ppi_arg.py sub-025 --force
+N=18 (sub-084 excluded). Run: python dice_figure_stats.py
 """
 
 import os
-import sys
-import gc
-import time
-import argparse
 import numpy as np
 import pandas as pd
 import nibabel as nib
-from nilearn import image, input_data
-from nilearn.maskers import NiftiMasker
-from nilearn.glm.first_level import compute_regressor
+from scipy import stats
+from statsmodels.stats.anova import AnovaRM
+from statsmodels.stats.multitest import multipletests
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 
-# ── paths ──────────────────────────────────────────────────────────────────────
-curr_dir = '/user_data/csimmon2/git_repos/ptoc'
-sys.path.insert(0, curr_dir)
-import ptoc_params as params
+study_dir = "/lab_data/behrmannlab/vlad/ptoc"
+results_dir = "/user_data/csimmon2/git_repos/ptoc/results"
+out_dir = f"{results_dir}/acompcor_comparison"
+os.makedirs(out_dir, exist_ok=True)
 
-raw_dir = params.raw_dir                          # /lab_data/behrmannlab/vlad/hemispace
-study_dir = '/lab_data/behrmannlab/vlad/ptoc'
+sub_info = pd.read_csv("/user_data/csimmon2/git_repos/ptoc/sub_info.csv")
+subs = sub_info[sub_info["group"] == "control"]["sub"].tolist()
+subs = [s for s in subs if s != "sub-084"]        # documented exclusion (N=18)
 
-# ── analysis parameters ────────────────────────────────────────────────────────
-rois = ['LO', 'pIPS', 'PFS', 'V1']
-hemispheres = ['left', 'right']
-run_num = 3
-run_combos = [[1, 2], [1, 3], [2, 3]]
-vols_per_run = 184
-tr = 2.0
-
-
-# ── helper functions ───────────────────────────────────────────────────────────
-
-def extract_roi_sphere(img, coords):
-    """Extract mean timeseries from 6 mm sphere. Returns (N, 1) array."""
-    masker = input_data.NiftiSpheresMasker([tuple(coords)], radius=6)
-    ts = masker.fit_transform(img)
-    return np.mean(ts, axis=1).reshape(-1, 1)
+rois = ["pIPS", "LO", "PFS", "V1"]
+hemispheres = ["left", "right"]
+TEAL, PINK, PURPLE, GRAY = "#4ac0c0", "#ff9b83", "#9467bd", "#9aa0a6"
 
 
-def make_psy_cov(runs, ss):
-    """Object (+1) vs scramble (−1) psychological covariate.
-
-    Matches the original exp1_fc_ppi.py behaviour exactly:
-    single-run time axis, onsets from both runs overlaid.
-    """
-    cov_dir = f'{raw_dir}/{ss}/ses-01/covs'
-    times = np.arange(0, vols_per_run * tr, tr)          # single-run length
-    full_cov = pd.DataFrame(columns=['onset', 'duration', 'value'])
-
-    for rn in runs:
-        ss_num = ss.split('-')[1]
-        obj_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_Object.txt'
-        scr_file = f'{cov_dir}/catloc_{ss_num}_run-0{rn}_Scramble.txt'
-
-        if not os.path.exists(obj_file) or not os.path.exists(scr_file):
-            print(f'    covariate file missing for run {rn}')
-            continue
-
-        obj_cov = pd.read_csv(obj_file, sep='\t', header=None,
-                              names=['onset', 'duration', 'value'])
-        scr_cov = pd.read_csv(scr_file, sep='\t', header=None,
-                              names=['onset', 'duration', 'value'])
-        scr_cov['value'] *= -1
-        full_cov = pd.concat([full_cov, obj_cov, scr_cov])
-
-    full_cov = full_cov.sort_values(by='onset').reset_index(drop=True)
-    cov = full_cov.to_numpy()
-    cov = cov[cov[:, 0] < times[-1]]                     # drop onsets past end
-
-    if cov.shape[0] == 0:
-        print('    no valid covariate data — returning zeros')
-        return np.zeros((vols_per_run, 1))
-
-    psy, _ = compute_regressor(cov.T, 'spm', times)
-    return psy
+def dice(a, b):
+    a, b = (a > 0).astype(int), (b > 0).astype(int)
+    tot = a.sum() + b.sum()
+    return np.nan if tot == 0 else 2.0 * (a * b).sum() / tot
 
 
-# ── main analysis ──────────────────────────────────────────────────────────────
-
-def conduct_analyses(subs, do_fc=True, do_ppi=False, force=False):
-    for ss in subs:
-        print(f'\n=== {ss} ===')
-
-        sub_dir  = f'{study_dir}/{ss}/ses-01/derivatives'
-        temp_dir = f'{raw_dir}/{ss}/ses-01/derivatives/fsl/loc'
-        roi_dir  = f'{study_dir}/{ss}/ses-01/derivatives/rois'
-
-        # ── coordinates ────────────────────────────────────────────────────
-        coord_file = f'{roi_dir}/spheres/sphere_coords_hemisphere.csv'
-        if not os.path.exists(coord_file):
-            print('  missing coordinate file — skipping subject')
-            continue
-        roi_coords = pd.read_csv(coord_file)
-
-        # ── brain mask ─────────────────────────────────────────────────────
-        mask_path = f'{raw_dir}/{ss}/ses-01/anat/{ss}_ses-01_T1w_brain_mask.nii.gz'
-        if not os.path.exists(mask_path):
-            print('  missing brain mask — skipping subject')
-            continue
-        whole_brain_mask = nib.load(mask_path)
-        brain_masker = NiftiMasker(whole_brain_mask, smoothing_fwhm=0,
-                                   standardize=True)
-
-        # ── output dirs ────────────────────────────────────────────────────
-        if do_fc:
-            os.makedirs(f'{sub_dir}/fc', exist_ok=True)
-        if do_ppi:
-            os.makedirs(f'{sub_dir}/ppi', exist_ok=True)
-
-        # ── loop over ROIs × hemispheres ───────────────────────────────────
-        for rr in rois:
+def load_maps(subs):
+    data, valid = {}, []
+    for sub in subs:
+        data[sub], ok = {}, True
+        for roi in rois:
+            arrs = []
             for hemi in hemispheres:
-                t0 = time.time()
-
-                fc_file  = f'{sub_dir}/fc/{ss}_{rr}_{hemi}_loc_fc_acompcor.nii.gz'
-                ppi_file = f'{sub_dir}/ppi/{ss}_{rr}_{hemi}_loc_ppi_acompcor.nii.gz'
-
-                run_fc  = do_fc  and (force or not os.path.exists(fc_file))
-                run_ppi = do_ppi and (force or not os.path.exists(ppi_file))
-
-                if not run_fc and not run_ppi:
-                    print(f'  {rr} {hemi}: exists — skipping')
-                    continue
-
-                tags = []
-                if run_fc:  tags.append('FC')
-                if run_ppi: tags.append('PPI')
-                print(f'  {rr} {hemi} [{"+".join(tags)}] ...', end=' ',
-                      flush=True)
-
-                all_fc  = []
-                all_ppi = []
-
-                for rcn, rc in enumerate(run_combos):
-
-                    # ── look up coordinates ────────────────────────────────
-                    cc = roi_coords[
-                        (roi_coords['index'] == rcn) &
-                        (roi_coords['task'] == 'loc') &
-                        (roi_coords['roi'] == rr) &
-                        (roi_coords['hemisphere'] == hemi)
-                    ]
-                    if cc.empty:
-                        continue
-                    coords = cc[['x', 'y', 'z']].values.tolist()[0]
-
-                    # ── sequential loading: one run at a time ──────────────
-                    run_phys  = []
-                    run_brain = []
-                    valid = True
-
-                    for rn in rc:
-                        fpath = (f'{temp_dir}/run-0{rn}/'
-                                 f'1stLevel_acompcor.feat/'
-                                 f'filtered_func_data_reg.nii.gz')
-                        if not os.path.exists(fpath):
-                            print(f'\n    missing {fpath}')
-                            valid = False
-                            break
-
-                        img = image.clean_img(image.load_img(fpath),
-                                              standardize=True)
-
-                        run_phys.append(extract_roi_sphere(img, coords))
-                        run_brain.append(brain_masker.fit_transform(img))
-
-                        del img
-                        gc.collect()
-
-                    if not valid:
-                        continue
-
-                    # ── concatenate across runs ────────────────────────────
-                    phys     = np.concatenate(run_phys,  axis=0)
-                    brain_ts = np.concatenate(run_brain, axis=0)
-                    del run_phys, run_brain
-                    gc.collect()
-
-                    # trim to shorter if mismatch
-                    n = min(phys.shape[0], brain_ts.shape[0])
-                    phys     = phys[:n]
-                    brain_ts = brain_ts[:n]
-
-                    # ── FC: standardised seed → true Pearson's r ───────────
-                    if run_fc:
-                        phys_z = (phys - phys.mean()) / phys.std()
-                        corr = np.dot(brain_ts.T, phys_z) / n
-                        corr = np.arctanh(corr.ravel())
-                        all_fc.append(brain_masker.inverse_transform(corr))
-                        del phys_z, corr
-
-                    # ── PPI: unstandardised seed (matches existing outputs) ─
-                    if run_ppi:
-                        psy = make_psy_cov(rc, ss)
-                        n_ppi = min(phys.shape[0], psy.shape[0],
-                                    brain_ts.shape[0])
-                        ppi_reg = phys[:n_ppi] * psy[:n_ppi]
-                        bt_ppi  = brain_ts[:n_ppi]
-                        corr = np.dot(bt_ppi.T, ppi_reg) / n_ppi
-                        corr = np.arctanh(corr.ravel())
-                        all_ppi.append(brain_masker.inverse_transform(corr))
-                        del psy, ppi_reg, bt_ppi, corr
-
-                    del phys, brain_ts
-                    gc.collect()
-
-                # ── save ───────────────────────────────────────────────────
-                if run_fc and all_fc:
-                    nib.save(image.mean_img(all_fc), fc_file)
-                if run_ppi and all_ppi:
-                    nib.save(image.mean_img(all_ppi), ppi_file)
-
-                del all_fc, all_ppi
-                gc.collect()
-
-                print(f'{time.time() - t0:.0f}s')
+                f = f"{study_dir}/{sub}/ses-01/derivatives/fc_mni/{sub}_{roi}_{hemi}_loc_ppi_acompcor_mni.nii.gz"
+                if os.path.exists(f):
+                    arrs.append(nib.load(f).get_fdata())
+                else:
+                    print(f"  missing: {f}"); ok = False
+            if len(arrs) == 2:
+                data[sub][roi] = (arrs[0] + arrs[1]) / 2
+            else:
+                ok = False
+        if ok:
+            valid.append(sub)
+    return data, valid
 
 
-# ── CLI ────────────────────────────────────────────────────────────────────────
+def within_pair(data, valid, a, b):
+    return np.array([dice(data[s][a], data[s][b]) for s in valid])
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='aCompCor FC / PPI for Experiment 1')
-    parser.add_argument('subjects', nargs='+',
-                        help='Subject IDs (e.g. sub-025 sub-038)')
-    parser.add_argument('--ppi', action='store_true', default=False,
-                        help='Also run PPI (default: FC only)')
-    parser.add_argument('--no-fc', action='store_true', default=False,
-                        help='Skip FC (use with --ppi for PPI-only)')
-    parser.add_argument('--force', action='store_true', default=False,
-                        help='Overwrite existing output files')
-    args = parser.parse_args()
 
-    conduct_analyses(args.subjects,
-                     do_fc  = not args.no_fc,
-                     do_ppi = args.ppi,
-                     force  = args.force)
+def between_roi(data, valid, roi):
+    vals = []
+    for s in valid:
+        pw = [dice(data[s][roi], data[o][roi]) for o in valid if o != s]
+        vals.append(np.mean(pw))
+    return np.array(vals)
+
+
+def ci95(v):
+    v = v[~np.isnan(v)]
+    m = v.mean()
+    lo, hi = stats.t.interval(0.95, len(v) - 1, loc=m, scale=stats.sem(v))
+    return m, lo, hi
+
+
+def bar_with_dots(ax, x, vals, color, width=0.6):
+    m, lo, hi = ci95(vals)
+    ax.bar(x, m, width=width, color=color, edgecolor="none", zorder=1)
+    ax.errorbar(x, m, yerr=[[m - lo], [hi - m]], fmt="none",
+                ecolor="#333333", elinewidth=1.5, capsize=4, zorder=3)
+    jit = (np.random.RandomState(0).rand(len(vals)) - 0.5) * width * 0.5
+    ax.scatter(np.full(len(vals), x) + jit, vals, s=14, color="#333333",
+               alpha=0.45, zorder=2, linewidths=0)
+
+
+# ---- load ----
+data, valid = load_maps(subs)
+print(f"\nValid subjects (all 4 ROIs, both hemis): {len(valid)}\n")
+
+bt_dorsal  = between_roi(data, valid, "pIPS")
+bt_ventral = between_roi(data, valid, "LO")
+w_pips_lo  = within_pair(data, valid, "pIPS", "LO")
+w_pfs_pips = within_pair(data, valid, "PFS", "pIPS")
+w_pfs_lo   = within_pair(data, valid, "PFS", "LO")
+w_v1_pips  = within_pair(data, valid, "V1", "pIPS")
+w_v1_lo    = within_pair(data, valid, "V1", "LO")
+
+# ---- figure ----
+fig, (axL, axR) = plt.subplots(1, 2, figsize=(11, 4.5),
+                               gridspec_kw={"width_ratios": [3, 4]})
+
+L = [("between-subj\ndorsal", bt_dorsal, TEAL),
+     ("between-subj\nventral", bt_ventral, PINK),
+     ("within-subj\ndorsal-ventral", w_pips_lo, PURPLE)]
+for i, (lab, v, c) in enumerate(L):
+    bar_with_dots(axL, i, v, c)
+axL.set_xticks(range(len(L)))
+axL.set_xticklabels([l for l, _, _ in L], fontsize=9)
+axL.set_ylabel("Dice coefficient")
+axL.set_title("Network overlap (Fig 3D, aCompCor)", fontsize=10)
+
+R = [("pFS-pIPS", w_pfs_pips, PURPLE),
+     ("pFS-LO", w_pfs_lo, PURPLE),
+     ("V1-pIPS", w_v1_pips, GRAY),
+     ("V1-LO", w_v1_lo, GRAY)]
+for i, (lab, v, c) in enumerate(R):
+    bar_with_dots(axR, i, v, c)
+axR.set_xticks(range(len(R)))
+axR.set_xticklabels([l for l, _, _ in R], fontsize=9)
+axR.set_title("Within-subject region-pair overlap", fontsize=10)
+axR.legend(handles=[Patch(color=PURPLE, label="object-object"),
+                    Patch(color=GRAY, label="control (V1)")],
+           frameon=False, fontsize=9, loc="upper right")
+
+for ax in (axL, axR):
+    ax.set_ylim(0, 1)
+    ax.grid(axis="y", alpha=0.2)
+    for sp in ("top", "right"):
+        ax.spines[sp].set_visible(False)
+
+plt.tight_layout()
+fig_path = f"{out_dir}/dice_overlap_figure.png"
+fig.savefig(fig_path, dpi=300, bbox_inches="tight")
+print(f"Saved figure: {fig_path}")
+
+# ---- stats: mirror manuscript Dice analysis ----
+asin = lambda v: np.arcsin(np.sqrt(v))
+
+# object = stream pairs (incl. the paper's dorsal-ventral pair); control = V1 pairs.
+# Drop the two "pIPS-LO" lines if you'd rather test only pFS pairs vs V1.
+pairs = {
+    "pIPS-LO":  ("object",  w_pips_lo),
+    "pFS-pIPS": ("object",  w_pfs_pips),
+    "pFS-LO":   ("object",  w_pfs_lo),
+    "V1-pIPS":  ("control", w_v1_pips),
+    "V1-LO":    ("control", w_v1_lo),
+}
+
+rows = []
+for name, (grp, vals) in pairs.items():
+    for sub, v in zip(valid, vals):
+        rows.append({"subject": sub, "pair": name, "group": grp,
+                     "dice_asin": asin(v)})
+sdf = pd.DataFrame(rows)
+
+aov = AnovaRM(sdf, depvar="dice_asin", subject="subject", within=["pair"]).fit()
+print("\nOne-way RM-ANOVA (arcsine-sqrt Dice), factor = pair:")
+print(aov.anova_table)
+
+obj_pairs  = [k for k, (g, _) in pairs.items() if g == "object"]
+ctrl_pairs = [k for k, (g, _) in pairs.items() if g == "control"]
+
+comps, tvals, pvals, dzs = [], [], [], []
+for op in obj_pairs:
+    for cp in ctrl_pairs:
+        o, c = asin(pairs[op][1]), asin(pairs[cp][1])
+        d = o - c
+        t, p = stats.ttest_rel(o, c)
+        comps.append(f"{op} vs {cp}")
+        tvals.append(t); pvals.append(p)
+        dzs.append(d.mean() / d.std(ddof=1))
+
+_, p_holm, _, _ = multipletests(pvals, method="holm")
+
+print("\nPost-hoc (paired, Holm-corrected over the object-vs-control family):")
+print(f"  {'comparison':22s}{'t':>8s}{'p_holm':>11s}{'dz':>7s}")
+for comp, t, ph, dz in zip(comps, tvals, p_holm, dzs):
+    print(f"  {comp:22s}{t:8.2f}{ph:11.2e}{dz:7.2f}")
+
+print("\nPair means (Dice):")
+for name, (grp, vals) in pairs.items():
+    print(f"  {name:9s} [{grp:7s}]: {np.nanmean(vals):.3f}")
+
+# ---- save ----
+pd.DataFrame({"comparison": comps, "t": tvals, "p_uncorrected": pvals,
+              "p_holm": p_holm, "dz": dzs}).to_csv(
+              f"{out_dir}/dice_posthoc.csv", index=False)
+aov.anova_table.to_csv(f"{out_dir}/dice_anova.csv")
+pd.DataFrame({"subject": valid, "pIPS_LO": w_pips_lo, "PFS_pIPS": w_pfs_pips,
+              "PFS_LO": w_pfs_lo, "V1_pIPS": w_v1_pips, "V1_LO": w_v1_lo,
+              "between_dorsal": bt_dorsal, "between_ventral": bt_ventral}).to_csv(
+              f"{out_dir}/dice_per_subject.csv", index=False)
+print(f"\nSaved: dice_anova.csv, dice_posthoc.csv, dice_per_subject.csv  (in {out_dir})")
