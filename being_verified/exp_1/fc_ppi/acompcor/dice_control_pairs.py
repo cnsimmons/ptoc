@@ -19,7 +19,7 @@ subs = [s for s in subs if s != "sub-084"]      # documented exclusion (N=18)
 
 rois = ["pIPS", "LO", "PFS", "V1"]
 hemispheres = ["left", "right"]
-pairs = [("PFS", "pIPS"), ("V1", "pIPS"), ("V1", "LO")]
+pairs = [("PFS", "pIPS"), ("V1", "pIPS"), ("V1", "LO"), ("PFS", "LO")]
 
 
 def dice(a, b):
