@@ -4,6 +4,7 @@ aCompCor PPI network-overlap: figure + stats (R2.2 V1 control, R2.3 pFS).
 RIGHT panel (new): within-subject Dice for 4 region pairs.
   Test: one-way RM-ANOVA (factor = pair, 4 levels) + planned group contrast
         object pairs (pFS-pIPS, pFS-LO) +1 vs control pairs (V1-pIPS, V1-LO) -1.
+  Plus within-group post-hocs (pFS-pIPS vs pFS-LO; V1-pIPS vs V1-LO), Holm.
 LEFT panel: Fig 3D reproduced on aCompCor maps (between-dorsal, between-ventral,
   within-subject dorsal-ventral). Test: RM-ANOVA (3 levels) + Holm post-hocs,
   within-DV vs each between-subject bar. Mirrors the manuscript.
@@ -156,6 +157,23 @@ print("\nRIGHT panel — RM-ANOVA (4 levels), factor = pair:")
 print(aovR.anova_table)
 print(f"\nGroup contrast object(+1) vs control(-1), n={n}: "
       f"t({n-1}) = {t_c:.2f}, p = {p_c:.2e}, dz = {dz_c:.2f}")
+
+# within-group post-hocs (do the two object pairs / two control pairs differ?)
+within_tests = [("pFS-pIPS", "pFS-LO"), ("V1-pIPS", "V1-LO")]
+wc, wt, wp, wdz = [], [], [], []
+for a, b in within_tests:
+    oa, ob = asin(right[a]), asin(right[b])
+    d = oa - ob
+    t, p = stats.ttest_rel(oa, ob)
+    wc.append(f"{a} vs {b}"); wt.append(t); wp.append(p)
+    wdz.append(d.mean() / d.std(ddof=1))
+_, wp_holm, _, _ = multipletests(wp, method="holm")
+
+print("\nWithin-group post-hocs (paired, Holm-corrected):")
+print(f"  {'comparison':22s}{'t':>8s}{'p_holm':>11s}{'dz':>7s}")
+for c, t, ph, dz in zip(wc, wt, wp_holm, wdz):
+    print(f"  {c:22s}{t:8.2f}{ph:11.2e}{dz:7.2f}")
+
 print("\nPair means (Dice):")
 for k, arr in {**left, **right}.items():
     print(f"  {k:16s}: {np.nanmean(arr):.3f}")
@@ -210,8 +228,12 @@ aovL.anova_table.to_csv(f"{out_dir}/dice_anova_left.csv")
 pd.DataFrame([{"contrast": "object(+1) vs control(-1)", "t": t_c,
                "df": n - 1, "p": p_c, "dz": dz_c}]).to_csv(
               f"{out_dir}/dice_contrast.csv", index=False)
+pd.DataFrame({"comparison": wc, "t": wt, "p_uncorrected": wp,
+              "p_holm": wp_holm, "dz": wdz}).to_csv(
+              f"{out_dir}/dice_within_group_posthoc.csv", index=False)
 pd.DataFrame({"subject": valid, "pIPS_LO": w_pips_lo, "PFS_pIPS": w_pfs_pips,
               "PFS_LO": w_pfs_lo, "V1_pIPS": w_v1_pips, "V1_LO": w_v1_lo,
               "between_dorsal": bt_dorsal, "between_ventral": bt_ventral}).to_csv(
               f"{out_dir}/dice_per_subject.csv", index=False)
-print("Saved: dice_anova_right.csv, dice_anova_left.csv, dice_contrast.csv, dice_per_subject.csv")
+print("Saved: dice_anova_right.csv, dice_anova_left.csv, dice_contrast.csv, "
+      "dice_within_group_posthoc.csv, dice_per_subject.csv")
