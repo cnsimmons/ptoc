@@ -1,15 +1,11 @@
 """
 aCompCor PPI network-overlap: figure + stats (R2.2 V1 control, R2.3 pFS).
 
-Left panel  — Fig 3D recomputed on aCompCor maps:
-              between-subject dorsal (pIPS), between-subject ventral (LO),
-              within-subject dorsal-ventral (pIPS-LO).
-Right panel — within-subject region-pair Dice:
-              object pairs (pFS-pIPS, pFS-LO) vs control pairs (V1-pIPS, V1-LO).
-
-Stats: 2x2 repeated-measures ANOVA on arcsine-sqrt Dice,
-       Seed (pIPS/LO) x Partner (object[pFS]/control[V1]).
-       Main effect of Partner = the R2.2/R2.3 test.
+Stats: arcsine-sqrt Dice -> one-way repeated-measures ANOVA (single factor = pair,
+       5 levels). Object-vs-control tested two ways on top of that ANOVA:
+       (1) planned contrast, object pairs (+2 each) vs control pairs (-3 each);
+       (2) pairwise post-hocs (each object pair vs each V1 pair), Holm-corrected.
+       Balanced: every subject has all 5 pairs. No averaging.
 
 N=18 (sub-084 excluded). Run: python dice_figure_stats.py
 """
@@ -20,6 +16,7 @@ import pandas as pd
 import nibabel as nib
 from scipy import stats
 from statsmodels.stats.anova import AnovaRM
+from statsmodels.stats.multitest import multipletests
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -145,42 +142,70 @@ fig_path = f"{out_dir}/dice_overlap_figure.png"
 fig.savefig(fig_path, dpi=300, bbox_inches="tight")
 print(f"Saved figure: {fig_path}")
 
-# ---- stats: 2x2 RM-ANOVA ----
+# ---- stats: one-way RM-ANOVA (factor = pair), then object-vs-control ----
 asin = lambda v: np.arcsin(np.sqrt(v))
 
-cells = {
-    ("pIPS", "object"):  w_pfs_pips,
-    ("pIPS", "control"): w_v1_pips,
-    ("LO",   "object"):  w_pfs_lo,
-    ("LO",   "control"): w_v1_lo,
+pairs = {
+    "pIPS-LO":  ("object",  w_pips_lo),
+    "pFS-pIPS": ("object",  w_pfs_pips),
+    "pFS-LO":   ("object",  w_pfs_lo),
+    "V1-pIPS":  ("control", w_v1_pips),
+    "V1-LO":    ("control", w_v1_lo),
 }
 
-long_rows = []
-for (seed, partner), vals in cells.items():
+rows = []
+for name, (grp, vals) in pairs.items():
     for sub, v in zip(valid, vals):
-        long_rows.append({"subject": sub, "seed": seed,
-                          "partner": partner, "dice_asin": asin(v)})
-long_df = pd.DataFrame(long_rows)
+        rows.append({"subject": sub, "pair": name, "dice_asin": asin(v)})
+sdf = pd.DataFrame(rows)
 
-aov = AnovaRM(long_df, depvar="dice_asin", subject="subject",
-              within=["seed", "partner"]).fit()
-print("\n2x2 RM-ANOVA (arcsine-sqrt Dice):")
+aov = AnovaRM(sdf, depvar="dice_asin", subject="subject", within=["pair"]).fit()
+print("\nOne-way RM-ANOVA (arcsine-sqrt Dice), factor = pair (5 levels):")
 print(aov.anova_table)
 
-print("\nCell means (Dice):")
-for (seed, partner), vals in cells.items():
-    print(f"  {seed:4s} x {partner:7s}: {np.nanmean(vals):.3f}")
+# planned contrast: object pairs (+2) vs control pairs (-3), per subject
+weights = {"pIPS-LO": 2, "pFS-pIPS": 2, "pFS-LO": 2, "V1-pIPS": -3, "V1-LO": -3}
+contrast = np.zeros(len(valid))
+for name, (grp, vals) in pairs.items():
+    contrast += weights[name] * asin(vals)
+t_c, p_c = stats.ttest_1samp(contrast, 0.0)
+dz_c = contrast.mean() / contrast.std(ddof=1)
+print(f"\nPlanned contrast object(+2) vs control(-3), n={len(valid)}: "
+      f"t({len(valid)-1}) = {t_c:.2f}, p = {p_c:.2e}, dz = {dz_c:.2f}")
 
-obj_all  = np.concatenate([w_pfs_pips, w_pfs_lo])
-ctrl_all = np.concatenate([w_v1_pips, w_v1_lo])
-print(f"\nPartner marginal — object {obj_all.mean():.3f}  vs  control {ctrl_all.mean():.3f}")
-print(f"pIPS-LO (main-paper pair, left panel): {w_pips_lo.mean():.3f}")
+# pairwise post-hocs (each object pair vs each V1 pair), Holm-corrected
+obj_pairs  = [k for k, (g, _) in pairs.items() if g == "object"]
+ctrl_pairs = [k for k, (g, _) in pairs.items() if g == "control"]
+comps, tvals, pvals, dzs = [], [], [], []
+for op in obj_pairs:
+    for cp in ctrl_pairs:
+        o, c = asin(pairs[op][1]), asin(pairs[cp][1])
+        d = o - c
+        t, p = stats.ttest_rel(o, c)
+        comps.append(f"{op} vs {cp}")
+        tvals.append(t); pvals.append(p); dzs.append(d.mean() / d.std(ddof=1))
+_, p_holm, _, _ = multipletests(pvals, method="holm")
+
+print("\nPost-hoc (paired, Holm-corrected):")
+print(f"  {'comparison':22s}{'t':>8s}{'p_holm':>11s}{'dz':>7s}")
+for comp, t, ph, dz in zip(comps, tvals, p_holm, dzs):
+    print(f"  {comp:22s}{t:8.2f}{ph:11.2e}{dz:7.2f}")
+
+print("\nPair means (Dice):")
+for name, (grp, vals) in pairs.items():
+    print(f"  {name:9s} [{grp:7s}]: {np.nanmean(vals):.3f}")
 
 # ---- save ----
 aov.anova_table.to_csv(f"{out_dir}/dice_anova.csv")
-pd.DataFrame({"subject": valid, "between_dorsal": bt_dorsal,
-              "between_ventral": bt_ventral, "pIPS_LO": w_pips_lo,
-              "PFS_pIPS": w_pfs_pips, "PFS_LO": w_pfs_lo,
-              "V1_pIPS": w_v1_pips, "V1_LO": w_v1_lo}).to_csv(
+pd.DataFrame({"comparison": comps, "t": tvals, "p_uncorrected": pvals,
+              "p_holm": p_holm, "dz": dzs}).to_csv(
+              f"{out_dir}/dice_posthoc.csv", index=False)
+pd.DataFrame([{"contrast": "object(+2) vs control(-3)", "t": t_c,
+               "df": len(valid) - 1, "p": p_c, "dz": dz_c}]).to_csv(
+              f"{out_dir}/dice_contrast.csv", index=False)
+pd.DataFrame({"subject": valid, "pIPS_LO": w_pips_lo, "PFS_pIPS": w_pfs_pips,
+              "PFS_LO": w_pfs_lo, "V1_pIPS": w_v1_pips, "V1_LO": w_v1_lo,
+              "between_dorsal": bt_dorsal, "between_ventral": bt_ventral}).to_csv(
               f"{out_dir}/dice_per_subject.csv", index=False)
-print(f"\nSaved: dice_anova.csv, dice_per_subject.csv  (in {out_dir})")
+print(f"\nSaved: dice_anova.csv, dice_posthoc.csv, dice_contrast.csv, "
+      f"dice_per_subject.csv  (in {out_dir})")
