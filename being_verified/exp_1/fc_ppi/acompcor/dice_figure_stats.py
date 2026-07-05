@@ -1,15 +1,14 @@
 """
 aCompCor PPI network-overlap: figure + stats (R2.2 V1 control, R2.3 pFS).
 
-RIGHT panel (new): within-subject Dice for 4 region pairs.
-  Test: one-way RM-ANOVA (factor = pair, 4 levels) + planned group contrast
-        object pairs (pFS-pIPS, pFS-LO) +1 vs control pairs (V1-pIPS, V1-LO) -1.
-  Plus within-group post-hocs (pFS-pIPS vs pFS-LO; V1-pIPS vs V1-LO), Holm.
-LEFT panel: Fig 3D reproduced on aCompCor maps (between-dorsal, between-ventral,
-  within-subject dorsal-ventral). Test: RM-ANOVA (3 levels) + Holm post-hocs,
-  within-DV vs each between-subject bar. Mirrors the manuscript.
+RIGHT panel: within-subject Dice, 4 region pairs.
+  RM-ANOVA (factor = pair, 4 levels) + planned group contrast
+  object (pFS-pIPS, pFS-LO) +1 vs control (V1-pIPS, V1-LO) -1;
+  within-group post-hocs (pFS-pIPS vs pFS-LO; V1-pIPS vs V1-LO), Holm.
+LEFT panel: Fig 3D reproduced on aCompCor maps + Holm post-hocs
+  (within-subject dorsal-ventral vs each between-subject bar).
 
-Both arcsine-sqrt transformed. Balanced, no averaging. N=18 (sub-084 excluded).
+Arcsine-sqrt transformed. Balanced, no averaging. N=18 (sub-084 excluded).
 Run: python dice_figure_stats.py
 """
 
@@ -158,7 +157,7 @@ print(aovR.anova_table)
 print(f"\nGroup contrast object(+1) vs control(-1), n={n}: "
       f"t({n-1}) = {t_c:.2f}, p = {p_c:.2e}, dz = {dz_c:.2f}")
 
-# within-group post-hocs (do the two object pairs / two control pairs differ?)
+# within-group post-hocs
 within_tests = [("pFS-pIPS", "pFS-LO"), ("V1-pIPS", "V1-LO")]
 wc, wt, wp, wdz = [], [], [], []
 for a, b in within_tests:
@@ -179,7 +178,7 @@ for k, arr in {**left, **right}.items():
     print(f"  {k:16s}: {np.nanmean(arr):.3f}")
 
 # ---- figure ----
-fig, (axL, axR) = plt.subplots(1, 2, figsize=(11, 4.5),
+fig, (axL, axR) = plt.subplots(1, 2, figsize=(11.5, 4.7),
                                gridspec_kw={"width_ratios": [3, 4]})
 
 Ldef = [("between-subj\ndorsal", bt_dorsal, TEAL),
@@ -191,8 +190,8 @@ axL.set_xticks(range(len(Ldef)))
 axL.set_xticklabels([l for l, _, _ in Ldef], fontsize=9)
 axL.set_ylabel("Dice coefficient")
 axL.set_title("Network overlap (Fig 3D, aCompCor)", fontsize=10)
-sig_bar(axL, 1, 2, 1.00, stars(pL_holm[1]))   # within vs between-ventral (shorter)
-sig_bar(axL, 0, 2, 1.07, stars(pL_holm[0]))   # within vs between-dorsal (longer)
+sig_bar(axL, 1, 2, 1.02, stars(pL_holm[1]))   # within vs between-ventral
+sig_bar(axL, 0, 2, 1.14, stars(pL_holm[0]))   # within vs between-dorsal
 
 Rdef = [("pFS-pIPS", w_pfs_pips, PURPLE),
         ("pFS-LO", w_pfs_lo, PURPLE),
@@ -207,11 +206,13 @@ axR.legend(handles=[Patch(facecolor=to_rgba(PURPLE, FILL_ALPHA), edgecolor=PURPL
                           linewidth=2, label="object-object"),
                     Patch(facecolor=to_rgba(GRAY, FILL_ALPHA), edgecolor=GRAY,
                           linewidth=2, label="control (V1)")],
-           frameon=False, fontsize=9, loc="upper right")
-sig_bar(axR, 0.5, 2.5, 1.00, stars(p_c))       # object group vs control group
+           frameon=False, fontsize=9, loc="upper left", bbox_to_anchor=(1.02, 1.0))
+sig_bar(axR, 0, 1, 1.02, stars(wp_holm[0]))    # pFS-pIPS vs pFS-LO
+sig_bar(axR, 2, 3, 1.02, stars(wp_holm[1]))    # V1-pIPS vs V1-LO
+sig_bar(axR, 0.5, 2.5, 1.16, stars(p_c))       # object group vs control group
 
 for ax in (axL, axR):
-    ax.set_ylim(0, 1.15)
+    ax.set_ylim(0, 1.3)
     ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
     ax.grid(axis="y", alpha=0.2)
     for sp in ("top", "right"):
