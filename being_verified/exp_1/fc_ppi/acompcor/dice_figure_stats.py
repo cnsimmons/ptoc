@@ -115,11 +115,11 @@ axL.set_xticklabels([l for l, _, _ in L], fontsize=9)
 axL.set_ylabel("Dice coefficient")
 axL.set_title("Network overlap (Fig 3D, aCompCor)", fontsize=10)
 
-R = [("pIPS-LO", w_pips_lo, PURPLE),
-     ("pFS-pIPS", w_pfs_pips, PURPLE),
+R = [("pFS-pIPS", w_pfs_pips, PURPLE),
      ("pFS-LO", w_pfs_lo, PURPLE),
      ("V1-pIPS", w_v1_pips, GRAY),
      ("V1-LO", w_v1_lo, GRAY)]
+
 for i, (lab, v, c) in enumerate(R):
     bar_with_dots(axR, i, v, c)
 axR.set_xticks(range(len(R)))
