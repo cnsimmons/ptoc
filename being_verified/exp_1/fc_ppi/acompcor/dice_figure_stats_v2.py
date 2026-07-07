@@ -209,9 +209,7 @@ for i, (lab, v, c) in enumerate(bars1):
 ax1.set_xticks(range(len(bars1)))
 ax1.set_xticklabels([l for l, _, _ in bars1], fontsize=9)
 ax1.set_title("PPI network overlap (aCompCor)", fontsize=11)
-sig_bar(ax1, 1, 2, 1.02, stars(pL_holm[1]))
-sig_bar(ax1, 0, 2, 1.14, stars(pL_holm[0]))
-style_ax(ax1, ylim_top=1.3)
+style_ax(ax1)
 fig1.tight_layout()
 
 fig1_path = f"{out_dir}/fig_acompcor_robustness.png"
