@@ -1,14 +1,15 @@
 """
-aCompCor PPI network-overlap: figure + stats (R2.2 V1 control, R2.3 pFS).
+aCompCor PPI network-overlap: three separate figures + stats.
 
-RIGHT panel: within-subject Dice, 4 region pairs.
-  RM-ANOVA (factor = pair, 4 levels) + planned group contrast
-  object (pFS-pIPS, pFS-LO) +1 vs control (V1-pIPS, V1-LO) -1;
-  within-group post-hocs (pFS-pIPS vs pFS-LO; V1-pIPS vs V1-LO), Holm.
-LEFT panel: Fig 3D reproduced on aCompCor maps + Holm post-hocs
-  (within-subject dorsal-ventral vs each between-subject bar).
+Figure 1 (aCompCor robustness): Fig 3D reproduced on aCompCor maps
+  3 bars: between-dorsal, between-ventral, within dorsal-ventral
+  RM-ANOVA + Holm post-hocs.
 
-Arcsine-sqrt transformed. Balanced, no averaging. N=18 (sub-084 excluded).
+Supp Figure pFS: within-subject Dice for pIPS-LO (reference), pFS-pIPS, pFS-LO
+
+Supp Figure V1: within-subject Dice for pIPS-LO (reference), V1-pIPS, V1-LO
+
+Arcsine-sqrt transformed for stats. N=18 (sub-084 excluded).
 Run: python dice_figure_stats.py
 """
 
@@ -40,20 +41,27 @@ TEAL, PINK, PURPLE, GRAY = "#4ac0c0", "#ff9b83", "#9467bd", "#9aa0a6"
 FILL_ALPHA = 0.35
 
 
+# ---- helpers ----
+
 def dice(a, b):
     a, b = (a > 0).astype(int), (b > 0).astype(int)
     tot = a.sum() + b.sum()
     return np.nan if tot == 0 else 2.0 * (a * b).sum() / tot
 
 
-def load_maps(subs):
+def load_maps(subs, roi_list, suffix_map):
+    """
+    suffix_map: dict mapping roi name -> file suffix
+      e.g. {"pIPS": "_loc_ppi_acompcor_mni", "LO": "_loc_ppi_acompcor_mni"}
+    """
     data, valid = {}, []
     for sub in subs:
         data[sub], ok = {}, True
-        for roi in rois:
+        for roi in roi_list:
             arrs = []
             for hemi in hemispheres:
-                f = f"{study_dir}/{sub}/ses-01/derivatives/fc_mni/{sub}_{roi}_{hemi}_loc_ppi_acompcor_mni.nii.gz"
+                suf = suffix_map[roi]
+                f = f"{study_dir}/{sub}/ses-01/derivatives/fc_mni/{sub}_{roi}_{hemi}{suf}.nii.gz"
                 if os.path.exists(f):
                     arrs.append(nib.load(f).get_fdata())
                 else:
@@ -107,10 +115,27 @@ def sig_bar(ax, x1, x2, y, text, h=0.015, lw=1.3, c="#333333"):
             fontsize=13, color=c, clip_on=False)
 
 
+def style_ax(ax, ylim_top=1.1):
+    ax.set_ylim(0, ylim_top)
+    ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
+    ax.set_ylabel("Dice coefficient")
+    ax.grid(axis="y", alpha=0.2)
+    for sp in ("top", "right"):
+        ax.spines[sp].set_visible(False)
+
+
+asin = lambda v: np.arcsin(np.sqrt(v))
+
+
+# ---- suffixes: pIPS/LO original, PFS/V1 aCompCor ----
+SUFFIX = {"pIPS": "_loc_ppi_mni", "LO": "_loc_ppi_mni",
+          "PFS": "_loc_ppi_acompcor_mni", "V1": "_loc_ppi_acompcor_mni"}
+
 # ---- load ----
-data, valid = load_maps(subs)
+print("Loading maps (pIPS/LO original, PFS/V1 aCompCor)...")
+data, valid = load_maps(subs, rois, SUFFIX)
 n = len(valid)
-print(f"\nValid subjects (all 4 ROIs, both hemis): {n}\n")
+print(f"  Valid: {n}\n")
 
 bt_dorsal  = between_roi(data, valid, "pIPS")
 bt_ventral = between_roi(data, valid, "LO")
@@ -120,9 +145,10 @@ w_pfs_lo   = within_pair(data, valid, "PFS", "LO")
 w_v1_pips  = within_pair(data, valid, "V1", "pIPS")
 w_v1_lo    = within_pair(data, valid, "V1", "LO")
 
-asin = lambda v: np.arcsin(np.sqrt(v))
 
-# ---- LEFT-panel stats: Fig 3D reproduction (3 levels) ----
+# ================================================================
+# STATS: Fig 1 (aCompCor robustness) — RM-ANOVA, 3 levels
+# ================================================================
 left = {"between_dorsal": bt_dorsal, "between_ventral": bt_ventral, "within_DV": w_pips_lo}
 rowsL = [{"subject": s, "cond": k, "y": asin(v)}
          for k, arr in left.items() for s, v in zip(valid, arr)]
@@ -134,13 +160,16 @@ for k in ["between_dorsal", "between_ventral"]:
     pL_names.append(f"within_DV vs {k}"); tL.append(t); pL.append(p)
 _, pL_holm, _, _ = multipletests(pL, method="holm")
 
-print("LEFT panel (Fig 3D, aCompCor) — RM-ANOVA (3 levels):")
+print("Fig 1 (aCompCor robustness) — RM-ANOVA (3 levels):")
 print(aovL.anova_table)
 print("  post-hoc (Holm):")
 for name, t, ph in zip(pL_names, tL, pL_holm):
     print(f"    {name:32s} t={t:6.2f}  p_holm={ph:.2e}")
 
-# ---- RIGHT-panel stats: object vs control (4 levels) ----
+
+# ================================================================
+# STATS: 4-level ANOVA + planned contrast (kept for CSV export)
+# ================================================================
 right = {"pFS-pIPS": w_pfs_pips, "pFS-LO": w_pfs_lo,
          "V1-pIPS": w_v1_pips, "V1-LO": w_v1_lo}
 rowsR = [{"subject": s, "pair": k, "y": asin(v)}
@@ -152,12 +181,10 @@ contrast = sum(wts[k] * asin(arr) for k, arr in right.items())
 t_c, p_c = stats.ttest_1samp(contrast, 0.0)
 dz_c = contrast.mean() / contrast.std(ddof=1)
 
-print("\nRIGHT panel — RM-ANOVA (4 levels), factor = pair:")
+print(f"\n4-level RM-ANOVA (for reference):")
 print(aovR.anova_table)
-print(f"\nGroup contrast object(+1) vs control(-1), n={n}: "
-      f"t({n-1}) = {t_c:.2f}, p = {p_c:.2e}, dz = {dz_c:.2f}")
+print(f"Group contrast object(+1) vs control(-1): t({n-1}) = {t_c:.2f}, p = {p_c:.2e}, dz = {dz_c:.2f}")
 
-# within-group post-hocs
 within_tests = [("pFS-pIPS", "pFS-LO"), ("V1-pIPS", "V1-LO")]
 wc, wt, wp, wdz = [], [], [], []
 for a, b in within_tests:
@@ -169,72 +196,88 @@ for a, b in within_tests:
 _, wp_holm, _, _ = multipletests(wp, method="holm")
 
 print("\nWithin-group post-hocs (paired, Holm-corrected):")
-print(f"  {'comparison':22s}{'t':>8s}{'p_holm':>11s}{'dz':>7s}")
 for c, t, ph, dz in zip(wc, wt, wp_holm, wdz):
-    print(f"  {c:22s}{t:8.2f}{ph:11.2e}{dz:7.2f}")
+    print(f"  {c:22s} t={t:8.2f}  p_holm={ph:11.2e}  dz={dz:7.2f}")
 
 print("\nPair means (Dice):")
 for k, arr in {**left, **right}.items():
     print(f"  {k:16s}: {np.nanmean(arr):.3f}")
 
-# ---- figure ----
-fig, (axL, axR) = plt.subplots(1, 2, figsize=(11.5, 4.7),
-                               gridspec_kw={"width_ratios": [3, 4]})
 
-Ldef = [("between-subj\ndorsal", bt_dorsal, TEAL),
-        ("between-subj\nventral", bt_ventral, PINK),
-        ("within-subj\ndorsal-ventral", w_pips_lo, PURPLE)]
-for i, (lab, v, c) in enumerate(Ldef):
-    bar_with_dots(axL, i, v, c)
-axL.set_xticks(range(len(Ldef)))
-axL.set_xticklabels([l for l, _, _ in Ldef], fontsize=9)
-axL.set_ylabel("Dice coefficient")
-axL.set_title("Network overlap (Fig 3D, aCompCor)", fontsize=10)
-sig_bar(axL, 1, 2, 1.02, stars(pL_holm[1]))   # within vs between-ventral
-sig_bar(axL, 0, 2, 1.14, stars(pL_holm[0]))   # within vs between-dorsal
+# ================================================================
+# FIGURE 1: aCompCor robustness (Fig 3D replication)
+# ================================================================
+fig1, ax1 = plt.subplots(figsize=(5, 4.5))
 
-Rdef = [("pFS-pIPS", w_pfs_pips, PURPLE),
-        ("pFS-LO", w_pfs_lo, PURPLE),
-        ("V1-pIPS", w_v1_pips, GRAY),
-        ("V1-LO", w_v1_lo, GRAY)]
-for i, (lab, v, c) in enumerate(Rdef):
-    bar_with_dots(axR, i, v, c)
-axR.set_xticks(range(len(Rdef)))
-axR.set_xticklabels([l for l, _, _ in Rdef], fontsize=9)
-axR.set_title("Within-subject region-pair overlap", fontsize=10)
-axR.legend(handles=[Patch(facecolor=to_rgba(PURPLE, FILL_ALPHA), edgecolor=PURPLE,
-                          linewidth=2, label="object-object"),
-                    Patch(facecolor=to_rgba(GRAY, FILL_ALPHA), edgecolor=GRAY,
-                          linewidth=2, label="control (V1)")],
-           frameon=False, fontsize=9, loc="upper left", bbox_to_anchor=(1.02, 1.0))
-sig_bar(axR, 0, 1, 1.02, stars(wp_holm[0]))    # pFS-pIPS vs pFS-LO
-sig_bar(axR, 2, 3, 1.02, stars(wp_holm[1]))    # V1-pIPS vs V1-LO
-sig_bar(axR, 0.5, 2.5, 1.16, stars(p_c))       # object group vs control group
+bars1 = [("between-subj\ndorsal", bt_dorsal, TEAL),
+         ("between-subj\nventral", bt_ventral, PINK),
+         ("within-subj\ndorsal–ventral", w_pips_lo, PURPLE)]
+for i, (lab, v, c) in enumerate(bars1):
+    bar_with_dots(ax1, i, v, c)
 
-for ax in (axL, axR):
-    ax.set_ylim(0, 1.3)
-    ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
-    ax.grid(axis="y", alpha=0.2)
-    for sp in ("top", "right"):
-        ax.spines[sp].set_visible(False)
+ax1.set_xticks(range(len(bars1)))
+ax1.set_xticklabels([l for l, _, _ in bars1], fontsize=9)
+ax1.set_title("PPI network overlap (aCompCor)", fontsize=11)
+style_ax(ax1)
+fig1.tight_layout()
 
-plt.tight_layout()
-fig_path = f"{out_dir}/dice_overlap_figure.png"
-fig.savefig(fig_path, dpi=300, bbox_inches="tight")
-print(f"\nSaved figure: {fig_path}")
+fig1_path = f"{out_dir}/fig_acompcor_robustness.png"
+fig1.savefig(fig1_path, dpi=300, bbox_inches="tight")
+print(f"\nSaved: {fig1_path}")
 
-# ---- save stats ----
-aovR.anova_table.to_csv(f"{out_dir}/dice_anova_right.csv")
-aovL.anova_table.to_csv(f"{out_dir}/dice_anova_left.csv")
+
+# ================================================================
+# SUPP FIGURE: pFS control
+# ================================================================
+fig_pfs, ax_pfs = plt.subplots(figsize=(5, 4.5))
+
+bar_with_dots(ax_pfs, 0, w_pips_lo, PURPLE)
+bar_with_dots(ax_pfs, 1, w_pfs_pips, PURPLE)
+bar_with_dots(ax_pfs, 2, w_pfs_lo, PURPLE)
+
+ax_pfs.set_xticks([0, 1, 2])
+ax_pfs.set_xticklabels(["pIPS – LO\n(primary)", "pFS – pIPS", "pFS – LO"], fontsize=10)
+ax_pfs.set_title("Within-subject PPI network overlap: pFS", fontsize=11)
+style_ax(ax_pfs)
+fig_pfs.tight_layout()
+
+fig_pfs_path = f"{out_dir}/supp_fig_pFS.png"
+fig_pfs.savefig(fig_pfs_path, dpi=300, bbox_inches="tight")
+print(f"Saved: {fig_pfs_path}")
+
+
+# ================================================================
+# SUPP FIGURE: V1 control
+# ================================================================
+fig_v1, ax_v1 = plt.subplots(figsize=(5, 4.5))
+
+bar_with_dots(ax_v1, 0, w_pips_lo, PURPLE)
+bar_with_dots(ax_v1, 1, w_v1_pips, GRAY)
+bar_with_dots(ax_v1, 2, w_v1_lo, GRAY)
+
+ax_v1.set_xticks([0, 1, 2])
+ax_v1.set_xticklabels(["pIPS – LO\n(primary)", "V1 – pIPS", "V1 – LO"], fontsize=10)
+ax_v1.set_title("Within-subject PPI network overlap: V1", fontsize=11)
+style_ax(ax_v1)
+fig_v1.tight_layout()
+
+fig_v1_path = f"{out_dir}/supp_fig_V1.png"
+fig_v1.savefig(fig_v1_path, dpi=300, bbox_inches="tight")
+print(f"Saved: {fig_v1_path}")
+
+
+# ---- save stats CSVs ----
+aovL.anova_table.to_csv(f"{out_dir}/dice_anova_robustness.csv")
+aovR.anova_table.to_csv(f"{out_dir}/dice_anova_4level.csv")
 pd.DataFrame([{"contrast": "object(+1) vs control(-1)", "t": t_c,
                "df": n - 1, "p": p_c, "dz": dz_c}]).to_csv(
               f"{out_dir}/dice_contrast.csv", index=False)
 pd.DataFrame({"comparison": wc, "t": wt, "p_uncorrected": wp,
               "p_holm": wp_holm, "dz": wdz}).to_csv(
               f"{out_dir}/dice_within_group_posthoc.csv", index=False)
-pd.DataFrame({"subject": valid, "pIPS_LO": w_pips_lo, "PFS_pIPS": w_pfs_pips,
-              "PFS_LO": w_pfs_lo, "V1_pIPS": w_v1_pips, "V1_LO": w_v1_lo,
+pd.DataFrame({"subject": valid, "pIPS_LO": w_pips_lo,
+              "PFS_pIPS": w_pfs_pips, "PFS_LO": w_pfs_lo,
+              "V1_pIPS": w_v1_pips, "V1_LO": w_v1_lo,
               "between_dorsal": bt_dorsal, "between_ventral": bt_ventral}).to_csv(
               f"{out_dir}/dice_per_subject.csv", index=False)
-print("Saved: dice_anova_right.csv, dice_anova_left.csv, dice_contrast.csv, "
-      "dice_within_group_posthoc.csv, dice_per_subject.csv")
+print("\nSaved all CSVs.")
