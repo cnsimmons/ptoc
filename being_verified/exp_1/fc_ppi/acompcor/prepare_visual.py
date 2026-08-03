@@ -107,30 +107,30 @@ fig, axes = plt.subplots(2, 4, figsize=(20, 10),
 
 print("\nPlotting original (top row)...")
 plot_overlap_row(overlap_orig, axes[0], cmap_overlap)
-axes[0][0].set_title('LH lateral', fontsize=10)
-axes[0][1].set_title('LH medial', fontsize=10)
-axes[0][2].set_title('RH lateral', fontsize=10)
-axes[0][3].set_title('RH medial', fontsize=10)
+axes[0][0].set_title('LH lateral', fontsize=24)
+axes[0][1].set_title('LH medial', fontsize=24)
+axes[0][2].set_title('RH lateral', fontsize=24)
+axes[0][3].set_title('RH medial', fontsize=24)
 
 print("Plotting aCompCor (bottom row)...")
 plot_overlap_row(overlap_acomp, axes[1], cmap_overlap)
 
 # Row labels
-fig.text(0.02, 0.72, 'Original', fontsize=14, fontweight='bold', rotation=90, va='center')
-fig.text(0.02, 0.28, 'aCompCor', fontsize=14, fontweight='bold', rotation=90, va='center')
+fig.text(0.02, 0.72, 'Original', fontsize=24, fontweight='bold', rotation=90, va='center')
+fig.text(0.02, 0.28, 'aCompCor', fontsize=24, fontweight='bold', rotation=90, va='center')
 
-# Legend
+# Legend — order: Dorsal, Ventral, Overlap
 legend_elements = [
     mpatches.Patch(facecolor='#4ac0c0', label='Dorsal only'),
-    mpatches.Patch(facecolor='#9467bd', label='Overlap'),
-    mpatches.Patch(facecolor='#ff9b83', label='Ventral only')
+    mpatches.Patch(facecolor='#ff9b83', label='Ventral only'),
+    mpatches.Patch(facecolor='#9467bd', label='Overlap')
 ]
 fig.legend(handles=legend_elements, loc='lower center', ncol=3,
-           fontsize=12, frameon=True, bbox_to_anchor=(0.5, 0.01))
+           fontsize=20, frameon=True, bbox_to_anchor=(0.5, 0.01))
 
-fig.suptitle('PPI Overlap: Original vs aCompCor (N=18, z > 2.58)', fontsize=16, fontweight='bold')
+fig.suptitle('PPI Overlap: Original vs aCompCor (N=18, z > 2.58)', fontsize=26, fontweight='bold')
 plt.tight_layout(rect=[0.04, 0.05, 1, 0.95])
-plt.savefig(f'{out_dir}/surface_overlap_comparison.png', dpi=300, bbox_inches='tight')
+plt.savefig(f'{out_dir}/surface_overlap_comparison_v3.png', dpi=300, bbox_inches='tight')
 plt.close('all')
 print(f"\nSaved: {out_dir}/surface_overlap_comparison.png")
 
