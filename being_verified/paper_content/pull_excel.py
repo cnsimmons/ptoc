@@ -43,12 +43,17 @@ def build_ppi_dice():
         return None
     # within: already 1 row per subject
     w = within.rename(columns={"Subject": "subject", "Dice": "within"})[["subject", "within"]]
-    # between: 153 pairwise rows → average per subject (appears as Subject1 and Subject2)
+    # between: 153 pairwise rows -> average per subject.
+    # Each subject appears in both Subject1 and Subject2, in unequal numbers, so
+    # the two columns must be pooled into one long table before averaging.
+    # Averaging the two column-means separately weights them incorrectly and
+    # shifts the group means off the values reported in the manuscript.
     def avg_per_sub(df):
-        a = df.groupby("Subject1")["Dice"].mean()
-        b = df.groupby("Subject2")["Dice"].mean()
-        combined = pd.concat([a, b]).groupby(level=0).mean()
-        return combined
+        long = pd.concat([
+            df[["Subject1", "Dice"]].rename(columns={"Subject1": "s"}),
+            df[["Subject2", "Dice"]].rename(columns={"Subject2": "s"}),
+        ])
+        return long.groupby("s")["Dice"].mean()
     bd = avg_per_sub(btw_d).rename("between_dorsal")
     bv = avg_per_sub(btw_v).rename("between_ventral")
     out = w.set_index("subject").join(bd).join(bv).reset_index()
@@ -226,7 +231,7 @@ def inspect():
     if ppi is not None:
         m = ppi.select_dtypes("number").mean()
         print(f"[ppi_dice] means: {', '.join(f'{c}={m[c]:.3f}' for c in m.index)}")
-        print(f"  manuscript: (0.810, 0.525, 0.535)")
+        print(f"  manuscript: (0.810, 0.525, 0.535)")  # pooled between-subject means
     # fingerprint scale
     for tag in ("fc_fp","ppi_fp","partial_fp"):
         df = load(tag)
