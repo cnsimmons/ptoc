@@ -55,7 +55,7 @@ def build_ppi_dice():
     return out
 
 def build_supp_v1():
-    """Supp Fig 2: V1-pIPS, V1-LO, with pIPS-LO reference."""
+    """Supp Fig 3: V1-pIPS, V1-LO, with pIPS-LO reference."""
     cp = load("ctrl_pairs")
     ps = load("acomp_persub")
     if cp is None or ps is None:
@@ -68,7 +68,7 @@ def build_supp_v1():
     })
 
 def build_supp_pfs():
-    """Supp Fig 3: pFS-pIPS, pFS-LO, with pIPS-LO reference."""
+    """Supp Fig 4: pFS-pIPS, pFS-LO, with pIPS-LO reference."""
     cp = load("ctrl_pairs")
     ps = load("acomp_persub")
     if cp is None or ps is None:
@@ -98,7 +98,79 @@ def fp_select(key, cols):
     if missing:
         print(f"  WARNING: cols {missing} not in {key}, writing full table")
         return df
-    return df[cols]
+    out = df[cols].copy()
+    # Write booleans as plain text so Excel does not store them as =TRUE()/=FALSE()
+    if "Combined_Significant" in out.columns:
+        out["Combined_Significant"] = (
+            out["Combined_Significant"].astype(bool)
+            .map({True: "TRUE", False: "FALSE"})
+        )
+    return out
+
+def build_readme():
+    """README worksheet: worksheet index plus column definitions."""
+    L = [
+        "Communications Biology Source Data - CommsBio-26-2997",
+        "Large-scale functional overlap between dorsal and ventral object-responsive networks",
+        "Simmons C, Behrmann M, Ayzenberg V",
+        "",
+        "One worksheet per graph/chart panel. Values are exactly as plotted.",
+        "Raw data deposit: https://doi.org/10.1184/R1/31459006",
+        "Analysis code: https://github.com/cnsimmons/dv_overlap",
+        "",
+        "WORKSHEET INDEX",
+        "  Fig 2d       Dice coefficients, correlation-based functional connectivity",
+        "  Fig 2e       Parcel connectivity strength (Pearson's r), dorsal and ventral seeds",
+        "  Fig 2f       Dorsal minus ventral difference per parcel, with significance flag",
+        "  Fig 2g       Parcel proportions by connectivity category",
+        "  Fig 3d       Dice coefficients, task-dependent connectivity (PPI)",
+        "  Fig 3e       Parcel connectivity strength (PPI)",
+        "  Fig 3f       Dorsal minus ventral difference per parcel (PPI)",
+        "  Fig 3g       Parcel proportions by connectivity category (PPI)",
+        "  Fig 4d       Dice coefficients, partial correlation",
+        "  Fig 4e       Parcel connectivity strength (partial correlation)",
+        "  Fig 4f       Dorsal minus ventral difference per parcel (partial correlation)",
+        "  Fig 4g       Parcel proportions by connectivity category (partial correlation)",
+        "  Supp Fig 2   Dice overlap, original versus aCompCor pipelines",
+        "  Supp Fig 3   Dice overlap, V1 control seed",
+        "  Supp Fig 4   Dice overlap, pFS control seed",
+        "",
+        "Manuscript Supplementary Figure 1 is an anatomical parcel image and has no",
+        "plotted values, so it has no worksheet here.",
+        "",
+        "COLUMN DEFINITIONS",
+        "  subject                One row per participant (n = 18 per experiment).",
+        "  within                 Within-participant Dice between the dorsal (pIPS) and",
+        "                         ventral (LO) whole-brain network maps.",
+        "  between_dorsal         Mean Dice between this participant's dorsal map and every",
+        "                         other participant's dorsal map.",
+        "  between_ventral        As above, for the ventral map.",
+        "  pIPS_LO                Within-participant dorsal-ventral Dice (reference bar in",
+        "                         the supplementary control panels).",
+        "  V1_pIPS, V1_LO         Within-participant Dice between the V1 control seed and the",
+        "                         dorsal or ventral seed network.",
+        "  PFS_pIPS, PFS_LO       As above, for the pFS seed.",
+        "  ROI_Name               Parcel label from the merged Schaefer-Wang-Julian atlas.",
+        "  pIPS_Connectivity      Connectivity between the dorsal seed and that parcel,",
+        "                         as Pearson's r.",
+        "  LO_Connectivity        As above, for the ventral seed.",
+        "  Difference             pIPS_Connectivity minus LO_Connectivity.",
+        "  Combined_Significant   TRUE if the difference was significant against bootstrapped",
+        "                         confidence intervals; plotted as an opaque bar.",
+        "  category               both / dorsal_only / ventral_only / neither.",
+        "  n_parcels, percent     Parcel counts and percentages in each category.",
+        "  total_parcels          Total parcels considered (200).",
+        "",
+        "NOTES",
+        "  Dice coefficients are arcsine-square-root transformed before statistical",
+        "  analysis; the values here are untransformed, as plotted.",
+        "  Bars show the mean across participants with 95% confidence intervals.",
+        "  G-panel proportions derive from thresholded group maps rather than any single",
+        "  per-subject file; counts are taken from the manuscript text.",
+        "  Surface and statistical maps are covered by the data deposit above.",
+    ]
+    return pd.DataFrame({0: L})
+
 
 # ── assembly ──
 
@@ -130,9 +202,11 @@ def build_all():
     add("Fig 4g", g_table(55, 61, 19, 65))  # from MS: 55 both; 61 unique dorsal; 19 unique ventral
 
     # Supp
-    add("Supp Fig 1", load("acomp_orig_vs"))
-    add("Supp Fig 2", build_supp_v1())
-    add("Supp Fig 3", build_supp_pfs())
+    # Manuscript Supplementary Figure 1 is the anatomical parcel image and has no
+    # plotted values, so the workbook tabs start at Supp Fig 2.
+    add("Supp Fig 2", load("acomp_orig_vs"))   # aCompCor vs original
+    add("Supp Fig 3", build_supp_v1())         # V1 control
+    add("Supp Fig 4", build_supp_pfs())        # pFS control
 
     return sheets, notes
 
@@ -165,15 +239,10 @@ def main():
     if not sheets:
         print("\nNothing built."); sys.exit(1)
 
-    readme = pd.DataFrame({
-        "Communications Biology source data -- CommsBio-26-2997": [
-            "One worksheet per graph/chart panel; values exactly as plotted.",
-            "Surface / statistical maps covered by deposit 10.1184/R1/31459006.",
-            "G-panel proportions derived from thresholded group maps; counts from MS text.",
-        ]
-    })
+    readme = build_readme()
     with pd.ExcelWriter(OUT_XLSX, engine="openpyxl") as xw:
-        readme.to_excel(xw, sheet_name="README", index=False)
+        # header=False so the README reads as prose, not a table with a column header
+        readme.to_excel(xw, sheet_name="README", index=False, header=False)
         for name, df in sheets.items():
             df.to_excel(xw, sheet_name=name[:31], index=False)
 
